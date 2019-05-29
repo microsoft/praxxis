@@ -1,3 +1,0 @@
-@SETLOCAL
-@cd mtool
-@m %*
