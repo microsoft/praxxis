@@ -13,8 +13,7 @@ With or without a big data cluster, mtool's suggestions are usable through train
 With mtool, a history of commands is preserved, allowing you to backtrack through problems and move forward quickly through complex systems. Since situation specific configurations are saved as environment variables in scenes, you'll always be able to track exactly what commands were run, what was changed, and where you need to go next.
 
 ##### Notebook Libraries
-mtool runs on libraries of notebooks, allowing every command on your system to be documented and explained in a beautiful markdown format. mtool combines the idea of functional documentation with every part of a system, allowing every person on a team to operate with the same efficiency as even the most senior engineer, through generated suggestions and truly meaningful understanding.
-
+mtool runs on libraries of notebooks, allowing every command on your system to be documented and explained in a beautiful markdown format. mtool combines the idea of functional documentation with every part of a system, allowing every person on a team to operate with the same understanding as even the most senior engineer, through outcome driven, useful documentation.
 
 ## Installation
 // how to install
