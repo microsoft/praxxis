@@ -6,14 +6,14 @@ We'd love your help!
 //detail how the dev environment for it works
 //explain how venv works
 
-## Coding standard
-All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does and what other files it depends on; see the current files for an idea of the expected level of detail. 
+## Coding Standards
+All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does and what other files it depends on; see the current files for an idea of the expected level of detail.
 
-Overall, this project places a focus on useful, descriptive inline comments over block comments. The best changes will clearly document non-obvious sections of the code with inline or section comments. A single-line comment will suffice for most confusing sections or methods, at the programmer's discretion. 
+Overall, this project places a focus on useful, descriptive inline comments over block comments. The best changes will clearly document non-obvious sections of the code with inline or section comments. A single-line comment will suffice for most confusing sections or methods, at the programmer's discretion.
 
 All code added should also pass the [tests](). Please run the pytest testset regularly as you work to ensure your code will not break any tests if it's pulled into the project.
 
-As new functionality is added, please document the new features and add them to the tool's help page and the github readme. 
+As new functionality is added, please document the new features and add them to the tool's help page and the github readme.
 
 ## Making a Change
 Before making a pull request, please open an issue! Discussing your proposed changes with the community will make your changes that much more valuable.
@@ -24,7 +24,7 @@ The smaller your changes are, the easier it is for them to be reviewed and merge
 
 Your pull request has the best chance of being merged if
 - it includes tests for the new functionality
-- it adds/alters a single functionality 
+- it adds/alters a single functionality
 - It includes tests for the new functionality
 - Has a good commit message
   - subject line is 50 characters or less
