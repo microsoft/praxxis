@@ -1,3 +1,8 @@
+"""
+This file DOES A THING
+
+Dependencies within mtool: mtool/mtool.py
+"""
 import os
 import sys
 
