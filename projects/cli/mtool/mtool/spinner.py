@@ -1,3 +1,9 @@
+"""
+This file DOES A THING
+
+Dependencies within mtool: none
+"""
+
 import sys, time, threading
 
 # Twirling console spinner to show progress
