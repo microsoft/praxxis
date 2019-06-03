@@ -1,5 +1,6 @@
 """
-This file DOES A THING
+This file calls the function to set an environment variable for the current
+    scence (a value passed on the command line)
 
 Dependencies within mtool: mtool/mtool.py
 """

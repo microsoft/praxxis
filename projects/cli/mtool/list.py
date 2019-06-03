@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file prints a list of all notebooks on the machine.
 
 Dependencies within mtool: mtool/mtool.py
 """
@@ -7,7 +7,6 @@ import sys
 import os
 
 # Include the mtool subfolder folder
-#
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "mtool"))
 
 import mtool
@@ -20,6 +19,11 @@ items = []
 display_format_string = "\t{0}.\t{1} ({2})"
 
 def display(filename):
+    """Displays a notebook name as part of a list.
+    
+    Keyword arguments:
+    filename -- notebook name to display
+    """
     global counter
     global items
     global display_format_string

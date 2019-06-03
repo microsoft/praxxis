@@ -1,3 +1,9 @@
+"""
+This file runs a notebook. Results are either printed to the console or 
+opened as an html output in the web browser, depending on user input.
+
+Dependencies within mtool: mtool/mtool.py
+"""
 import os
 import sys
 import webbrowser
@@ -11,6 +17,13 @@ import mtool
 m = mtool.MTool(sys.argv)
 
 def run_notebook(filename):
+    """Run a notebook.
+
+    Keyword arguments:
+    filename -- the name of a notebook to run
+    Keyword exceptions:
+    if notebook fails to execute correctly (raises error in running)
+    """
     notebook = m.notebook(filename)
     log = m.log
     spinner = m.spinner

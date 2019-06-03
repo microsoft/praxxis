@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file calls the function to delete an environment variable.
 
 Dependencies within mtool: mtool/mtool.py
 """
