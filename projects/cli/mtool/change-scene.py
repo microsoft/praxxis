@@ -1,5 +1,5 @@
 """
-This file changes the current scence.
+This file calls a function to change the current scene.
 
 Dependencies within mtool: mtool/mtool.py
 """

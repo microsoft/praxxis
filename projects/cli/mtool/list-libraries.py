@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file prints a list of all notebook libraries installed on this machine.
 
 Dependencies within mtool: mtool/mtool.py
 """
@@ -17,6 +17,12 @@ m = mtool.MTool(sys.argv)
 m.log.header("Notebook libraries installed on this machine")
 
 def display(root, library_name):
+    """Print the library's name and description (from a readme).
+
+    Keyword arguments:
+    root -- file path to the dir where the library folder is
+    library_name -- name of the library folder
+    """
     library_readme_filename = os.path.join(os.path.expandvars(root), library_name, "README.md")
 
     description = ""

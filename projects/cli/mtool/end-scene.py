@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file calls the function to end the current scence.
 
 Dependencies within mtool: mtool/mtool.py
 """

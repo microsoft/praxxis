@@ -1,7 +1,8 @@
 """
-This file DOES A THING
+This file contains the Console class, with useful dialog and a spinner for the
+user experience of mtool. 
 
-Dependencies within mtool: mtool/mtool.py
+Dependencies within mtool: mtool/spinner.py
 """
 import os
 import sys
@@ -11,14 +12,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..
 import spinner
 
 class Console:
-
+    """Useful functions for console output"""
     progress_text = "RUNNING PRECONDITION CHECK... "
 
     # Twirling console spinner to show progress
-    #
     spinner = spinner.Spinner()
 
     def print_banner(self, directory):
+        """Prints """
         print()
         print("Analyzing current cluster state for applicable TSGs.  View output at:")
         print()
@@ -37,7 +38,6 @@ class Console:
         self.spinner.stop()
 
     # Remove the progress_text i.e. 'RUNNING PRECONDITION CHECK...'
-    #
     def remove_progress_text(self):
         for x in range(len(self.progress_text) + 1):
             print("\b", end="")
@@ -59,7 +59,7 @@ class Console:
         print("No useful TSGs found for current cluster state.")
 
     def found_useful_tsgs(self, fn_for_each, count):
-        print("Found {0} TSG{1} that maybe useful:  ".format(count, '' if count == 1 else 's'))
+        print("Found {0} TSG{1} that may be useful:  ".format(count, '' if count == 1 else 's'))
         print()
         fn_for_each(Console.print_tsg)
         print()

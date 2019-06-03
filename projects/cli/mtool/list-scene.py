@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file calls a function to list all scenes.
 
 Dependencies within mtool: mtool/mtool.py
 """

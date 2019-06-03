@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file calls the function to delete the current scene.
 
 Dependencies within mtool: mtool/mtool.py
 """

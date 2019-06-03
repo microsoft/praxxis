@@ -1,5 +1,5 @@
 """
-This file creates a new scene.
+This file calls the function to create a new scene.
 
 Dependencies within mtool: mtool/mtool.py
 """
