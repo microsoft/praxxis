@@ -1,3 +1,9 @@
+"""
+This file DOES A THING
+
+Dependencies within mtool: none
+"""
+
 class UsefulTsgs:
 
     # List of the useful TSGs whose PRECONDITION CHECKs

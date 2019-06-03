@@ -1,3 +1,9 @@
+"""
+This file DOES A THING
+
+Dependencies within mtool: none
+"""
+
 class Log:
 
     @staticmethod

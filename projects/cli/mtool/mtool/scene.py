@@ -1,3 +1,9 @@
+"""
+This file DOES A THING
+
+Dependencies within mtool: helpers/config.py
+"""
+
 import sys
 import os
 import uuid
