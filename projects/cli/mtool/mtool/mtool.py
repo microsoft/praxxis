@@ -1,3 +1,9 @@
+"""
+This file contains the functions that the other files call to implement mtool.
+
+Dependencies within mtool: spinner.py, scene.py, environment.py, telemetry.py, log.py
+    helpers/args.py, helpers/file_io.py, ../pansop/pansop.py
+"""
 import os
 import sys
 import time
