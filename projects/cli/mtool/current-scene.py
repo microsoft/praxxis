@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file sets up the toml overrides for the current scene.
 
 Dependencies within mtool: mtool/mtool.py
 """
