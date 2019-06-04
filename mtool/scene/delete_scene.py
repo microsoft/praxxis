@@ -3,8 +3,9 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
+def delete_scene(args):
+    m = mtool.MTool(args)
 
-name = m.delete_scene()
+    name = m.delete_scene()
 
-m.log.info("New Current Scene", name)
+    m.log.info("New Current Scene", name)

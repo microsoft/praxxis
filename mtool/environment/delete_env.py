@@ -3,6 +3,6 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
-
-m.delete_env()
+def delete_env(args):
+    m = mtool.MTool(args)
+    m.delete_env()

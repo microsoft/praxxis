@@ -3,9 +3,10 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
+def new_scene(args):
+    m = mtool.MTool(args)
 
-name = m.create_scene()
+    name = m.create_scene()
 
-m.log.header("Scene Created", name)
-m.log.info("New Current Scene", name)
+    m.log.header("Scene Created", name)
+    m.log.info("New Current Scene", name)

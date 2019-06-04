@@ -3,7 +3,8 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
+def list_scenes(args):
+    m = mtool.MTool(args)
 
-m.log.header("Scenes")
-m.list_scenes()
+    m.log.header("Scenes")
+    m.list_scenes()

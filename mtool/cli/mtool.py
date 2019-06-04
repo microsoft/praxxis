@@ -35,7 +35,7 @@ class MTool:
 
         sys.excepthook = self._capture_unhandled_exception
 
-        # BUGBUG: APPDATA is Windows specific!
+        ##TODO: APPDATA is Windows specific!
         directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
 
         self._write_installation_identifier(directory)
@@ -55,6 +55,7 @@ class MTool:
 
     @property
     def azure_data_studio_binary_location(self):
+        ##TODO: THIS IS WINDOWS SPECIFIC
         return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
     @property

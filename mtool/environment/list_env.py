@@ -3,6 +3,9 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
-m.log.header("Environment variables for all libraries")
-m.list_env()
+def list_env(args):
+    m = mtool.MTool(args)
+
+    m.log.header("Environment variables for all libraries")
+    m.list_env()    
+    

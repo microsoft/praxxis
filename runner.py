@@ -3,23 +3,20 @@ import sys
 
 def diagnose(arg):
     from mtool.cli import diag
-    diag.diagnose(arg[0])
+    diag.diag(arg)
     return
  
 def run_notebook(arg):
     from mtool.notebook import run_notebook
-    run_notebook.run_notebook(arg[0])
+    
     return
  
 def open_notebook(arg):
     from mtool.notebook import open_notebook
-    open_notebook.load_notebook(arg[0])
     return
  
 def search_notebook(arg):
-    print(arg)
     from mtool.notebook import search_notebook
-    search_notebook.filter(arg[0])
     return
 
 def list_notebook(arg):
@@ -35,6 +32,7 @@ def next_notebook(arg):
 
 def new_scene(arg):
     from mtool.scene import new_scene
+    new_scene.new_scene(arg)
     return
  
 def end_scene(arg):
@@ -77,8 +75,6 @@ def default(arg):
     return
  
 def command(argument):
-    argument.pop(0)
-    swtich = argument.pop(0)
     switcher = {
         "diagnose": diagnose,
         "run_notebook": run_notebook,
@@ -98,7 +94,8 @@ def command(argument):
         "set_env": set_env,
         "delete_env": delete_env
     }
-    func = switcher.get(swtich, lambda x: default(x))
+
+    func = switcher.get(argument[1], lambda x: default(x))
     return func(argument)
     
 if __name__ == "__main__":

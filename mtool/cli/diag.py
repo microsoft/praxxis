@@ -5,14 +5,32 @@ import sys
 #
 from mtool.cli import mtool
 from mtool.cli import console
-from mtool.util import useful_tsgs
+from mtool.util import useful_tsgs  
 
-m = mtool.MTool(sys.argv)
-
+m = None
 console = console.Console()
 useful_tsgs = useful_tsgs.UsefulTsgs()
 
-m.set_environment_overrides_for_scene()
+def diag(arg):
+    global m 
+    m = mtool.MTool(arg)
+
+    m.set_environment_overrides_for_scene()
+
+    console.print_banner(m.working_dir)
+    m.for_each_notebook(diagnose)
+    console.print_finished()
+
+    if useful_tsgs.count == 0:
+        console.no_useful_tsgs()
+    else:
+        console.found_useful_tsgs(useful_tsgs.for_each, useful_tsgs.count)
+
+    console.print_end_banner(m.working_dir)
+
+    if useful_tsgs.count > 0:
+        sys.exit(1)
+
 
 def diagnose(filename):
 
@@ -21,7 +39,7 @@ def diagnose(filename):
     if len(sys.argv) == 2:
         category = sys.argv[1]
     else:
-        category = 'install'
+        category = 'install'        
 
     metadata = notebook.metadata
     if metadata.has_azdata_diagnostic_categories and metadata.has_category(category):
@@ -54,16 +72,3 @@ def diagnose(filename):
         else:
             console.print_precondition_check_not_found(notebook.name)
 
-console.print_banner(m.working_dir)
-m.for_each_notebook(diagnose)
-console.print_finished()
-
-if useful_tsgs.count == 0:
-    console.no_useful_tsgs()
-else:
-    console.found_useful_tsgs(useful_tsgs.for_each, useful_tsgs.count)
-
-console.print_end_banner(m.working_dir)
-
-if useful_tsgs.count > 0:
-    sys.exit(1)

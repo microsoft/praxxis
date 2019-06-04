@@ -3,9 +3,15 @@ import sys
 import webbrowser
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
+m = None
 
-def run_notebook(filename):
+def run_notebook(args):
+    global m
+    m = mtool.MTool(args)
+    m.set_environment_overrides_for_scene()
+    m.for_each_notebook_specified_on_command_line(run_notebook)
+
+def run(filename):
     notebook = m.notebook(filename)
     log = m.log
     spinner = m.spinner
@@ -55,5 +61,3 @@ def run_notebook(filename):
 
     m.send_telemetry(local_copy)
 
-m.set_environment_overrides_for_scene()
-m.for_each_notebook_specified_on_command_line(run_notebook)
