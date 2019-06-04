@@ -6,7 +6,7 @@ from mtool.cli import mtool
 
 m = None
 
-def list_libraries(args):
+def list_library(args):
     global m
     m = mtool.MTool(args)
     m.log.header("Notebook libraries installed on this machine")
