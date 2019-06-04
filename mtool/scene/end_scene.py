@@ -3,5 +3,6 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
-m.log.info("Current Scene ended", m.end_scene())
+def end_scene(args):
+    m = mtool.MTool(args)
+    m.log.info("Current Scene ended", m.end_scene())

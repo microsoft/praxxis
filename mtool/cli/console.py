@@ -62,7 +62,7 @@ class Console:
         print()
         print("\thttps://docs.microsoft.com/en-us/sql/azure-data-studio/download")
 
-    def print_tsg(filename):
+    def print_tsg(self, filename):
         print("\t{0}".format(os.path.splitext(os.path.basename(filename))[0]))
 
     def print_end_banner(self, directory):

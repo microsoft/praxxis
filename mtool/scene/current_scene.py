@@ -3,6 +3,6 @@ import sys
 
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
-
-m.set_environment_overrides_for_scene()
+def current_scene(args):
+    m = mtool.MTool(args)
+    m.set_environment_overrides_for_scene()

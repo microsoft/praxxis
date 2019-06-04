@@ -2,12 +2,22 @@ import os
 import sys
 from mtool.cli import mtool
 
-m = mtool.MTool(sys.argv)
-
-search_term = m.args.search_term
-
+m = None
 counter = 0
 items = []
+search_term = None
+
+
+def search_notebook(args):
+    global m
+    global search_term
+    
+    m = mtool.MTool(args)
+    search_term = m.args.search_term
+    m.log.section("Search notebook names for", search_term)
+    m.for_each_notebook(filter)
+    m.write_list(items)
+
 
 def filter(filename):
     global counter
@@ -21,6 +31,3 @@ def filter(filename):
         m.log.info(f"\t{str(counter)}.\t{notebook.name} ({notebook.library_name})")
         items.append([counter, notebook.name, notebook.library_name])
 
-m.log.section("Search notebook names for", search_term)
-m.for_each_notebook(filter)
-m.write_list(items)

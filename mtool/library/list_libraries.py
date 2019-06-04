@@ -4,10 +4,14 @@ import json
 
 from mtool.cli import mtool
 
+m = None
 
-m = mtool.MTool(sys.argv)
+def list_libraries(args):
+    global m
+    m = mtool.MTool(args)
+    m.log.header("Notebook libraries installed on this machine")
+    m.for_each_library(display)
 
-m.log.header("Notebook libraries installed on this machine")
 
 def display(root, library_name):
     library_readme_filename = os.path.join(os.path.expandvars(root), library_name, "README.md")
@@ -19,5 +23,4 @@ def display(root, library_name):
 
     m.log.indent("{0} ({1})".format(library_name, description.replace("# ", "", 1)))
 
-m.for_each_library(display)
 
