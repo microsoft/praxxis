@@ -1,4 +1,5 @@
 @ECHO OFF
+@SETLOCAL
 
 REM I have this as a .cmd/.sh file, because it gives the user something to do while python is taking 5 seconds
 REM to cold boot (start)!!  First impressions count!   i.e. the user is reading the help, not noticing python is starting.
