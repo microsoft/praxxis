@@ -19,13 +19,11 @@ import log
 import args
 
 # Include the helpers subfolder folder
-#
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "helpers"))
 
 import file_io
 
 # Include the pansop folder
-#
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "pansop"))
 
 import pansop
@@ -47,7 +45,7 @@ class MTool:
     _args = None
 
     def __init__(self, argv):
-
+        """Starts up mtool with scene, environment, and args"""
         sys.excepthook = self._capture_unhandled_exception
 
         # BUGBUG: APPDATA is Windows specific!
@@ -62,22 +60,27 @@ class MTool:
         print('Current Scene: {0}'.format(self.current_scene))
 
     def notebook(self, filename):
+        """Returns notebook at filename"""
         return pansop.notebook(filename, self.working_dir)
 
     @property
     def show_notebook_in_web_browser(self):
+        """Returns html of notebook"""
         return self.args.to_html
 
     @property
     def azure_data_studio_binary_location(self):
+        """Returns location of ADS binary"""
         return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
     @property
     def args(self):
+        """Returns current set of arguments"""
         return self._args
 
     @property
     def log(self):
+        """Creates log, if not present"""
         if self._log is None:
             self._log = log.Log()
 
@@ -85,20 +88,25 @@ class MTool:
 
     @property
     def list_filename(self):
+        """Returns the filename of the list"""
         return os.path.join(self.working_dir, 'list.json')
 
     @property
     def list_exist(self):
+        """Returns whether a list exists"""
         return os.path.isfile(self.list_filename)
 
     @property
     def get_list(self):
+        """Returns list of items"""
         return file_io.load_json(self.list_filename)
 
     def write_list(self, items):
+        """Writes list of items to file"""
         file_io.save_json(self.list_filename, items)
 
     def _write_installation_identifier(self, directory):
+        """Writes unique installation identifier to directory"""
         self._id_file = os.path.join(directory, "id.json")
 
         if not os.path.isfile(self._id_file):
@@ -109,16 +117,18 @@ class MTool:
                 outfile.write(str(uuid.uuid4()))
 
     def for_each_notebook(self, fn):
+        """Calls fn for each notebook"""
         pansop.notebook.for_each_notebook(fn)
 
     def for_each_notebook_specified_on_command_line(self, fn):
-
+        """Calls fn for each notebook listed on command line"""
         if not self._scene.is_scene_active():
             raise Exception('Scene is not active, please resume scene (m rs) or create a new one (m cs)')
 
         pansop.notebook.for_each_notebook_with_prefix(self.args.ordinal_to_list_item(self.list_filename), fn)
 
     def for_each_notebook_in_scene_history(self, uniquify, fn):
+        """Calls fn for each unique (if uniquify) notebook in scene history"""
         previous = ""
 
         for root, dirs, files in os.walk(os.path.join(self.working_dir)):
@@ -129,7 +139,6 @@ class MTool:
                     filename_without_extension = parts[0]
 
                     # Remove the first 'n' chars, and then remove the library name
-                    #
                     remove_timestamp_in_filename=filename_without_extension[filename_without_extension.find('-', 12) + 1:]
                     library_name=remove_timestamp_in_filename[0:remove_timestamp_in_filename.find('-')]
                     name=remove_timestamp_in_filename[remove_timestamp_in_filename.find('-') + 1:]
