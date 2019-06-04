@@ -111,7 +111,11 @@ def command(argument):
         "delete_env": delete_env
     }
 
-    func = switcher.get(argument[0], lambda x: default(x))
+    if(len(argument)):
+        func = switcher.get(argument[0], lambda x: default(x))
+    else:
+        func = switcher.get(None, lambda x: default(x))
+
     return func(argument)
     
 if __name__ == "__main__":
