@@ -141,13 +141,15 @@ class MTool:
 
     @property
     def working_dir(self):
+        """Get the working directory for current scene"""
         return self._scene.get_current_scene_directory
 
     def create_scene(self):
+        """Create a new scene"""
         return self._scene.create(self.args.first_arg_lower)
 
     def delete_scene(self):
-        
+        """Delete a scene, current one if no argument provided"""
         if self.args.arg_provided:
             scene_name = self.args.ordinal_to_list_item(self._scene.scenes_json_filename)
         else:
@@ -156,41 +158,51 @@ class MTool:
         return self._scene.delete(scene_name)
 
     def list_scenes(self):
+        """List all scenes"""
         self._scene.list()
 
     def set_scene(self):
+        """Set the current scene"""
         return self._scene.set(self.args.ordinal_to_list_item(self._scene.scenes_json_filename))
 
     def end_scene(self):
+        """End a scene"""
         return self._scene.end()
 
     def resume_scene(self):
+        """Resume previously ended scene"""
         return self._scene.resume()
 
     @property
     def current_scene(self):
+        """Returns the current scene"""
         return self._scene.current
 
     def list_env(self):
+        """Lists environment variables"""
         return self._environment.list()
 
     def set_env(self):
+        """Sets an environment variable"""
         return self._environment.set(self.args.ordinal_to_list_item(self._environment.list_json_filename), self.args.the_value)
 
     def delete_env(self):
+        """Deletes an environment variable"""
         return self._environment.delete(self.args.ordinal_to_list_item(self._environment.list_json_filename))
 
     def set_environment_overrides_for_scene(self):
+        """Sets any overrides of the toml file"""
         self._scene.set_environment_overrides()
 
     def for_each_library(self, fn):
+        """Calls fn for each library"""
         for root in self._library_roots:
             if os.path.isdir(root):
                 for library_name in os.listdir(os.path.expandvars(root)):
                     fn(root, library_name)
 
     def send_telemetry(self, local_copy):
-
+        """Sends telemetry to HDFS"""
         with open(self._id_file) as infile:
             id = infile.read()
 
@@ -200,7 +212,7 @@ class MTool:
         telemetry.send(id, scene_id, local_copy)
 
     def _capture_unhandled_exception(self, exctype, value, tb):
-
+        """Highest level of exception handling"""
         if MTool.spinner is not None:
             MTool.spinner.stop()
 
