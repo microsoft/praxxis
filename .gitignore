@@ -1,0 +1,6 @@
+**__pycache__**
+/projects/cli/mtool/library/*
+/projects/cli/mtool/pansop/*
+*.pyo
+*.pyc
+.vscode
