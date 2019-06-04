@@ -43,7 +43,6 @@ class MTool:
         self._environment = environment.Environment(self._library_roots, self.working_dir)
         self._args = args.Args(argv)
 
-        print()
         print('Current Scene: {0}'.format(self.current_scene))
 
     def notebook(self, filename):
@@ -133,12 +132,10 @@ class MTool:
         return self._scene.create(self.args.first_arg_lower)
 
     def delete_scene(self):
-        
         if self.args.arg_provided:
             scene_name = self.args.ordinal_to_list_item(self._scene.scenes_json_filename)
         else:
             scene_name = self._scene.current
-
         return self._scene.delete(scene_name)
 
     def list_scenes(self):
