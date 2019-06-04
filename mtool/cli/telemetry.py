@@ -1,3 +1,9 @@
+"""
+This file sends the telemetry from execution into HDFS.
+
+Dependencies within mtool: helpers/config.py
+"""
+
 import os
 import sys
 
@@ -10,6 +16,13 @@ from requests.auth import HTTPBasicAuth
 from mtool.cli import config
 
 def send(installation_identifier, scene_identifier, filename):
+    """Send telemetry into HDFS
+    
+    Keyword arguments:
+    installation_identifier -- identify user running the file
+    scene_identifier -- identify current scene
+    filename -- name of file that was run
+    """
     # IP address for spe-sag4hp-23vm01.corp.microsoft.com, because the name doesn't resolve for everyone
     #
     # TODO: Retrieve address from configuration (TOML) file
@@ -27,7 +40,6 @@ def send(installation_identifier, scene_identifier, filename):
         contents = infile.read()
 
     # Get the filename from the end of the url
-    #
     basename = os.path.basename(filename)
 
     year = basename[0:4]
@@ -35,7 +47,6 @@ def send(installation_identifier, scene_identifier, filename):
     day = basename[6:8]
 
     # Create a file in hdfs
-    #
     route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(web_hdfs_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
 
     payload = {'op': 'CREATE'}

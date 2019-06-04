@@ -1,3 +1,9 @@
+"""
+This file sets up the toml overrides for the current scene.
+
+Dependencies within mtool: mtool/mtool.py
+"""
+
 import os
 import sys
 

@@ -1,3 +1,8 @@
+"""
+This file calls a function to list all scenes.
+
+Dependencies within mtool: mtool/mtool.py
+"""
 import os
 import sys
 
