@@ -1,5 +1,5 @@
 """
-This file DOES A THING
+This file prints the history in the current scene.
 
 Dependencies within mtool: mtool/mtool.py
 """
@@ -20,6 +20,7 @@ items = []
 counter = 0
 
 def display(notebook_name, library_name):
+    """Print a notebook when printing history"""
     global counter
     global items
 

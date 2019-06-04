@@ -3,10 +3,9 @@ import os
 from collections import OrderedDict
 
 def import_or_install(package):
-    """
-    One time install of package
+    """One time install of package
     
-        https://stackoverflow.com/questions/49839610/attributeerror-module-pip-has-no-attribute-main
+    https://stackoverflow.com/questions/49839610/attributeerror-module-pip-has-no-attribute-main
     """
     try:
         return __import__(package)
@@ -26,7 +25,7 @@ def import_or_install(package):
 toml = import_or_install('toml')
 
 def load(filename):
-
+    """Load toml as dict"""
     if os.path.isfile(filename):
         dict = toml.load(filename)
     else:
@@ -35,7 +34,7 @@ def load(filename):
     return dict
 
 def load_ordered(filename):
-
+    """Load toml as ordered dict"""
     if os.path.isfile(filename):
         dict = toml.load(filename, _dict=OrderedDict)
     else:
@@ -44,10 +43,12 @@ def load_ordered(filename):
     return dict
 
 def save(filename, dict):
+    """Save toml dictionary in file"""
     serial = toml.dumps(dict)
 
     with open(filename, 'w') as outfile:
         outfile.write(serial)
 
 def delete(filename):
+    """Delete a file"""
     os.remove(filename)

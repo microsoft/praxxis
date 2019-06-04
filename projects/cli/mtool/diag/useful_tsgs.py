@@ -21,5 +21,6 @@ class UsefulTsgs:
         return len(self._useful_tsgs)
 
     def for_each(self, fn):
+        """Calls function fn on each TSG in list"""
         for filename in self._useful_tsgs:
             fn(filename)
