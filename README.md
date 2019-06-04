@@ -15,19 +15,6 @@ With mtool, a history of commands is preserved, allowing you to backtrack throug
 ##### Notebook Libraries
 mtool runs on libraries of notebooks, allowing every command on your system to be documented and explained in a beautiful markdown format. mtool combines the idea of functional documentation with every part of a system, allowing every person on a team to operate with the same understanding as even the most senior engineer, through outcome driven, useful documentation.
 
-## Installation
-// how to install
-
-## Examples
-// add demo
-
-
 ## Docs
-// we should make a github.io wiki for the docs
+Accessible in markdown format in the docs folder
 
-
-## License
-This software is released under the [LGPL] license
-
-## Release Notes
-// the releases we've done
