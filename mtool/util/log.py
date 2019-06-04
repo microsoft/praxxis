@@ -31,7 +31,7 @@ class Log:
     @staticmethod
     def complete():
         """Prints end-of-log message"""
-         print("\b\b\b\b: COMPLETE")
+        print("\b\b\b\b: COMPLETE")
 
     @staticmethod
     def section(string, value=None):
