@@ -1,3 +1,8 @@
+"""
+This file calls the function to resume a previously used scene.
+
+Dependencies within mtool: mtool/mtool.py
+"""
 import os
 import sys
 
