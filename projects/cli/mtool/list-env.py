@@ -1,3 +1,8 @@
+"""
+This file calls the function to list all environment variables.
+
+Dependencies within mtool: mtool/mtool.py
+"""
 import os
 import sys
 

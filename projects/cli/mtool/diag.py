@@ -1,8 +1,13 @@
+"""
+This file attempts to diagnose cluster problems.
+
+Dependencies within mtool: mtool/mtool.py,
+    diag/console.py, diag/useful_tsgs.py
+"""
 import os
 import sys
 
 # Include the mtool subfolder folder
-#
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "mtool"))
 
 import mtool
@@ -20,7 +25,7 @@ useful_tsgs = useful_tsgs.UsefulTsgs()
 m.set_environment_overrides_for_scene()
 
 def diagnose(filename):
-
+    """Attempts to determine if notebook at filename is useful for issue"""
     notebook = m.notebook(filename)
 
     if len(sys.argv) == 2:
@@ -46,7 +51,6 @@ def diagnose(filename):
 
             # Run the shortened notebook (only up to the PRECONDITION CHECK)
             # to see if this TSG is helpful for the current cluster state
-            #
             executed_notebook = m.notebook(outputfile)
 
             if executed_notebook.metadata.is_precondition_true:
