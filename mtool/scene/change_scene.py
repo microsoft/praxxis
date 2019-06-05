@@ -10,6 +10,7 @@ import sys
 from mtool.cli import mtool
 
 def change_scene(args):
+    """Calls mtool method to change the current scene"""
     m = mtool.MTool(args)
 
     name = m.set_scene()

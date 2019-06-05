@@ -10,6 +10,7 @@ import sys
 from mtool.cli import mtool
 
 def new_scene(args):
+    """Creates new scene"""
     m = mtool.MTool(args)
     name = m.create_scene()
     m.log.header("Scene Created", name)

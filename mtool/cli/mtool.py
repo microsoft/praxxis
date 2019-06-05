@@ -22,7 +22,7 @@ from mtool.pansop import pansop
 
 
 class MTool:
-
+    """Methods for the operation of the tool"""
     # Libraries can exist in current dir (shared), or in user's local working dir (personal)
     _library_roots = [".\\library", "%APPDATA%\\mtool\\library"] 
 
