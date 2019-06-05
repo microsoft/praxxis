@@ -1,9 +1,9 @@
 function mtool {
     [CmdletBinding(DefaultParameterSetName = "Path", HelpURI = "")]
     param([string]$p1, [string]$p2, [string]$p3 , [string]$p4)
-    
+
     begin{
-        $RUNNER= "../../runner.py"
+        $RUNNER= "$PSScriptRoot" + "\python\runner.py"
         $DIAGNOSE = "diagnose"
         $RUN_NOTEBOOK = "run_notebook"
         $OPEN_NOTEBOOK = "open_notebook"
