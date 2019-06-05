@@ -2,3 +2,5 @@ urllib3
 requests
 file
 run
+pytest
+pytest-runner

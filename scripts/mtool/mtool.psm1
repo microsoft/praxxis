@@ -3,7 +3,7 @@ function mtool {
     param([string]$p1, [string]$p2, [string]$p3 , [string]$p4)
 
     begin{
-        $RUNNER= "$PSScriptRoot" + "\python\runner.py"
+        $RUNNER= "$PSScriptRoot" + "\python\src\app.py"
         $DIAGNOSE = "diagnose"
         $RUN_NOTEBOOK = "run_notebook"
         $OPEN_NOTEBOOK = "open_notebook"

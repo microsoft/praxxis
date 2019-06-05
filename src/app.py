@@ -1,5 +1,5 @@
-import mtool
 import sys
+import mtool
 
 def diagnose(arg):
     from mtool.cli import diag
