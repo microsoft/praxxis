@@ -11,5 +11,6 @@ import sys
 from mtool.cli import mtool
 
 def set_env(args):
+    """Call mtool method to set environment variables"""
     m = mtool.MTool(args)
     m.set_env()

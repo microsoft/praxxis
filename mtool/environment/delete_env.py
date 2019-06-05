@@ -10,5 +10,6 @@ import sys
 from mtool.cli import mtool
 
 def delete_env(args):
+    """Calls the Mtool method delete environment"""
     m = mtool.MTool(args)
     m.delete_env()
