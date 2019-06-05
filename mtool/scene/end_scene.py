@@ -1,4 +1,3 @@
-
 """
 This file calls the function to end the current scence.
 
