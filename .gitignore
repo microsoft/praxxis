@@ -4,3 +4,4 @@
 *.pyo
 *.pyc
 .vscode
+/mtool/pansop/*
