@@ -9,7 +9,6 @@ search_term = None
 
 
 def search_notebook(args):
-    """Goes through notebook names looking for search term"""
     global m
     global search_term
     
@@ -20,8 +19,7 @@ def search_notebook(args):
     m.write_list(items)
 
 
-def filter(filename): 
-    """Adds all notebooks with the search term to a list"""
+def filter(filename):
     global counter
     global items
     global search_term
