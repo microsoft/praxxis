@@ -3,6 +3,7 @@ This file opens a notebook in Azure Data Studio.
 
 Dependencies within mtool: mtool/mtool.py
 """
+
 import os
 import sys
 import shutil
