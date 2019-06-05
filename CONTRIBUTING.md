@@ -2,10 +2,6 @@
 
 We'd love your help!
 
-## Developing
-//detail how the dev environment for it works
-//explain how venv works
-
 ## Coding Standards
 All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does and what other files it depends on; see the current files for an idea of the expected level of detail.
 
