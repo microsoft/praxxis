@@ -7,3 +7,5 @@
 /mtool/pansop/*
 /scripts/mtool/python/*
 /library
+/mtool.egg-info
+/.pytest_cache
