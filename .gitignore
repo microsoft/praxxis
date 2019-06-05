@@ -3,3 +3,7 @@
 /projects/cli/mtool/pansop/*
 *.pyo
 *.pyc
+.vscode
+/mtool/pansop/*
+/scripts/mtool/python/*
+/library
