@@ -13,6 +13,7 @@ uniquify = False
 m = None
 
 def history(args):
+    """Calls display for every notebook in scene history"""
     global m
     m = mtool.MTool(args)
 

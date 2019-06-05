@@ -10,5 +10,6 @@ import sys
 from mtool.cli import mtool
 
 def current_scene(args):
+    """Sets up environment for current scene"""
     m = mtool.MTool(args)
     m.set_environment_overrides_for_scene()

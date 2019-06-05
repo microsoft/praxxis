@@ -15,6 +15,7 @@ items = []
 display_format_string = "\t{0}.\t{1} ({2})"
 
 def list_notebook(args):
+    """Display each notebook found on machine"""
     global m
     m = mtool.MTool(args)
     m.log.section("List notebooks")

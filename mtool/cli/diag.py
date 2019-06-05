@@ -16,6 +16,7 @@ console = console.Console()
 useful_tsgs = useful_tsgs.UsefulTsgs()
 
 def diag(arg):
+    """Calls diagnose on every notebook, prints result"""
     global m 
     m = mtool.MTool(arg)
 
