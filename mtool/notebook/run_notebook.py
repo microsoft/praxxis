@@ -12,6 +12,7 @@ from mtool.cli import mtool
 m = None
 
 def run_notebook(args):
+    """Runs one or more notebooks specified"""
     global m
     m = mtool.MTool(args)
     m.set_environment_overrides_for_scene()

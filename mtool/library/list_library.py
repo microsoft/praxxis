@@ -12,6 +12,7 @@ from mtool.cli import mtool
 m = None
 
 def list_library(args):
+    """Display for each library"""
     global m
     m = mtool.MTool(args)
     m.log.header("Notebook libraries installed on this machine")
