@@ -3,6 +3,7 @@ This file prints a list of all notebooks on the machine.
 
 Dependencies within mtool: mtool/mtool.py
 """
+
 import sys
 import os
 
@@ -12,7 +13,6 @@ m = None
 counter = 0
 items = []
 display_format_string = "\t{0}.\t{1} ({2})"
-
 
 def list_notebook(args):
     global m

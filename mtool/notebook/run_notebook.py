@@ -4,6 +4,7 @@ opened as an html output in the web browser, depending on user input.
 
 Dependencies within mtool: mtool/mtool.py
 """
+
 import os
 import sys
 import webbrowser
@@ -16,6 +17,7 @@ def run_notebook(args):
     m = mtool.MTool(args)
     m.set_environment_overrides_for_scene()
     m.for_each_notebook_specified_on_command_line(run_notebook)
+
 
 def run(filename):
     """Run a notebook.

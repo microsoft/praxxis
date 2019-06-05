@@ -1,5 +1,4 @@
 ## Introduction
-
 mtool is a revolutionary task automation interface built on big data and machine learing. With all of the efficiency of tools like ktool, and the intelligence of machine learning, mtool learns from your habits to create intelligent pathways through your workflow.
 
 ## Features
