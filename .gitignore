@@ -5,3 +5,4 @@
 *.pyc
 .vscode
 /mtool/pansop/*
+/scripts/mtool/python/*
