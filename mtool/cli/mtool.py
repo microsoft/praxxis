@@ -2,12 +2,14 @@
 This file contains the functions that the other files call to implement mtool.
 
 Dependencies within mtool: spinner.py, scene.py, environment.py, telemetry.py, log.py
-    helpers/args.py, helpers/file_io.py, ../pansop/pansop.py
+    helpers/args.py, helpers/file_io.py
 """
+
 import os
 import sys
 import time
 import uuid
+import papermill 
 
 import traceback
 
@@ -18,8 +20,6 @@ from mtool.cli import telemetry
 from mtool.util import log
 from mtool.cli import args
 from mtool.cli import file_io
-from mtool.pansop import pansop
-
 
 class MTool:
     """Methods for the operation of the tool"""
