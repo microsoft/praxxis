@@ -28,6 +28,7 @@ def run(filename):
     Keyword exceptions:
     if notebook fails to execute correctly (raises error in running)
     """
+   
     notebook = m.notebook(filename)
     log = m.log
     spinner = m.spinner

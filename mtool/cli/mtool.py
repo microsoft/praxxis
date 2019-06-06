@@ -20,6 +20,7 @@ from mtool.cli import telemetry
 from mtool.util import log
 from mtool.cli import args
 from mtool.cli import file_io
+from mtool.notebook import notebook
 
 class MTool:
     """Methods for the operation of the tool"""
@@ -53,7 +54,7 @@ class MTool:
 
     def notebook(self, filename):
         """Returns notebook at filename"""
-        return pansop.notebook(filename, self.working_dir)
+        return notebook.Notebook(filename)
 
     @property
     def show_notebook_in_web_browser(self):
@@ -111,14 +112,14 @@ class MTool:
 
     def for_each_notebook(self, fn):
         """Calls fn for each notebook"""
-        pansop.notebook.for_each_notebook(fn)
+        #pansop.notebook.for_each_notebook(fn)
 
     def for_each_notebook_specified_on_command_line(self, fn):
         """Calls fn for each notebook listed on command line"""
         if not self._scene.is_scene_active():
             raise Exception('Scene is not active, please resume scene (m rs) or create a new one (m cs)')
 
-        pansop.notebook.for_each_notebook_with_prefix(self.args.ordinal_to_list_item(self.list_filename), fn)
+        #pansop.notebook.for_each_notebook_with_prefix(self.args.ordinal_to_list_item(self.list_filename), fn)
 
     def for_each_notebook_in_scene_history(self, uniquify, fn):
         """Calls fn for each unique (if uniquify) notebook in scene history"""
