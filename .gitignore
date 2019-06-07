@@ -11,3 +11,6 @@
 /build
 /dist
 /mtool.egg-info
+.project
+.pydevproject
+
