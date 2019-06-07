@@ -53,7 +53,7 @@ class Notebook:
                 "injected for this notebook.")
         #need local output -- temp? or just send it directly to HDFS
         # need to pull params from toml and send to papermill as dict
-        local_copy = os.path.join(os.path.split(self._path)[0], "..", "..", "..", "output", self.name.split(".")[0] + "-" + str(time.time()) + ".ipynb")
+        local_copy = os.path.join(os.path.split(self._path)[0], "..", "..", "..", "output", "20190607" + str(time.time()) + self.name.split(".")[0] + "-"  + ".ipynb")
         papermill.execute_notebook(self._path, local_copy)
         return local_copy
 

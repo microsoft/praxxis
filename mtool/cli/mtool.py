@@ -213,7 +213,7 @@ class MTool:
         with open(os.path.join(self.working_dir, "id.json")) as infile:
             scene_id = infile.read()
 
-        #telemetry.send(id, scene_id, local_copy)
+        telemetry.send(id, scene_id, local_copy)
 
     def _capture_unhandled_exception(self, exctype, value, tb):
         """Highest level of exception handling"""

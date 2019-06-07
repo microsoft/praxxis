@@ -6,6 +6,7 @@ Dependencies within mtool: helpers/config.py
 
 import os
 import sys
+import toml
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -27,7 +28,9 @@ def send(installation_identifier, scene_identifier, filename):
     #
     # TODO: Retrieve address from configuration (TOML) file
     #
-    dict = config.load(os.path.join("..", "config.toml"))
+    curr = os.getcwd()
+
+    dict = config.load(os.path.join(curr, "..", "mtool", "config.toml"))
 
     section = dict["telemetry"]
     telemetry_url_format_string = section["url"]
