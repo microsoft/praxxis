@@ -7,7 +7,7 @@ import os
 import sys
 import json
 
-from mtool.cli import mtool
+from src.mtool.cli import mtool
 
 m = None
 

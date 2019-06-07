@@ -7,7 +7,7 @@ Dependencies within mtool: mtool/spinner.py
 import os
 import sys
 
-from mtool.util import spinner
+from src.mtool.util import spinner
 
 class Console:
     """Useful functions for console output"""

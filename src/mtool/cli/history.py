@@ -5,7 +5,7 @@ Dependencies within mtool: mtool/mtool.py
 """
 import os
 import sys
-from mtool.cli import mtool
+from src.mtool.cli import mtool
 
 counter = 0
 items = []

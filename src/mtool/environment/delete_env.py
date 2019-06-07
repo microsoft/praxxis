@@ -7,7 +7,7 @@ Dependencies within mtool: mtool/mtool.py
 import os
 import sys
 
-from mtool.cli import mtool
+from src.mtool.cli import mtool
 
 def delete_env(args):
     """Calls the Mtool method delete environment"""

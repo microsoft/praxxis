@@ -7,7 +7,7 @@ Dependencies within mtool: mtool/mtool.py
 import os
 import sys
 
-from mtool.cli import mtool
+from src.mtool.cli import mtool
 
 def list_scene(args):
     """Lists all scenes"""

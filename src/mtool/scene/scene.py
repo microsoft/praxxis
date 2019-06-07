@@ -12,7 +12,7 @@ import glob
 import datetime
 import json
 
-from mtool.cli import config
+from src.mtool.cli import config
 
 class Scene:
     """The mtool concept of a scene"""
