@@ -9,14 +9,17 @@ import os
 import sys
 import webbrowser
 from mtool.cli import mtool
+from mtool.notebook import notebook
+import time
 
 m = None
 
 def run_notebook(args):
-    """Runs one or more notebooks specified"""
+    """Runs one notebook specified"""
     global m
     m = mtool.MTool(args)
     m.set_environment_overrides_for_scene()
+
     m.for_each_notebook_specified_on_command_line(run_notebook)
 
 
@@ -28,20 +31,19 @@ def run(filename):
     Keyword exceptions:
     if notebook fails to execute correctly (raises error in running)
     """
-   
+    
     notebook = m.notebook(filename)
     log = m.log
     spinner = m.spinner
 
-    local_copy = notebook.get_local_copy_filename('.ipynb')
-    html_outputfile = notebook.get_local_copy_filename('.html')
+    local_copy = notebook.name 
+    html_outputfile = notebook.name.split(".")[0] + "-" + str(time.time()) + ".ipynb"
 
     log.header("Running")
     log.indent_no_new_line("{0}... ".format(notebook.name))
 
     spinner.start()
-
-    notebook.execute(local_copy, allow_errors=False)
+    notebook.execute()
 
     # BUGBUG: There appears to be a bug in jupyter nbconvert where you can't
     # save the results of a notebook if an error was raised in one of the cells!

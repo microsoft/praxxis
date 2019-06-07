@@ -20,12 +20,12 @@ from mtool.cli import telemetry
 from mtool.util import log
 from mtool.cli import args
 from mtool.cli import file_io
-from mtool.notebook import notebook
+from mtool.notebook.notebook import Notebook
 
 class MTool:
     """Methods for the operation of the tool"""
     # Libraries can exist in current dir (shared), or in user's local working dir (personal)
-    _library_roots = [".\\library", "%APPDATA%\\mtool\\library"] 
+    _library_roots = ["%APPDATA%\\mtool\\library"] 
 
     spinner = spinner.Spinner() # Spinning progress animation for the console
     
@@ -41,7 +41,8 @@ class MTool:
     def __init__(self, argv):
         """Starts up mtool with scene, environment, and args"""
         sys.excepthook = self._capture_unhandled_exception
-
+        curr = os.getcwd()
+        self._library_roots.append(os.path.join(curr, "..\\library"))
         ##TODO: APPDATA is Windows specific!
         directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
 
@@ -54,7 +55,7 @@ class MTool:
 
     def notebook(self, filename):
         """Returns notebook at filename"""
-        return notebook.Notebook(filename)
+        return Notebook(filename)
 
     @property
     def show_notebook_in_web_browser(self):
@@ -110,16 +111,17 @@ class MTool:
             with open(self._id_file, 'w') as outfile:
                 outfile.write(str(uuid.uuid4()))
 
-    def for_each_notebook(self, fn):
-        """Calls fn for each notebook"""
-        #pansop.notebook.for_each_notebook(fn)
+    def for_each_notebook(self, root, fn):
+        """Calls fn for each notebook in directory tree at root"""
+        Notebook.for_each_notebook(root, fn)
 
     def for_each_notebook_specified_on_command_line(self, fn):
         """Calls fn for each notebook listed on command line"""
         if not self._scene.is_scene_active():
             raise Exception('Scene is not active, please resume scene (m rs) or create a new one (m cs)')
-
-        #pansop.notebook.for_each_notebook_with_prefix(self.args.ordinal_to_list_item(self.list_filename), fn)
+        nb = Notebook(os.path.join(self.args.ordinal_to_list_item(self.list_filename)))
+        local_copy = nb.execute()
+        self.send_telemetry(local_copy)
 
     def for_each_notebook_in_scene_history(self, uniquify, fn):
         """Calls fn for each unique (if uniquify) notebook in scene history"""
@@ -211,7 +213,7 @@ class MTool:
         with open(os.path.join(self.working_dir, "id.json")) as infile:
             scene_id = infile.read()
 
-        telemetry.send(id, scene_id, local_copy)
+        #telemetry.send(id, scene_id, local_copy)
 
     def _capture_unhandled_exception(self, exctype, value, tb):
         """Highest level of exception handling"""

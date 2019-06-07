@@ -20,15 +20,17 @@ def list_notebook(args):
     m = mtool.MTool(args)
     m.log.section("List notebooks")
 
-    if (m.list_exist):
+    if (m.list_exist and m.get_list != []):
         for item in m.get_list:
             m.log.info(display_format_string.format(str(item[0]), item[1], item[2]))
     else:
-        m.for_each_notebook(display)
+        curr = os.getcwd()
+        root = os.path.join(curr, "..\\library")
+        m.for_each_notebook(root, display)
         m.write_list(items)
 
 
-def display(filename):
+def display(notebook):
     """Displays a notebook name as part of a list.
     
     Keyword arguments:
@@ -38,8 +40,6 @@ def display(filename):
     global items
     global display_format_string
     counter += 1
-
-    notebook = m.notebook(filename)
 
     m.log.info(display_format_string.format(str(counter), notebook.name, notebook.library_name))
     items.append([counter, notebook.name, notebook.library_name])
