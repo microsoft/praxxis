@@ -6,9 +6,9 @@ Dependencies within mtool: mtool/mtool.py,
 """
 import os
 import sys
-from mtool.cli import mtool
-from mtool.cli import console
-from mtool.util import useful_tsgs  
+from src.mtool.cli import mtool
+from src.mtool.cli import console
+from src.mtool.util import useful_tsgs  
 
 
 m = None

@@ -13,7 +13,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import requests
 from requests.auth import HTTPBasicAuth
 
-from mtool.cli import config
+from src.mtool.cli import config
 
 def send(installation_identifier, scene_identifier, filename):
     """Send telemetry into HDFS

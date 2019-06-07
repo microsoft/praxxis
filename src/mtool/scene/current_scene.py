@@ -7,7 +7,7 @@ Dependencies within mtool: mtool/mtool.py
 import os
 import sys
 
-from mtool.cli import mtool
+from src.mtool.cli import mtool
 
 def current_scene(args):
     """Sets up environment for current scene"""

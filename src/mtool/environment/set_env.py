@@ -8,7 +8,7 @@ Dependencies within mtool: mtool/mtool.py
 import os
 import sys
 
-from mtool.cli import mtool
+from src.mtool.cli import mtool
 
 def set_env(args):
     """Call mtool method to set environment variables"""

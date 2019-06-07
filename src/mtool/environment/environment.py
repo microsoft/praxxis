@@ -6,8 +6,8 @@ Dependencies within mtool: helpers/file_io, helpers/config
 import os
 import sys
 
-from mtool.cli import config
-from mtool.cli import file_io
+from src.mtool.cli import config
+from src.mtool.cli import file_io
 
 class Environment:
     """Environment, containing environment variables"""
