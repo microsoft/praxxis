@@ -2,12 +2,14 @@
 This file contains the functions that the other files call to implement mtool.
 
 Dependencies within mtool: spinner.py, scene.py, environment.py, telemetry.py, log.py
-    helpers/args.py, helpers/file_io.py, ../pansop/pansop.py
+    helpers/args.py, helpers/file_io.py
 """
+
 import os
 import sys
 import time
 import uuid
+import papermill 
 
 import traceback
 
@@ -18,11 +20,12 @@ from src.mtool.cli import telemetry
 from src.mtool.util import log
 from src.mtool.cli import args
 from src.mtool.cli import file_io
+from src.mtool.notebook.notebook import Notebook
 
 class MTool:
     """Methods for the operation of the tool"""
     # Libraries can exist in current dir (shared), or in user's local working dir (personal)
-    _library_roots = [".\\library", "%APPDATA%\\mtool\\library"] 
+    _library_roots = ["%APPDATA%\\mtool\\library"] 
 
     spinner = spinner.Spinner() # Spinning progress animation for the console
     
@@ -38,7 +41,8 @@ class MTool:
     def __init__(self, argv):
         """Starts up mtool with scene, environment, and args"""
         sys.excepthook = self._capture_unhandled_exception
-
+        curr = os.getcwd()
+        self._library_roots.append(os.path.join(curr, "..\\library"))
         ##TODO: APPDATA is Windows specific!
         directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
 
@@ -48,6 +52,10 @@ class MTool:
         self._args = args.Args(argv)
 
         print('Current Scene: {0}'.format(self.current_scene))
+
+    def notebook(self, filename):
+        """Returns notebook at filename"""
+        return Notebook(filename)
 
     @property
     def show_notebook_in_web_browser(self):
@@ -102,6 +110,18 @@ class MTool:
 
             with open(self._id_file, 'w') as outfile:
                 outfile.write(str(uuid.uuid4()))
+
+    def for_each_notebook(self, root, fn):
+        """Calls fn for each notebook in directory tree at root"""
+        Notebook.for_each_notebook(root, fn)
+
+    def for_each_notebook_specified_on_command_line(self, fn):
+        """Calls fn for each notebook listed on command line"""
+        if not self._scene.is_scene_active():
+            raise Exception('Scene is not active, please resume scene (m rs) or create a new one (m cs)')
+        nb = Notebook(os.path.join(self.args.ordinal_to_list_item(self.list_filename)))
+        local_copy = nb.execute()
+        self.send_telemetry(local_copy)
 
     def for_each_notebook_in_scene_history(self, uniquify, fn):
         """Calls fn for each unique (if uniquify) notebook in scene history"""

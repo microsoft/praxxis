@@ -13,7 +13,7 @@ class Environment:
     """Environment, containing environment variables"""
     _root_folders = None
     _toml_filename = None # The user's per scene environment variable overrides
-    _list_filename = None # The list of envionment variables and their ordinals, 1, 2, 3 etc.
+    _list_filename = None # The list of environment variables and their ordinals, 1, 2, 3 etc.
 
     def __init__(self, library_root_folders, working_dir):
         """Create toml and list of variables files"""
