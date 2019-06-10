@@ -85,12 +85,12 @@ class Args:
 
                 for item in items:
                     if (item[0] == ordinal):
-                        list_item = item[1].lower()
+                        list_item = os.path.join(item[2].lower(), item[2].lower(), item[1].lower())
                         break
 
             if list_item is None:
                 raise Exception(f"\n\nOrdinal '{ordinal}' does not exist in list. Use any of the m l* commands to generate (and display) the list.")
         else:
-            list_item = self.first_arg_lower
+            list_item = [self.first_arg_lower]
 
         return list_item

@@ -43,5 +43,5 @@ class Log:
     def header(string, value=None):
         """Prints a header in the log"""
         print()
-        Log.info(f"{string}:", value)
+        Log.info(f"{string}", value)
         print()
