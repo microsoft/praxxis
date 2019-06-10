@@ -1,10 +1,5 @@
 import sys
 
-def diagnose(arg):  
-    from src.mtool.cli import diag
-    diag.diag(arg)
-    return
- 
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
     run_notebook.run_notebook(arg)
@@ -91,7 +86,6 @@ def default(arg):
 def command(argument):
     argument.pop(0)
     switcher = {
-        "diagnose": diagnose,
         "run_notebook": run_notebook,
         "open_notebook": open_notebook,
         "search_notebook": search_notebook,
