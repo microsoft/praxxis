@@ -11,17 +11,14 @@ import time
 
 import ijson
 
-#TODO: works I think? but needs cleanup
-#TODO: refactor for readability / pythonic nature
+#TODO: works, but needs cleanup
 #TODO: remove all unused parts from yanking 
 class Notebook:
     # TODO: only works on Windows, is kinda ugly :(
     _library_loc = "%APPDATA%\\mtool\\library"
-    _output_loc  = "%APPDATA%\\mtool\\output"
 
     def __init__(self, path, libary_space = _library_loc):
         #TODO: add support for reading from a URL
-        self._output_loc  = os.path.join(os.getenv('APPDATA'),"mtool","output")
 
         self._hasParameters = False
         self._environmentVars = []
