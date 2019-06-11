@@ -11,7 +11,7 @@ from src.mtool.cli import mtool
 
 def new_scene(args):
     """Creates new scene"""
-    m = mtool.MTool(args)
+    m = mtool.Mtool(args)
     name = m.create_scene()
     m.log.header("Scene Created", name)
     m.log.info("New Current Scene", name)

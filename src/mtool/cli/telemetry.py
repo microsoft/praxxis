@@ -28,9 +28,11 @@ def send(installation_identifier, scene_identifier, filename):
     #
     # TODO: Retrieve address from configuration (TOML) file
     #
-    curr = os.getcwd()
+    curr = os.path.dirname(__file__)
 
-    dict = config.load(os.path.join(curr, "..", "mtool", "config.toml"))
+    dict = config.load(os.path.join(curr, "..", "config.toml"))
+    print(os.path.join(curr, "..", "config.toml"))
+    print(dict)
 
     section = dict["telemetry"]
     telemetry_url_format_string = section["url"]

@@ -11,6 +11,6 @@ from src.mtool.cli import mtool
 
 def list_scene(args):
     """Lists all scenes"""
-    m = mtool.MTool(args)
+    m = mtool.Mtool(args)
     m.log.header("Scenes")
     m.list_scenes()
