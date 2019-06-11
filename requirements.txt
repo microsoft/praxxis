@@ -7,3 +7,4 @@ papermill
 ijson
 datetime
 toml
+pypandoc

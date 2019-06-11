@@ -11,10 +11,12 @@ import uuid
 import glob
 import datetime
 import json
+import sqlite3
 
 from src.mtool.cli import config
 
-class Scene:
+class Scene:    
+    root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
     """The mtool concept of a scene"""
     _root_folder = None
     _folder_name = "scene"
@@ -63,29 +65,30 @@ class Scene:
         """Returns path to json file for scene"""
         return os.path.join(self._root_folder, "scenes.json")
 
-    def create(self, nameHint):
-        """Creates a new scene, handling repeat names"""
-        nameHint = nameHint.lower()
-        nameHint = nameHint.replace(' ', '-')
+    def create(self, name):
+        from src.mtool.util import sqlite_util
+        name = name.lower()
 
-        directory = self.get_scene_directory(nameHint)
-
-        postfix = 0
-        name = nameHint
-        nameHint = nameHint + "-"
-        while os.path.exists(directory):
-            postfix += 1
-            name = nameHint + str(postfix)
-            directory = self.get_scene_directory(name)
-
+        directory = os.path.join(self.root, name)
+        if os.path.exists(directory):
+            i=1
+            while os.path.exists(f"{directory}-{i}"):
+                i+= 1
+            directory = f"{directory}-{i}"
+            name = f"{name}-{i}"
         os.mkdir(directory)
+    
+        sqlite_util.init_scene(os.path.join(directory, f"{name}.db"), name)
 
-        with open(os.path.join(directory, self._id_file), 'w') as outfile:
-            outfile.write(str(uuid.uuid4()))
 
-        self.set(name)
+        # os.mkdir(directory)
 
-        return name
+        # with open(os.path.join(directory, self._id_file), 'w') as outfile:
+        #     outfile.write(str(uuid.uuid4()))
+
+        # self.set(name)
+
+        # return name
 
     def delete(self, name):
         """Deletes a scene and all related information"""
