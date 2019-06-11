@@ -2,6 +2,13 @@
 
 We'd love your help!
 
+## Running Mtool 
+run 
+```
+python setup.py install 
+``` 
+to install the package, and be able to run from the command line
+
 ## Coding Standards
 All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does and what other files it depends on; see the current files for an idea of the expected level of detail.
 
