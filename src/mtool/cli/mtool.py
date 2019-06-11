@@ -45,14 +45,14 @@ class Mtool:
 
         self._library_roots.append(os.path.join(self._loc, "..\\library"))
         ##TODO: APPDATA is Windows specific!
-        #directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
+        directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
 
-        #self._write_installation_identifier(directory)
+        self._write_installation_identifier(directory)
         self._scene = scene.Scene()
-        #self._environment = environment.Environment(self._library_roots, self.working_dir)
+        self._environment = environment.Environment(self._library_roots, self.working_dir)
         self._args = argv
 
-        #print('Current Scene: {0}'.format(self.current_scene))
+        print('Current Scene: {0}'.format(self.current_scene))
 
 
     @property

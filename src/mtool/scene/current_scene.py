@@ -25,6 +25,5 @@ def current_scene(args):
         sqlite_util.init_current_scene(os.path.join(root, "current_scene.db"), default_scene_name)
         print("Created current_scene")
 
-    print(sqlite_util.get_current_scene(current_scene)) 
-    return("nya?")   
+    print(f'Current Scene: {sqlite_util.get_current_scene(current_scene)}') 
     
