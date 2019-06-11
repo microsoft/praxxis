@@ -46,7 +46,7 @@ def init_current_scene(db_file, scene_name):
 def update_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur =  conn.cursor()
-    update_current_scene = 'UPDATE "CurrentScene" SET Name = {scene_name} WHERE "ID" = 0' 
+    update_current_scene = f'UPDATE "CurrentScene" SET Name = {scene_name} WHERE "ID" = 0' 
     cur.execute(update_current_scene)
     conn.commit()
     conn.close()
