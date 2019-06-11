@@ -55,9 +55,10 @@ def get_current_scene(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
     get_current_scene = 'SELECT Name FROM "CurrentScene" WHERE ID = 0'
-    cur.execute(get_current_scene)
-    conn.commit()
+    name = cur.execute(get_current_scene)
+    rows = cur.fetchall()
     conn.close()
+    return rows[0][0]
 
 
 def get_scene_id(db_file):

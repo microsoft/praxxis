@@ -15,12 +15,28 @@ import sqlite3
 
 from src.mtool.cli import config
 
+def new_scene(self, name):
+    from src.mtool.util import sqlite_util
+    name = name.lower()
+    directory = os.path.join(self._root, name)
+    if os.path.exists(directory):
+        i=1
+        while os.path.exists(f"{directory}-{i}"):
+            i+= 1
+        directory = f"{directory}-{i}"
+        name = f"{name}-{i}"
+    os.mkdir(directory)
+    db_file = os.path.join(directory, f"{name}.db")
+    
+    sqlite_util.init_scene(db_file)
+    sqlite_util.update_current_scene(db_file ,name)
+    return name
+
 class Scene:    
     """The mtool concept of a scene"""
     _root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
     _root_folder = None
     _folder_name = "scene"
-    _default_scene_name = 'scene'
     _id_file = "id.json"
     _current_scene = None
 
@@ -45,43 +61,18 @@ class Scene:
         """Returns directory of the scene <name>"""
         return os.path.join(self._root_folder, name)
 
-    def set_curent_scene(self):
+## TODO: move this to the current scene file
+    def get_current_scene(self):
         """Returns current scene information"""
         from src.mtool.util import sqlite_util
         
-        sqlite_util.set_current_scene(self._current_scene)
-
-    def get_current_scene(self):
-        from src.mtool.util import sqlite_util
-        
-        sqlite_util.get_current_scene(self._current_scene)
-        
-
 
     @property
     def scenes_json_filename(self):
         """Returns path to json file for scene"""
         return os.path.join(self._root_folder, "scenes.json")
 
-    def new_scene(self, name):
-        from src.mtool.util import sqlite_util
-        name = name.lower()
 
-        directory = os.path.join(self._root, name)
-        if os.path.exists(directory):
-            i=1
-            while os.path.exists(f"{directory}-{i}"):
-                i+= 1
-            directory = f"{directory}-{i}"
-            name = f"{name}-{i}"
-        os.mkdir(directory)
-
-        db_file = os.path.join(directory, f"{name}.db")
-        
-        sqlite_util.init_scene(db_file)
-        sqlite_util.update_current_scene(db_file ,name)
-
-        return name
 
     def delete(self, name):
         """Deletes a scene and all related information"""
