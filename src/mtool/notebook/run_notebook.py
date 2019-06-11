@@ -17,7 +17,7 @@ m = None
 def run_notebook(args):
     """Runs one notebook specified"""
     global m
-    m = mtool.MTool(args)
+    m = mtool.Mtool(args)
     m.set_environment_overrides_for_scene()
 
     m.for_each_notebook_specified_on_command_line(run_notebook)
@@ -32,20 +32,21 @@ def run(filename):
     if notebook fails to execute correctly (raises error in running)
     """
     
-    notebook = m.notebook(filename)
+    nb = notebook.Notebook(filename)
     log = m.log
     spinner = m.spinner
 
-    local_copy = notebook.name 
-    html_outputfile = notebook.name.split(".")[0] + "-" + str(time.time()) + ".ipynb"
+    local_copy = nb.name 
+    html_outputfile = nb.name.split(".")[0] + "-" + str(time.time()) + ".ipynb"
 
     log.header("Running")
-    log.indent_no_new_line("{0}... ".format(notebook.name))
+    print("testing")
+    log.indent_no_new_line("{0}... ".format(nb.name))
 
     spinner.start()
-    notebook.execute()
+    nb.execute()
 
-    # BUGBUG: There appears to be a bug in jupyter nbconvert where you can't
+    # BUG: There appears to be a bug in jupyter nbconvert where you can't
     # save the results of a notebook if an error was raised in one of the cells!
     # 
     # This is frustrating, because it means we can't get any telemetry on notebooks
@@ -60,14 +61,14 @@ def run(filename):
         raise Exception("\n\nNotebook execution raised an error, please 'm open' this notebook and execute the cells to view the error.")
 
     if m.show_notebook_in_web_browser:
-        notebook.convert_to_html(local_copy, html_outputfile)
+        nb.convert_to_html(local_copy, html_outputfile)
 
     spinner.stop()
 
     if not m.show_notebook_in_web_browser:
         log.info("")
         log.header("Notebook output")
-        notebook.display_to_console(local_copy)
+        nb.display_to_console()
     else:
         log.complete()
 

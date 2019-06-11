@@ -11,7 +11,7 @@ from src.mtool.cli import mtool
 
 def change_scene(args):
     """Calls mtool method to change the current scene"""
-    m = mtool.MTool(args)
+    m = mtool.Mtool(args)
 
     name = m.set_scene()
     m.log.info("New Current Scene", name)

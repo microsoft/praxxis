@@ -6,31 +6,31 @@ import ijson
 import os
 import papermill
 import time
+import pypandoc
+
 
 #TODO: refactor for readability / pythonic nature
 class Notebook:
-    _path = ""
-    _hasParameters = False
-    _environmentVars = []
-    name = ""
-    library_name = ""
-    
-    def __init__(self, path):
+    # TODO: only works on Windows, is kinda ugly :(
+    _library_loc = "%APPDATA%\\mtool\\library"
+    _output_loc  = "%APPDATA%\\mtool\\output"
+
+    def __init__(self, path, libary_space = _library_loc):
         #TODO: add support for reading from a URL
-        curr = os.getcwd()
-        curr = os.path.split(curr)[0]
-        curr = os.path.join(curr, "library")
-        self._path = os.path.join(curr, path)
+        self._output_loc  = os.path.join(os.getenv('APPDATA'),"mtool","output")
+
+        self._hasParameters = False
+        self._environmentVars = []
+
+        self._path = os.path.join(os.path.expandvars(self._library_loc), path)
         split = os.path.split(path)
         self.name = split[-1]
         self.library_name = os.path.split(split[0])[-1]
         try:
-            f = open(path)
+            f = open(self._path)
             self.extract_params(f)
         except(FileNotFoundError):
-            # BUG: notebooks being run aren't opening correctly
-            print()
-            #print("Invalid notebook name entered.")
+            print("Invalid notebook name entered.")
 
     def extract_params(self, openFile):
         objects = ijson.items(openFile, 'cells.item')
@@ -42,6 +42,14 @@ class Notebook:
                 self.extract_envVars(cell.get("source"))
                 return
     
+    def convert_to_html(self, local_copy, html_outputfile):
+        return pypandoc.convert_file(self._path, 'html')
+    
+    
+    def display_to_console(self):
+        return pypandoc.convert_file(self._path, 'asciidoc')
+       
+
     def extract_envVars(self, source):
         for line in source:
             if "=" in line and not line.startswith("#"):
@@ -53,16 +61,23 @@ class Notebook:
                 "injected for this notebook.")
         #need local output -- temp? or just send it directly to HDFS
         # need to pull params from toml and send to papermill as dict
-        local_copy = os.path.join(os.path.split(self._path)[0], "..", "..", "..", "output", "20190607" + str(time.time()) + self.name.split(".")[0] + "-"  + ".ipynb")
+        local_copy = os.path.join(os.path.expandvars(self._output_loc), "20190607" + str(time.time()) + self.name.split(".")[0] + "-"  + ".ipynb")
         papermill.execute_notebook(self._path, local_copy)
         return local_copy
 
     def pull_params(self):
+        
         return
 
     @staticmethod
-    def for_each_notebook(root, fn):
-        """Calls fn on every notebook in directory"""
+    def for_each_notebook(fn, root = _library_loc):
+        """Calls fn on every notebook in directory
+        
+        Default: calls fn on every notebook in library folder
+        """
+        # TODO: fix this lmao 
+        if root == "":
+            root = os.path.join(os.getenv('APPDATA'),"mtool","library")
         os.chdir(root)
         currDir = os.listdir()
         subDirs = []
@@ -70,12 +85,14 @@ class Notebook:
             if os.path.isfile(item) and item.endswith(".ipynb"):
                 path = os.getcwd()
                 nb = Notebook(os.path.join(path, item))
+                print(item)
                 fn(nb)
             elif os.path.isdir(item):
                 subDirs.append(item)
         while subDirs != []:
             thisSubDir = subDirs.pop()
-            Notebook.for_each_notebook(os.path.join(root, thisSubDir), fn)
+            subDirPath = os.path.join(root, thisSubDir)
+            Notebook.for_each_notebook(fn, subDirPath)
 
     @staticmethod
     def for_each_notebook_in_library(library_path, fn):

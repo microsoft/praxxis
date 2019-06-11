@@ -29,6 +29,7 @@ def load(filename):
     if os.path.isfile(filename):
         dict = toml.load(filename)
     else:
+        print(filename)
         dict = {}
 
     return dict

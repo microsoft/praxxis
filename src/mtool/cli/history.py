@@ -15,7 +15,7 @@ m = None
 def history(args):
     """Calls display for every notebook in scene history"""
     global m
-    m = mtool.MTool(args)
+    m = mtool.Mtool(args)
 
     m.log.header("History for scene", m.current_scene)
 
