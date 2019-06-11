@@ -16,11 +16,29 @@ m = None
 
 def run_notebook(args):
     """Runs one notebook specified"""
+    print(args)
     global m
     m = mtool.Mtool(args)
     m.set_environment_overrides_for_scene()
 
     m.for_each_notebook_specified_on_command_line(run_notebook)
+
+
+
+def execute(self):
+    if not(self._hasParameters):
+        print("Warning: no tagged cell located. No parameters will be " +
+            "injected for this notebook.")
+    #need local output -- temp? or just send it directly to HDFS
+    # need to pull params from toml and send to papermill as dict
+    local_copy = os.path.join(os.path.expandvars(self._output_loc), "20190607" + str(time.time()) + self.name.split(".")[0] + "-"  + ".ipynb")
+    papermill.execute_notebook(self._path, local_copy)
+    return local_copy
+
+def pull_params(self):
+    
+    return
+
 
 
 def run(filename):
