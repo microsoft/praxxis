@@ -45,14 +45,14 @@ class Mtool:
 
         self._library_roots.append(os.path.join(self._loc, "..\\library"))
         ##TODO: APPDATA is Windows specific!
-        directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
+        #directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
 
-        self._write_installation_identifier(directory)
-        self._scene = scene.Scene(directory)
-        self._environment = environment.Environment(self._library_roots, self.working_dir)
+        #self._write_installation_identifier(directory)
+        self._scene = scene.Scene()
+        #self._environment = environment.Environment(self._library_roots, self.working_dir)
         self._args = argv
 
-        print('Current Scene: {0}'.format(self.current_scene))
+        #print('Current Scene: {0}'.format(self.current_scene))
 
 
     @property
@@ -149,7 +149,7 @@ class Mtool:
 
     def create_scene(self):
         """Create a new scene"""
-        return self._scene.create(self._args.name)
+        return self._scene.new_scene(self._args.name)
 
     def delete_scene(self):
         """Delete a scene, current one if no argument provided"""
@@ -178,7 +178,7 @@ class Mtool:
     @property
     def current_scene(self):
         """Returns the current scene"""
-        return self._scene.current
+        return self._scene.get_current_scene
 
     def list_env(self):
         """Lists environment variables"""
