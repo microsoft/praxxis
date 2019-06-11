@@ -16,60 +16,58 @@ import sqlite3
 from src.mtool.cli import config
 
 class Scene:    
-    root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
     """The mtool concept of a scene"""
+    _root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
     _root_folder = None
     _folder_name = "scene"
-    _default_scene_name = 'scene-1'
+    _default_scene_name = 'scene'
     _id_file = "id.json"
-    _id_current_scene = None
+    _current_scene = None
 
-    def __init__(self, root_folder):
-        """Creates a scene in the root folder, making folder for it"""
-        self._root_folder = os.path.join(root_folder, self._folder_name)
-        self._id_current_scene = os.path.join(self._root_folder, "current_scene.json")
+    def __init__(self):
+        from src.mtool.util import sqlite_util
+        self._current_scene = os.path.join(self._root, "current_scene.db")
 
-        if not os.path.exists(self._root_folder):
-            os.mkdir(self._root_folder)
-
-        if not self.are_there_any_scenes():
-            self.create(self._default_scene_name)
-
-    def are_there_any_scenes(self):
-        """Determines whether any scenes currently exist"""
-        are_there_scenes = False
-        for root, dirs, files in os.walk(os.path.join(self._root_folder)):
-            for name in dirs:
-                are_there_scenes = True
-                break
-
-        return are_there_scenes
+        if not os.path.exists(self._root):
+            os.mkdir(self._root)
+        
+        if not os.path.exists(self._current_scene):
+            self.new_scene(self._default_scene_name)
+            sqlite_util.init_current_scene(os.path.join(self._root, "current_scene.db"), self._default_scene_name)
+            print("Created current_scene")
 
     @property
     def get_current_scene_directory(self):
         """Returns current scene's directory"""
-        return os.path.join(self._root_folder, self.current)
+        return os.path.join(self._root_folder, self.get_current_scene)
 
     def get_scene_directory(self, name):
         """Returns directory of the scene <name>"""
         return os.path.join(self._root_folder, name)
 
-    @property
-    def current(self):
+    def set_curent_scene(self):
         """Returns current scene information"""
-        with open(self._id_current_scene, 'r') as file:
-            return file.read()
+        from src.mtool.util import sqlite_util
+        
+        sqlite_util.set_current_scene(self._current_scene)
+
+    def get_current_scene(self):
+        from src.mtool.util import sqlite_util
+        
+        sqlite_util.get_current_scene(self._current_scene)
+        
+
 
     @property
     def scenes_json_filename(self):
         """Returns path to json file for scene"""
         return os.path.join(self._root_folder, "scenes.json")
 
-    def create(self, name):
+    def new_scene(self, name):
         from src.mtool.util import sqlite_util
         name = name.lower()
 
-        directory = os.path.join(self.root, name)
+        directory = os.path.join(self._root, name)
         if os.path.exists(directory):
             i=1
             while os.path.exists(f"{directory}-{i}"):
@@ -77,18 +75,13 @@ class Scene:
             directory = f"{directory}-{i}"
             name = f"{name}-{i}"
         os.mkdir(directory)
-    
-        sqlite_util.init_scene(os.path.join(directory, f"{name}.db"), name)
 
+        db_file = os.path.join(directory, f"{name}.db")
+        
+        sqlite_util.init_scene(db_file)
+        sqlite_util.update_current_scene(db_file ,name)
 
-        # os.mkdir(directory)
-
-        # with open(os.path.join(directory, self._id_file), 'w') as outfile:
-        #     outfile.write(str(uuid.uuid4()))
-
-        # self.set(name)
-
-        # return name
+        return name
 
     def delete(self, name):
         """Deletes a scene and all related information"""
@@ -155,14 +148,16 @@ class Scene:
         return name
 
     def set(self, name):
+        from src.mtool.util import sqlite_util
         """Sets name for the current scene"""
-        directory = self.get_scene_directory(name)
+        directory = os.path.join(self._root, name)
 
         # Might as well create it if it doesn't exist
         if not os.path.exists(directory):
-            self.create(name)
+            self.new_scene(name)
 
-        with open(self._id_current_scene, 'w') as outfile:
+        sqlite_util.set_current_scene(name)
+        with open(self._current_scene, 'w') as outfile:
             outfile.write(name)
 
         return name

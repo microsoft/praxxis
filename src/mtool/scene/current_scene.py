@@ -11,5 +11,7 @@ from src.mtool.cli import mtool
 
 def current_scene(args):
     """Sets up environment for current scene"""
+    from src.mtool.cli import scene 
+    
     m = mtool.Mtool(args)
-    m.set_environment_overrides_for_scene()
+    #m.set_environment_overrides_for_scene()
