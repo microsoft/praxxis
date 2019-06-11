@@ -18,10 +18,10 @@ m = None
 def open_notebook(arvs):
     """Open a notebook"""
     global m
+    print("working on that whole thing")
     m = mtool.Mtool(arvs)
     m.set_environment_overrides_for_scene()
-
-
+    #load_notebook(m.args.ordinal_to_list_item(arvs)[0])
 
 def load_notebook(filename):
     """Opens a notebook in Azure Data Studio
@@ -31,6 +31,7 @@ def load_notebook(filename):
     """
     #nb = notebook.Notebook(filename)
     outputfile = filename
+    print("in load_notebook")
     #outputfile = nb.get_local_copy_filename('.ipynb')
     shutil.copyfile(filename, outputfile)
     subprocess.Popen([m.azure_data_studio_binary_location, outputfile])

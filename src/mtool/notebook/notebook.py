@@ -69,30 +69,6 @@ class Notebook:
         
         return
 
-    @staticmethod
-    def for_each_notebook(fn, root = _library_loc):
-        """Calls fn on every notebook in directory
-        
-        Default: calls fn on every notebook in library folder
-        """
-        # TODO: fix this lmao 
-        if root == "":
-            root = os.path.join(os.getenv('APPDATA'),"mtool","library")
-        os.chdir(root)
-        currDir = os.listdir()
-        subDirs = []
-        for item in currDir:
-            if os.path.isfile(item) and item.endswith(".ipynb"):
-                path = os.getcwd()
-                nb = Notebook(os.path.join(path, item))
-                print(item)
-                fn(nb)
-            elif os.path.isdir(item):
-                subDirs.append(item)
-        while subDirs != []:
-            thisSubDir = subDirs.pop()
-            subDirPath = os.path.join(root, thisSubDir)
-            Notebook.for_each_notebook(fn, subDirPath)
 
     @staticmethod
     def for_each_notebook_in_library(library_path, fn):
