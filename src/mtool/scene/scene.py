@@ -228,10 +228,11 @@ class Scene:
     def get_current_scene_list():
         # TODO: uses json 
         # TODO: return scene info
+        """
         with open(filename, encoding="utf8") as json_file:
             scene_info = json.load(json_file)
         return ""        
-
+        """
 
     @staticmethod
     def ordinal_to_list_item(ordinal):

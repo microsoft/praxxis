@@ -37,6 +37,10 @@ class Notebook:
             # TODO: prints to console
             print("Invalid notebook name entered.")
 
+    
+    def getpath(self):
+        return self._path
+
     def extract_params(self, openFile):
         objects = ijson.items(openFile, 'cells.item')
         code_cells = (o for o in objects if o['cell_type'] == 'code')

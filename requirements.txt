@@ -16,3 +16,4 @@ subprocess
 glob
 datetime
 threading
+pandoc
