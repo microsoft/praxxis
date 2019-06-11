@@ -16,7 +16,8 @@ from src.mtool.cli import config
 
 class Scene:
     """The mtool concept of a scene"""
-    _root_folder = None
+    _root_folder = "%APPDATA%"
+    _root_part2 = "mtool"
     _folder_name = "scene"
     _default_scene_name = 'scene-1'
     _id_file = "id.json"
@@ -223,3 +224,33 @@ class Scene:
                 os.environ[key] = value
                 print(f'\t{key}={value}')
 
+    @staticmethod
+    def get_current_scene_list():
+        # TODO: uses json 
+        # TODO: return scene info
+        with open(filename, encoding="utf8") as json_file:
+            scene_info = json.load(json_file)
+        return ""        
+
+
+    @staticmethod
+    def ordinal_to_list_item(ordinal):
+        """Returns list item referenced by input ordinal"""
+        appdata = os.getenv("APPDATA")
+        current_scene_filename = (os.path.join(appdata, "mtool/scene/current_scene.json"))
+        with open(current_scene_filename, encoding="utf8") as json_file: 
+            name = json_file.read()
+            current_scene_filename = os.path.dirname(current_scene_filename)
+            current_scene_filename = os.path.join(current_scene_filename, name, "list.json")
+        json_file.close()
+
+        with open(current_scene_filename, encoding="utf8") as json_file: 
+            items = json.loads(json_file.read())
+            list_item = os.path.join(os.getenv("APPDATA"), "mtool", "library")
+            for item in items:
+                if (int(item[0]) == int(ordinal)):
+                    list_item = os.path.join(list_item, item[2].lower(), item[2].lower(), item[1].lower())
+                    break
+        json_file.close()
+
+        return list_item

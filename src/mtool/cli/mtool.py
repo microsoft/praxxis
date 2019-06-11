@@ -61,12 +61,6 @@ class Mtool:
         return self.args.to_html
 
     @property
-    def azure_data_studio_binary_location(self):
-        ##TODO: THIS IS WINDOWS SPECIFIC
-        """Returns location of ADS binary"""
-        return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
-
-    @property
     def args(self):
         """Returns current set of arguments"""
         return self._args

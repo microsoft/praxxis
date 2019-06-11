@@ -1,15 +1,19 @@
 """
+This file contains the Notebook class, with methods for loading in a .ipynb
+file and checking its parameterization information.
+
+Dependencies within mtool: NONE
 """
 
 import json
-import ijson
 import os
-import papermill
 import time
-import pypandoc
 
+import ijson
 
+#TODO: works I think? but needs cleanup
 #TODO: refactor for readability / pythonic nature
+#TODO: remove all unused parts from yanking 
 class Notebook:
     # TODO: only works on Windows, is kinda ugly :(
     _library_loc = "%APPDATA%\\mtool\\library"
@@ -30,6 +34,7 @@ class Notebook:
             f = open(self._path)
             self.extract_params(f)
         except(FileNotFoundError):
+            # TODO: prints to console
             print("Invalid notebook name entered.")
 
     def extract_params(self, openFile):
@@ -41,39 +46,10 @@ class Notebook:
                 self._hasParameters = True
                 self.extract_envVars(cell.get("source"))
                 return
-    
-    def convert_to_html(self, local_copy, html_outputfile):
-        return pypandoc.convert_file(self._path, 'html')
-    
-    
-    def display_to_console(self):
-        return pypandoc.convert_file(self._path, 'asciidoc')
-       
 
     def extract_envVars(self, source):
         for line in source:
             if "=" in line and not line.startswith("#"):
                 self._environmentVars.append(line.split("=")[0].strip())
-
-    def execute(self):
-        if not(self._hasParameters):
-            print("Warning: no tagged cell located. No parameters will be " +
-                "injected for this notebook.")
-        #need local output -- temp? or just send it directly to HDFS
-        # need to pull params from toml and send to papermill as dict
-        local_copy = os.path.join(os.path.expandvars(self._output_loc), "20190607" + str(time.time()) + self.name.split(".")[0] + "-"  + ".ipynb")
-        papermill.execute_notebook(self._path, local_copy)
-        return local_copy
-
-    def pull_params(self):
-        
-        return
-
-
-    @staticmethod
-    def for_each_notebook_in_library(library_path, fn):
-        for item in os.listdir():
-            if(item.endswith(".ipynb")):
-                fn(os.path.join(library_path, item))
 
 
