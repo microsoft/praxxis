@@ -11,17 +11,17 @@ import subprocess
 
 from src.mtool.cli import mtool
 from src.mtool.cli import args
-from src.mtool.notebook import notebook
+from src.mtool.notebook.notebook import Notebook
 
 m = None
 
-def open_notebook(arvs):
+def open_notebook(args):
     """Open a notebook"""
     global m
-    print("working on that whole thing")
-    m = mtool.Mtool(arvs)
+    # notebook = the number of the notebook
+    m = mtool.Mtool(args)
     m.set_environment_overrides_for_scene()
-    #load_notebook(m.args.ordinal_to_list_item(arvs)[0])
+    #load_notebook(m.args.ordinal_to_list_item(args)[0])
 
 def load_notebook(filename):
     """Opens a notebook in Azure Data Studio
