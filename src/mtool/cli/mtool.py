@@ -50,7 +50,7 @@ class Mtool:
         self._write_installation_identifier(directory)
         self._scene = scene.Scene(directory)
         self._environment = environment.Environment(self._library_roots, self.working_dir)
-        self._args = args.Args(argv)
+        self._args = argv
 
         print('Current Scene: {0}'.format(self.current_scene))
 
@@ -149,7 +149,7 @@ class Mtool:
 
     def create_scene(self):
         """Create a new scene"""
-        return self._scene.create(self.args.first_arg_lower)
+        return self._scene.create(self._args.name)
 
     def delete_scene(self):
         """Delete a scene, current one if no argument provided"""
