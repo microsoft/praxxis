@@ -16,7 +16,7 @@ import traceback
 from src.mtool.util import spinner
 from src.mtool.scene import scene
 from src.mtool.environment import environment
-from src.mtool.cli import telemetry
+from src.mtool.util import telemetry
 from src.mtool.util import log
 from src.mtool.cli import args
 from src.mtool.cli import file_io
