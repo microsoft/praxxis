@@ -22,10 +22,11 @@ from src.mtool.cli import args
 from src.mtool.cli import file_io
 from src.mtool.notebook.notebook import Notebook
 
-class MTool:
+class Mtool:
     """Methods for the operation of the tool"""
     # Libraries can exist in current dir (shared), or in user's local working dir (personal)
     _library_roots = ["%APPDATA%\\mtool\\library"] 
+    _loc = __file__
 
     spinner = spinner.Spinner() # Spinning progress animation for the console
     
@@ -41,8 +42,8 @@ class MTool:
     def __init__(self, argv):
         """Starts up mtool with scene, environment, and args"""
         sys.excepthook = self._capture_unhandled_exception
-        curr = os.getcwd()
-        self._library_roots.append(os.path.join(curr, "..\\library"))
+
+        self._library_roots.append(os.path.join(self._loc, "..\\library"))
         ##TODO: APPDATA is Windows specific!
         directory = os.path.join(os.getenv('APPDATA'), self._working_folder_name)
 
@@ -53,9 +54,6 @@ class MTool:
 
         print('Current Scene: {0}'.format(self.current_scene))
 
-    def notebook(self, filename):
-        """Returns notebook at filename"""
-        return Notebook(filename)
 
     @property
     def show_notebook_in_web_browser(self):
@@ -217,8 +215,9 @@ class MTool:
 
     def _capture_unhandled_exception(self, exctype, value, tb):
         """Highest level of exception handling"""
-        if MTool.spinner is not None:
-            MTool.spinner.stop()
+        if Mtool.spinner is not None:
+            Mtool.spinner.stop()
 
         print('\n\nmtool hit an unhandled exception:\n')
         traceback.print_exception(exctype, value, tb, file=sys.stdout)
+    

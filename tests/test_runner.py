@@ -1,9 +1,5 @@
 import pytest
 
-def test_diagnose():
-    from src.mtool.app import diagnose
-    print("diagnose")
-
 def test_run_notebook():
     from src.mtool.app import run_notebook
     print("run_notebook")
