@@ -15,10 +15,11 @@ import sqlite3
 
 from src.mtool.cli import config
 
-def new_scene(self, name):
+def new_scene(self, name, root):
+    
     from src.mtool.util import sqlite_util
     name = name.lower()
-    directory = os.path.join(self._root, name)
+    directory = os.path.join(root, name)
     if os.path.exists(directory):
         i=1
         while os.path.exists(f"{directory}-{i}"):
@@ -29,7 +30,6 @@ def new_scene(self, name):
     db_file = os.path.join(directory, f"{name}.db")
     
     sqlite_util.init_scene(db_file)
-    sqlite_util.update_current_scene(db_file ,name)
     return name
 
 class Scene:    
@@ -71,8 +71,6 @@ class Scene:
     def scenes_json_filename(self):
         """Returns path to json file for scene"""
         return os.path.join(self._root_folder, "scenes.json")
-
-
 
     def delete(self, name):
         """Deletes a scene and all related information"""

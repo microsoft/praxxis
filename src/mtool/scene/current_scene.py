@@ -21,7 +21,7 @@ def current_scene(args):
         os.mkdir(root)
         
     if not os.path.exists(current_scene):
-        scene.new_scene(default_scene_name, default_scene_name)
+        scene.new_scene(default_scene_name, default_scene_name, root)
         sqlite_util.init_current_scene(os.path.join(root, "current_scene.db"), default_scene_name)
         print("Created current_scene")
 
