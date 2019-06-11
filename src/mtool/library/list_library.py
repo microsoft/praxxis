@@ -8,14 +8,20 @@ import sys
 import json
 
 from src.mtool.cli import mtool
+from src.mtool.util import log
+from src.mtool.library import library
 
 m = None
+l = None
 
 def list_library(args):
     """Display for each library"""
     global m
-    m = mtool.MTool(args)
-    m.log.header("Notebook libraries installed on this machine")
+    m = mtool.Mtool(args)
+
+    global l 
+    l = log.Log()
+    l.header("Notebook libraries installed on this machine")
     m.for_each_library(display)
 
 
@@ -33,6 +39,7 @@ def display(root, library_name):
         with open(library_readme_filename, 'r') as file:
             description = file.read()
 
-    m.log.indent("{0} ({1})".format(library_name, description.replace("# ", "", 1)))
+    global l
+    l.indent("{0} ({1})".format(library_name, description.replace("# ", "", 1)))
 
 

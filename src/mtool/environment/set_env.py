@@ -12,5 +12,5 @@ from src.mtool.cli import mtool
 
 def set_env(args):
     """Call mtool method to set environment variables"""
-    m = mtool.MTool(args)
+    m = mtool.Mtool(args)
     m.set_env()
