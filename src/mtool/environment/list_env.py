@@ -7,11 +7,18 @@ Dependencies within mtool: mtool/mtool.py
 import os
 import sys
 
-from src.mtool.cli import mtool
+def list_env(args, root):
+    from src.mtool.util import sqlite_util
+    
+    current_scene = os.path.join(root, "current_scene.db")
+    scene = sqlite_util.get_current_scene(current_scene)
 
-def list_env(args):
-    """Call mtool method to list environment variables"""
-    m = mtool.Mtool(args)
-    m.log.header("Environment variables for all libraries")
-    m.list_env()    
+    directory = os.path.join(root, scene)
+    db_file = os.path.join(directory, f"{scene}.db")
+
+    print(sqlite_util.list_env(db_file))
+
+
+
+
     

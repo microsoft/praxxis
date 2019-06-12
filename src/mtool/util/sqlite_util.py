@@ -149,6 +149,35 @@ def get_ended_scenes(db_file):
     return rows
 
 
+def list_env(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    list_env = f'SELECT * FROM "Environment"'
+    cur.execute(list_env)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def set_env(db_file, name, value):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    set_env = f'INSERT INTO "Environment"(Name, Value) VALUES("{name}", "{value}")'
+    cur.execute(set_env)
+    conn.commit()
+    conn.close()
+
+
+def delete_env(db_file, name):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
+    cur.execute(delete_env)
+    conn.commit()
+    conn.close()
+
+
 def get_scene_id(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()

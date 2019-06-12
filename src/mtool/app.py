@@ -143,13 +143,13 @@ def main(command_line=None):
     set_env.add_argument('value', help=set_env_value_help)
     set_env.set_defaults(which=set_env_command)
 
-    search_env = subparsers.add_parser('searchenv', aliases=["se"], help=search_env_help)
+    search_env = subparsers.add_parser('searchenv', aliases=["s"], help=search_env_help)
     search_env.add_argument('term', help=search_env_term_help)
     search_env.set_defaults(which=search_env_command)
 
     delete_env = subparsers.add_parser('deleteenv', aliases=["de"], help=delete_env_help)
     delete_env.add_argument('name', help=delete_env_name_help)
-    set_env.set_defaults(which=delete_env_command)
+    delete_env.set_defaults(which=delete_env_command)
 
     list_env = subparsers.add_parser('listenv', aliases=["le"], help=list_env_help)
     list_env.set_defaults(which=list_env_command)
@@ -229,12 +229,17 @@ def list_library(arg):
 
 def set_env(arg):
     from src.mtool.environment import set_env
-    set_env.set_env(arg)
+    set_env.set_env(arg, _root)
     return
 
 def delete_env(arg):
     from src.mtool.environment import delete_env
-    delete_env.delete_env(arg)
+    delete_env.delete_env(arg, _root)
+    return
+
+def list_env(arg):
+    from src.mtool.environment import list_env
+    list_env.list_env(arg, _root)
     return
 
 def default(arg):
@@ -259,7 +264,8 @@ def command(argument):
         "add_library": add_library,
         "list_library": list_library,
         "set_env": set_env,
-        "delete_env": delete_env
+        "delete_env": delete_env,
+        "list_env": list_env
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
