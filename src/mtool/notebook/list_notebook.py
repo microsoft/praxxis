@@ -11,6 +11,7 @@ import os
 from src.mtool.cli import mtool 
 from src.mtool.util import log
 from src.mtool.notebook import notebook
+from src.mtool.util import sqlite_util
 
 l = None
 m = None
@@ -67,9 +68,11 @@ def list_notebook(args):
     l.section("List notebooks")
 
     if (m.list_exist and m.get_list != []):
+        print("!!!!!")
         for item in m.get_list:
             l.info(display_format_string.format(str(item[0]), item[1], item[2]))
     else:
+        print(".....")
         display_each_notebook()
         m.write_list(items)
 
