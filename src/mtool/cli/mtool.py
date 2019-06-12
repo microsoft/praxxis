@@ -16,7 +16,7 @@ import traceback
 from src.mtool.util import spinner
 from src.mtool.scene import scene
 from src.mtool.environment import environment
-from src.mtool.cli import telemetry
+from src.mtool.util import telemetry
 from src.mtool.util import log
 from src.mtool.cli import args
 from src.mtool.cli import file_io
@@ -59,12 +59,6 @@ class Mtool:
     def show_notebook_in_web_browser(self):
         """Returns html of notebook"""
         return self.args.to_html
-
-    @property
-    def azure_data_studio_binary_location(self):
-        ##TODO: THIS IS WINDOWS SPECIFIC
-        """Returns location of ADS binary"""
-        return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
     @property
     def args(self):

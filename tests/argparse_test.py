@@ -27,6 +27,7 @@ def main(command_line=None):
     run_notebook_environment_help="environment for notebook"
 
     open_notebook_help="open notebook in Azure Data Studio"
+    open_notebook_html_help="view notebook as html file"
     open_notebook_notebook_help="notebook to open"
 
     list_notebooks_help="list notebooks to run, by ordinal."
@@ -86,6 +87,8 @@ def main(command_line=None):
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
+    # TODO: fix html 
+    open_notebook.add_argument('--html', help=open_notebook_html_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
