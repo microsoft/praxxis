@@ -19,9 +19,9 @@ def delete_scene(args, root):
     directory = os.path.join(root, name)
     
     if os.path.exists(directory):
-        shutil.rmtree(directory)
         current_scene = os.path.join(root, "current_scene.db")
-        sqlite_util.delete_scene(current_scene, name)
+        if sqlite_util.delete_scene(current_scene, name):
+            shutil.rmtree(directory)
     else:
         ##TODO: give proper print
         print("that doesn't exist :((")
