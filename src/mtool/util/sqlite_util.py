@@ -187,9 +187,3 @@ def delete_env(db_file, name):
     cur.execute(delete_env)
     conn.commit()
     conn.close()
-
-
-def get_scene_id(db_file):
-    conn = create_connection(db_file)
-    cur = conn.cursor()
-
