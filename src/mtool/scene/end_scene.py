@@ -19,5 +19,7 @@ def end_scene(args, root):
     scene = os.path.join(root, name, f"{name}.db" )
     current_scene = os.path.join(root, "current_scene.db")
 
-    sqlite_util.end_scene(scene, name)
-    sqlite_util.delete_scene(current_scene, name)
+    if sqlite_util.mark_ended_scene(current_scene, name):
+        sqlite_util.end_scene(scene, name)
+        
+    

@@ -37,10 +37,8 @@ def init_scene(db_file, name):
 def init_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    create_current_scene_table = 'CREATE TABLE "CurrentScene" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT)'
-    init_current_scene_table = f'insert into "CurrentScene"(Name) values ("{scene_name}")'
+    create_current_scene_table = 'CREATE TABLE "CurrentScene" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Ended INTEGER)'
     cur.execute(create_current_scene_table)
-    cur.execute(init_current_scene_table)
     conn.commit()
     conn.close()
 
@@ -48,7 +46,7 @@ def init_current_scene(db_file, scene_name):
 def update_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur =  conn.cursor()
-    add_current_scene = f'INSERT INTO "CurrentScene"(Name) VALUES("{scene_name}")'
+    add_current_scene = f'INSERT INTO "CurrentScene"(Name, Ended) VALUES("{scene_name}", 0)'
     cur.execute(add_current_scene)
     conn.commit()
     conn.close()
@@ -57,18 +55,8 @@ def update_current_scene(db_file, scene_name):
 def get_current_scene(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    get_current_scene = 'SELECT Name FROM "CurrentScene" ORDER BY id DESC LIMIT 0, 1'
+    get_current_scene = 'SELECT Name FROM "CurrentScene" WHERE Ended != 1 ORDER BY ID DESC LIMIT 0, 1'
     cur.execute(get_current_scene)
-    rows = cur.fetchall()
-    conn.close()
-    return rows[0][0]
-
-
-def get_next_scene(db_file, name):
-    conn = create_connection(db_file)
-    cur = conn.cursor()
-    get_next_scene = f'SELECT Name FROM "CurrentScene" WHERE Name != "{name}" ORDER BY id DESC LIMIT 0, 1'
-    cur.execute(get_next_scene)
     rows = cur.fetchall()
     conn.close()
     return rows[0][0]
@@ -92,6 +80,23 @@ def end_scene(db_file, name):
     conn.close()
 
 
+def mark_ended_scene(db_file, name):
+    rows = get_active_scenes(db_file)
+    if len(rows) <= 1:
+        #TODO: make this print a good print
+        print("Can't end current scene, it's the only active scene you have. Make a new scene.")
+        return 0
+    else:
+        conn = create_connection(db_file)
+        cur = conn.cursor()
+        end_scene = f'UPDATE "CurrentScene" SET Ended = 1 WHERE Name = "{name}"'
+        cur.execute(end_scene)
+        conn.commit()
+        conn.close()
+        return 1
+    return 0
+
+
 def resume_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -99,6 +104,25 @@ def resume_scene(db_file, name):
     cur.execute(end_scene)
     conn.commit()
     conn.close()
+
+
+def get_active_scenes(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_active_scenes = f'SELECT DISTINCT Name from "CurrentScene" WHERE Ended = 0'
+    cur.execute(get_active_scenes)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def get_ended_scenes(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_ended_scenes = f'SELECT DISTINCT Name from "CurrentScene" WHERE Ended = 1'
+    cur.execute(get_ended_scenes)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 
 
 def get_scene_id(db_file):
