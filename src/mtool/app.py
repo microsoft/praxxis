@@ -1,5 +1,6 @@
 import sys
 import argparse
+import os
 
 def main(command_line=None):
     run_notebook_command = "run_notebook"
@@ -156,6 +157,7 @@ def main(command_line=None):
     args = parser.parse_args(command_line)
     return args
 
+_root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
 
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
@@ -188,7 +190,7 @@ def next_notebook(arg):
 
 def new_scene(arg):
     from src.mtool.scene import new_scene
-    new_scene.new_scene(arg)
+    new_scene.new_scene(arg, _root)
     return
  
 def end_scene(arg):
@@ -237,7 +239,7 @@ def delete_env(arg):
 
 def default(arg):
     from src.mtool.scene import current_scene
-    current_scene.current_scene(arg)
+    current_scene.current_scene(_root)
     return
  
 def command(argument):
