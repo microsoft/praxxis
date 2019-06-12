@@ -6,7 +6,7 @@ Dependencies within mtool: mtool/mtool.py
 
 import os
 
-def end_scene(args, root):
+def end_scene(args, root, history_db):
     """Ends a scene"""
     from src.mtool.util import sqlite_util
     
@@ -16,9 +16,8 @@ def end_scene(args, root):
         name = args
 
     scene = os.path.join(root, name, f"{name}.db" )
-    current_scene = os.path.join(root, "current_scene.db")
 
-    if sqlite_util.mark_ended_scene(current_scene, name):
+    if sqlite_util.mark_ended_scene(history_db, name):
         sqlite_util.end_scene(scene, name)
         
     

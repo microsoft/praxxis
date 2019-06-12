@@ -6,12 +6,11 @@ Dependencies within mtool: mtool/mtool.py
 
 import os
 
-def delete_env(args, root):
+def delete_env(args, root, history_db):
     from src.mtool.util import sqlite_util
 
-    current_scene = os.path.join(root, "current_scene.db")
-    scene = sqlite_util.get_current_scene(current_scene)
-
+    scene = sqlite_util.get_current_scene(history_db)
+    
     directory = os.path.join(root, scene)
     db_file = os.path.join(directory, f"{scene}.db")
 
