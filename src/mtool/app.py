@@ -158,6 +158,7 @@ def main(command_line=None):
     return args
 
 _root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
+_history_db = os.path.join(os.getenv('APPDATA'),"mtool","scene", "current_scene.db")
 
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
@@ -190,32 +191,47 @@ def next_notebook(arg):
 
 def new_scene(arg):
     from src.mtool.scene import new_scene
-    new_scene.new_scene(arg, _root)
+    new_scene.new_scene(arg, _root, _history_db)
     return
  
 def end_scene(arg):
     from src.mtool.scene import end_scene
-    end_scene.end_scene(arg, _root)
+    end_scene.end_scene(arg, _root, _history_db)
     return
  
 def change_scene(arg):
     from src.mtool.scene import change_scene
-    change_scene.change_scene(arg, _root)
+    change_scene.change_scene(arg, _root, _history_db)
     return
  
 def resume_scene(arg):
     from src.mtool.scene import resume_scene
-    resume_scene.resume_scene(arg, _root)
+    resume_scene.resume_scene(arg, _root, _history_db)
     return
  
 def delete_scene(arg):
     from src.mtool.scene import delete_scene
-    delete_scene.delete_scene(arg, _root)
+    delete_scene.delete_scene(arg, _root, _history_db)
     return
 
 def list_scene(arg):
     from src.mtool.scene import list_scene
-    list_scene.list_scene(_root)
+    list_scene.list_scene(_root, _history_db)
+    return
+
+def set_env(arg):
+    from src.mtool.environment import set_env
+    set_env.set_env(arg, _root, _history_db)
+    return
+
+def delete_env(arg):
+    from src.mtool.environment import delete_env
+    delete_env.delete_env(arg, _root, _history_db)
+    return
+
+def list_env(arg):
+    from src.mtool.environment import list_env
+    list_env.list_env(arg, _root, _history_db)
     return
 
 def add_library(arg):
@@ -227,24 +243,11 @@ def list_library(arg):
     list_library.list_library(arg)
     return
 
-def set_env(arg):
-    from src.mtool.environment import set_env
-    set_env.set_env(arg, _root)
-    return
 
-def delete_env(arg):
-    from src.mtool.environment import delete_env
-    delete_env.delete_env(arg, _root)
-    return
-
-def list_env(arg):
-    from src.mtool.environment import list_env
-    list_env.list_env(arg, _root)
-    return
 
 def default(arg):
     from src.mtool.scene import current_scene
-    current_scene.current_scene(_root)
+    current_scene.current_scene(_root, _history_db)
     return
  
 def command(argument):

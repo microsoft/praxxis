@@ -6,7 +6,7 @@ Dependencies within mtool: mtool/mtool.py
 
 import os
 
-def resume_scene(args, root):
+def resume_scene(args, root, history_db):
     """Resumes a scene"""
     from src.mtool.util import sqlite_util
 
@@ -16,8 +16,7 @@ def resume_scene(args, root):
         name = args
 
     scene = os.path.join(root, name, f"{name}.db" )
-    current_scene = os.path.join(root, "current_scene.db")
 
     sqlite_util.resume_scene(scene, name)
-    sqlite_util.mark_resumed_scene(current_scene, name)
-    sqlite_util.update_current_scene(current_scene, name)
+    sqlite_util.mark_resumed_scene(history_db, name)
+    sqlite_util.update_current_scene(history_db, name)

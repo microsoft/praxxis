@@ -65,10 +65,11 @@ def get_current_scene(db_file):
 def delete_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
-    cur.execute(ended)
-    ended = cur.fetchall()[0][0]
 
+    ended = check_ended(db_file, name, conn, cur)
+    if ended == -1:
+        return 0
+        
     active_scenes = get_active_scenes(db_file)
     if len(active_scenes) <= 1 and ended != 1:
         #TODO: make this print a good print
@@ -92,12 +93,22 @@ def end_scene(db_file, name):
     conn.close()
 
 
+def check_ended(db_file, name, conn, cur):
+    ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
+    cur.execute(ended)
+    ended = cur.fetchall()
+    if ended == []:
+        print("scene does not exist")
+        return -1
+    return ended[0][0]
+
 def mark_ended_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
-    cur.execute(ended)
-    ended = cur.fetchall()[0][0]
+
+    ended = check_ended(db_file, name, conn, cur)
+    if ended == -1:
+        return 0
 
     active_scenes = get_active_scenes(db_file)
     if len(active_scenes) <= 1 and ended != 1:
