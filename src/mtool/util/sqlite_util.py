@@ -65,9 +65,11 @@ def get_current_scene(db_file):
 def delete_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    ended = f'SELECT Ended from "CurrentScene" WHERE Name = {name}'
-    active_scenes = get_active_scenes(db_file)
+    ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
+    cur.execute(ended)
+    ended = cur.fetchall()[0][0]
 
+    active_scenes = get_active_scenes(db_file)
     if len(active_scenes) <= 1 and ended != 1:
         #TODO: make this print a good print
         print("Can't delete current scene, it's the only active scene you have. Make a new scene or restart an old one")
@@ -91,20 +93,32 @@ def end_scene(db_file, name):
 
 
 def mark_ended_scene(db_file, name):
-    rows = get_active_scenes(db_file)
-    if len(rows) <= 1:
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
+    cur.execute(ended)
+    ended = cur.fetchall()[0][0]
+
+    active_scenes = get_active_scenes(db_file)
+    if len(active_scenes) <= 1 and ended != 1:
         #TODO: make this print a good print
         print("Can't end current scene, it's the only active scene you have. Make a new scene or restart an old one")
         return 0
     else:
-        conn = create_connection(db_file)
-        cur = conn.cursor()
         end_scene = f'UPDATE "CurrentScene" SET Ended = 1 WHERE Name = "{name}"'
         cur.execute(end_scene)
         conn.commit()
         conn.close()
         return 1
     return 0
+
+def mark_resumed_scene(db_file, name):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    end_scene = f'UPDATE "CurrentScene" SET Ended = 0 WHERE Name = "{name}"'
+    cur.execute(end_scene)
+    conn.commit()
+    conn.close()
 
 
 def resume_scene(db_file, name):

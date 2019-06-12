@@ -19,4 +19,5 @@ def resume_scene(args, root):
     current_scene = os.path.join(root, "current_scene.db")
 
     sqlite_util.resume_scene(scene, name)
+    sqlite_util.mark_resumed_scene(current_scene, name)
     sqlite_util.update_current_scene(current_scene, name)
