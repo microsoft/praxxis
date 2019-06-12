@@ -195,27 +195,27 @@ def new_scene(arg):
  
 def end_scene(arg):
     from src.mtool.scene import end_scene
-    end_scene.end_scene(arg)
+    end_scene.end_scene(arg, _root)
     return
  
 def change_scene(arg):
     from src.mtool.scene import change_scene
-    change_scene.change_scene(arg)
+    change_scene.change_scene(arg, _root)
     return
  
 def resume_scene(arg):
     from src.mtool.scene import resume_scene
-    resume_scene.resume_scene(arg)
+    resume_scene.resume_scene(arg, _root)
     return
  
 def delete_scene(arg):
     from src.mtool.scene import delete_scene
-    delete_scene.delete_scene(arg)
+    delete_scene.delete_scene(arg, _root)
     return
 
 def list_scene(arg):
     from src.mtool.scene import list_scene
-    list_scene.list_scene(arg)
+    list_scene.list_scene(_root)
     return
 
 def add_library(arg):

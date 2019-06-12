@@ -5,12 +5,9 @@ Dependencies within mtool: mtool/mtool.py
 """
 
 import os
-import sys
 
-from src.mtool.cli import mtool
+def list_scene(root):
+    output = [dI for dI in os.listdir(root) if os.path.isdir(os.path.join(root,dI))]
+    print(output)
 
-def list_scene(args):
-    """Lists all scenes"""
-    m = mtool.Mtool(args)
-    m.log.header("Scenes")
-    m.list_scenes()
+ 

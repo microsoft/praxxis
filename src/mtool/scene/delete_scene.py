@@ -5,12 +5,26 @@ Dependencies within mtool: mtool/mtool.py
 """
 
 import os
-import sys
+import shutil
 
-from src.mtool.cli import mtool
-
-def delete_scene(args):
+def delete_scene(args, root):
+    from src.mtool.scene import current_scene
+    from src.mtool.util import sqlite_util
     """Deletes a scene"""
-    m = mtool.Mtool(args)
-    name = m.delete_scene()
-    m.log.info("New Current Scene", name)
+    if hasattr(args, "name"):
+        name = args.name
+    else:
+        name = args
+
+    directory = os.path.join(root, name)
+    
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+        current_scene = os.path.join(root, "current_scene.db")
+        sqlite_util.delete_scene(current_scene, name)
+    else:
+        ##TODO: give proper print
+        print("that doesn't exist :((")
+    
+
+            

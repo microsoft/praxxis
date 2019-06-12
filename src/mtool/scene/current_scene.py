@@ -5,7 +5,6 @@ Dependencies within mtool: mtool/mtool.py
 """
 
 import os
-import sys
 
 def current_scene(root):
     """Sets up environment for current scene""" 
@@ -22,7 +21,11 @@ def current_scene(root):
     if not os.path.exists(current_scene):
         new_scene.new_scene(default_scene_name, root)
         sqlite_util.init_current_scene(os.path.join(root, "current_scene.db"), default_scene_name)
+
+##TODO: REMOVE PRINTS, ENVIRONMENT LOADING ??
         print("Created current_scene")
 
     print(f'Current Scene: {sqlite_util.get_current_scene(current_scene)}') 
+    return current_scene
+    
     
