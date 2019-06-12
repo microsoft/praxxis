@@ -5,7 +5,6 @@ Dependencies within mtool: mtool/mtool.py
 """
 
 import os
-import sys
 
 def list_env(args, root):
     from src.mtool.util import sqlite_util

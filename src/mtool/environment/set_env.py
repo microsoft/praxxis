@@ -9,10 +9,6 @@ import os
 
 def set_env(args, root):
     from src.mtool.util import sqlite_util
-    if hasattr(args, "name"):
-        name = args.name
-    else:
-        name = args
 
     current_scene = os.path.join(root, "current_scene.db")
     scene = sqlite_util.get_current_scene(current_scene)
@@ -21,5 +17,4 @@ def set_env(args, root):
     db_file = os.path.join(directory, f"{scene}.db")
 
     sqlite_util.set_env(db_file, args.name, args.value)
-
 

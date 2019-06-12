@@ -5,7 +5,6 @@ Dependencies within mtool: mtool/mtool.py
 """
 
 import os
-import sys
 
 def end_scene(args, root):
     """Ends a scene"""
