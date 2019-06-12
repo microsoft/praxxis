@@ -7,12 +7,11 @@ Dependencies within mtool: mtool/mtool.py
 import os
 import sys
 
-def current_scene(args):
+def current_scene(root):
     """Sets up environment for current scene""" 
-    from src.mtool.scene import scene
+    from src.mtool.scene import new_scene
     from src.mtool.util import sqlite_util
 
-    root = os.path.join(os.getenv('APPDATA'),"mtool","scene")
     default_scene_name = 'scene'
 
     current_scene = os.path.join(root, "current_scene.db")
@@ -21,7 +20,7 @@ def current_scene(args):
         os.mkdir(root)
         
     if not os.path.exists(current_scene):
-        scene.new_scene(default_scene_name, default_scene_name, root)
+        new_scene.new_scene(default_scene_name, root)
         sqlite_util.init_current_scene(os.path.join(root, "current_scene.db"), default_scene_name)
         print("Created current_scene")
 
