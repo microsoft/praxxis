@@ -18,7 +18,3 @@ def list_env(args, root):
 
     print(sqlite_util.list_env(db_file))
 
-
-
-
-    
