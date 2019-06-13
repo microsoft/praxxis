@@ -27,7 +27,7 @@ def main(command_line=None):
 
     run_notebook_help="run notebook"
     run_notebook_notebook_help="notebook to run"
-    run_notebook_environment_help="environment for notebook"
+    run_notebook_environment_help="html flag for opening in web"
 
     open_notebook_help="open notebook in Azure Data Studio"
     open_notebook_notebook_help="notebook to open"
@@ -87,7 +87,7 @@ def main(command_line=None):
     
     run_notebook = subparsers.add_parser('run', aliases=["r"], help=run_notebook_help)
     run_notebook.add_argument('notebook', help=run_notebook_notebook_help)
-    run_notebook.add_argument('environment', nargs="?", help=run_notebook_environment_help)
+    run_notebook.add_argument('html', nargs="?", help=run_notebook_environment_help)
     run_notebook.set_defaults(which=run_notebook_command)
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
