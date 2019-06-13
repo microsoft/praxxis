@@ -11,14 +11,18 @@ import subprocess
 
 import pypandoc
 import webbrowser
+#TODO: the version of pandoc that's on wheel is ... ugly and doesn't support ipynb
 
 from src.mtool.notebook.notebook import Notebook
 from src.mtool.scene.scene import Scene
 
-def open_notebook(args):
+def open_notebook(args, scene_root):
+    from src.mtool.util import sqlite_util
     """Open a notebook"""
     # notebook = the number of the notebook
-    notebook_filename = Scene.ordinal_to_list_item(args.notebook)
+    history_db = os.path.join(scene_root, "current_scene.db")
+    db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
+    notebook_filename = sqlite_util.ordinal_to_list_item(db_file, args.notebook)[0]
     display_in_editor(notebook_filename)
     #load_notebook(m.args.ordinal_to_list_item(args)[0])
 

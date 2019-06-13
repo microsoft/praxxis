@@ -7,13 +7,6 @@ import os
 import sys
 import json
 
-# from src.mtool.cli import mtool
-# from src.mtool.util import log
-# from src.mtool.library import library
-
-# m = None
-# l = None
-
 def list_library(library_root, library_db):
         from src.mtool.library import library
         from src.mtool.util import sqlite_util
@@ -21,15 +14,6 @@ def list_library(library_root, library_db):
         library.load_libraries(library_root, library_db)
         libraries = ", ".join(list(sum(sqlite_util.list_libraries(library_db, 0, 10), ())))
         print(f"libraries: {libraries}")
-
-#     """Display for each library"""
-#     global m
-#     m = mtool.Mtool(args)
-
-#     global l 
-#     l = log.Log()
-#     l.header("Notebook libraries installed on this machine")
-#     m.for_each_library(display)
 
 
 def display(root, library_name):
