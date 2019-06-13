@@ -34,7 +34,6 @@ def init_scene(db_file, name):
     conn.commit()
     conn.close()
 
-<<<<<<< HEAD
 
 def init_library_db(db_file):
     conn = create_connection(db_file)
@@ -47,8 +46,6 @@ def init_library_db(db_file):
     conn.close()
 
 
-=======
->>>>>>> origin/finishing_papermill_integration
 def init_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur = conn.cursor()
