@@ -54,6 +54,31 @@ def init_current_scene(db_file, scene_name):
     conn.commit()
     conn.close()
 
+def init_user_info(db_file):
+    """From name of database file, creates and initializes user info"""
+    import uuid
+
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    create_userinfo_table = f'CREATE TABLE "UserInfo" (Key TEXT PRIMARY KEY, Value TEXT)'
+    create_user_id = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("ID",?)'
+    create_telem_permissions = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("TELEMETRY", 1)'
+    create_host = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Host", ?)'
+    create_url = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
+    id_val = str(uuid.uuid4())
+    
+    cur.execute(create_userinfo_table)
+    cur.execute(create_user_id, (id_val,))
+    cur.execute(create_telem_permissions)
+    #TODO: figure out where to put input of server info (hint: not here)
+    host = input("Enter an IP address for the host server: ")
+    url = input("Enter the URL of the HDFS location to save files (hint: should end in mtool): ")
+    cur.execute(create_host, (host,))
+    cur.execute(create_url, (url,))
+    conn.commit()
+    conn.close()
+    
+
 def update_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur =  conn.cursor()
@@ -251,7 +276,21 @@ def write_list(db_file, input):
     cur.executemany(insert_line, input)
     conn.commit()
     conn.close()
-    
+
+def get_telemetry_info(db_file, key):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    query = f'SELECT Value FROM "UserInfo" WHERE Key = ?'
+    cur.execute(query, (key,))
+    conn.commit()
+    item = cur.fetchone()
+    if item != None:
+        item = item[0] # remove tuple wrapping
+    print(key)
+    print(item)
+    conn.close()
+    return item
+
 def ordinal_to_list_item(db_file, ordinal):
     """Returns list item referenced by input ordinal"""
     conn = create_connection(db_file)
