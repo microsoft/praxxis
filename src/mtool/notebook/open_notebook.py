@@ -40,7 +40,4 @@ def display_in_editor(filename):
     Keyword arguments:
     filename -- name of notebook to open
     """
-    #nb = notebook.Notebook(filename)
-    #outputfile = nb.get_local_copy_filename('.ipynb')
-    #shutil.copyfile(filename, outputfile)
     subprocess.Popen([azure_data_studio_binary_location(), filename])

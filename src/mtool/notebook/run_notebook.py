@@ -49,14 +49,15 @@ def run_notebook(args, root, outfile_root, current_scene_db):
     display.display_run_notebook_start(notebook.name)
     local_copy = execute(current_scene_db, notebook)
 
-    print(args)
-
     if args.html == "html":
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:
         display.display_run_notebook(local_copy)
-    send_telemetry(root, local_copy)
+
+
+    telemetry.send(root, local_copy, current_scene_db)
+    #send_telemetry(root, local_copy)
 
 def execute(db_file, notebook):
     from src.mtool.cli import display
@@ -92,20 +93,3 @@ def get_outputname(notebook):
     
     outputname = os.path.join(output_folder, filename)
     return outputname
-
-def send_telemetry(root, local_copy):
-    """Sends telemetry to HDFS"""
-    # TODO: it appears all data for user flies into a single scene??
-    # TODO oass this in 
-    basedir = root
-    with open(os.path.join(basedir, "id.json")) as infile:
-        id = infile.read()
-    infile.close()
-    with open(os.path.join(basedir, "scene", "current_scene.json")) as infile:
-        curr_scene = infile.read()
-    infile.close()
-    with open(os.path.join(basedir, "scene", curr_scene, "id.json")) as infile:
-        scene_id = infile.read()
-    infile.close()
-
-    telemetry.send(root, id, scene_id, local_copy)
