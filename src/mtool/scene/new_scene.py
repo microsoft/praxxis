@@ -8,6 +8,7 @@ import os
 
 def new_scene(args, root, history_db):
     from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
 
     if hasattr(args, "name"):
         name = args.name
@@ -27,6 +28,6 @@ def new_scene(args, root, history_db):
     
     sqlite_util.init_scene(db_file, name)
     sqlite_util.update_current_scene(history_db, name)
-
-    return name
-    ##TODO: create prints to show that a scene has been created
+    
+    display.display_new_scene(name)
+    

@@ -17,8 +17,11 @@ def end_scene(args, root, history_db):
         name = args
 
     scene = os.path.join(root, name, f"{name}.db" )
+    allow_end_scene = sqlite_util.mark_ended_scene(history_db, name)
 
-    if sqlite_util.mark_ended_scene(history_db, name):
+    if allow_end_scene == -1:
+        display.scene_does_not_exist_error(name)
+    elif allow_end_scene:
         sqlite_util.end_scene(scene, name)
         display.display_end_scene_success(name)
     else:

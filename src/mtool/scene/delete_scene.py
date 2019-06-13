@@ -23,6 +23,8 @@ def delete_scene(args, root, history_db):
         if sqlite_util.delete_scene(history_db, name):
             shutil.rmtree(directory)
             display.display_delete_scene_success(name)
+        else:
+            display.last_active_scene_error(name)
     else:
         display.scene_does_not_exist_error(name)
     
