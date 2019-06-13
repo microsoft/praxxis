@@ -16,8 +16,12 @@ import json
 
 def list_library(library_root, library_db):
         from src.mtool.library import library
+        from src.mtool.util import sqlite_util
         library.init_library(library_root, library_db)
         library.load_libraries(library_root, library_db)
+        libraries = ", ".join(list(sum(sqlite_util.list_libraries(library_db, 0, 10), ())))
+        print(f"libraries: {libraries}")
+
 #     """Display for each library"""
 #     global m
 #     m = mtool.Mtool(args)
