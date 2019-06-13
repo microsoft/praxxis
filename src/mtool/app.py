@@ -175,9 +175,16 @@ _library_db = os.path.join(_library_root, "libraries.db")
 _history_db = os.path.join(_scene_root, "current_scene.db")
 
 
+def get_current_scene_db():
+    from src.mtool.util import sqlite_util
+    scene = sqlite_util.get_current_scene(_history_db)
+    return os.path.join(_scene_root, scene, f"{scene}.db")
+
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
-    run_notebook.run_notebook(arg, _root, _outfile_root)
+    current_scene_db = get_current_scene_db()
+
+    run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db)
     return
  
 def open_notebook(arg):
@@ -192,7 +199,7 @@ def search_notebook(arg):
 
 def list_notebook(arg):
     from src.mtool.notebook import list_notebook
-    list_notebook.list_notebook(_library_db)
+    list_notebook.list_notebook(_scene_root, _library_db, _history_db)
     return
 
 def history(arg):
@@ -255,7 +262,8 @@ def add_library(arg):
 
 def list_library(arg):
     from src.mtool.library import list_library
-    list_library.list_library(_library_root, _library_db)
+    current_scene_db = get_current_scene_db()
+    list_library.list_library(_library_root, _library_db, current_scene_db)
     return
 
 def load_library(arg):
