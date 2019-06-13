@@ -199,7 +199,10 @@ def search_notebook(arg):
 
 def list_notebook(arg):
     from src.mtool.notebook import list_notebook
-    list_notebook.list_notebook(_scene_root, _library_db, _history_db)
+    current_scene_db = get_current_scene_db()
+    start = 0
+    stop = 10
+    list_notebook.list_notebook(_scene_root, _library_db, _history_db, current_scene_db, start, stop)
     return
 
 def history(arg):
