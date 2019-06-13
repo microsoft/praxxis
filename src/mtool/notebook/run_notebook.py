@@ -2,7 +2,7 @@
 This file runs a notebook. Results are either printed to the console or 
 opened as an html output in the web browser, depending on user input.
 
-Dependencies within mtool: log.py, notebook.py, scene.py, open_notebook.py,
+Dependencies within mtool:  notebook.py, scene.py, open_notebook.py,
     telemetry.py
 """
 
@@ -27,11 +27,9 @@ Also check string concat and other optimizers.
 #TODO: have a way to load all environment variables for a library?
 
 import os
-import sys
 import webbrowser
 from datetime import datetime
 
-from src.mtool.util.log import Log
 from src.mtool.notebook import open_notebook 
 from src.mtool.util import telemetry
 from src.mtool.util import sqlite_util
@@ -60,7 +58,7 @@ def run_notebook(args, root, outfile_root, current_scene_db):
 
 
     telemetry.send(root, local_copy, current_scene_db)
-    #send_telemetry(root, local_copy)
+
 
 def execute(db_file, notebook):
     from src.mtool.cli import display
@@ -97,22 +95,3 @@ def get_outputname(notebook):
     outputname = os.path.join(output_folder, filename)
     return outputname
 
-def send_telemetry(root, local_copy):
-    """Sends telemetry to HDFS"""
-    # TODO: it appears all data for user flies into a single scene??
-    with open(os.path.join(root, "id.json")) as infile:
-        id = infile.read()
-    infile.close()
-
-    scene_root = os.path.join(root, "scene")
-    history_db = os.path.join(scene_root, "current_scene.db")
-    db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
-
-    with open(os.path.join(root, "scene", "current_scene.json")) as infile:
-        curr_scene = infile.read()
-    infile.close()
-    with open(os.path.join(root, "scene", curr_scene, "id.json")) as infile:
-        scene_id = infile.read()
-    infile.close()
-
-    telemetry.send(root, id, scene_id, local_copy)
