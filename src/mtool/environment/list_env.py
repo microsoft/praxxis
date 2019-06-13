@@ -8,11 +8,11 @@ import os
 
 def list_env(args, root, history_db):
     from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
     
     scene = sqlite_util.get_current_scene(history_db)
 
     directory = os.path.join(root, scene)
     db_file = os.path.join(directory, f"{scene}.db")
 
-    print(sqlite_util.list_env(db_file))
-
+    display.display_list_env(sqlite_util.list_env(db_file))

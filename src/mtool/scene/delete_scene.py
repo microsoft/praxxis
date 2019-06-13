@@ -10,6 +10,7 @@ import shutil
 def delete_scene(args, root, history_db):
     from src.mtool.scene import current_scene
     from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
     """Deletes a scene"""
     if hasattr(args, "name"):
         name = args.name
@@ -21,9 +22,9 @@ def delete_scene(args, root, history_db):
     if os.path.exists(directory):
         if sqlite_util.delete_scene(history_db, name):
             shutil.rmtree(directory)
+            display.display_delete_scene_success(name)
     else:
-        ##TODO: give proper print
-        print("scene does not exist")
+        display.scene_does_not_exist_error(name)
     
 
             

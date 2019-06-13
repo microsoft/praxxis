@@ -9,6 +9,7 @@ import os
 def change_scene(args, root, history_db):
     """Calls mtool method to change the current scene"""
     from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
 
     if hasattr(args, "name"):
         name = args.name
@@ -16,4 +17,4 @@ def change_scene(args, root, history_db):
         name = args
 
     sqlite_util.update_current_scene(history_db, name)
-
+    display.display_change_scene(name)
