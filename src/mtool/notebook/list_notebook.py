@@ -7,10 +7,9 @@ Goal dependencies: notebook.py
 
 import os
         
-def list_notebook(scene_root, library_db, history_db):
+def list_notebook(scene_root, library_db, history_db, current_scene_db, start, stop):
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
-    notebooks = sqlite_util.list_notebooks(library_db, 0, 10)
-    scene = sqlite_util.get_current_scene(history_db)
-    sqlite_util.write_list(os.path.join(scene_root, scene, f"{scene}.db"), notebooks)
+    notebooks = sqlite_util.list_notebooks(library_db, start, stop)
+    sqlite_util.write_list(current_scene_db, notebooks)
     display.display_list_notebook(notebooks)

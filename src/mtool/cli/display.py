@@ -1,6 +1,9 @@
 def explode_list(list_data):
     return "\n\t".join(list(sum(list_data, ())))
 
+def explode_zipped_list(list_data):
+    return (f"\n\t".join(list(zip(*list_data))[0]))
+
 def display_delete_env(name):
     print(f"{name} deleted")
 
@@ -14,7 +17,7 @@ def display_set_env(name, value):
 
 
 def display_list_notebook(notebooks):
-    print(f"Notebooks:\n\t{explode_list(notebooks)}")
+    print(f"Notebooks:\n\t{explode_zipped_list(notebooks)}")
 
 
 def display_init_libraries_folder(root):
@@ -39,7 +42,7 @@ def display_loaded_notebook(name, first):
         print(f"\t{name}")
 
 def display_libraries(libraries):
-    print(f"Loaded libraries:\n\t{explode_list(libraries)}")
+    print(f"Loaded libraries:\n\t{explode_zipped_list(libraries)}")
 
 
 def display_change_scene(name):
