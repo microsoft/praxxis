@@ -4,6 +4,9 @@ def explode_list(list_data):
 def explode_zipped_list(list_data):
     return (f"\n\t".join(list(zip(*list_data))[0]))
 
+def explode_scenes_list(list_data):
+    return list(sum(list_data, ()))
+
 def display_delete_env(name):
     print(f"{name} deleted")
 
@@ -15,8 +18,8 @@ def display_list_env(envs):
         return
     i = 0
     for env in envs:
-        print(f"{i}\t{env[0]} = {env[1]}")
         i += 1
+        print(f"{i}\t{env[0]} = {env[1]}")
 
 
 def display_set_env(name, value):
@@ -24,7 +27,11 @@ def display_set_env(name, value):
 
 
 def display_list_notebook(notebooks):
-    print(f"Notebooks:\n\t{explode_zipped_list(notebooks)}")
+    print(f"Notebooks:")
+    i = 0
+    for notebook in notebooks:
+        i+=1
+        print(f"{i}\t{notebook[0]}")
 
 
 def display_init_libraries_folder(root):
@@ -82,9 +89,19 @@ def display_end_scene_success(name):
 
 
 def display_list_scene(ended, active, current):
-    print(f"Ended scenes:\n\t{explode_list(ended)}")
-    print(f"Active scenes:\n\t{explode_list(active)}")
-    print(f"Current scene:\n\t{current}")
+    i = 0
+    
+    print(f"Ended scenes:")
+    for scene in ended:
+        i += 1
+        print(f"{i}\t{scene[0]}")
+    print(f"Active scenes:")
+    for scene in active:
+        i += 1
+        print(f"{i}\t{scene[0]}")
+    print(f"Current scene:")
+    i += 1
+    print(f"{i}\t{current}")
 
 def display_resume_scene(name):
     print(f"{name} resumed")

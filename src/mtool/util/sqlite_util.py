@@ -21,13 +21,13 @@ def init_scene(db_file, name):
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
-    create_list_table=f'CREATE TABLE "List" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, Path TEXT)'
+    create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, Path TEXT)'
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
     create_history_table=f'CREATE TABLE "History" (Timestamp INTEGER, Notebook TEXT, Library TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
     
     cur.execute(create_metadata_table)
-    cur.execute(create_list_table)
+    cur.execute(create_notebook_list_table)
     cur.execute(create_environment_table)
     cur.execute(create_history_table)
     cur.execute(init_metadata_table)
@@ -49,7 +49,9 @@ def init_library_db(db_file):
 def init_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    create_current_scene_table = 'CREATE TABLE "CurrentScene" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Ended INTEGER)'
+    create_current_scene_table = 'CREATE TABLE "SceneHistory" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Ended INTEGER)'
+    create_scene_list_table=f'CREATE TABLE "SceneList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT)'
+    cur.execute(create_scene_list_table)
     cur.execute(create_current_scene_table)
     conn.commit()
     conn.close()
@@ -57,7 +59,7 @@ def init_current_scene(db_file, scene_name):
 def update_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur =  conn.cursor()
-    add_current_scene = f'INSERT INTO "CurrentScene"(Name, Ended) VALUES("{scene_name}", 0)'
+    add_current_scene = f'INSERT INTO "SceneHistory"(Name, Ended) VALUES("{scene_name}", 0)'
     cur.execute(add_current_scene)
     conn.commit()
     conn.close()
@@ -65,7 +67,7 @@ def update_current_scene(db_file, scene_name):
 def get_current_scene(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    get_current_scene = 'SELECT Name FROM "CurrentScene" WHERE Ended != 1 ORDER BY ID DESC LIMIT 0, 1'
+    get_current_scene = 'SELECT Name FROM "SceneHistory" WHERE Ended != 1 ORDER BY ID DESC LIMIT 0, 1'
     cur.execute(get_current_scene)
     rows = cur.fetchall()
     conn.close()
@@ -83,7 +85,7 @@ def delete_scene(db_file, name):
     if len(active_scenes) <= 1 and ended != 1:
         return 0
     else:
-        delete_scene = f'DELETE FROM "CurrentScene" WHERE Name = "{name}"'
+        delete_scene = f'DELETE FROM "SceneHistory" WHERE Name = "{name}"'
         cur.execute(delete_scene)
         conn.commit()
         conn.close()
@@ -101,7 +103,7 @@ def end_scene(db_file, name):
 
 
 def check_ended(db_file, name, conn, cur):
-    ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
+    ended = f'SELECT Ended from "SceneHistory" WHERE Name = "{name}"'
     cur.execute(ended)
     ended = cur.fetchall()
     if ended == []:
@@ -120,7 +122,7 @@ def mark_ended_scene(db_file, name):
     if len(active_scenes) <= 1 and ended != 1:
         return 0
     else:
-        end_scene = f'UPDATE "CurrentScene" SET Ended = 1 WHERE Name = "{name}"'
+        end_scene = f'UPDATE "SceneHistory" SET Ended = 1 WHERE Name = "{name}"'
         cur.execute(end_scene)
         conn.commit()
         conn.close()
@@ -130,7 +132,7 @@ def mark_ended_scene(db_file, name):
 def mark_resumed_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    end_scene = f'UPDATE "CurrentScene" SET Ended = 0 WHERE Name = "{name}"'
+    end_scene = f'UPDATE "SceneHistory" SET Ended = 0 WHERE Name = "{name}"'
     cur.execute(end_scene)
     conn.commit()
     conn.close()
@@ -146,7 +148,7 @@ def resume_scene(db_file, name):
 def get_active_scenes(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    get_active_scenes = f'SELECT DISTINCT Name from "CurrentScene" WHERE Ended = 0'
+    get_active_scenes = f'SELECT DISTINCT Name from "SceneHistory" WHERE Ended = 0'
     cur.execute(get_active_scenes)
     rows = cur.fetchall()
     conn.close()
@@ -155,11 +157,13 @@ def get_active_scenes(db_file):
 def get_ended_scenes(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    get_ended_scenes = f'SELECT DISTINCT Name from "CurrentScene" WHERE Ended = 1'
+    get_ended_scenes = f'SELECT DISTINCT Name from "SceneHistory" WHERE Ended = 1'
     cur.execute(get_ended_scenes)
     rows = cur.fetchall()
     conn.close()
     return rows
+
+
 
 def list_env(db_file, start, end):
     conn = create_connection(db_file)
@@ -197,7 +201,7 @@ def set_env(db_file, name, value):
 def get_env_by_ord(db_file, ordinal):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {ordinal}, {ordinal+1}'
+    list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {ordinal-1}, {ordinal}'
     cur.execute(list_env)
     conn.commit()
     rows = cur.fetchall()
@@ -265,28 +269,61 @@ def list_notebooks(db_file, start, end):
     return rows
 
 
-def write_list(db_file, input):
+def write_list(db_file, notebook_list):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    clear_list = f'DELETE FROM "List"'
-    reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='List'"
-    insert_line = f'INSERT INTO "List" (DATA, PATH) VALUES (?,?)'
+    clear_list = f'DELETE FROM "NotebookList"'
+    reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='NotebookList'"
+    insert_line = f'INSERT INTO "NotebookList" (DATA, PATH) VALUES (?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
-    cur.executemany(insert_line, input)
+    cur.executemany(insert_line, notebook_list)
     conn.commit()
     conn.close()
+
     
 def ordinal_to_list_item(db_file, ordinal):
     """Returns list item referenced by input ordinal"""
     conn = create_connection(db_file)
     cur = conn.cursor()
     if str.isnumeric(ordinal):
-        query = f'SELECT DATA, PATH FROM List WHERE ID = ?'
+        query = f'SELECT DATA, PATH FROM NotebookList WHERE ID = ?'
     else:
-        query = f'SELECT DATA, PATH FROM LIST WHERE DATA = ?'
+        query = f'SELECT DATA, PATH FROM NotebookList WHERE DATA = ?'
     cur.execute(query, (ordinal,))
     conn.commit()
     item = cur.fetchone()
     conn.close()
     return item
+
+
+def dump_scene_list(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    clear_list = f'DELETE FROM "SceneList"'
+    reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='SceneList'"
+    cur.execute(clear_list)
+    cur.execute(reset_counter)
+    conn.commit()
+    conn.close()
+
+
+def write_scene_list(db_file, scene_list):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    insert_line = f'INSERT INTO "SceneList" (Name) VALUES (?)'
+    cur.executemany(insert_line, scene_list)
+    conn.commit()
+    conn.close()
+
+def get_scene_by_ord(db_file, ordinal):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    list_env = f'SELECT Name FROM "SceneList" ORDER BY ID LIMIT {ordinal-1}, {ordinal}'
+    cur.execute(list_env)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    if rows == []:
+        return ""
+    return rows[0][0]

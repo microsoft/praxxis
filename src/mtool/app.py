@@ -221,7 +221,8 @@ def new_scene(arg):
  
 def end_scene(arg):
     from src.mtool.scene import end_scene
-    end_scene.end_scene(arg, _scene_root, _history_db)
+    current_scene = get_current_scene_db()
+    end_scene.end_scene(arg, _scene_root, _history_db, current_scene)
     return
  
 def change_scene(arg):
@@ -246,7 +247,8 @@ def list_scene(arg):
 
 def set_env(arg):
     from src.mtool.environment import set_env
-    set_env.set_env(arg, _scene_root, _history_db)
+    current_scene = get_current_scene_db()
+    set_env.set_env(arg, _scene_root, _history_db, current_scene)
     return
 
 def delete_env(arg):
