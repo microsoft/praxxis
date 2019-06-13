@@ -19,6 +19,7 @@ class Notebook:
     _library_loc = "%APPDATA%\\mtool\\library"
 
     def __init__(self, path, libary_space = _library_loc):
+        from src.mtool.cli import display
         #TODO: add support for reading from a URL
 
         self._hasParameters = False
@@ -32,8 +33,7 @@ class Notebook:
             f = open(self._path)
             self.extract_params(f)
         except(FileNotFoundError):
-            # TODO: prints to console
-            print("Invalid notebook name entered.")
+            display.notebook_does_not_exist_error(self.name)
 
     
     def getpath(self):

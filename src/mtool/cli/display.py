@@ -67,14 +67,6 @@ def display_delete_scene_success(name):
     print(f"Deleted scene: {name}")
 
 
-def scene_does_not_exist_error(name):
-    print(f"{name} does not exist")
-
-
-def last_active_scene_error(name):
-    print(f"{name} is your last active scene. Make a new scene, or restart an old one.")
-
-
 def display_end_scene_success(name):
     print(f"{name} ended")
 
@@ -86,3 +78,19 @@ def display_list_scene(ended, active, current):
 
 def display_resume_scene(name):
     print(f"{name} resumed")
+
+
+def scene_does_not_exist_error(name):
+    print(f"{name} does not exist")
+
+
+def notebook_does_not_exist_error(name):
+    print(f"{name} does not exist")
+
+
+def last_active_scene_error(name):
+    print(f"{name} is your last active scene. Make a new scene, or restart an old one.")
+
+
+def no_tagged_cell_warning():
+    print("Warning: no tagged cell located. No parameters will be injected for this notebook.")
