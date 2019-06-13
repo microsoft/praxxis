@@ -55,8 +55,17 @@ def run_notebook(args, root, outfile_root, current_scene_db):
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:
+<<<<<<< HEAD
         display.display_run_notebook(local_copy)
     send_telemetry(root, local_copy)
+=======
+        log.info("")
+        log.header("Notebook output")
+        open_notebook.display_to_console(local_copy)
+
+    telemetry.send(root, local_copy)
+    #send_telemetry(root, local_copy)
+>>>>>>> removing toml config
 
 def execute(db_file, notebook):
     from src.mtool.cli import display
@@ -96,15 +105,18 @@ def get_outputname(notebook):
 def send_telemetry(root, local_copy):
     """Sends telemetry to HDFS"""
     # TODO: it appears all data for user flies into a single scene??
-    # TODO oass this in 
-    basedir = root
-    with open(os.path.join(basedir, "id.json")) as infile:
+    with open(os.path.join(root, "id.json")) as infile:
         id = infile.read()
     infile.close()
-    with open(os.path.join(basedir, "scene", "current_scene.json")) as infile:
+
+    scene_root = os.path.join(root, "scene")
+    history_db = os.path.join(scene_root, "current_scene.db")
+    db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
+
+    with open(os.path.join(root, "scene", "current_scene.json")) as infile:
         curr_scene = infile.read()
     infile.close()
-    with open(os.path.join(basedir, "scene", curr_scene, "id.json")) as infile:
+    with open(os.path.join(root, "scene", curr_scene, "id.json")) as infile:
         scene_id = infile.read()
     infile.close()
 
