@@ -51,7 +51,7 @@ def run_notebook(args, root, outfile_root, current_scene_db):
 
     print(args)
 
-    if args.html:
+    if args.html == "html":
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:
