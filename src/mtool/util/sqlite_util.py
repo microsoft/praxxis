@@ -21,7 +21,7 @@ def init_scene(db_file, name):
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
-    create_list_table=f'CREATE TABLE "List" (ID INTEGER PRIMARY KEY, Data TEXT, Path TEXT)'
+    create_list_table=f'CREATE TABLE "List" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, Path TEXT)'
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
     create_history_table=f'CREATE TABLE "History" (Timestamp INTEGER, Notebook TEXT, Library TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
@@ -221,7 +221,7 @@ def load_notebook(db_file, root, name, library):
 def list_libraries(db_file, start, end):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    list_libraries = f'SELECT Name FROM "LibraryMetadata" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Name, Root FROM "LibraryMetadata" LIMIT {start}, {end}'
     cur.execute(list_libraries)
     conn.commit()
     rows = cur.fetchall()
@@ -232,7 +232,7 @@ def list_libraries(db_file, start, end):
 def list_notebooks(db_file, start, end):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    list_libraries = f'SELECT Name FROM "Notebooks" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Name, Root FROM "Notebooks" LIMIT {start}, {end}'
     cur.execute(list_libraries)
     conn.commit()
     rows = cur.fetchall()
@@ -240,16 +240,17 @@ def list_notebooks(db_file, start, end):
     return rows
 
 
-def write_scene_list(db_file, input):
+def write_list(db_file, input):
     conn = create_connection(db_file)
     cur = conn.cursor()
     clear_list = f'DELETE FROM "List"'
-    insert_line = f'INSERT INTO "List" (ID, DATA, PATH) VALUES (?,?,?)'
+    reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='List'"
+    insert_line = f'INSERT INTO "List" (DATA, PATH) VALUES (?,?)'
     cur.execute(clear_list)
+    cur.execute(reset_counter)
     cur.executemany(insert_line, input)
     conn.commit()
     conn.close()
-
     
 def ordinal_to_list_item(db_file, ordinal):
     """Returns list item referenced by input ordinal"""

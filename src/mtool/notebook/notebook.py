@@ -12,6 +12,15 @@ import time
 import ijson
 
 
+def init_notebook_run(outfile_root):
+    from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
+    
+    if not os.path.exists(outfile_root):
+        os.mkdir(outfile_root)
+        display.display_init_run_notebook(outfile_root)
+
+
 #TODO: works, but needs cleanup
 #TODO: remove all unused parts from yanking 
 class Notebook:

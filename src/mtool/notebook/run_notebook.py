@@ -39,20 +39,16 @@ from src.mtool.util import sqlite_util
 
 import papermill
 
-def run_notebook(args, root, outfile_root):
+def run_notebook(args, root, outfile_root, current_scene_db):
     from src.mtool.cli import display
-    """Runs one notebook specified"""
-    scene_root = os.path.join(root, "scene")
-    history_db = os.path.join(scene_root, "current_scene.db")
-    db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
-    
-    filename = sqlite_util.ordinal_to_list_item(db_file, args.notebook)[1]
+    from src.mtool.notebook import notebook
+    """Runs one notebook specified"""    
+    notebook.init_notebook_run(outfile_root)
 
+    filename = sqlite_util.ordinal_to_list_item(current_scene_db, args.notebook)[1]
     notebook = Notebook(filename)
-
     display.display_run_notebook_start(notebook.name)
-
-    local_copy = execute(db_file, notebook)
+    local_copy = execute(current_scene_db, notebook)
 
     # TODO: html flag
     if False:
@@ -100,7 +96,8 @@ def get_outputname(notebook):
 def send_telemetry(root, local_copy):
     """Sends telemetry to HDFS"""
     # TODO: it appears all data for user flies into a single scene??
-    basedir = os.path.expandvars("%APPDATA%/mtool")
+    # TODO oass this in 
+    basedir = root
     with open(os.path.join(basedir, "id.json")) as infile:
         id = infile.read()
     infile.close()

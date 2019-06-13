@@ -1,7 +1,6 @@
 def explode_list(list_data):
     return "\n\t".join(list(sum(list_data, ())))
 
-
 def display_delete_env(name):
     print(f"{name} deleted")
 
@@ -110,3 +109,5 @@ def display_run_notebook(filename):
     print("\nNotebook output:")
     print(pypandoc.convert_file(filename, 'asciidoc'))
 
+def display_init_run_notebook(outfile_root):
+    print(f"Created outfile directory at {outfile_root}")
