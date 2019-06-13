@@ -1,8 +1,6 @@
 """
 This file prints a list of all notebooks on the machine.
 
-Dependencies within mtool: mtool.py, log.py, notebook.py
-Goal dependencies: notebook.py
 """
 
 import os
