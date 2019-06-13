@@ -5,6 +5,23 @@ opened as an html output in the web browser, depending on user input.
 Dependencies within mtool: log.py, notebook.py, scene.py, open_notebook.py,
     telemetry.py
 """
+
+"""
+TIMING INFO: notebook runs 
+avg without injection, without telemetry: 3.904 s (4 runs)
+avg with    injection, without telemetry: 3.881 s (3 runs)
+avg with    injection, with    telemetry: 5.556 s (4 runs)
+
+injection does not appear to add substantial processing time; the difference 
+between injection enabled and disabled does not appear to be statistically
+significant. 
+
+telemetry is a huge time drag, adding an average of 1.675 seconds simply to 
+send the data to HDFS. At this rate, might be easier to thread that process?
+Also check string concat and other optimizers.
+"""
+
+
 #TODO: want to print defaults and overridden vals before execution
 #TODO: should have a way to view all defaults in a notebook 
 #TODO: have a way to load all environment variables for a library?
@@ -55,12 +72,12 @@ def run_notebook(args, root):
         log.header("Notebook output")
         open_notebook.display_to_console(local_copy)
 
-    send_telemetry(local_copy)
+    send_telemetry(root, local_copy)
 
 def execute(db_file, notebook):
     """Handles papermill execution for notebook"""
     local_copy = get_outputname(notebook)
-    if (notebook._hasParameters):
+    if (notebook._hasParameters): 
         injects = pull_params(db_file, notebook._environmentVars)
         papermill.execute_notebook(notebook.getpath(), local_copy, injects)
     else:
@@ -69,8 +86,6 @@ def execute(db_file, notebook):
         papermill.execute_notebook(notebook.getpath(), local_copy)
     
     #need local output -- temp? or just send it directly to HDFS
-    # need to pull params from toml and send to papermill as dict
-    
     return local_copy
 
 def pull_params(db_file, environmentVars):
@@ -94,7 +109,7 @@ def get_outputname(notebook):
     outputname = os.path.join(output_folder, filename)
     return outputname
 
-def send_telemetry(local_copy):
+def send_telemetry(root, local_copy):
     """Sends telemetry to HDFS"""
     # TODO: it appears all data for user flies into a single scene??
     basedir = os.path.expandvars("%APPDATA%/mtool")
@@ -108,4 +123,4 @@ def send_telemetry(local_copy):
         scene_id = infile.read()
     infile.close()
 
-    telemetry.send(id, scene_id, local_copy)
+    telemetry.send(root, id, scene_id, local_copy)
