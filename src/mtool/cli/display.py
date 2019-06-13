@@ -9,7 +9,14 @@ def display_delete_env(name):
 
 
 def display_list_env(envs):
-    print(explode_list(envs))
+    print(f"Environment Variables: ")
+    if envs == []:
+        print("\tNone Set")
+        return
+    i = 0
+    for env in envs:
+        print(f"{i}\t{env[0]} = {env[1]}")
+        i += 1
 
 
 def display_set_env(name, value):
@@ -93,6 +100,10 @@ def notebook_does_not_exist_error(name):
 
 def last_active_scene_error(name):
     print(f"{name} is your last active scene. Make a new scene, or restart an old one.")
+
+
+def env_not_found_error(name):
+    print(f"{name} not found")
 
 
 def no_tagged_cell_warning():

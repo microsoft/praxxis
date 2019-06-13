@@ -6,7 +6,7 @@ Dependencies within mtool: mtool/mtool.py
 
 import os
 
-def delete_env(args, root, history_db):
+def delete_env(args, root, history_db, current_scene_db):
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
 
@@ -15,11 +15,14 @@ def delete_env(args, root, history_db):
     else:
         name = args
 
-    scene = sqlite_util.get_current_scene(history_db)
-    
-    directory = os.path.join(root, scene)
-    db_file = os.path.join(directory, f"{scene}.db")
+    if f"{name}".isdigit():
+        name = sqlite_util.get_env_by_ord(current_scene_db, int(name))
+        if name == "":
+            display.env_not_found_error(args.name)
+            return
 
-    sqlite_util.delete_env(db_file, name)
-    display.display_delete_env(name)
+    if(sqlite_util.delete_env(current_scene_db, name)):
+        display.display_delete_env(name)
+    else:
+        display.env_not_found_error(name)
     

@@ -161,15 +161,17 @@ def get_ended_scenes(db_file):
     conn.close()
     return rows
 
-def list_env(db_file):
+def list_env(db_file, start, end):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    list_env = f'SELECT * FROM "Environment"'
+    list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {start}, {end}'
     cur.execute(list_env)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     return rows
+
+
 
 def get_env(db_file, var_name):
     conn = create_connection(db_file)
@@ -184,18 +186,41 @@ def get_env(db_file, var_name):
 def set_env(db_file, name, value):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    set_env = f'INSERT INTO "Environment"(Name, Value) VALUES("{name}", "{value}")'
+    set_env = f'INSERT OR IGNORE INTO "Environment"(Name, Value) VALUES("{name}", "{value}")'
+    upate_env = f'UPDATE "Environment" SET Value = "{value}"'
     cur.execute(set_env)
+    cur.execute(upate_env)
     conn.commit()
     conn.close()
+
+
+def get_env_by_ord(db_file, ordinal):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {ordinal}, {ordinal+1}'
+    cur.execute(list_env)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    if rows == []:
+        return ""
+    return rows[0][0]
+
 
 def delete_env(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
-    cur.execute(delete_env)
-    conn.commit()
-    conn.close()
+    env = f'SELECT * from "Environment" WHERE Name = "{name}"'
+    cur.execute(env)
+    exists = cur.fetchall()
+    if exists == []:
+        return 0
+    else:
+        delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
+        cur.execute(delete_env)
+        conn.commit()
+        conn.close()
+        return 1
 
 
 def load_library(db_file, root, readme, name):

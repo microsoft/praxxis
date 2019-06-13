@@ -251,12 +251,15 @@ def set_env(arg):
 
 def delete_env(arg):
     from src.mtool.environment import delete_env
-    delete_env.delete_env(arg, _scene_root, _history_db)
+    current_scene = get_current_scene_db()
+    delete_env.delete_env(arg, _scene_root, _history_db, current_scene)
     return
 
 def list_env(arg):
-    from src.mtool.environment import list_env
-    list_env.list_env(arg, _scene_root, _history_db)
+    from src.mtool.environment import list_env       
+    start = 0
+    end = 10 
+    list_env.list_env(arg, _scene_root, _history_db, start, end)
     return
 
 def add_library(arg):
