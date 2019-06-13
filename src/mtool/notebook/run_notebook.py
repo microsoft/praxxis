@@ -75,14 +75,14 @@ def run_notebook(args, root):
     send_telemetry(root, local_copy)
 
 def execute(db_file, notebook):
+    from src.mtool.cli import display
     """Handles papermill execution for notebook"""
     local_copy = get_outputname(notebook)
     if (notebook._hasParameters): 
         injects = pull_params(db_file, notebook._environmentVars)
         papermill.execute_notebook(notebook.getpath(), local_copy, injects)
     else:
-        print("Warning: no tagged cell located. No parameters will be " +
-            "injected for this notebook.")
+        display.no_tagged_cell_warning()
         papermill.execute_notebook(notebook.getpath(), local_copy)
     
     #need local output -- temp? or just send it directly to HDFS

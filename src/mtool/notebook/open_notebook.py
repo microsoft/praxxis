@@ -14,7 +14,6 @@ import webbrowser
 #TODO: the version of pandoc that's on wheel is ... ugly and doesn't support ipynb
 
 from src.mtool.notebook.notebook import Notebook
-from src.mtool.scene.scene import Scene
 
 def open_notebook(args, scene_root):
     from src.mtool.util import sqlite_util
