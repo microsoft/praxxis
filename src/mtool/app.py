@@ -164,7 +164,7 @@ _history_db = os.path.join(_scene_root, "current_scene.db")
 
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
-    run_notebook.run_notebook(arg)
+    run_notebook.run_notebook(arg, _root)
     return
  
 def open_notebook(arg):

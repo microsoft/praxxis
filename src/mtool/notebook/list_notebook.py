@@ -40,7 +40,7 @@ def display_each_notebook(root):
             path = os.getcwd()
             nb = notebook.Notebook(os.path.join(path, item))
             counter += 1
-            notebooks.append((counter, item, root))
+            notebooks.append((counter, item, os.path.join(root, item)))
             display(nb)
         elif os.path.isdir(item):
             subDirs.append(item)
