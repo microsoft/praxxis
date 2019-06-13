@@ -34,6 +34,17 @@ def init_scene(db_file, name):
     conn.close()
 
 
+def init_library_db(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Root TEXT PRIMARY KEY, Readme TEXT, Name TEXT)'
+    create_notebook_table=f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
+    cur.execute(create_metadata_table)
+    cur.execute(create_notebook_table)
+    conn.commit()
+    conn.close()
+
+
 def init_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -185,5 +196,25 @@ def delete_env(db_file, name):
     cur = conn.cursor()
     delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
     cur.execute(delete_env)
+    conn.commit()
+    conn.close()
+
+
+def load_library(db_file, root, readme, name):
+    print(readme)
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Root, Readme, Name) VALUES("{root}", "{readme}", "{name}")'
+    update_library = f'UPDATE "LibraryMetadata" SET Readme = "{readme}" WHERE Name = "{name}"'
+    cur.execute(load_library)
+    cur.execute(update_library)
+    conn.commit()
+    conn.close()
+
+def load_notebook(db_file, root, name, library):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{root}", "{name}", "{library}")'
+    cur.execute(load_library)
     conn.commit()
     conn.close()

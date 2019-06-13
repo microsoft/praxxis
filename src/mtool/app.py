@@ -159,7 +159,10 @@ def main(command_line=None):
 
 _root = os.path.join(os.getenv('APPDATA'), "mtool")
 _scene_root = os.path.join(_root, "scene")
+_library_root = os.path.join(_root, "library")
+_library_db = os.path.join(_library_root, "libraries.db")
 _history_db = os.path.join(_scene_root, "current_scene.db")
+
 
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
@@ -241,9 +244,8 @@ def add_library(arg):
 
 def list_library(arg):
     from src.mtool.library import list_library
-    list_library.list_library(arg)
+    list_library.list_library(_library_root, _library_db)
     return
-
 
 
 def default(arg):

@@ -7,22 +7,25 @@ import os
 import sys
 import json
 
-from src.mtool.cli import mtool
-from src.mtool.util import log
-from src.mtool.library import library
+# from src.mtool.cli import mtool
+# from src.mtool.util import log
+# from src.mtool.library import library
 
-m = None
-l = None
+# m = None
+# l = None
 
-def list_library(args):
-    """Display for each library"""
-    global m
-    m = mtool.Mtool(args)
+def list_library(library_root, library_db):
+        from src.mtool.library import library
+        library.init_library(library_root, library_db)
+        library.load_libraries(library_root, library_db)
+#     """Display for each library"""
+#     global m
+#     m = mtool.Mtool(args)
 
-    global l 
-    l = log.Log()
-    l.header("Notebook libraries installed on this machine")
-    m.for_each_library(display)
+#     global l 
+#     l = log.Log()
+#     l.header("Notebook libraries installed on this machine")
+#     m.for_each_library(display)
 
 
 def display(root, library_name):
@@ -39,7 +42,6 @@ def display(root, library_name):
         with open(library_readme_filename, 'r') as file:
             description = file.read()
 
-    global l
-    l.indent("{0} ({1})".format(library_name, description.replace("# ", "", 1)))
+
 
 
