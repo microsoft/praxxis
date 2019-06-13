@@ -14,7 +14,6 @@ import webbrowser
 #TODO: the version of pandoc that's on wheel is ... ugly and doesn't support ipynb
 
 from src.mtool.notebook.notebook import Notebook
-from src.mtool.scene.scene import Scene
 
 def open_notebook(args, scene_root):
     from src.mtool.util import sqlite_util
@@ -24,7 +23,6 @@ def open_notebook(args, scene_root):
     db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
     notebook_filename = sqlite_util.ordinal_to_list_item(db_file, args.notebook)[0]
     display_in_editor(notebook_filename)
-    #load_notebook(m.args.ordinal_to_list_item(args)[0])
 
 def azure_data_studio_binary_location():
     ##TODO: THIS IS WINDOWS SPECIFIC
