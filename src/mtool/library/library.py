@@ -20,8 +20,6 @@ def load_library(root, library_db):
     readme_location = os.path.join(root, "README.md")
     readme_data = "No Readme"
     dirname = root.split(os.path.sep)[-1]
-    print(readme_location)
-
     if os.path.isfile(readme_location):
          f = open(readme_location, "r")
          readme_data = "  ".join(f.readlines()[:3])

@@ -201,7 +201,6 @@ def delete_env(db_file, name):
 
 
 def load_library(db_file, root, readme, name):
-    print(readme)
     conn = create_connection(db_file)
     cur = conn.cursor()
     load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Root, Readme, Name) VALUES("{root}", "{readme}", "{name}")'
