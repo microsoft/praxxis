@@ -39,9 +39,9 @@ from src.mtool.util import sqlite_util
 
 import papermill
 
-def run_notebook(args, root):
+def run_notebook(args, root, outfile_root):
+    from src.mtool.cli import display
     """Runs one notebook specified"""
-
     scene_root = os.path.join(root, "scene")
     history_db = os.path.join(scene_root, "current_scene.db")
     db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
@@ -49,29 +49,17 @@ def run_notebook(args, root):
     filename = sqlite_util.ordinal_to_list_item(db_file, args.notebook)[1]
 
     notebook = Notebook(filename)
-    log = Log()
 
-
-    log.header("Running")
-    log.indent_no_new_line("{0}... ".format(notebook.name))
+    display.display_run_notebook_start(notebook.name)
 
     local_copy = execute(db_file, notebook)
 
     # TODO: html flag
     if False:
         html_outputfile = f"{local_copy.split('.')[0]}.html"
-        log.complete()
-
-        log.header("View HTML output from notebook runs here")
-        log.indent("%APPDATA%/mtool/output")
-        log.header("Launching result file in web browser")
-        log.indent(html_outputfile)
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:
-        log.info("")
-        log.header("Notebook output")
-        open_notebook.display_to_console(local_copy)
-
+        display.display_run_notebook(local_copy)
     send_telemetry(root, local_copy)
 
 def execute(db_file, notebook):
@@ -82,7 +70,7 @@ def execute(db_file, notebook):
         injects = pull_params(db_file, notebook._environmentVars)
         papermill.execute_notebook(notebook.getpath(), local_copy, injects)
     else:
-        display.no_tagged_cell_warning()
+        display.no_tagged_cell_warning
         papermill.execute_notebook(notebook.getpath(), local_copy)
     
     #need local output -- temp? or just send it directly to HDFS
