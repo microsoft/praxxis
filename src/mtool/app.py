@@ -182,7 +182,7 @@ def search_notebook(arg):
 
 def list_notebook(arg):
     from src.mtool.notebook import list_notebook
-    list_notebook.list_notebook(arg, _root)
+    list_notebook.list_notebook(_library_db)
     return
 
 def history(arg):
