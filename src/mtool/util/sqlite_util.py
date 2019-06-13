@@ -119,8 +119,6 @@ def mark_ended_scene(db_file, name):
 
     active_scenes = get_active_scenes(db_file)
     if len(active_scenes) <= 1 and ended != 1:
-        #TODO: make this print a good print
-        print("Can't end current scene, it's the only active scene you have. Make a new scene or restart an old one")
         return 0
     else:
         end_scene = f'UPDATE "CurrentScene" SET Ended = 1 WHERE Name = "{name}"'

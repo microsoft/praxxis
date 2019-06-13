@@ -18,6 +18,7 @@ def main(command_line=None):
     add_library_command="add_library"
     list_library_command="list_library"
     remove_library_command="remove_library"
+    load_library_command="load_library"
     set_env_command="set_env"
     delete_env_command="delete_env"
     list_env_command="list_env"
@@ -78,6 +79,9 @@ def main(command_line=None):
 
     list_libraries_help="list libraries currently installed"
 
+    load_library_help="load libraries into mtool. Default loads from predefined library path"
+    load_library_path_help="load library from a specific directory into mtool"
+
     parser = argparse.ArgumentParser('mtool')
     subparsers = parser.add_subparsers(dest='command')
     
@@ -137,6 +141,11 @@ def main(command_line=None):
 
     list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
     list_libraries.set_defaults(which=list_library_command)
+
+    load_library = subparsers.add_parser('loadlibrary', aliases=["lo"], help=load_library_help)
+    load_library.add_argument('path', nargs="?", help=load_library_path_help)
+    load_library.set_defaults(which=load_library_command)
+
 
     set_env = subparsers.add_parser('setenv', aliases=["se"], help=set_env_help)
     set_env.add_argument('name', help=set_env_name_help)
@@ -248,6 +257,11 @@ def list_library(arg):
     list_library.list_library(_library_root, _library_db)
     return
 
+def load_library(arg):
+    from src.mtool.library import load_library
+    load_library.load_libraries(_library_root, _library_db)
+    return
+
 
 def default(arg):
     from src.mtool.scene import current_scene
@@ -272,7 +286,8 @@ def command(argument):
         "list_library": list_library,
         "set_env": set_env,
         "delete_env": delete_env,
-        "list_env": list_env
+        "list_env": list_env,
+        "load_library": load_library
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
