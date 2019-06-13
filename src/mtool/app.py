@@ -170,13 +170,14 @@ _root = os.path.join(os.getenv('APPDATA'), "mtool")
 _library_root = os.path.join(_root, "library")
 _scene_root = os.path.join(_root, "scene")
 _library_root = os.path.join(_root, "library")
+_outfile_root = os.path.join(_root, "output")
 _library_db = os.path.join(_library_root, "libraries.db")
 _history_db = os.path.join(_scene_root, "current_scene.db")
 
 
 def run_notebook(arg):
     from src.mtool.notebook import run_notebook
-    run_notebook.run_notebook(arg, _root)
+    run_notebook.run_notebook(arg, _root, _outfile_root)
     return
  
 def open_notebook(arg):

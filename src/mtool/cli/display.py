@@ -94,3 +94,19 @@ def last_active_scene_error(name):
 
 def no_tagged_cell_warning():
     print("Warning: no tagged cell located. No parameters will be injected for this notebook.")
+
+def display_run_notebook_start(notebook_name):
+    print(f"\nRunning {notebook_name}...\n")
+
+def display_run_notebook_html(output_root, html_outfile):
+    print("\nCOMPLETE\n")
+    print("View HTML output from notebook runs here")
+    print(f"\t{output_root}")
+    print("Launching result file in web browser")
+    print(f"\t{html_outfile}")
+
+def display_run_notebook(filename):
+    import pypandoc
+    print("\nNotebook output:")
+    print(pypandoc.convert_file(filename, 'asciidoc'))
+

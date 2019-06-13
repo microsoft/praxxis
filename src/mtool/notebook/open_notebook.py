@@ -34,8 +34,6 @@ def display_as_html(filename, html_outputfile):
     pypandoc.convert_file(filename, 'html', outputfile=html_outputfile)
     webbrowser.open(html_outputfile)
 
-def display_to_console(filename):
-    print(pypandoc.convert_file(filename, 'asciidoc'))
 
 def display_in_editor(filename):
     """Opens a notebook in Azure Data Studio

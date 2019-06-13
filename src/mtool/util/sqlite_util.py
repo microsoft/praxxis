@@ -259,7 +259,7 @@ def ordinal_to_list_item(db_file, ordinal):
         query = f'SELECT DATA, PATH FROM List WHERE ID = ?'
     else:
         query = f'SELECT DATA, PATH FROM LIST WHERE DATA = ?'
-    cur.execute(query, ordinal)
+    cur.execute(query, (ordinal,))
     conn.commit()
     item = cur.fetchone()
     conn.close()
