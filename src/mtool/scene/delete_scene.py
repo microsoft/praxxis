@@ -19,9 +19,7 @@ def delete_scene(args, root, history_db):
         name = args
 
     tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
-    if tmp_name == "":
-        return
-    else:
+    if tmp_name != None:
         name = tmp_name
 
     directory = os.path.join(root, name)

@@ -56,6 +56,20 @@ def init_current_scene(db_file, scene_name):
     conn.commit()
     conn.close()
 
+
+def check_scene_ended(db_file, scene_name):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    check_scene_exists = f'SELECT Ended from "SceneHistory" WHERE Name = "{scene_name}"'
+    cur.execute(check_scene_exists)
+    rows = cur.fetchall()
+    conn.close()
+    if rows == []:
+        return -1
+    else:
+        return rows[0][0]
+
+
 def update_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur =  conn.cursor()

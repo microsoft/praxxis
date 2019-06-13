@@ -18,9 +18,7 @@ def end_scene(args, root, history_db, current_scene_db):
         name = args
 
     tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
-    if tmp_name == "":
-        return
-    else:
+    if tmp_name != None:
         name = tmp_name
 
     allow_end_scene = sqlite_util.mark_ended_scene(history_db, name)
