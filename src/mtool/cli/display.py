@@ -116,11 +116,15 @@ def notebook_does_not_exist_error(name):
 
 
 def last_active_scene_error(name):
-    print(f"{name} is your last active scene. Make a new scene, or restart an old one.")
+    print(f"{name} is your last active scene. Make a new scene, or resume an old one.")
 
 
 def env_not_found_error(name):
     print(f"{name} not found")
+
+
+def scene_ended_error(name):
+    print(f"can't switch to {name}, because the scene has ended. Resume the scene or make a new one")
 
 
 def no_tagged_cell_warning():
