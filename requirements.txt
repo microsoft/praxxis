@@ -10,3 +10,4 @@ toml
 pypandoc
 threading
 pandoc
+ipykernel 

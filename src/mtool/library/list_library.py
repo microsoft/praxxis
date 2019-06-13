@@ -14,7 +14,4 @@ def list_library(library_root, library_db, current_scene_db):
     
     library.init_library(library_root, library_db)
     libraries = sqlite_util.list_libraries(library_db, 0, 10)
-    sqlite_util.write_list(current_scene_db, libraries)
     display.display_libraries(libraries)
-
-

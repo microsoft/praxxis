@@ -32,7 +32,6 @@ import webbrowser
 from datetime import datetime
 
 from src.mtool.util.log import Log
-from src.mtool.notebook.notebook import Notebook
 from src.mtool.notebook import open_notebook 
 from src.mtool.util import telemetry
 from src.mtool.util import sqlite_util
@@ -46,12 +45,13 @@ def run_notebook(args, root, outfile_root, current_scene_db):
     notebook.init_notebook_run(outfile_root)
 
     filename = sqlite_util.ordinal_to_list_item(current_scene_db, args.notebook)[1]
-    notebook = Notebook(filename)
+    notebook = notebook.Notebook(filename)
     display.display_run_notebook_start(notebook.name)
     local_copy = execute(current_scene_db, notebook)
 
-    # TODO: html flag
-    if False:
+    print(args)
+
+    if args.html:
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:

@@ -221,7 +221,7 @@ def load_notebook(db_file, root, name, library):
 def list_libraries(db_file, start, end):
     conn = create_connection(db_file)
     cur = conn.cursor()
-    list_libraries = f'SELECT Name, Root FROM "LibraryMetadata" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Name FROM "LibraryMetadata" LIMIT {start}, {end}'
     cur.execute(list_libraries)
     conn.commit()
     rows = cur.fetchall()

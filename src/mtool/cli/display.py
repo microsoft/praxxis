@@ -41,8 +41,9 @@ def display_loaded_notebook(name, first):
     else:
         print(f"\t{name}")
 
+
 def display_libraries(libraries):
-    print(f"Loaded libraries:\n\t{explode_zipped_list(libraries)}")
+    print(f"Loaded libraries:\n\t{explode_list(libraries)}")
 
 
 def display_change_scene(name):
