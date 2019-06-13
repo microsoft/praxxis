@@ -29,10 +29,12 @@ def azure_data_studio_binary_location():
     """Returns location of ADS binary"""
     return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
-def display_as_html(filename, html_outputfile):
-    pypandoc.convert_file(filename, 'html', outputfile=html_outputfile)
+def display_as_html(html_outputfile):
     webbrowser.open(html_outputfile)
 
+def get_html_result(filename, html_outputfile):
+    pypandoc.convert_file(filename, 'html', outputfile=html_outputfile)
+    return html_outputfile
 
 def display_in_editor(filename):
     """Opens a notebook in Azure Data Studio
@@ -40,7 +42,4 @@ def display_in_editor(filename):
     Keyword arguments:
     filename -- name of notebook to open
     """
-    #nb = notebook.Notebook(filename)
-    #outputfile = nb.get_local_copy_filename('.ipynb')
-    #shutil.copyfile(filename, outputfile)
     subprocess.Popen([azure_data_studio_binary_location(), filename])

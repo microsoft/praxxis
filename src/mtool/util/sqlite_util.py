@@ -45,7 +45,6 @@ def init_library_db(db_file):
     conn.commit()
     conn.close()
 
-
 def init_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -95,6 +94,15 @@ def get_current_scene(db_file):
     rows = cur.fetchall()
     conn.close()
     return rows[0][0]
+
+def get_scene_id(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_scene_id = 'SELECT ID FROM "SceneMetadata"'
+    cur.execute(get_scene_id)
+    id = cur.fetchone()[0]
+    conn.close()
+    return id
 
 def delete_scene(db_file, name):
     conn = create_connection(db_file)
@@ -286,8 +294,6 @@ def get_telemetry_info(db_file, key):
     item = cur.fetchone()
     if item != None:
         item = item[0] # remove tuple wrapping
-    print(key)
-    print(item)
     conn.close()
     return item
 

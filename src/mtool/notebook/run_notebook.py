@@ -49,23 +49,18 @@ def run_notebook(args, root, outfile_root, current_scene_db):
     display.display_run_notebook_start(notebook.name)
     local_copy = execute(current_scene_db, notebook)
 
-    print(args)
+
+    html_outputfile = f"{local_copy.split('.')[0]}.html"
+    open_notebook.get_html_result(local_copy, html_outputfile)
 
     if args.html:
-        html_outputfile = f"{local_copy.split('.')[0]}.html"
-        open_notebook.display_as_html(local_copy, html_outputfile)
+        open_notebook.display_as_html(html_outputfile)
     else:
-<<<<<<< HEAD
         display.display_run_notebook(local_copy)
-    send_telemetry(root, local_copy)
-=======
-        log.info("")
-        log.header("Notebook output")
-        open_notebook.display_to_console(local_copy)
 
-    telemetry.send(root, local_copy)
+
+    telemetry.send(root, local_copy, current_scene_db)
     #send_telemetry(root, local_copy)
->>>>>>> removing toml config
 
 def execute(db_file, notebook):
     from src.mtool.cli import display
