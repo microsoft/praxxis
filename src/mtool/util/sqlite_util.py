@@ -2,6 +2,8 @@ import sqlite3
 
 from sqlite3 import Error
 
+#TODO: sql injection is scary and bad
+
 def create_connection(db_file):
     try:
         conn = sqlite3.connect(db_file)
@@ -9,7 +11,6 @@ def create_connection(db_file):
     except Error as e:
         print(e)
         return None
-
 
 def init_scene(db_file, name):
     import uuid
@@ -20,9 +21,9 @@ def init_scene(db_file, name):
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
-    create_list_table=f'CREATE TABLE "List" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Timestamp INTEGER, Data TEXT)'
+    create_list_table=f'CREATE TABLE "List" (ID INTEGER PRIMARY KEY, Data TEXT, Path TEXT)'
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
-    create_history_table=f'CREATE TABLE "History" (Timestamp INTEGER, Notebook, TEXT, Library TEXT)'
+    create_history_table=f'CREATE TABLE "History" (Timestamp INTEGER, Notebook TEXT, Library TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
     
     cur.execute(create_metadata_table)
@@ -33,7 +34,6 @@ def init_scene(db_file, name):
     conn.commit()
     conn.close()
 
-
 def init_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -41,7 +41,6 @@ def init_current_scene(db_file, scene_name):
     cur.execute(create_current_scene_table)
     conn.commit()
     conn.close()
-
 
 def update_current_scene(db_file, scene_name):
     conn = create_connection(db_file)
@@ -51,7 +50,6 @@ def update_current_scene(db_file, scene_name):
     conn.commit()
     conn.close()
 
-
 def get_current_scene(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -60,7 +58,6 @@ def get_current_scene(db_file):
     rows = cur.fetchall()
     conn.close()
     return rows[0][0]
-
 
 def delete_scene(db_file, name):
     conn = create_connection(db_file)
@@ -83,7 +80,6 @@ def delete_scene(db_file, name):
         return 1
     return 0
 
-
 def end_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -91,7 +87,6 @@ def end_scene(db_file, name):
     cur.execute(end_scene)
     conn.commit()
     conn.close()
-
 
 def check_ended(db_file, name, conn, cur):
     ended = f'SELECT Ended from "CurrentScene" WHERE Name = "{name}"'
@@ -131,7 +126,6 @@ def mark_resumed_scene(db_file, name):
     conn.commit()
     conn.close()
 
-
 def resume_scene(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -139,7 +133,6 @@ def resume_scene(db_file, name):
     cur.execute(end_scene)
     conn.commit()
     conn.close()
-
 
 def get_active_scenes(db_file):
     conn = create_connection(db_file)
@@ -159,7 +152,6 @@ def get_ended_scenes(db_file):
     conn.close()
     return rows
 
-
 def list_env(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -170,7 +162,6 @@ def list_env(db_file):
     conn.close()
     return rows
 
-
 def set_env(db_file, name, value):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -178,7 +169,6 @@ def set_env(db_file, name, value):
     cur.execute(set_env)
     conn.commit()
     conn.close()
-
 
 def delete_env(db_file, name):
     conn = create_connection(db_file)
@@ -188,8 +178,31 @@ def delete_env(db_file, name):
     conn.commit()
     conn.close()
 
-
 def get_scene_id(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
 
+def write_scene_list(db_file, input):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    clear_list = f'DELETE FROM "List"'
+    insert_line = f'INSERT INTO "List" (ID, DATA, PATH) VALUES (?,?,?)'
+    cur.execute(clear_list)
+    cur.executemany(insert_line, input)
+    conn.commit()
+    conn.close()
+
+    
+def ordinal_to_list_item(db_file, ordinal):
+    """Returns list item referenced by input ordinal"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    if str.isnumeric(ordinal):
+        query = f'SELECT DATA, PATH FROM List WHERE ID = ?'
+    else:
+        query = f'SELECT DATA, PATH FROM LIST WHERE DATA = ?'
+    cur.execute(query, ordinal)
+    conn.commit()
+    item = cur.fetchall()
+    conn.close()
+    return item
