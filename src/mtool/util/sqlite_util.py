@@ -162,6 +162,16 @@ def list_env(db_file):
     conn.close()
     return rows
 
+def get_env(db_file, var_name):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_env = f'SELECT Value FROM "Environment" WHERE Name = ?'
+    cur.execute(get_env, (var_name,))
+    conn.commit()
+    value = cur.fetchone()   #just a value, not the tuple
+    conn.close()
+    return value
+
 def set_env(db_file, name, value):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -203,6 +213,6 @@ def ordinal_to_list_item(db_file, ordinal):
         query = f'SELECT DATA, PATH FROM LIST WHERE DATA = ?'
     cur.execute(query, ordinal)
     conn.commit()
-    item = cur.fetchall()
+    item = cur.fetchone()
     conn.close()
     return item

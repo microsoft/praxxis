@@ -5,6 +5,9 @@ opened as an html output in the web browser, depending on user input.
 Dependencies within mtool: log.py, notebook.py, scene.py, open_notebook.py,
     telemetry.py
 """
+#TODO: want to print defaults and overridden vals before execution
+#TODO: should have a way to view all defaults in a notebook 
+#TODO: have a way to load all environment variables for a library?
 
 import os
 import sys
@@ -13,54 +16,21 @@ from datetime import datetime
 
 from src.mtool.util.log import Log
 from src.mtool.notebook.notebook import Notebook
-from src.mtool.scene.scene import Scene
 from src.mtool.notebook import open_notebook 
 from src.mtool.util import telemetry
+from src.mtool.util import sqlite_util
 
 import papermill
 
-def run_notebook(args):
+def run_notebook(args, root):
     """Runs one notebook specified"""
-    run(Scene.ordinal_to_list_item(args.notebook))
 
-def execute(notebook):
-    """Handles papermill execution for notebook"""
-    local_copy = get_outputname(notebook)
-    if (notebook._hasParameters):
-        injects = pull_params(notebook)
-        papermill.execute_notebook(notebook.path, local_copy, injects)
-    else:
-        print("Warning: no tagged cell located. No parameters will be " +
-            "injected for this notebook.")
-        papermill.execute_notebook(notebook.getpath(), local_copy)
+    scene_root = os.path.join(root, "scene")
+    history_db = os.path.join(scene_root, "current_scene.db")
+    db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
     
-    #need local output -- temp? or just send it directly to HDFS
-    # need to pull params from toml and send to papermill as dict
-    
-    return local_copy
+    filename = sqlite_util.ordinal_to_list_item(db_file, args.notebook)[1]
 
-def pull_params(environmentVars):
-    """Returns a dictionary of all overridden parameters for notebook"""
-    return {}
-
-def get_outputname(notebook):
-    """Returns name of output file for notebook"""
-    appdata = os.path.expandvars("%APPDATA%")
-    output_folder = os.path.join(appdata, "mtool", "output")
-
-    timestamp = datetime.today().strftime("%Y%m%d-%H%M%S")
-    filename = f"{timestamp}-{notebook.library_name}-{notebook.name}"
-    
-    outputname = os.path.join(output_folder, filename)
-    return outputname
-
-def run(filename):
-    """Run a notebook, given a filename.
-
-    Keyword arguments:
-    filename -- the name of a notebook to run
-    """
-    
     notebook = Notebook(filename)
     log = Log()
 
@@ -68,7 +38,7 @@ def run(filename):
     log.header("Running")
     log.indent_no_new_line("{0}... ".format(notebook.name))
 
-    local_copy = execute(notebook)
+    local_copy = execute(db_file, notebook)
 
     # TODO: html flag
     if False:
@@ -87,8 +57,46 @@ def run(filename):
 
     send_telemetry(local_copy)
 
+def execute(db_file, notebook):
+    """Handles papermill execution for notebook"""
+    local_copy = get_outputname(notebook)
+    if (notebook._hasParameters):
+        injects = pull_params(db_file, notebook._environmentVars)
+        papermill.execute_notebook(notebook.getpath(), local_copy, injects)
+    else:
+        print("Warning: no tagged cell located. No parameters will be " +
+            "injected for this notebook.")
+        papermill.execute_notebook(notebook.getpath(), local_copy)
+    
+    #need local output -- temp? or just send it directly to HDFS
+    # need to pull params from toml and send to papermill as dict
+    
+    return local_copy
+
+def pull_params(db_file, environmentVars):
+    """Returns a dictionary of all overridden parameters for notebook"""
+    injects = {}
+    for var in environmentVars:
+        value = sqlite_util.get_env(db_file, var)
+        if value != None:
+            value = value[0] # want just the value, currently a tuple
+            injects[var] = value
+    return injects
+
+def get_outputname(notebook):
+    """Returns name of output file for notebook"""
+    appdata = os.path.expandvars("%APPDATA%")
+    output_folder = os.path.join(appdata, "mtool", "output")
+
+    timestamp = datetime.today().strftime("%Y%m%d-%H%M%S")
+    filename = f"{timestamp}-{notebook.library_name}-{notebook.name}"
+    
+    outputname = os.path.join(output_folder, filename)
+    return outputname
+
 def send_telemetry(local_copy):
     """Sends telemetry to HDFS"""
+    # TODO: it appears all data for user flies into a single scene??
     basedir = os.path.expandvars("%APPDATA%/mtool")
     with open(os.path.join(basedir, "id.json")) as infile:
         id = infile.read()
