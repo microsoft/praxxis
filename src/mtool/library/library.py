@@ -9,11 +9,13 @@ def init_library(root, library_db):
     if not os.path.exists(library_db):
         sqlite_util.init_library_db(library_db)
 
+
 def load_libraries(root, library_db):
     directories = [ name for name in os.listdir(root) if os.path.isdir(os.path.join(root, name)) ]
     
     for directory in directories:
         load_library(os.path.join(root, directory), library_db)
+
 
 def load_library(root, library_db):
     from src.mtool.util import sqlite_util
