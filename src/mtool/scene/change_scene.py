@@ -21,7 +21,6 @@ def change_scene(args, root, history_db):
     if tmp_name != None:
         name = tmp_name
 
-
     ended = sqlite_util.check_scene_ended(history_db, name) 
 
     if ended == -1:
