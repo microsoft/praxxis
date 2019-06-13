@@ -231,6 +231,18 @@ def list_libraries(db_file, start, end):
     conn.close()
     return rows
 
+
+def list_notebooks(db_file, start, end):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    list_libraries = f'SELECT Name FROM "Notebooks" LIMIT {start}, {end}'
+    cur.execute(list_libraries)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
 def write_scene_list(db_file, input):
     conn = create_connection(db_file)
     cur = conn.cursor()
