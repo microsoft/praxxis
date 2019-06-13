@@ -77,3 +77,12 @@ def last_active_scene_error(name):
 
 def display_end_scene_success(name):
     print(f"{name} ended")
+
+
+def display_list_scene(ended, active, current):
+    print(f"Ended scenes:\n\t{explode_list(ended)}")
+    print(f"Active scenes:\n\t{explode_list(active)}")
+    print(f"Current scene:\n\t{current}")
+
+def display_resume_scene(name):
+    print(f"{name} resumed")
