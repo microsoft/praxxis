@@ -23,7 +23,7 @@ def init_scene(db_file, name):
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
     create_list_table=f'CREATE TABLE "List" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, Path TEXT)'
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
-    create_history_table=f'CREATE TABLE "History" (Timestamp INTEGER, Notebook TEXT, Library TEXT)'
+    create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
     
     cur.execute(create_metadata_table)
@@ -194,6 +194,15 @@ def get_ended_scenes(db_file):
     conn.close()
     return rows
 
+def add_to_scene_history(db_file, timestamp, name, library):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    add_to_scene_history = f'INSERT INTO "History"(Timestamp, Notebook, Library) VALUES (?,?,?)'
+    cur.execute(add_to_scene_history, (timestamp, name, library))
+    conn.commit()
+    conn.close()
+    pass
+
 def list_env(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -271,7 +280,6 @@ def list_notebooks(db_file, start, end):
     rows = cur.fetchall()
     conn.close()
     return rows
-
 
 def write_list(db_file, input):
     conn = create_connection(db_file)
