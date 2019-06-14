@@ -8,6 +8,5 @@ ijson
 datetime
 toml
 pypandoc
-threading
 pandoc
 ipykernel 

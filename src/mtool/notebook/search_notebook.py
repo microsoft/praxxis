@@ -1,38 +1,25 @@
 import os
-import sys
 
-from src.mtool.cli import mtool
-from src.mtool.util.log import Log
-from src.mtool.notebook import notebook
+from src.mtool.notebook.notebook import Notebook
+from src.mtool.util import sqlite_util
+from src.mtool.cli import display
 
-m = None
-log = None
-counter = 0
-items = []
-search_term = None
 
-def search_notebook(args):
-    global m
-    global search_term
-    global log
-
-    log = Log()
-    
-    m = mtool.Mtool(args)
+def search_notebook(args, library_db):
     search_term = args.term
-    log.section("Search notebook names for", search_term)
-    m.write_list(items)
 
+    notebooks = sqlite_util.list_notebooks(library_db, 0, 100)
 
-def filter(filename):
-    global counter
-    global items
-    global search_term
+    display.display_search(search_term, filter(notebooks, search_term))
+   
 
-    nb = notebook.Notebook(filename)
+def filter(notebook_filenames, search_term):
+    results = []
+    
+    for i in range(len(notebook_filenames)):
+        notebook = Notebook(notebook_filenames[i][1])
+        if (notebook.name.lower().find(search_term)) > -1:
+            results.append([notebook.name, notebook.library_name])
 
-    if (nb.name.lower().find(search_term)) > -1:
-        counter += 1
-        log.info(f"\t{str(counter)}.\t{nb.name} ({nb.library_name})")
-        items.append([counter, nb.name, nb.library_name])
+    return results 
 
