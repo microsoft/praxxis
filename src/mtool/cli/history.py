@@ -4,8 +4,9 @@ This file prints the history in the current scene.
 Dependencies within mtool: mtool/mtool.py
 """
 import os
-import sys
-from src.mtool.cli import mtool
+
+from mtool.util import sqlite_util
+from mtool.cli import display
 
 counter = 0
 items = []
@@ -14,8 +15,7 @@ m = None
 
 def history(args):
     """Calls display for every notebook in scene history"""
-    global m
-    m = mtool.Mtool(args)
+
 
     m.log.header("History for scene", m.current_scene)
 
