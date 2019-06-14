@@ -252,7 +252,7 @@ def set_env(db_file, name, value):
     conn = create_connection(db_file)
     cur = conn.cursor()
     set_env = f'INSERT OR IGNORE INTO "Environment"(Name, Value) VALUES("{name}", "{value}")'
-    upate_env = f'UPDATE "Environment" SET Value = "{value}"'
+    upate_env = f'UPDATE "Environment" SET Value = "{value}" WHERE Name = "{name}"'
     cur.execute(set_env)
     cur.execute(upate_env)
     conn.commit()
