@@ -34,7 +34,6 @@ def init_scene(db_file, name):
     conn.commit()
     conn.close()
 
-
 def init_library_db(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -201,7 +200,16 @@ def add_to_scene_history(db_file, timestamp, name, library):
     cur.execute(add_to_scene_history, (timestamp, name, library))
     conn.commit()
     conn.close()
-    pass
+    
+def get_notebook_history(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_notebook_history = f'SELECT * FROM "History" ORDER BY Timestamp LIMIT 10'
+    cur.execute(get_notebook_history)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 
 def list_env(db_file):
     conn = create_connection(db_file)
