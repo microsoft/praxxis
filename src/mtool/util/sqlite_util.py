@@ -329,12 +329,8 @@ def list_notebooks(db_file, start, end):
     conn.close()
     return rows
 
-<<<<<<< HEAD
 
 def write_list(db_file, notebook_list):
-=======
-def write_list(db_file, input):
->>>>>>> 720648646aff4419ba03b7db79a9d97a870c7a86
     conn = create_connection(db_file)
     cur = conn.cursor()
     clear_list = f'DELETE FROM "NotebookList"'
