@@ -65,9 +65,7 @@ def execute(db_file, notebook):
     local_copy = get_outputname(notebook)
     if (notebook._hasParameters): 
         injects = pull_params(db_file, notebook._environmentVars)
-        print(injects)
         papermill.execute_notebook(notebook.getpath(), local_copy, injects)
-        print("ew")
     else:
         display.no_tagged_cell_warning()
         papermill.execute_notebook(notebook.getpath(), local_copy)
