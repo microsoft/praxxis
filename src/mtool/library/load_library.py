@@ -3,7 +3,7 @@ import os
 def load_libraries(root, library_db):
     from src.mtool.cli import display
     directories = [ name for name in os.listdir(root) if os.path.isdir(os.path.join(root, name)) ]
-    
+   
     first = True
     for directory in directories:
         library_root = os.path.join(root, directory)
