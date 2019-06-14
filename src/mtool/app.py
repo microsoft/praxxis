@@ -1,4 +1,3 @@
-import sys
 import argparse
 import os
 
@@ -194,7 +193,7 @@ def open_notebook(arg):
  
 def search_notebook(arg):
     from src.mtool.notebook import search_notebook
-    search_notebook.search_notebook(arg)
+    search_notebook.search_notebook(arg, _library_db)
     return
 
 def list_notebook(arg):
@@ -206,8 +205,8 @@ def list_notebook(arg):
     return
 
 def history(arg):
-    from src.mtool.cli import history
-    history.history(arg)
+    from src.mtool.scene import history
+    history.history(arg, _history_db)
     return
 
 def next_notebook(arg):
