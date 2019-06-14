@@ -43,7 +43,6 @@ class Notebook:
             self.extract_params(f)
         except(FileNotFoundError):
             display.notebook_does_not_exist_error(self.name)
-
     
     def getpath(self):
         return self._path
