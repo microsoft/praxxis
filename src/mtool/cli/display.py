@@ -115,3 +115,18 @@ def display_run_notebook(filename):
 
 def display_init_run_notebook(outfile_root):
     print(f"Created outfile directory at {outfile_root}")
+
+def display_history(current_scene, notebooks):
+    print(f"History for scene {current_scene}")
+    print(f"\tTIMESTAMP\t\tNOTEBOOK\t\tLIBRARY")
+    for notebook in notebooks:
+        print(f"\t{notebook[0]}\t{notebook[1]}\t{notebook[2]}")
+
+def display_search(search_term, notebooks):
+    print(f"Search notebook names for \"{search_term}\"")
+    counter = 0
+    for notebook in notebooks:
+        counter += 1
+        print(f"\t{counter}.\t{notebook[0]} ({notebook[1]})")
+    if len(notebooks) == 0:
+        print("\tNo results found")

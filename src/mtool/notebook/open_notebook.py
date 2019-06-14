@@ -5,7 +5,6 @@ Dependencies within mtool: notebook.py, scene.py
 """
 
 import os
-import sys
 import shutil
 import subprocess
 
