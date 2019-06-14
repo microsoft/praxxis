@@ -4,7 +4,6 @@ This file prints a list of all notebook libraries installed on this machine.
 Dependencies within mtool: mtool/mtool.py
 """
 import os
-import sys
 import json
 
 def list_library(library_root, library_db, current_scene_db):

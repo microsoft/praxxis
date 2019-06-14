@@ -23,7 +23,7 @@ def init_scene(db_file, name):
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
     create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, Path TEXT)'
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
-    create_history_table=f'CREATE TABLE "History" (Timestamp INTEGER, Notebook TEXT, Library TEXT)'
+    create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
     
     cur.execute(create_metadata_table)
@@ -33,7 +33,6 @@ def init_scene(db_file, name):
     cur.execute(init_metadata_table)
     conn.commit()
     conn.close()
-
 
 def init_library_db(db_file):
     conn = create_connection(db_file)
@@ -209,9 +208,25 @@ def get_ended_scenes(db_file):
     conn.close()
     return rows
 
+def add_to_scene_history(db_file, timestamp, name, library):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    add_to_scene_history = f'INSERT INTO "History"(Timestamp, Notebook, Library) VALUES (?,?,?)'
+    cur.execute(add_to_scene_history, (timestamp, name, library))
+    conn.commit()
+    conn.close()
+    
+def get_notebook_history(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_notebook_history = f'SELECT * FROM "History" ORDER BY Timestamp LIMIT 10'
+    cur.execute(get_notebook_history)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 
-
-def list_env(db_file, start, end):
+def list_env(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
     list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {start}, {end}'
@@ -314,8 +329,12 @@ def list_notebooks(db_file, start, end):
     conn.close()
     return rows
 
+<<<<<<< HEAD
 
 def write_list(db_file, notebook_list):
+=======
+def write_list(db_file, input):
+>>>>>>> 720648646aff4419ba03b7db79a9d97a870c7a86
     conn = create_connection(db_file)
     cur = conn.cursor()
     clear_list = f'DELETE FROM "NotebookList"'
