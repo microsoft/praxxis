@@ -226,7 +226,7 @@ def get_notebook_history(db_file):
     conn.close()
     return rows
 
-def list_env(db_file):
+def list_env(db_file, start, end):
     conn = create_connection(db_file)
     cur = conn.cursor()
     list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {start}, {end}'
