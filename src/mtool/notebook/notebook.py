@@ -59,7 +59,11 @@ class Notebook:
                 return
 
     def extract_envVars(self, source):
-        for line in source:
+        if(isinstance(source, list)):
+            lines = source
+        else:
+            lines = source.splitlines()
+        for line in lines:
             if "=" in line and not line.startswith("#"):
                 self._environmentVars.append(line.split("=")[0].strip())
 
