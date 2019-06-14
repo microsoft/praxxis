@@ -19,7 +19,7 @@ def display_list_env(envs):
     i = 0
     for env in envs:
         i += 1
-        print(f"{i}\t{env[0]} = {env[1]}")
+        print(f"\t{i}.\t{env[0]} = {env[1]}")
 
 
 def display_set_env(name, value):
@@ -31,7 +31,7 @@ def display_list_notebook(notebooks):
     i = 0
     for notebook in notebooks:
         i+=1
-        print(f"{i}\t{notebook[0]}")
+        print(f"\t{i}.\t{notebook[0]}")
 
 
 def display_init_libraries_folder(root):
@@ -94,14 +94,14 @@ def display_list_scene(ended, active, current):
     print(f"Ended scenes:")
     for scene in ended:
         i += 1
-        print(f"{i}\t{scene[0]}")
+        print(f"\t{i}.\t{scene[0]}")
     print(f"Active scenes:")
     for scene in active:
         i += 1
-        print(f"{i}\t{scene[0]}")
+        print(f"\t{i}.\t{scene[0]}")
     print(f"Current scene:")
     i += 1
-    print(f"{i}\t{current}")
+    print(f"\t{i}.\t{current}")
 
 def display_resume_scene(name):
     print(f"{name} resumed")
@@ -147,3 +147,18 @@ def display_run_notebook(filename):
 
 def display_init_run_notebook(outfile_root):
     print(f"Created outfile directory at {outfile_root}")
+
+def display_history(current_scene, notebooks):
+    print(f"History for scene {current_scene}")
+    print(f"\tTIMESTAMP\t\tNOTEBOOK\t\tLIBRARY")
+    for notebook in notebooks:
+        print(f"\t{notebook[0]}\t{notebook[1]}\t{notebook[2]}")
+
+def display_search(search_term, notebooks):
+    print(f"Search notebook names for \"{search_term}\"")
+    counter = 0
+    for notebook in notebooks:
+        counter += 1
+        print(f"\t{counter}.\t{notebook[0]} ({notebook[1]})")
+    if len(notebooks) == 0:
+        print("\tNo results found")

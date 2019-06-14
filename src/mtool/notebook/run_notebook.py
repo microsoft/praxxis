@@ -2,7 +2,7 @@
 This file runs a notebook. Results are either printed to the console or 
 opened as an html output in the web browser, depending on user input.
 
-Dependencies within mtool: log.py, notebook.py, scene.py, open_notebook.py,
+Dependencies within mtool:  notebook.py, scene.py, open_notebook.py,
     telemetry.py
 """
 
@@ -27,11 +27,9 @@ Also check string concat and other optimizers.
 #TODO: have a way to load all environment variables for a library?
 
 import os
-import sys
 import webbrowser
 from datetime import datetime
 
-from src.mtool.util.log import Log
 from src.mtool.notebook import open_notebook 
 from src.mtool.util import telemetry
 from src.mtool.util import sqlite_util
@@ -56,8 +54,10 @@ def run_notebook(args, root, outfile_root, current_scene_db):
         display.display_run_notebook(local_copy)
 
 
+    timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
+    sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
     telemetry.send(root, local_copy, current_scene_db)
-    #send_telemetry(root, local_copy)
+
 
 def execute(db_file, notebook):
     from src.mtool.cli import display
@@ -65,10 +65,18 @@ def execute(db_file, notebook):
     local_copy = get_outputname(notebook)
     if (notebook._hasParameters): 
         injects = pull_params(db_file, notebook._environmentVars)
-        papermill.execute_notebook(notebook.getpath(), local_copy, injects)
+        try:
+            papermill.execute_notebook(notebook.getpath(), local_copy, injects)
+        except Exception as e:
+            print("PAPERMILL ERROR")
+            print(e)
     else:
-        display.no_tagged_cell_warning
-        papermill.execute_notebook(notebook.getpath(), local_copy)
+        display.no_tagged_cell_warning()
+        try:
+            papermill.execute_notebook(notebook.getpath(), local_copy)
+        except Exception as e:
+            print("PAPERMILL ERROR")
+            print(e)
     
     #need local output -- temp? or just send it directly to HDFS
     return local_copy

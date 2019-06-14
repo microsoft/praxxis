@@ -5,7 +5,6 @@ Dependencies within mtool: notebook.py, scene.py
 """
 
 import os
-import sys
 import shutil
 import subprocess
 
@@ -15,13 +14,11 @@ import webbrowser
 
 from src.mtool.notebook.notebook import Notebook
 
-def open_notebook(args, scene_root):
+def open_notebook(args, current_scene_db):
     from src.mtool.util import sqlite_util
     """Open a notebook"""
     # notebook = the number of the notebook
-    history_db = os.path.join(scene_root, "current_scene.db")
-    db_file = os.path.join(scene_root, sqlite_util.get_current_scene(history_db), sqlite_util.get_current_scene(history_db) + ".db")
-    notebook_filename = sqlite_util.ordinal_to_list_item(db_file, args.notebook)[0]
+    notebook_filename = sqlite_util.ordinal_to_list_item(current_scene_db, args.notebook)[1]
     display_in_editor(notebook_filename)
 
 def azure_data_studio_binary_location():
