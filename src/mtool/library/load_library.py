@@ -9,11 +9,13 @@ def load_libraries(root, library_db):
         library_root = os.path.join(root, directory)
         load_library(library_root, library_db)
         display.display_loaded_library(library_root, first)
-        first = False
+        #first = False
 
 
 def load_library(root, library_db):
     from src.mtool.util import sqlite_util
+    sqlite_util.clear_loaded_libararies(library_db)
+
     readme_location = os.path.join(root, "README.md")
     readme_data = "No Readme"
     dirname = root.split(os.path.sep)[-1]
