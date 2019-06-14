@@ -188,7 +188,7 @@ def run_notebook(arg):
  
 def open_notebook(arg):
     from src.mtool.notebook import open_notebook
-    open_notebook.open_notebook(arg, _scene_root)
+    open_notebook.open_notebook(arg, get_current_scene_db())
     return
  
 def search_notebook(arg):

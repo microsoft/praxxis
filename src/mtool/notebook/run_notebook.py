@@ -65,10 +65,18 @@ def execute(db_file, notebook):
     local_copy = get_outputname(notebook)
     if (notebook._hasParameters): 
         injects = pull_params(db_file, notebook._environmentVars)
-        papermill.execute_notebook(notebook.getpath(), local_copy, injects)
+        try:
+            papermill.execute_notebook(notebook.getpath(), local_copy, injects)
+        except Exception as e:
+            print("PAPERMILL ERROR")
+            print(e)
     else:
         display.no_tagged_cell_warning()
-        papermill.execute_notebook(notebook.getpath(), local_copy)
+        try:
+            papermill.execute_notebook(notebook.getpath(), local_copy)
+        except Exception as e:
+            print("PAPERMILL ERROR")
+            print(e)
     
     #need local output -- temp? or just send it directly to HDFS
     return local_copy
