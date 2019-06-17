@@ -286,6 +286,7 @@ def get_env(db_file, var_name):
     conn.close()
     return value
 
+
 def set_env(db_file, name, value):
     """set or update an environment variable"""
     conn = create_connection(db_file)

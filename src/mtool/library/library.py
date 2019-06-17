@@ -2,11 +2,11 @@
 This file initializes the library directory and db for all library calls
 """
 
-import os
-
 def init_library(library_root, library_db):
     """checks if the library library_root exists, and creates it,
     then checks if the library database exists, and creates that as well."""
+    import os
+
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
 
