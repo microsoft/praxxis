@@ -8,15 +8,16 @@ def load_libraries(library_root, library_db):
     """ loads libraries from the library root you supply, into the library db"""
     from src.mtool.library import library
     from src.mtool.cli import display
-    library.init_library(library_root, library_db)
+    from src.mtool.util import sqlite_util
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
-   
+    sqlite_util.clear_loaded_libararies(library_db)   
+    
     first = True
     for directory in directories:
-        library_library_root = os.path.join(library_root, directory)
-        load_library(library_library_root, library_db)
-        display.display_loaded_library(library_library_root, first)
-        first = False
+        library_root = os.path.join(library_root, directory)
+        load_library(library_root, library_db)
+        display.display_loaded_library(library_root, first)
+        #first = False
 
 
 def load_library(library_root, library_db):
