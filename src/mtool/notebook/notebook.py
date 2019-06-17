@@ -1,18 +1,13 @@
 """
 This file contains the Notebook class, with methods for loading in a .ipynb
 file and checking its parameterization information.
-
-Dependencies within mtool: NONE
 """
 
-import json
 import os
-import time
-
-import ijson
 
 
 def init_notebook_run(outfile_root):
+    """ initializes the notebook folder"""
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
     
@@ -21,20 +16,16 @@ def init_notebook_run(outfile_root):
         display.display_init_run_notebook(outfile_root)
 
 
-#TODO: works, but needs cleanup
-#TODO: remove all unused parts from yanking 
 class Notebook:
-    # TODO: only works on Windows, is kinda ugly :(
-    _library_loc = "%APPDATA%\\mtool\\library"
-
-    def __init__(self, path, libary_space = _library_loc):
+    """ this is the notebook class, which is an instance of a notebook"""
+    def __init__(self, path, library_path):
         from src.mtool.cli import display
         #TODO: add support for reading from a URL
 
         self._hasParameters = False
         self._environmentVars = []
 
-        self._path = os.path.join(os.path.expandvars(self._library_loc), path)
+        self._path = os.path.join(os.path.expandvars(library_path), path)
         split = os.path.split(path)
         self.name = split[-1]
         self.library_name = os.path.split(split[0])[-1]
@@ -48,6 +39,8 @@ class Notebook:
         return self._path
 
     def extract_params(self, openFile):
+        import ijson
+
         objects = ijson.items(openFile, 'cells.item')
         code_cells = (o for o in objects if o['cell_type'] == 'code')
         for cell in code_cells:
