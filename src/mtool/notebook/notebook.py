@@ -26,6 +26,7 @@ def get_notebook_by_ordinal(scene_db, name):
             return ""
         return(name)   
 
+
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
     def __init__(self, notebook_data, library_path):
@@ -52,7 +53,9 @@ class Notebook:
         """returns the path of the notebook"""
         return self._path
 
+
     def extract_params(self, openFile):
+        """extracts the parameters from the file"""
         import ijson
 
         objects = ijson.items(openFile, 'cells.item')
@@ -64,7 +67,9 @@ class Notebook:
                 self.extract_envVars(cell.get("source"))
                 return
 
+
     def extract_envVars(self, source):
+        """extracts the environment variables"""
         if(isinstance(source, list)):
             lines = source
         else:
@@ -72,5 +77,3 @@ class Notebook:
         for line in lines:
             if "=" in line and not line.startswith("#"):
                 self._environmentVars.append(line.split("=")[0].strip())
-
-
