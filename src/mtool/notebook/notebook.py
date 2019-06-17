@@ -15,19 +15,33 @@ def init_notebook_run(outfile_root):
         display.display_init_run_notebook(outfile_root)
 
 
+def get_notebook_by_ordinal(scene_db, name):
+    """gets scene by ordinal using the sqlite history db"""
+    from src.mtool.util import sqlite_util
+    if f"{name}".isdigit():
+        name = sqlite_util.get_notebook_by_ord(scene_db, name)
+        if name == "":
+            from src.mtool.cli import display
+            display.notebook_does_not_exist_error(name)
+            return ""
+        return(name)   
+
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
-    def __init__(self, path, library_path):
+    def __init__(self, notebook_data, library_path):
         from src.mtool.cli import display
         #TODO: add support for reading from a URL
+        self.name = notebook_data[1]
+        notebook_path = notebook_data[0]
 
         self._hasParameters = False
         self._environmentVars = []
 
-        self._path = os.path.join(os.path.expandvars(library_path), path)
-        split = os.path.split(path)
-        self.name = split[-1]
-        self.library_name = os.path.split(split[0])[-1]
+
+        print(notebook_data)
+        self._path = os.path.join(notebook_path)
+        self.library_name = notebook_data[2]
+
         try:
             f = open(self._path)
             self.extract_params(f)
@@ -35,6 +49,7 @@ class Notebook:
             display.notebook_does_not_exist_error(self.name)
     
     def getpath(self):
+        """returns the path of the notebook"""
         return self._path
 
     def extract_params(self, openFile):
