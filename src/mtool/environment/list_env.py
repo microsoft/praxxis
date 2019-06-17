@@ -2,10 +2,10 @@
 This file lists all of the environment variables
 """
 
-import os
-
 def list_env(args, scene_root, history_db, start, end):
     """lists the environment variables by getting them out of the scene"""
+    import os
+    
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
     

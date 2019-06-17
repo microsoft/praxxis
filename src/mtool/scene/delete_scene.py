@@ -2,7 +2,6 @@
 This file deletes the specified scene
 """
 
-
 def delete_scene(args, root, history_db):
     """Deletes a scene"""
     import shutil

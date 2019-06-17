@@ -35,7 +35,7 @@ def run_notebook(arg):
 def open_notebook(arg):
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
-    open_notebook.open_notebook(arg, get_current_scene_db(), _azure_data_studio_location)
+    open_notebook.open_notebook(arg, get_current_scene_db(), _library_db, _azure_data_studio_location)
     return
  
 
@@ -45,12 +45,14 @@ def search_notebook(arg):
     search_notebook.search_notebook(arg, _library_db, _query_start, _query_end)
     return
 
+
 def list_notebook(arg):
     """calls the function to list notebooks"""
     from src.mtool.notebook import list_notebook
     current_scene_db = get_current_scene_db()
     list_notebook.list_notebook(_scene_root, _library_db, _history_db, current_scene_db, _query_start, _query_end)
     return
+
 
 def next_notebook(arg):
     """calls the function to get the next notebook"""
@@ -108,12 +110,14 @@ def list_scene(arg):
     list_scene.list_scene(_scene_root, _history_db)
     return
 
+
 def set_env(arg):
     """calls the function to set an environment"""
     from src.mtool.environment import set_env
     current_scene = get_current_scene_db()
     set_env.set_env(arg, _scene_root, _history_db, current_scene)
     return
+
 
 def delete_env(arg):
     """calls the function to delete an environment"""
@@ -122,16 +126,19 @@ def delete_env(arg):
     delete_env.delete_env(arg, _scene_root, _history_db, current_scene)
     return
 
+
 def list_env(arg):
     """calls the function to list environments in current scene"""
     from src.mtool.environment import list_env       
     list_env.list_env(arg, _scene_root, _history_db, _query_start, _query_end)
     return
 
+
 def add_library(arg):
     """calls the function to add a library"""
     ##TODO: implement this
     return "coming soon"
+
 
 def list_library(arg):
     """calls the function to list loaded libraries"""
@@ -139,6 +146,7 @@ def list_library(arg):
     current_scene_db = get_current_scene_db()
     list_library.list_library(_library_root, _library_db, current_scene_db)
     return
+
 
 def load_library(arg):
     """calls the function to load libraries"""
@@ -153,6 +161,7 @@ def default(arg):
     from src.mtool.scene import current_scene
     current_scene.current_scene(_scene_root, _history_db)
     return
+ 
  
 def command(argument):
     switcher = {
