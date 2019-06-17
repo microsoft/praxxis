@@ -10,7 +10,7 @@ python setup.py install
 to install the package, and be able to run from the command line
 
 ## Coding Standards
-All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does and what other files it depends on; see the current files for an idea of the expected level of detail.
+All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does. see the current files for an idea of the expected level of detail.
 
 Overall, this project places a focus on useful, descriptive inline comments over block comments. The best changes will clearly document non-obvious sections of the code with inline or section comments. A single-line comment will suffice for most confusing sections or methods, at the programmer's discretion.
 
