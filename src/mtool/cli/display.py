@@ -111,13 +111,15 @@ def display_list_scene(ended, active, current):
     for scene in ended:
         i += 1
         print(f"\t{i}.\t{scene[0]}")
-    print(f"Active scenes:")
+    if (len(ended) == 0):
+        print(f"\tNone")
+    print(f"\nActive scenes:")
     for scene in active:
         i += 1
         print(f"\t{i}.\t{scene[0]}")
-    print(f"Current scene:")
-    i += 1
-    print(f"\t{i}.\t{current}")
+    if (len(active) == 0):
+        print(f"\tNone")
+    print(f"\nCurrent scene: {current}")
 
 def display_resume_scene(name):
     """the display function for resuming the scene""" 

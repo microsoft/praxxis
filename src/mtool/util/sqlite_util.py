@@ -329,6 +329,16 @@ def delete_env(db_file, name):
         conn.close()
         return 1
 
+def clear_loaded_libararies(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    clear_metadata = f'DELETE FROM "LibraryMetadata"'
+    clear_notebooks = f'DELETE FROM "Notebooks"'
+    cur.execute(clear_metadata)
+    cur.execute(clear_notebooks)
+    conn.commit()
+    conn.close()
+
 
 def load_library(db_file, root, readme, name):
     """load a library into the library db"""
