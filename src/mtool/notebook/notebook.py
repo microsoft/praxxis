@@ -5,7 +5,6 @@ file and checking its parameterization information.
 
 import os
 
-
 def init_notebook_run(outfile_root):
     """ initializes the notebook folder"""
     from src.mtool.util import sqlite_util

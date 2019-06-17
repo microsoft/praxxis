@@ -1,16 +1,14 @@
 """
-This file calls the function to end the current scence.
-
-Dependencies within mtool: mtool/mtool.py
+This file ends the specified scene
 """
 
-import os
-
-def end_scene(args, root, history_db, current_scene_db):
+def end_scene(args, scene_root, history_db, current_scene_db):
     """Ends a scene"""
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
     from src.mtool.scene import scene
+
+    scene.init_scene(scene_root, history_db)
     
     if hasattr(args, "name"):
         name = args.name
