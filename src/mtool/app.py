@@ -183,7 +183,7 @@ def run_notebook(arg):
     from src.mtool.notebook import run_notebook
     current_scene_db = get_current_scene_db()
 
-    run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db)
+    run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db, _library_root)
     return
  
 def open_notebook(arg):

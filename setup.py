@@ -1,10 +1,12 @@
 import setuptools
+import sys
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
     
 setuptools.setup(
-     name='mtool',  
+     name='mtool', 
+     python_requires = '>3.7', 
      version='0.0.0',
      scripts=['scripts/m.cmd', 'scripts/mtool/installer.cmd'] ,
      author="Skyler Clark",

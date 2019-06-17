@@ -36,14 +36,14 @@ from src.mtool.util import sqlite_util
 
 import papermill
 
-def run_notebook(args, root, outfile_root, current_scene_db):
+def run_notebook(args, root, outfile_root, current_scene_db, library_root):
     from src.mtool.cli import display
     from src.mtool.notebook import notebook
     """Runs one notebook specified"""    
     notebook.init_notebook_run(outfile_root)
 
     filename = sqlite_util.ordinal_to_list_item(current_scene_db, args.notebook)[1]
-    notebook = notebook.Notebook(filename)
+    notebook = notebook.Notebook(filename, library_root)
     display.display_run_notebook_start(notebook.name)
     local_copy = execute(current_scene_db, notebook)
 
