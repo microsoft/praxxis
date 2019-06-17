@@ -164,6 +164,12 @@ def default(arg):
  
  
 def command(argument):
+    """uses a dictionary as a switch statement to determine which funciton to run."""
+
+    ##Creates the appdata mtool folder if it doesn't exist
+    if not os.path.exists(_root):
+        os.mkdir(_root)
+
     switcher = {
         "run_notebook": run_notebook,
         "open_notebook": open_notebook,
