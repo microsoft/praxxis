@@ -1,14 +1,16 @@
 """
-This file calls the function to create a new scene.
-
-Dependencies within mtool: mtool/mtool.py
+This file creates a new scene
 """
 
-import os
 
-def new_scene(args, root, history_db):
+def new_scene(args, scene_root, history_db):
+    """ creates a new scene, and sets that scene to the current scene""" 
+    import os
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
+    from src.mtool.scene import scene 
+    
+    scene.init_scene(scene_root, history_db)
 
     if hasattr(args, "name"):
         name = args.name
@@ -16,7 +18,7 @@ def new_scene(args, root, history_db):
         name = args
         
     name = name.lower()
-    directory = os.path.join(root, name)
+    directory = os.path.join(scene_root, name)
     if os.path.exists(directory):
         i=1
         while os.path.exists(f"{directory}-{i}"):

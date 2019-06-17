@@ -1,16 +1,14 @@
 """
-This file calls a function to change the current scene.
-
-Dependencies within mtool: mtool/mtool.py
+This file changes the current scene.
 """
 
-import os
-
-def change_scene(args, root, history_db):
-    """Calls mtool method to change the current scene"""
+def change_scene(args, scene_root, history_db):
+    """changes current scene in sqlite history db"""
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
     from src.mtool.scene import scene
+
+    scene.init_scene(scene_root, history_db)
 
     if hasattr(args, "name"):
         name = args.name

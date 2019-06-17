@@ -1,18 +1,18 @@
 """
-This file calls the function to delete the current scene.
-
-Dependencies within mtool: mtool/mtool.py
+This file deletes the specified scene
 """
 
-import os
-import shutil
 
 def delete_scene(args, root, history_db):
+    """Deletes a scene"""
+    import shutil
+    import os
+
     from src.mtool.scene import current_scene
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
     from src.mtool.scene import scene
-    """Deletes a scene"""
+
     if hasattr(args, "name"):
         name = args.name
     else:

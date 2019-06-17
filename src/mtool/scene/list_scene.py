@@ -1,12 +1,9 @@
 """
-This file calls a function to list all scenes.
-
-Dependencies within mtool: mtool/mtool.py
+This file lists all scenes
 """
 
-import os
-
 def list_scene(root, history_db):
+    """lists scenes by fetching from sqlite db"""
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
 

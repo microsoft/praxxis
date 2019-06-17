@@ -4,7 +4,7 @@ This file deletes a specified environment variable
 
 import os
 
-def delete_env(args, root, history_db, current_scene_db):
+def delete_env(args, scene_root, history_db, current_scene_db):
     """deletes the environment variable specified in args. Can be passed only a name or an ordinal"""
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display

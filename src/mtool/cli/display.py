@@ -164,7 +164,7 @@ def display_search(search_term, notebooks):
     counter = 0
     for notebook in notebooks:
         counter += 1
-        print(f"\t{counter}.\t{notebook[0]} ({notebook[1]})")
+        print(f"\t{counter}.\t{notebook[0]}")
     if len(notebooks) == 0:
         print("\tNo results found")
 
@@ -192,6 +192,12 @@ def env_not_found_error(name):
 def scene_ended_error(name):
     """the error display for trying to switch to an ended scene"""
     print(f"can't switch to {name}, because the scene has ended. Resume the scene or make a new one")
+
+
+def papermill_error(error):
+        """the error display for papermill errors"""
+        print("PAPERMILL ERROR")
+        print(error)
 
 
 def no_tagged_cell_warning():

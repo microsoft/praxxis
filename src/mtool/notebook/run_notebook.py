@@ -26,26 +26,23 @@ Also check string concat and other optimizers.
 #TODO: should have a way to view all defaults in a notebook 
 #TODO: have a way to load all environment variables for a library?
 
-import os
-import webbrowser
-from datetime import datetime
-
-from src.mtool.notebook import open_notebook 
-from src.mtool.util import telemetry
-from src.mtool.util import sqlite_util
-
-import papermill
 
 def run_notebook(args, root, outfile_root, current_scene_db, library_root):
+    """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.cli import display
     from src.mtool.notebook import notebook
-    """Runs one notebook specified"""    
+    from src.mtool.notebook import open_notebook 
+    from src.mtool.util import telemetry
+    from src.mtool.util import sqlite_util
+
+    from datetime import datetime
+
     notebook.init_notebook_run(outfile_root)
 
     filename = sqlite_util.ordinal_to_list_item(current_scene_db, args.notebook)[1]
     notebook = notebook.Notebook(filename, library_root)
     display.display_run_notebook_start(notebook.name)
-    local_copy = execute(current_scene_db, notebook)
+    local_copy = execute(current_scene_db, notebook, outfile_root)
 
     if args.html == "html":
         html_outputfile = f"{local_copy.split('.')[0]}.html"
@@ -59,30 +56,34 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root):
     telemetry.send(root, local_copy, current_scene_db)
 
 
-def execute(db_file, notebook):
-    from src.mtool.cli import display
+def execute(db_file, notebook, outfile_root):
     """Handles papermill execution for notebook"""
-    local_copy = get_outputname(notebook)
+    import papermill
+    from src.mtool.cli import display
+
+    local_copy = get_outputname(notebook, outfile_root)
+
     if (notebook._hasParameters): 
         injects = pull_params(db_file, notebook._environmentVars)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
-            print("PAPERMILL ERROR")
-            print(e)
+            display.papermill_error(e)
     else:
         display.no_tagged_cell_warning()
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy)
         except Exception as e:
-            print("PAPERMILL ERROR")
-            print(e)
-    
+            display.papermill_error(e)
+
     #need local output -- temp? or just send it directly to HDFS
     return local_copy
 
+
 def pull_params(db_file, environmentVars):
     """Returns a dictionary of all overridden parameters for notebook"""
+    from src.mtool.util import sqlite_util
+
     injects = {}
     for var in environmentVars:
         value = sqlite_util.get_env(db_file, var)
@@ -91,13 +92,14 @@ def pull_params(db_file, environmentVars):
             injects[var] = value
     return injects
 
-def get_outputname(notebook):
+
+def get_outputname(notebook, outfile_root):
     """Returns name of output file for notebook"""
-    appdata = os.path.expandvars("%APPDATA%")
-    output_folder = os.path.join(appdata, "mtool", "output")
+    import os
+    from datetime import datetime
 
     timestamp = datetime.today().strftime("%Y%m%d-%H%M%S")
     filename = f"{timestamp}-{notebook.library_name}-{notebook.name}"
     
-    outputname = os.path.join(output_folder, filename)
+    outputname = os.path.join(outfile_root, filename)
     return outputname
