@@ -37,9 +37,6 @@ class Notebook:
 
         self._hasParameters = False
         self._environmentVars = []
-
-
-        print(notebook_data)
         self._path = os.path.join(notebook_path)
         self.library_name = notebook_data[2]
 
