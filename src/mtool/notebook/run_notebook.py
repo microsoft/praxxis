@@ -27,7 +27,7 @@ Also check string concat and other optimizers.
 #TODO: have a way to load all environment variables for a library?
 
 
-def run_notebook(args, root, outfile_root, current_scene_db, library_root):
+def run_notebook(args, root, outfile_root, current_scene_db, library_root, library_db):
     """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.cli import display
     from src.mtool.notebook import notebook
@@ -38,18 +38,23 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root):
     from datetime import datetime
 
     notebook.init_notebook_run(outfile_root)
+    name = args.notebook
 
-    filename = sqlite_util.ordinal_to_list_item(current_scene_db, args.notebook)[1]
-    notebook = notebook.Notebook(filename, library_root)
+    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    if tmp_name != None:
+        name = tmp_name
+        
+    notebook_data = sqlite_util.get_notebook(library_db, name)
+    notebook = notebook.Notebook(notebook_data, library_root)
+
     display.display_run_notebook_start(notebook.name)
-    local_copy = execute(current_scene_db, notebook, outfile_root)
 
+    local_copy = execute(current_scene_db, notebook, outfile_root)
     if args.html == "html":
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:
         display.display_run_notebook(local_copy)
-
 
     timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
     sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
@@ -99,7 +104,7 @@ def get_outputname(notebook, outfile_root):
     from datetime import datetime
 
     timestamp = datetime.today().strftime("%Y%m%d-%H%M%S")
-    filename = f"{timestamp}-{notebook.library_name}-{notebook.name}"
+    filename = f"{timestamp}-{notebook.library_name}-{notebook.name}.ipynb"
     
     outputname = os.path.join(outfile_root, filename)
     return outputname

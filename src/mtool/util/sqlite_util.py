@@ -375,6 +375,31 @@ def list_notebooks(db_file, start, end):
     return rows
 
 
+def get_notebook(db_file, name):
+    """returns a specific notebook"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_notebook = f'SELECT * FROM "Notebooks" WHERE Name = "{name}" LIMIT 0, 1'
+    print(name)
+    cur.execute(get_notebook)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows[0]
+
+
+def get_notebook_by_ord(db_file, ord):
+    """Returns list item referenced by input ordinal"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    query = f'SELECT Data FROM NotebookList WHERE ID = ? LIMIT 0, 1'
+    cur.execute(query, (ord))
+    conn.commit()
+    item = cur.fetchone()
+    conn.close()
+    return item[0]
+
+
 def write_list(db_file, notebook_list):
     """creates the list of notebooks in list"""
     conn = create_connection(db_file)
@@ -387,7 +412,7 @@ def write_list(db_file, notebook_list):
     cur.executemany(insert_line, notebook_list)
     conn.commit()
     conn.close()
-    
+
     
 def get_telemetry_info(db_file, key):
     """gets the telemetry information:"""
@@ -399,21 +424,6 @@ def get_telemetry_info(db_file, key):
     item = cur.fetchone()
     if item != None:
         item = item[0] # remove tuple wrapping
-    conn.close()
-    return item
-
-
-def ordinal_to_list_item(db_file, ordinal):
-    """Returns list item referenced by input ordinal"""
-    conn = create_connection(db_file)
-    cur = conn.cursor()
-    if str.isnumeric(ordinal):
-        query = f'SELECT DATA, PATH FROM NotebookList WHERE ID = ?'
-    else:
-        query = f'SELECT DATA, PATH FROM NotebookList WHERE DATA = ?'
-    cur.execute(query, (ordinal,))
-    conn.commit()
-    item = cur.fetchone()
     conn.close()
     return item
 
