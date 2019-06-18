@@ -4,7 +4,7 @@
 
 import os
 
-def load_libraries(library_root, library_db):
+def sync_libraries(library_root, library_db):
     """ loads libraries from the library root you supply, into the library db"""
     from src.mtool.library import library
     from src.mtool.cli import display
@@ -18,12 +18,12 @@ def load_libraries(library_root, library_db):
     first = True
     for directory in directories:
         library_root = os.path.join(library_root, directory)
-        load_library(library_root, library_db)
+        sync_library(library_root, library_db)
         display.display_loaded_library(library_root, first)
         #first = False
 
 
-def load_library(library_root, library_db):
+def sync_library(library_root, library_db):
     """ loads the individual library specified by the library root passed in, into the library db""" 
     from src.mtool.util import sqlite_util
     readme_location = os.path.join(library_root, "README.md")
@@ -34,10 +34,10 @@ def load_library(library_root, library_db):
          readme_data = "  ".join(f.readlines()[:3])
 
     sqlite_util.load_library(library_db, library_root, readme_data, dirname)
-    load_notebooks(library_root, library_db, dirname)
+    sync_notebooks(library_root, library_db, dirname)
 
 
-def load_notebooks(library_root, library_db, library_name):
+def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display

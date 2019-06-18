@@ -50,7 +50,7 @@ def list_notebook(arg):
     """calls the function to list notebooks"""
     from src.mtool.notebook import list_notebook
     current_scene_db = get_current_scene_db()
-    list_notebook.list_notebook(_scene_root, _library_db, current_scene_db, _query_start, _query_end)
+    list_notebook.list_notebook(_scene_root, _library_root, _library_db, current_scene_db, _query_start, _query_end)
     return
 
 
