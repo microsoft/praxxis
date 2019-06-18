@@ -148,10 +148,10 @@ def list_library(arg):
     return
 
 
-def load_library(arg):
+def sync_library(arg):
     """calls the function to load libraries"""
-    from src.mtool.library import load_library
-    load_library.load_libraries(_library_root, _library_db)
+    from src.mtool.library import sync_library
+    sync_library.load_libraries(_library_root, _library_db)
     return
 
 
@@ -188,7 +188,7 @@ def command(argument):
         "set_env": set_env,
         "delete_env": delete_env,
         "list_env": list_env,
-        "load_library": load_library
+        "sync_library": sync_library
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
