@@ -82,3 +82,4 @@ def test_default(arg):
 
 def test_command(arg):
     function_switcher.command(arg)
+    
