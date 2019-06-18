@@ -399,12 +399,12 @@ def get_notebook(db_file, name):
     return rows[0]
 
 
-def get_notebook_by_ord(db_file, ord):
+def get_notebook_by_ord(db_file, ordinal):
     """Returns list item referenced by input ordinal"""
     conn = create_connection(db_file)
     cur = conn.cursor()
     query = f'SELECT Data FROM NotebookList WHERE ID = ? LIMIT 0, 1'
-    cur.execute(query, (ord))
+    cur.execute(query, (ordinal))
     conn.commit()
     item = cur.fetchone()
     conn.close()

@@ -2,7 +2,7 @@
 This file deletes the specified scene
 """
 
-def delete_scene(args, root, history_db):
+def delete_scene(args, scene_root, history_db):
     """Deletes a scene"""
     import shutil
     import os
@@ -21,7 +21,7 @@ def delete_scene(args, root, history_db):
     if tmp_name != None:
         name = tmp_name
 
-    directory = os.path.join(root, name)
+    directory = os.path.join(scene_root, name)
 
     if os.path.exists(directory):
         if sqlite_util.delete_scene(history_db, name):
