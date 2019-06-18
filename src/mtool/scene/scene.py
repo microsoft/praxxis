@@ -12,6 +12,7 @@ def init_scene(scene_root, history_db):
         display.display_init_scene_folder(scene_root)
 
     if not os.path.exists(history_db):
+        from src.mtool.cli import display
         from src.mtool.scene import new_scene
         from src.mtool.util import sqlite_util
         sqlite_util.init_current_scene(history_db, default_scene_name)
