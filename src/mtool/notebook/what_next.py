@@ -1,4 +1,6 @@
 import requests
+import json
+import warnings
 from requests.auth import HTTPBasicAuth
 
 from src.mtool.util import sqlite_util
@@ -13,27 +15,19 @@ def what_next(args, user_info_db, current_scene_db):
     # get access token
     ctl_url = f'https://{host}:30080/token'
     auth = HTTPBasicAuth('arisctrl', 'Yukon900')
-    res = requests.post(ctl_url, verify=False, auth=auth)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        res = requests.post(ctl_url, verify=False, auth=auth)
 
     res_json = res.json()
     headers = {'Authorization': '{} {}'.format(res_json['token_type'], res_json['access_token'])}
 
-    data_json = dict(seq=["SOP023", "SOP023", "SOP023"])
-    res = requests.post(route, headers=headers, json=data_json, verify=False)
+    data_json = dict(seq=["SOP027", "SOP023", "SOP023"])
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        res = requests.post(route, headers=headers, json=data_json, verify=False)
 
     res_json = res.json()
-    print(res_json)
-    # TODO: Enable round-robin for all nodes in the K8s cluster (nodePort)
-
-    params = {"seq": "['ES002', 'ES002', 'ES003', 'ES003', 'SOP002', 'SOP003', 'SOP003']"} # RunService
-
-   
-    # https://docs.microsoft.com/en-us/sql/big-data-cluster/concept-application-deployment?view=sqlallproducts-allversions
-
-
-
-
-
-
-
-  
+    suggestions = (res_json["outputParameters"]["score"]["notebook"][0:5])
+    for i in range(len(suggestions)):
+        print(str(1+i) + ". " + suggestions[i])
