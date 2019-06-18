@@ -1,0 +1,11 @@
+name: mtool-model-app
+version: v1
+runtime: Python
+src: ./score.py
+entrypoint: predict
+replicas: 1
+poolsize: 1
+inputs:
+  seq: vector
+output:
+  score: dataframe

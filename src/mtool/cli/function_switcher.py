@@ -6,6 +6,7 @@ import os
 
 ## database roots for mtool. Should be changed to remove hard coding
 _root = os.path.join(os.getenv('APPDATA'), "mtool")
+_user_info_db = user_id = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
@@ -56,9 +57,10 @@ def list_notebook(arg):
 
 def next_notebook(arg):
     """calls the function to get the next notebook"""
-    ##TODO  implement this
-    return "coming soon"
-
+    from src.mtool.notebook import what_next
+    current_scene_db = get_current_scene_db()
+    what_next.what_next(arg, _user_info_db, current_scene_db)
+    return
 
 def history(arg):
     """calls the function to display scene history"""

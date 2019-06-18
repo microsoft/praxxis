@@ -1,12 +1,16 @@
 import requests
 import json
 import warnings
+import time
 from requests.auth import HTTPBasicAuth
 
 from src.mtool.util import sqlite_util
 
+
 def what_next(args, user_info_db, current_scene_db):
-    #10.193.23.1:30778",
+    """
+    print(time.time())
+    #10.193.23.1:30778"
     #"basePath": "/api/app/mtool-model-app/v1
 
     host = sqlite_util.get_telemetry_info(user_info_db, "Host")
@@ -31,3 +35,13 @@ def what_next(args, user_info_db, current_scene_db):
     suggestions = (res_json["outputParameters"]["score"]["notebook"][0:5])
     for i in range(len(suggestions)):
         print(str(1+i) + ". " + suggestions[i])
+    """
+    print(time.time())
+
+    from src.mtool.notebook.mtool_model_app import score
+    data = ["SOP027", "SOP023", "SOP023"]
+    suggestions = score.predict(data)
+
+ 
+    print(time.time())
+    

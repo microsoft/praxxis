@@ -1,7 +1,5 @@
 urllib3
 requests
-pytest
-pytest-runner
 uuid
 papermill
 ijson
@@ -10,3 +8,6 @@ toml
 pypandoc
 pandoc
 ipykernel 
+
+pytest
+pytest-runner
