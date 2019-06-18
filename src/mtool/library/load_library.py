@@ -9,6 +9,9 @@ def load_libraries(library_root, library_db):
     from src.mtool.library import library
     from src.mtool.cli import display
     from src.mtool.util import sqlite_util
+
+    library.init_library(library_root, library_db)
+
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
     sqlite_util.clear_loaded_libararies(library_db)   
     
