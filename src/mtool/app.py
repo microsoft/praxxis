@@ -22,7 +22,7 @@ list_scene_command="list_scene"
 add_library_command="add_library"
 list_library_command="list_library"
 remove_library_command="remove_library"
-load_library_command="load_library"
+sync_library_command="sync_library"
 set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
@@ -65,8 +65,8 @@ add_library_path_help="the path to the library you want to add"
 remove_library_help="remove library of notebooks mtool"
 remove_library_path_help="path of the library you want to remove"
 list_libraries_help="list libraries currently installed"
-load_library_help="load libraries into mtool. Default loads from predefined library path"
-load_library_path_help="load library from a specific directory into mtool"
+sync_library_help="load libraries into mtool. Default loads from predefined library path"
+sync_library_path_help="load library from a specific directory into mtool"
 ## misc help strings
 history_help="history of what you've done in the current scene"
 
@@ -134,10 +134,9 @@ def main(command_line=None):
     list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
     list_libraries.set_defaults(which=list_library_command)
 
-    load_library = subparsers.add_parser('loadlibrary', aliases=["lo"], help=load_library_help)
-    load_library.add_argument('path', nargs="?", help=load_library_path_help)
-    load_library.set_defaults(which=load_library_command)
-
+    sync_library = subparsers.add_parser('synclibrary', aliases=["sl"], help=sync_library_help)
+    sync_library.add_argument('path', nargs="?", help=sync_library_path_help)
+    sync_library.set_defaults(which=sync_library_command)
 
     set_env = subparsers.add_parser('setenv', aliases=["se"], help=set_env_help)
     set_env.add_argument('name', help=set_env_name_help)
