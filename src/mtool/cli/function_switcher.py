@@ -151,7 +151,7 @@ def list_library(arg):
 def sync_library(arg):
     """calls the function to load libraries"""
     from src.mtool.library import sync_library
-    sync_library.load_libraries(_library_root, _library_db)
+    sync_library.sync_libraries(_library_root, _library_db)
     return
 
 
