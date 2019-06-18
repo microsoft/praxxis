@@ -20,11 +20,11 @@ def get_notebook_by_ordinal(scene_db, name):
     from src.mtool.util import sqlite_util
     if f"{name}".isdigit():
         name = sqlite_util.get_notebook_by_ord(scene_db, name)
-        if name == "":
+        if name == None:
             from src.mtool.cli import display
             display.notebook_does_not_exist_error(name)
-            return ""
-        return(name)   
+            return
+        return(name[0])   
 
 
 class Notebook:
