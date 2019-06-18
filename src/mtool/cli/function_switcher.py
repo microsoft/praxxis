@@ -159,13 +159,13 @@ def default(arg):
     """calls the default function, which is to display the current scene."""
     ##TODO:set up running notebook as default 
     from src.mtool.scene import current_scene
+
     current_scene.current_scene(_scene_root, _history_db)
     return
  
  
 def command(argument):
     """uses a dictionary as a switch statement to determine which funciton to run."""
-
     ##Creates the appdata mtool folder if it doesn't exist
     if not os.path.exists(_root):
         os.mkdir(_root)

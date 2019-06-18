@@ -4,6 +4,7 @@ This file handles the argument parsing, and is the entry point of the app
 
 import argparse
 import os
+import sys
 
 ## these are the commands passed into function_switcher.py
 run_notebook_command = "run_notebook"
@@ -72,6 +73,7 @@ history_help="history of what you've done in the current scene"
 
 def main(command_line=None):
     """creates all of the argparse parsers and returns the args passed in"""
+
     parser = argparse.ArgumentParser('mtool')
     subparsers = parser.add_subparsers(dest='command')
     
@@ -154,6 +156,10 @@ def main(command_line=None):
     list_env.set_defaults(which=list_env_command)
 
     args = parser.parse_args(command_line)
+    
+    if len(sys.argv[1:])==0:
+        parser.print_help()
+    
     return args
 
 if __name__ == "__main__":
