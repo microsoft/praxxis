@@ -86,7 +86,7 @@ def main(command_line=None):
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
-    search_notebooks = subparsers.add_parser('search', aliases=["sn"], help=search_notebooks_help)
+    search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
     search_notebooks.add_argument('term', help=search_notebooks_term_help)
     search_notebooks.set_defaults(which=search_notebooks_command)
 
@@ -144,7 +144,7 @@ def main(command_line=None):
     set_env.add_argument('value', help=set_env_value_help)
     set_env.set_defaults(which=set_env_command)
 
-    search_env = subparsers.add_parser('searchenv', aliases=["s"], help=search_env_help)
+    search_env = subparsers.add_parser('searchenv', aliases=["sv"], help=search_env_help)
     search_env.add_argument('term', help=search_env_term_help)
     search_env.set_defaults(which=search_env_command)
 
