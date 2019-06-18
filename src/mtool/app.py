@@ -166,6 +166,7 @@ def main(command_line=None):
     return args
 
 _root = os.path.join(os.getenv('APPDATA'), "mtool")
+_user_info = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
 _scene_root = os.path.join(_root, "scene")
 _library_root = os.path.join(_root, "library")
@@ -210,8 +211,9 @@ def history(arg):
     return
 
 def next_notebook(arg):
-    ##TODO  implement this
-    return "coming soon"
+    from src.mtool.notebook import what_next
+    what_next.what_next(arg, _user_info, get_current_scene_db())
+    return 
 
 def new_scene(arg):
     from src.mtool.scene import new_scene
