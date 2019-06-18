@@ -1,61 +1,84 @@
 from src.mtool.cli import function_switcher
 
-def test_run_notebook():
-    function_switcher.run_notebook
-    print("run_notebook")
+def test_get_current_scene_db():
+    function_switcher.get_current_scene_db()
 
-def test_open_notebook():
-    function_switcher.open_notebook
-    print("open_notebook")
 
-def test_search_notebook():
-    function_switcher.search_notebook
-    print("search_notebook")
+def test_run_notebook(arg):
+    function_switcher.run_notebook(arg)
 
-def test_list_notebook():
-    function_switcher.list_notebook
-    print("list_notebook")
 
-def test_history():
-    function_switcher.history
-    print("history")
+def test_open_notebook(arg):
+    function_switcher.open_notebook(arg)
 
-def test_next_notebook():
-    function_switcher.next_notebook
-    print("next_notebook")
 
-def test_new_scene():
-    function_switcher.new_scene
-    print("new_scene")
+def test_search_notebook(arg):
+    function_switcher.search_notebook(arg)
 
-def test_end_scene():
-    function_switcher.end_scene
-    print("end_scene")
 
-def test_resume_scene():
-    function_switcher.resume_scene
-    print("resume_scene")
+def test_list_notebook(arg):
+    function_switcher.list_notebook(arg)
 
-def test_delete_scene():
-    function_switcher.delete_scene
-    print("delete_scene")
 
-def test_list_scene():
-    function_switcher.list_scene
-    print("list_scene")
+def test_next_notebook(arg):
+    function_switcher.next_notebook(arg)
 
-def test_add_library():
-    function_switcher.add_library
-    print("add_library")
 
-def test_list_library():
-    function_switcher.list_library
-    print("list_library")
+def test_history(arg):
+    function_switcher.history(arg)
 
-def test_set_env():
-    function_switcher.set_env
-    print("set_env")
 
-def test_delete_env():
-    function_switcher.delete_env
-    print("delete_env")
+def test_new_scene(arg):
+    function_switcher.new_scene(arg)
+
+
+def test_end_scene(arg):
+    function_switcher.end_scene(arg)
+
+
+def test_change_scene(arg):
+    function_switcher.change_scene(arg)
+
+
+def test_resume_scene(arg):
+    function_switcher.resume_scene(arg)
+
+
+def test_delete_scene(arg):
+    function_switcher.delete_scene(arg)
+
+
+def test_list_scene(arg):
+    function_switcher.list_scene(arg)
+
+
+def test_set_env(arg):
+    function_switcher.set_env(arg)
+
+
+def test_delete_env(arg):
+    function_switcher.delete_env(arg)
+
+
+def test_list_env(arg):
+    function_switcher.list_env(arg)
+
+
+def test_add_library(arg):
+    function_switcher.add_library(arg)
+
+
+def test_list_library(arg):
+    function_switcher.list_library(arg)
+
+
+def test_load_library(arg):
+    function_switcher.load_library(arg)
+
+
+def test_default(arg):
+    function_switcher.default(arg)
+
+
+def test_command(arg):
+    function_switcher.command(arg)
