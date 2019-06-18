@@ -1,7 +1,4 @@
-import argparse
+from src.mtool import app
 
-def main(command_line=None):
-    pass
-
-if __name__ == "__main__":
-    print(main())
+def test_main(command_line):
+    app.main(command_line)
