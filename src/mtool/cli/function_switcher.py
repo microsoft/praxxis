@@ -21,6 +21,7 @@ _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
+_user_info_db = os.path.join(_root, "user_id.db")
 
 _query_start = 0
 _query_end = 100
