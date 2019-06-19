@@ -170,6 +170,7 @@ def display_search(search_term, notebooks):
         print(f"\t{counter}.\t{notebook[0]}")
     if len(notebooks) == 0:
         print("\tNo results found")
+    return notebooks
 
 
 def scene_does_not_exist_error(name):
