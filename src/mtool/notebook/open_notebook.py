@@ -21,8 +21,8 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
 
 def display_as_html(filename, html_outputfile):
     """opens the file as html in the web browser"""
-    import pypandoc
+    from nbconvert import HTMLExporter
     import webbrowser
 
-    pypandoc.convert_file(filename, 'html', outputfile=html_outputfile)
+    #pypandoc.convert_file(filename, 'html', outputfile=html_outputfile)
     webbrowser.open(html_outputfile)
