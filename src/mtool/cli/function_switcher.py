@@ -5,6 +5,7 @@ This file is responsible for running all of the functions identified by app.py
 import os
 
 ## database roots for mtool. Should be changed to remove hard coding
+
 _root = os.path.join(os.getenv('APPDATA'), "mtool")
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
