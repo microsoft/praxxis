@@ -2,8 +2,6 @@ urllib3
 requests
 papermill
 ijson
-pypandoc
-pandoc
 ipykernel 
 pytest
 pytest-runner
