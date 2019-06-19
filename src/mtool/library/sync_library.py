@@ -38,13 +38,17 @@ def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
-
+    from src.mtool.notebook import notebook
     first = True
     for library_root, dirs, files in os.walk(library_root, topdown=False):
         for name in files:
             file_name, file_extension = os.path.splitext(name)
             if(file_extension == ".ipynb"):
-                file_library_root = os.path.join(library_root, name)
-                sqlite_util.load_notebook(library_db, file_library_root, file_name, library_name)
+                file_root = os.path.join(library_root, name)
+
+                notebook_data = notebook.Notebook([file_root, file_name, library_name])
+                for environment in notebook_data._environmentVars:
+                    sqlite_util.set_notebook_environments(library_db, file_name, environment[0], environment[1])
+                sqlite_util.load_notebook(library_db, file_root, file_name, library_name)
                 display.display_loaded_notebook(name, first)
                 first = False

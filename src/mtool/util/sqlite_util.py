@@ -45,9 +45,11 @@ def init_library_db(db_file):
     conn = create_connection(db_file)
     cur = conn.cursor()
     create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Root TEXT PRIMARY KEY, Readme TEXT, Name TEXT)'
-    create_notebook_table=f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
+    create_notebook_table = f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
+    create_environment_table = f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT, NotebookName TEXT, FOREIGN KEY(NotebookName) REFERENCES "Notebooks"(Name))'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_table)
+    cur.execute(create_environment_table)
     conn.commit()
     conn.close()
 
@@ -110,6 +112,29 @@ def get_scene_id(db_file):
     id = cur.fetchone()[0]
     conn.close()
     return id
+
+
+def get_notebook_environments(db_file, name):
+    """gets the scene ID from the scene db"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_notebook_environment = f'SELECT * FROM "Environment" WHERE NotebookName = "{name}"'
+    cur.execute(get_notebook_environment)
+    id = cur.fetchall()
+    conn.close()
+    return id
+
+
+def set_notebook_environments(db_file, notebook_name, environment_name, environment_value):
+    """set or update an environment variable"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    set_env = f'INSERT OR IGNORE INTO "Environment" (Name, Value, NotebookName) VALUES(?, ?, ?)'
+    update_env = f'UPDATE "Environment" SET Value = ? WHERE Name = ? AND NotebookName = ?'
+    cur.execute(set_env, (environment_name, environment_value, notebook_name))
+    cur.execute(update_env, (environment_name, environment_value, notebook_name))
+    conn.commit()
+    conn.close()
 
 
 def delete_scene(db_file, name):
@@ -352,11 +377,11 @@ def load_library(db_file, root, readme, name):
     conn.close()
 
 
-def load_notebook(db_file, root, name, library):
+def load_notebook(db_file, file_root, name, library):
     """load a notebook into the library db"""
     conn = create_connection(db_file)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{root}", "{name}", "{library}")'
+    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{file_root}", "{name}", "{library}")'
     cur.execute(load_library)
     conn.commit()
     conn.close()

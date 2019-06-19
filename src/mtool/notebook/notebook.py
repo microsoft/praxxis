@@ -2,10 +2,7 @@
 This file contains the Notebook class, with methods for loading in a .ipynb
 file and checking its parameterization information.
 """
-
 import os
-
-
 
 
 def get_notebook_by_ordinal(scene_db, name):
@@ -22,7 +19,7 @@ def get_notebook_by_ordinal(scene_db, name):
 
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
-    def __init__(self, notebook_data, library_path):
+    def __init__(self, notebook_data):
         from src.mtool.cli import display
         #TODO: add support for reading from a URL
         self.name = notebook_data[1]
@@ -66,4 +63,9 @@ class Notebook:
             lines = source.splitlines()
         for line in lines:
             if "=" in line and not line.startswith("#"):
-                self._environmentVars.append(line.split("=")[0].strip())
+                environment = line.split("=")
+                name = environment[0]
+                value = environment[1].split("#")[0].strip()
+                if value == "\"\"":
+                    value = None               
+                self._environmentVars.append([name, value])

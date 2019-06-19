@@ -48,7 +48,7 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
 
 
     notebook_data = sqlite_util.get_notebook(library_db, name)
-    notebook = notebook.Notebook(notebook_data, library_root)
+    notebook = notebook.Notebook(notebook_data)
 
     display.display_run_notebook_start(notebook.name)
 
