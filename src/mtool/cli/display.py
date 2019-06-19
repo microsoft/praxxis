@@ -146,8 +146,6 @@ def display_run_notebook(filename):
     print("\nNotebook output:")
     
     output = nbconvert.exporters.export(nbconvert.MarkdownExporter(), filename)[0]
-    print(output)
-    #print(pypandoc.convert_file(filename, 'asciidoc'))
 
 
 def display_init_run_notebook(outfile_root):
