@@ -94,7 +94,7 @@ def pull_params(db_file, environmentVars):
 
     injects = {}
     for var in environmentVars:
-        value = sqlite_util.get_env(db_file, var)
+        value = sqlite_util.get_env(db_file, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
             injects[var] = value
