@@ -1,5 +1,5 @@
 ## Introduction
-MTool is built upon the idea of helping each other. Every day we are generating and wasting valuable data that could help solve each other’s problems. What if there was a centralized way of collect data? MTool does that! It collects and analyzes the exhaust emitted from your computer, and in doing so enables others to learn from your problems. We want MTool to empower everybody to learn from each other! 
+MTool is built upon the idea of helping each other. Every day we are generating and wasting valuable data that could help solve each other’s problems. What if there was a centralized way of collect data? MTool does that! It collects and analyzes the exhaust emitted from your computer, and in doing so enables others to learn from your problems. In return, MTool helps you predict what you want to run next. We want MTool to empower everybody to learn from each other! 
 
 MTool is a task interface built on big data and machine learing. It streamlines the process of running notebooks and elemenates the need to write/ memorize complicated series of commands. MTool includes all of the efficiencies of tools like ktool, and the intelligence of machine learning, mtool learns from your habits to create intelligent pathways through your workflow.
 
