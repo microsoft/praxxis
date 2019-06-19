@@ -50,7 +50,7 @@ def list_notebook(arg):
     """calls the function to list notebooks"""
     from src.mtool.notebook import list_notebook
     current_scene_db = get_current_scene_db()
-    list_notebook.list_notebook(_scene_root, _library_db, current_scene_db, _query_start, _query_end)
+    list_notebook.list_notebook(_scene_root, _library_root, _library_db, current_scene_db, _query_start, _query_end)
     return
 
 
@@ -151,7 +151,7 @@ def list_library(arg):
 def sync_library(arg):
     """calls the function to load libraries"""
     from src.mtool.library import sync_library
-    sync_library.load_libraries(_library_root, _library_db)
+    sync_library.sync_libraries(_library_root, _library_db)
     return
 
 
