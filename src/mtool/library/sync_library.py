@@ -13,7 +13,6 @@ def sync_libraries(library_root, library_db):
     library.init_library(library_root, library_db)
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
-    print(directories)
     sqlite_util.clear_loaded_libararies(library_db)   
     
     first = True

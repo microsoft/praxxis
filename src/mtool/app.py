@@ -161,7 +161,12 @@ def main(command_line=None):
         print()    
     return args
 
+
 if __name__ == "__main__":
-    """the runner of mtool. makes a call to the switcher with the output of main"""
+    """the runner of mtool. makes a call to start"""
+    start()
+
+def start():
+    """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.cli import function_switcher
     function_switcher.command(main())
