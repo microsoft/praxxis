@@ -51,7 +51,7 @@ def open_notebook(arg):
 def search_notebook(arg):
     """calls the function to search a notebook"""
     from src.mtool.notebook import search_notebook
-    search_notebook.search_notebook(arg, _library_db, _query_start, _query_end)
+    search_notebook.search_notebook(arg, _library_db, get_current_scene_db(), _query_start, _query_end)
     return
 
 
