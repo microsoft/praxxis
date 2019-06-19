@@ -3,16 +3,24 @@ This file is responsible for running all of the functions identified by app.py
 """
 
 import os
+import sys
 
 ## database roots for mtool. Should be changed to remove hard coding
+if(sys.platform == "linux"):
+    ## TODO: make this directory less of a risky place
+    _root = os.path.join (os.path.expanduser('~/mtool'))
+    _azure_data_studio_location = os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
 
-_root = os.path.join(os.getenv('APPDATA'), "mtool")
+else:
+    _root = os.path.join(os.getenv('APPDATA'), "mtool")
+    _azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
+
+
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
-_azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
 _query_start = 0
 _query_end = 100
@@ -192,6 +200,7 @@ def init(_root):
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")
     sqlite_util.init_user_info(user_id)
+
 
 def command(argument):
     """uses a dictionary as a switch statement to determine which funciton to run."""

@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
      name='mtool', 
-     python_requires = '>3.7', 
+     python_requires = '>=3.7.*, >=3.6.*', 
      version='0.0.0',
      author="Skyler Clark",
      author_email="example@microsoft.com",
@@ -19,6 +19,6 @@ setuptools.setup(
      url="mtool.github.com",
      packages=setuptools.find_packages(),
      classifiers=[
-         "Programming Language :: Python :: 3",
-     ],
+        'Programming Language :: Python :: 3.7',
+      ],
  )
