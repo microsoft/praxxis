@@ -5,14 +5,7 @@ file and checking its parameterization information.
 
 import os
 
-def init_notebook_run(outfile_root):
-    """ initializes the notebook folder"""
-    from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
-    
-    if not os.path.exists(outfile_root):
-        os.mkdir(outfile_root)
-        display.display_init_run_notebook(outfile_root)
+
 
 
 def get_notebook_by_ordinal(scene_db, name):
