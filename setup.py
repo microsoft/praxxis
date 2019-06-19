@@ -8,12 +8,13 @@ setuptools.setup(
      name='mtool', 
      python_requires = '>3.7', 
      version='0.0.0',
-     scripts=['scripts/m.cmd', 'scripts/mtool/installer.cmd'] ,
      author="Skyler Clark",
      author_email="example@microsoft.com",
      description="mtool",
      long_description=long_description,
-     
+     entry_points = {
+     'console_scripts': ['m=src.mtool.app:start'],
+     },
    long_description_content_type="text/markdown",
      url="mtool.github.com",
      packages=setuptools.find_packages(),
