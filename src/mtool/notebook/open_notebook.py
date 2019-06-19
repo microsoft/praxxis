@@ -28,5 +28,4 @@ def display_as_html(filename, html_outputfile):
     with open(html_outputfile, 'w+') as f:
         f.write(output)
 
-    #pypandoc.convert_file(filename, 'html', outputfile=html_outputfile)
     webbrowser.open(html_outputfile)
