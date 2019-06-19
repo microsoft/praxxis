@@ -10,8 +10,6 @@ def resume_scene(args, scene_root, history_db):
     from src.mtool.cli import display
     from src.mtool.scene import scene
 
-    scene.init_scene(scene_root, history_db)
-
     if hasattr(args, "name"):
         name = args.name
     else:
