@@ -3,16 +3,24 @@ This file is responsible for running all of the functions identified by app.py
 """
 
 import os
+import sys
 
 ## database roots for mtool. Should be changed to remove hard coding
-_root = os.path.join(os.getenv('APPDATA'), "mtool")
-_user_info_db = user_id = os.path.join(_root, "user_id.db")
+if(sys.platform == "linux"):
+    ## TODO: make this directory less of a risky place
+    _root = os.path.join (os.path.expanduser('~/mtool'))
+    _azure_data_studio_location = os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
+
+else:
+    _root = os.path.join(os.getenv('APPDATA'), "mtool")
+    _azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
+
+
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
-_azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
 _query_start = 0
 _query_end = 100
@@ -51,7 +59,7 @@ def list_notebook(arg):
     """calls the function to list notebooks"""
     from src.mtool.notebook import list_notebook
     current_scene_db = get_current_scene_db()
-    list_notebook.list_notebook(_scene_root, _library_db, _history_db, current_scene_db, _query_start, _query_end)
+    list_notebook.list_notebook(_scene_root, _library_root, _library_db, current_scene_db, _query_start, _query_end)
     return
 
 
@@ -150,10 +158,10 @@ def list_library(arg):
     return
 
 
-def load_library(arg):
+def sync_library(arg):
     """calls the function to load libraries"""
-    from src.mtool.library import load_library
-    load_library.load_libraries(_library_root, _library_db)
+    from src.mtool.library import sync_library
+    sync_library.sync_libraries(_library_root, _library_db)
     return
 
 
@@ -161,16 +169,45 @@ def default(arg):
     """calls the default function, which is to display the current scene."""
     ##TODO:set up running notebook as default 
     from src.mtool.scene import current_scene
+
     current_scene.current_scene(_scene_root, _history_db)
     return
  
- 
+def init(_root):
+    from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
+    from src.mtool.scene import new_scene
+
+    os.mkdir(_root)
+
+    #library init
+    os.mkdir(_library_root)
+    display.display_init_libraries_folder(_library_root)
+    sqlite_util.init_library_db(_library_db)
+    display.display_init_libraries_db(_library_db)
+    
+    #outfile init
+    os.mkdir(_outfile_root)
+    display.display_init_run_notebook(_outfile_root)
+    
+    #scene init
+    default_scene_name = 'scene'
+    os.mkdir(_scene_root)
+    display.display_init_scene_folder(_scene_root)
+    sqlite_util.init_current_scene(_history_db, default_scene_name)
+    new_scene.new_scene(default_scene_name, _scene_root, _history_db)
+    display.display_init_scene_db(_history_db)
+
+    # telemetry info init
+    user_id = os.path.join(_root, "user_id.db")
+    sqlite_util.init_user_info(user_id)
+
+
 def command(argument):
     """uses a dictionary as a switch statement to determine which funciton to run."""
-
-    ##Creates the appdata mtool folder if it doesn't exist
+    ##Creates the mtool folder if it doesn't exist
     if not os.path.exists(_root):
-        os.mkdir(_root)
+        init(_root)
 
     switcher = {
         "run_notebook": run_notebook,
@@ -190,7 +227,7 @@ def command(argument):
         "set_env": set_env,
         "delete_env": delete_env,
         "list_env": list_env,
-        "load_library": load_library
+        "sync_library": sync_library
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)

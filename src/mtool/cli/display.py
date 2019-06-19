@@ -142,9 +142,10 @@ def display_run_notebook_html(output_root, html_outfile):
 
 def display_run_notebook(filename):
     """the display function for running a notebook"""
-    import pypandoc
+    import nbconvert
     print("\nNotebook output:")
-    print(pypandoc.convert_file(filename, 'asciidoc'))
+    
+    output = nbconvert.exporters.export(nbconvert.MarkdownExporter(), filename)[0]
 
 
 def display_init_run_notebook(outfile_root):

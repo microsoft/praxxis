@@ -4,6 +4,7 @@ This file handles the argument parsing, and is the entry point of the app
 
 import argparse
 import os
+import sys
 
 ## these are the commands passed into function_switcher.py
 run_notebook_command = "run_notebook"
@@ -21,7 +22,7 @@ list_scene_command="list_scene"
 add_library_command="add_library"
 list_library_command="list_library"
 remove_library_command="remove_library"
-load_library_command="load_library"
+sync_library_command="sync_library"
 set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
@@ -64,14 +65,15 @@ add_library_path_help="the path to the library you want to add"
 remove_library_help="remove library of notebooks mtool"
 remove_library_path_help="path of the library you want to remove"
 list_libraries_help="list libraries currently installed"
-load_library_help="load libraries into mtool. Default loads from predefined library path"
-load_library_path_help="load library from a specific directory into mtool"
+sync_library_help="load libraries into mtool. Default loads from predefined library path"
+sync_library_path_help="load library from a specific directory into mtool"
 ## misc help strings
 history_help="history of what you've done in the current scene"
 
 
 def main(command_line=None):
     """creates all of the argparse parsers and returns the args passed in"""
+
     parser = argparse.ArgumentParser('mtool')
     subparsers = parser.add_subparsers(dest='command')
     
@@ -84,7 +86,7 @@ def main(command_line=None):
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
-    search_notebooks = subparsers.add_parser('search', aliases=["sn"], help=search_notebooks_help)
+    search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
     search_notebooks.add_argument('term', help=search_notebooks_term_help)
     search_notebooks.set_defaults(which=search_notebooks_command)
 
@@ -132,17 +134,16 @@ def main(command_line=None):
     list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
     list_libraries.set_defaults(which=list_library_command)
 
-    load_library = subparsers.add_parser('loadlibrary', aliases=["lo"], help=load_library_help)
-    load_library.add_argument('path', nargs="?", help=load_library_path_help)
-    load_library.set_defaults(which=load_library_command)
-
+    sync_library = subparsers.add_parser('synclibrary', aliases=["sl"], help=sync_library_help)
+    sync_library.add_argument('path', nargs="?", help=sync_library_path_help)
+    sync_library.set_defaults(which=sync_library_command)
 
     set_env = subparsers.add_parser('setenv', aliases=["se"], help=set_env_help)
     set_env.add_argument('name', help=set_env_name_help)
     set_env.add_argument('value', help=set_env_value_help)
     set_env.set_defaults(which=set_env_command)
 
-    search_env = subparsers.add_parser('searchenv', aliases=["s"], help=search_env_help)
+    search_env = subparsers.add_parser('searchenv', aliases=["sv"], help=search_env_help)
     search_env.add_argument('term', help=search_env_term_help)
     search_env.set_defaults(which=search_env_command)
 
@@ -154,9 +155,19 @@ def main(command_line=None):
     list_env.set_defaults(which=list_env_command)
 
     args = parser.parse_args(command_line)
+    
+    if len(sys.argv[1:])==0:
+        parser.print_help()
+        print()    
     return args
 
-if __name__ == "__main__":
-    """the runner of mtool. makes a call to the switcher with the output of main"""
+
+def start():
+    """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.cli import function_switcher
     function_switcher.command(main())
+
+
+if __name__ == "__main__":
+    """the runner of mtool. makes a call to start"""
+    start()

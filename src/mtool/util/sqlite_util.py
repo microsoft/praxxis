@@ -391,7 +391,6 @@ def get_notebook(db_file, name):
     conn = create_connection(db_file)
     cur = conn.cursor()
     get_notebook = f'SELECT * FROM "Notebooks" WHERE Name = "{name}" LIMIT 0, 1'
-    print(name)
     cur.execute(get_notebook)
     conn.commit()
     rows = cur.fetchall()
@@ -408,7 +407,7 @@ def get_notebook_by_ord(db_file, ordinal):
     conn.commit()
     item = cur.fetchone()
     conn.close()
-    return item[0]
+    return item
 
 
 def write_list(db_file, notebook_list):

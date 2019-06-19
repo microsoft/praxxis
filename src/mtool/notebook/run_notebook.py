@@ -37,13 +37,16 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
 
     from datetime import datetime
 
-    notebook.init_notebook_run(outfile_root)
     name = args.notebook
+
 
     tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
     if tmp_name != None:
         name = tmp_name
-        
+    else:
+        return
+
+
     notebook_data = sqlite_util.get_notebook(library_db, name)
     notebook = notebook.Notebook(notebook_data, library_root)
 

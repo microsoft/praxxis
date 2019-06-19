@@ -1,12 +1,7 @@
 urllib3
 requests
-uuid
 papermill
 ijson
-datetime
-toml
-pypandoc
-pandoc
 ipykernel 
 
 pytest

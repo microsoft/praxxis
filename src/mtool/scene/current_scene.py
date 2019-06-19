@@ -8,7 +8,6 @@ def current_scene(scene_root, history_db):
     from src.mtool.scene import scene
     from src.mtool.cli import display
 
-    scene.init_scene(scene_root, history_db)
     display.display_current_scene(sqlite_util.get_current_scene(history_db))
     
     
