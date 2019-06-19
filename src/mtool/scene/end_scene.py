@@ -7,8 +7,6 @@ def end_scene(args, scene_root, history_db, current_scene_db):
     from src.mtool.util import sqlite_util
     from src.mtool.cli import display
     from src.mtool.scene import scene
-
-    scene.init_scene(scene_root, history_db)
     
     if hasattr(args, "name"):
         name = args.name
