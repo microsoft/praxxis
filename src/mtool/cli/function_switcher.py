@@ -164,12 +164,40 @@ def default(arg):
     current_scene.current_scene(_scene_root, _history_db)
     return
  
- 
+def init(_root):
+    from src.mtool.util import sqlite_util
+    from src.mtool.cli import display
+    from src.mtool.scene import new_scene
+
+    os.mkdir(_root)
+
+    #library init
+    os.mkdir(_library_root)
+    display.display_init_libraries_folder(_library_root)
+    sqlite_util.init_library_db(_library_db)
+    display.display_init_libraries_db(_library_db)
+    
+    #outfile init
+    os.mkdir(_outfile_root)
+    display.display_init_run_notebook(_outfile_root)
+    
+    #scene init
+    default_scene_name = 'scene'
+    os.mkdir(_scene_root)
+    display.display_init_scene_folder(_scene_root)
+    sqlite_util.init_current_scene(_history_db, default_scene_name)
+    new_scene.new_scene(default_scene_name, _scene_root, _history_db)
+    display.display_init_scene_db(_history_db)
+
+    # telemetry info init
+    user_id = os.path.join(_root, "user_id.db")
+    sqlite_util.init_user_info(user_id)
+
 def command(argument):
     """uses a dictionary as a switch statement to determine which funciton to run."""
-    ##Creates the appdata mtool folder if it doesn't exist
+    ##Creates the mtool folder if it doesn't exist
     if not os.path.exists(_root):
-        os.mkdir(_root)
+        init(_root)
 
     switcher = {
         "run_notebook": run_notebook,
