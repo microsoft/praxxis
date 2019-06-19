@@ -408,7 +408,7 @@ def get_notebook_by_ord(db_file, ordinal):
     conn.commit()
     item = cur.fetchone()
     conn.close()
-    return item[0]
+    return item
 
 
 def write_list(db_file, notebook_list):
