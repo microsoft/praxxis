@@ -103,7 +103,7 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
 
 
         return parts
-        
+
 
 def main(command_line=None):
     """creates all of the argparse parsers and returns the args passed in""" 
@@ -203,20 +203,21 @@ def main(command_line=None):
 def start():
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.cli import function_switcher
-    arg1 = sys.argv[1]
-    if arg1.isnumeric():
-        arg = argparse.Namespace
+    if len(sys.argv) > 1:
+        arg1 = sys.argv[1]
+        if arg1.isnumeric():
+            arg = argparse.Namespace
 
-        if len(sys.argv) > 2:
-            arg.html = sys.argv[2]
-        else:
-            arg.html = None
+            if len(sys.argv) > 2:
+                arg.html = sys.argv[2]
+            else:
+                arg.html = None
 
-        arg.command = 'r'
-        arg.notebook = arg1
-        arg.which = run_notebook_command
-        function_switcher.command(arg)
-        return 
+            arg.command = 'r'
+            arg.notebook = arg1
+            arg.which = run_notebook_command
+            function_switcher.command(arg)
+            return 
     function_switcher.command(main())
 
 
