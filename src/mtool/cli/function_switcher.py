@@ -168,7 +168,6 @@ def default(arg):
     """calls the default function, which is to display the current scene."""
     ##TODO:set up running notebook as default 
     from src.mtool.scene import current_scene
-
     current_scene.current_scene(_scene_root, _history_db)
     return
  
