@@ -15,7 +15,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
         name = tmp_name
     notebook_data = sqlite_util.get_notebook(library_db, name)
 
-    notebook_filename = notebook_data[1]
+    notebook_filename = notebook_data[0]
     subprocess.Popen([ads_location, notebook_filename])
 
 
