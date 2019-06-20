@@ -21,6 +21,7 @@ def delete_scene(args, scene_root, history_db):
     else:
         name = args
 
+
     tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
     if tmp_name != None:
         name = tmp_name

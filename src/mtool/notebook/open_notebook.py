@@ -15,17 +15,28 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
         name = tmp_name
     notebook_data = sqlite_util.get_notebook(library_db, name)
 
-    notebook_filename = notebook_data[1]
-    subprocess.Popen([ads_location, notebook_filename])
+    notebook_filename = notebook_data[0]
+    if args.html == "html":
+        display_as_html(notebook_filename)
+    else:
+        subprocess.Popen([ads_location, notebook_filename])
 
 
-def display_as_html(filename, html_outputfile):
+def display_as_html(filename, html_outputfile = None):
     """opens the file as html in the web browser"""
     import nbconvert
     import webbrowser
 
     output = nbconvert.exporters.export(nbconvert.HTMLExporter(), filename)[0]
-    with open(html_outputfile, 'w+') as f:
-        f.write(output)
-
-    webbrowser.open(html_outputfile)
+    if html_outputfile == None:
+        import tempfile
+        # create temporary file
+        temp = tempfile.NamedTemporaryFile(mode="w+t", suffix=".html", delete=False)
+        temp.write(output)
+        temp.seek(0)
+        webbrowser.open(temp.name)
+    
+    else:
+        with open(html_outputfile, 'w+') as f:
+            f.write(output)
+        webbrowser.open(html_outputfile)
