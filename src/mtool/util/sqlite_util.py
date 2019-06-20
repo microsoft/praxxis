@@ -256,7 +256,7 @@ def init_user_info(db_file):
     cur.execute(create_telem_permissions)
     #TODO: figure out where to put input of server info (hint: not here)
     host = input("Enter an IP address for the host server: ")
-    url = input("Enter the URL of the HDFS location to save files (hint: should end in mtool): ")
+    url = "https://{0}:30443/gateway/default/webhdfs/v1/mtool"
     cur.execute(create_host, (host,))
     cur.execute(create_url, (url,))
     conn.commit()

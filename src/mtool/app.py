@@ -117,7 +117,7 @@ def main(command_line=None):
     resume_scene.set_defaults(which=resume_scene_command)
 
     delete_scene = subparsers.add_parser('deletescene', aliases=["ds"], help=delete_scene_help)
-    delete_scene.add_argument('name', help=delete_scene_name_help)
+    delete_scene.add_argument('name', nargs="?", help=delete_scene_name_help)
     delete_scene.set_defaults(which=delete_scene_command)
 
     list_scene = subparsers.add_parser('listscenes', aliases=["ls"], help=list_scene_help)
