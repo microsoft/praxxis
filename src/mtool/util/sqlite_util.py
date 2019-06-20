@@ -422,8 +422,6 @@ def write_list(db_file, notebook_list, path_list = []):
     if path_list == []:
         cur.executemany(insert_line, notebook_list)
     else:
-        print(notebook_list)
-        print(path_list)
         cur.executemany(insert_line, (notebook_list, path_list))
     conn.commit()
     conn.close()
