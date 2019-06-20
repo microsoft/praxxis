@@ -1,4 +1,5 @@
 urllib3
 requests
-file
-run
+papermill
+ijson
+ipykernel 

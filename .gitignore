@@ -1,9 +1,15 @@
 **__pycache__**
 /projects/cli/mtool/library/*
-/projects/cli/mtool/pansop/*
 *.pyo
 *.pyc
 .vscode
-/mtool/pansop/*
 /scripts/mtool/python/*
 /library
+/.pytest_cache
+/build
+/dist
+/mtool.egg-info
+.project
+.pydevproject
+/library/*
+/output/*

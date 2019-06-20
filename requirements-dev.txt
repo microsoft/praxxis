@@ -1,0 +1,7 @@
+urllib3
+requests
+papermill
+ijson
+ipykernel 
+pytest
+pytest-runner
