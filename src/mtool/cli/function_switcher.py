@@ -73,7 +73,7 @@ def history(arg):
     """calls the function to display scene history"""
     from src.mtool.scene import history
     current_scene_db = get_current_scene_db()
-    history.history(arg, _history_db, current_scene_db)
+    history.history(arg, _history_db, _library_db, current_scene_db)
     return
 
 
