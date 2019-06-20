@@ -90,7 +90,7 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
                 if len(choice) <= 2:
                     new_choices.append(choice)
             action.choices = new_choices
-        parts = super(argparse.RawDescriptionHelpFormatter, self)._format_action(action)  
+        parts = super()._format_action(action)  
              
         if action.help == run_notebook_help:
             parts = f'Notebooks: \n{parts}'
