@@ -71,10 +71,10 @@ sync_library_path_help="load library from a specific directory into mtool"
 history_help="history of what you've done in the current scene"
 
 
-mtool_ascii_art = """
+mtool_ascii_art = r"""
                ▒▒ |                        ▒▒ |
 ▒▒▒▒▒▒\▒▒▒▒\ ▒▒▒▒▒▒\    ▒▒▒▒▒▒\   ▒▒▒▒▒▒\  ▒▒ |
-▒▒  _▒▒  _▒▒\\\_▒▒  _|  ▒▒  __▒▒\ ▒▒  __▒▒\ ▒▒ |
+▒▒  _▒▒  _▒▒\\_▒▒  _|  ▒▒  __▒▒\ ▒▒  __▒▒\ ▒▒ |
 ▒▒ / ▒▒ / ▒▒ | ▒▒ |    ▒▒ /  ▒▒ |▒▒ /  ▒▒ |▒▒ |
 ▒▒ | ▒▒ | ▒▒ | ▒▒ |▒▒\ ▒▒ |  ▒▒ |▒▒ |  ▒▒ |▒▒ |
 ▒▒ | ▒▒ | ▒▒ | \▒▒▒▒  |\▒▒▒▒▒▒  |\▒▒▒▒▒▒  |▒▒ |
