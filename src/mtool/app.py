@@ -71,10 +71,49 @@ sync_library_path_help="load library from a specific directory into mtool"
 history_help="history of what you've done in the current scene"
 
 
+mtool_ascii_art = """
+               ▒▒ |                        ▒▒ |
+▒▒▒▒▒▒\▒▒▒▒\ ▒▒▒▒▒▒\    ▒▒▒▒▒▒\   ▒▒▒▒▒▒\  ▒▒ |
+▒▒  _▒▒  _▒▒\\\_▒▒  _|  ▒▒  __▒▒\ ▒▒  __▒▒\ ▒▒ |
+▒▒ / ▒▒ / ▒▒ | ▒▒ |    ▒▒ /  ▒▒ |▒▒ /  ▒▒ |▒▒ |
+▒▒ | ▒▒ | ▒▒ | ▒▒ |▒▒\ ▒▒ |  ▒▒ |▒▒ |  ▒▒ |▒▒ |
+▒▒ | ▒▒ | ▒▒ | \▒▒▒▒  |\▒▒▒▒▒▒  |\▒▒▒▒▒▒  |▒▒ |
+\__| \__| \__|  \____/  \______/  \______/ \__|
+"""
+
+class helpFormatter (argparse.RawDescriptionHelpFormatter):
+    def _format_action(self, action):
+        import re
+        if action.dest == "command":
+            new_choices = []
+            for choice in action.choices:
+                if len(choice) <= 2:
+                    new_choices.append(choice)
+            action.choices = new_choices
+        parts = super(argparse.RawDescriptionHelpFormatter, self)._format_action(action)  
+             
+        if action.help == run_notebook_help:
+            parts = f'Notebooks: \n{parts}'
+        if action.help == new_scene_help:
+            parts = f'Scene: \n{parts}'
+        if action.help == add_library_help:
+            parts = f'Library: \n{parts}'
+        if action.help == set_env_help:
+            parts = f'Environment: \n{parts}'
+
+
+        return parts
+
+def myerror(message):
+    print('error message')
+    print(message)
+
 def main(command_line=None):
     """creates all of the argparse parsers and returns the args passed in"""
-
-    parser = argparse.ArgumentParser('mtool')
+    parser = argparse.ArgumentParser(description=mtool_ascii_art, 
+                                    formatter_class=helpFormatter, 
+                                    usage="Notebooks: r, o, s, l, h, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, Environment:se , sv, de, le")
+                                    
     subparsers = parser.add_subparsers(dest='command')
     
     run_notebook = subparsers.add_parser('run', aliases=["r"], help=run_notebook_help)

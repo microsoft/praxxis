@@ -1,7 +1,25 @@
-## Introduction
-MTool is built upon the idea of helping each other. Every day we are generating and wasting valuable data that could help solve each other’s problems. What if there was a centralized way of collect data? MTool does that! It collects and analyzes the exhaust emitted from your computer, and in doing so enables others to learn from your problems. In return, MTool helps you predict what you want to run next. We want MTool to empower everybody to learn from each other! 
+```
+               ██ |                        ██ |  
+██████\████\ ██████\    ██████\   ██████\  ██ |  
+██  _██  _██\\_██  _|  ██  __██\ ██  __██\ ██ |  
+██ / ██ / ██ | ██ |    ██ /  ██ |██ /  ██ |██ |  
+██ | ██ | ██ | ██ |██\ ██ |  ██ |██ |  ██ |██ |  
+██ | ██ | ██ | \████  |\██████  |\██████  |██ |  
+\__| \__| \__|  \____/  \______/  \______/ \__|
+```
 
-MTool is a task interface built on big data and machine learing. It streamlines the process of running notebooks and elemenates the need to write/ memorize complicated series of commands. MTool includes all of the efficiencies of tools like ktool, and the intelligence of machine learning, mtool learns from your habits to create intelligent pathways through your workflow.
+## Introduction
+mtool is built upon the idea of helping each other. Every day we are generating and wasting valuable data that could help solve each other’s problems. What if there was a centralized way of collect data? mtool does that! It collects and analyzes the exhaust emitted from your computer, and in doing so enables others to learn from your problems. In return, mtool helps you predict what you want to run next. We want mtool to empower everybody to learn from each other! 
+
+mtool is a task interface built on big data and machine learing. It streamlines the process of running notebooks and elemenates the need to write/ memorize complicated series of commands. mtool includes all of the efficiencies of tools like ktool, and the intelligence of machine learning, mtool learns from your habits to create intelligent pathways through your workflow.
+
+## Installation 
+git clone this repo, and run 
+``` 
+python setup.py install
+pip install -r requirements.txt
+```
+mtool requires python 3.6 and above.
 
 ## Features
 ##### Scenes
@@ -19,5 +37,5 @@ mtool runs on libraries of notebooks, allowing every command on your system to b
 ## Docs
 Accessible in markdown format in the docs folder
 
-## Extra MTool 
+## Extra mtool 
 For more infromation on how to use m tool type m --help into the command 
