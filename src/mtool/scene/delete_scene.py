@@ -12,8 +12,12 @@ def delete_scene(args, scene_root, history_db):
     from src.mtool.cli import display
     from src.mtool.scene import scene
 
+
     if hasattr(args, "name"):
-        name = args.name
+        if(args.name == None):
+            name = sqlite_util.get_current_scene(history_db)
+        else:
+            name = args.name
     else:
         name = args
 
