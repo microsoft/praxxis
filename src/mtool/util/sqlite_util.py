@@ -230,7 +230,7 @@ def get_notebook_history(db_file):
     """gets the notebook history from a scene"""
     conn = create_connection(db_file)
     cur = conn.cursor()
-    get_notebook_history = f'SELECT * FROM "History" ORDER BY Timestamp LIMIT 10'
+    get_notebook_history = f'SELECT * FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT 10) ORDER BY Timestamp ASC'
     cur.execute(get_notebook_history)
     conn.commit()
     rows = cur.fetchall()

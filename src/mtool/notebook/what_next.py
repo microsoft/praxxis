@@ -37,6 +37,7 @@ def what_next(args, user_info_db, current_scene_db):
         print(str(1+i) + ". " + suggestions[i])
     """
     from src.mtool.notebook.mtool_model_app import score
-    data = ["SOP027", "SOP023", "SOP023"]
+    data = sqlite_util.
+    #["SOP027", "SOP023", "SOP023"]
     suggestions = score.predict(data)
 
