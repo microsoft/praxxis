@@ -2,12 +2,13 @@
 
 We'd love your help!
 
-## Running Mtool 
+## Installing Mtool 
 run 
 ```
-python setup.py install 
+python setup.py develop
+pip -r requirements-dev.txt 
 ``` 
-to install the package, and be able to run from the command line
+to install the package in development mode and run m from the command line.
 
 ## Coding Standards
 All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does. see the current files for an idea of the expected level of detail.
@@ -22,8 +23,6 @@ As new functionality is added, please document the new features and add them to 
 Before making a pull request, please open an issue! Discussing your proposed changes with the community will make your changes that much more valuable.
 Once changes have been discussed, be sure that your code passes the tests before opening the pull request.
 The smaller your changes are, the easier it is for them to be reviewed and merged.
-
-//detail how the tests work
 
 Your pull request has the best chance of being merged if
 - it includes tests for the new functionality

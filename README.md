@@ -13,6 +13,14 @@ mtool is built upon the idea of helping each other. Every day we are generating 
 
 mtool is a task interface built on big data and machine learing. It streamlines the process of running notebooks and elemenates the need to write/ memorize complicated series of commands. mtool includes all of the efficiencies of tools like ktool, and the intelligence of machine learning, mtool learns from your habits to create intelligent pathways through your workflow.
 
+## Installation 
+git clone this repo, and run 
+``` 
+python setup.py install
+pip install -r requirements.txt
+```
+mtool requires python 3.6 and above.
+
 ## Features
 ##### Scenes
 mtool scenes are situation-specific configurations that can be saved, closed, reopened and shared. Scenes store your habits and environment, allowing you to easily fix old problems, and get help with new ones. Scenes store your environment variables and notebook history allowing you to easily share your working enviorment. When you share your scenes your peers are able to see the same outputs, predictions, and parameter values you see.
