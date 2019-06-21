@@ -237,6 +237,16 @@ def get_notebook_history(db_file):
     conn.close()
     return rows
 
+def get_recent_history(db_file, seq_length):
+    """Gets last <seq_length> file names from a scene"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_recent_history = f'SELECT Notebook FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    cur.execute(get_recent_history, (seq_length,))
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 
 def init_user_info(db_file):
     """From name of database file, creates and initializes user info"""
@@ -262,6 +272,13 @@ def init_user_info(db_file):
     conn.commit()
     conn.close()
     
+def init_models_db(db_file):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    create_models_table = f'CREATE TABLE "Models" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, LocalCopy BIT, LastUpdated STRING)'
+    cur.execute(create_models_table)
+    conn.commit()
+    conn.close()
 
 def list_env(db_file, start, end):
     """returns a list of set environment variables in the scene"""

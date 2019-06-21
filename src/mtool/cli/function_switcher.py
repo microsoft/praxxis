@@ -20,6 +20,8 @@ _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
+_model_root = os.path.join(_root, "model")
+_model_db = os.path.join(_model_root, "models.db")
 _history_db = os.path.join(_scene_root, "current_scene.db")
 _user_info_db = os.path.join(_root, "user_id.db")
 
@@ -197,6 +199,12 @@ def init(_root):
     sqlite_util.init_current_scene(_history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, _scene_root, _history_db)
     display.display_init_scene_db(_history_db)
+
+    #model init
+    os.mkdir(_model_root)
+    display.display_init_model_folder(_model_root)
+    sqlite_util.init_models_db(_model_db)
+    display.display_init_models_db(_model_db)
 
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")

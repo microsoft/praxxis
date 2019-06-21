@@ -1,4 +1,0 @@
-name: mtool-model-app
-version: v1
-inputs:
-  seq: ['ES002', 'ES002', 'ES003', 'ES003', 'SOP002', 'SOP003', 'SOP003', 'SOP003', 'SOP003', 'SOP027', 'SOP027', 'SOP027', 'TSG024', 'TSG024']

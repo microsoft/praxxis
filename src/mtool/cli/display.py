@@ -88,6 +88,16 @@ def display_init_scene_db(db_root):
     """the display function for initializing the scene database"""
     print(f"Created history db at {db_root}")
 
+def display_init_model_folder(root):
+    """the display function for initializing the model folder"""
+    print(f"Created models directory at {root}")
+
+
+def display_init_models_db(db_root):
+    """the display function for initializing the models database"""
+    print(f"Created models db at {db_root}")
+
+
 
 def display_new_scene(name):
     """the display function for creating a new scene"""

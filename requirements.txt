@@ -3,6 +3,6 @@ requests
 papermill
 ijson
 ipykernel 
-
-pytest
-pytest-runner
+tensorflow
+keras
+scikit-learn
