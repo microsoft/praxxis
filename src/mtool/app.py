@@ -101,8 +101,6 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
         elif action.help == add_library_help:
             parts = f'Library: \n{parts}'
 
-
-
         return parts
 
 
