@@ -241,6 +241,7 @@ def get_notebook_history(db_file):
 def init_user_info(db_file):
     """From name of database file, creates and initializes user info"""
     import uuid
+    import getpass
 
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -249,6 +250,8 @@ def init_user_info(db_file):
     create_telem_permissions = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("TELEMETRY", 1)'
     create_host = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Host", ?)'
     create_url = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
+    create_user = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Username", ?)'
+    create_pswd = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Password", ?)'
     id_val = str(uuid.uuid4())
     
     cur.execute(create_userinfo_table)
@@ -257,8 +260,12 @@ def init_user_info(db_file):
     #TODO: figure out where to put input of server info (hint: not here)
     host = input("Enter an IP address for the host server: ")
     url = "https://{0}:30443/gateway/default/webhdfs/v1/mtool"
+    username = input("Enter your username for connecting to the server: ")
+    pswd = getpass.getpass()
     cur.execute(create_host, (host,))
     cur.execute(create_url, (url,))
+    cur.execute(create_user, (username,))
+    cur.execute(create_pswd, (pswd,))
     conn.commit()
     conn.close()
     
