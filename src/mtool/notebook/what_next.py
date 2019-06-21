@@ -5,7 +5,7 @@ import time
 from requests.auth import HTTPBasicAuth
 
 from src.mtool.util import sqlite_util
-from src.mtool.notebook.model_management import score
+from src.mtool.model.model_scoring import score
 
 
 def what_next(args, user_info_db, current_scene_db):

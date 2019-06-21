@@ -1,4 +1,4 @@
-name: mtool-model-app
+name: mtool-model-scoring
 version: v1
 runtime: Python
 src: ./score.py

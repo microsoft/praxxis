@@ -1,5 +1,5 @@
 """
-This file fetches the newest model from HDFS
+This file sends the telemetry from execution into HDFS.
 """
 
 import os
@@ -28,6 +28,9 @@ def send(root, filename, current_scene_db):
     installation_identifier = sqlite_util.get_telemetry_info(user_id, "ID")
     scene_identifier = sqlite_util.get_scene_id(current_scene_db)
 
+    username = sqlite_util.get_telemetry_info(user_id, "Username")
+    pswd = sqlite_util.get_telemetry_info(user_id, "Password")
+
     # TODO: Enable round-robin for all nodes in the K8s cluster (nodePort)
     web_hdfs_endpoint = telemetry_url_format_string.format(telemery_hosts[0])
 
@@ -46,7 +49,6 @@ def send(root, filename, current_scene_db):
     
     payload = {'op': 'CREATE'}
 
-    r = requests.put(url=route, data=contents, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth('root', 'Yukon900'))
+    r = requests.put(url=route, data=contents, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
   
     r.raise_for_status()
-

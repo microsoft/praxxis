@@ -1,0 +1,1 @@
+# Deploy this training app into a big data cluster to run nightly trainings on all mtool data in HDFS
