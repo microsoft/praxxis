@@ -93,7 +93,7 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
         parts = super()._format_action(action)  
              
         if action.help == run_notebook_help:
-            parts = f'Notebooks: \n{parts}'
+            parts = f"""Notebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
         elif action.help == new_scene_help:
             parts = f'Scene: \n{parts}'
         elif action.help == set_env_help:
