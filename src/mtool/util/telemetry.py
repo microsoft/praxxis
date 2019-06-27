@@ -13,7 +13,7 @@ from src.mtool.util.sqlite import sqlite_telemetry
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "helpers"))
 
 
-def send(root, local_copy, current_scene_db):
+def send(root, local_copy, current_scene_db):    
     
     user_info_db = os.path.join(root, "user_id.db")
 
@@ -48,3 +48,7 @@ def send(root, local_copy, current_scene_db):
     with open(local_copy, 'rb' ) as f:
         r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
         r.raise_for_status()
+       
+
+if __name__ == "__main__":
+    send(*sys.argv[1:])
