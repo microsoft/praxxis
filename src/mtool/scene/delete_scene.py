@@ -9,7 +9,8 @@ def delete_scene(args, scene_root, history_db):
 
     from src.mtool.scene import current_scene
     from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.display import display_scene
+    from src.mtool.display import display_error
     from src.mtool.scene import scene
 
     if hasattr(args, "name"):
@@ -30,11 +31,11 @@ def delete_scene(args, scene_root, history_db):
     if os.path.exists(directory):
         if sqlite_util.delete_scene(history_db, name):
             shutil.rmtree(directory)
-            display.display_delete_scene_success(name)
+            display_scene.display_delete_scene_success(name)
         else:
-            display.last_active_scene_error(name)
+            display_error.last_active_scene_error(name)
     else:
-        display.scene_does_not_exist_error(name)
+        display_error.scene_does_not_exist_error(name)
     
 
             

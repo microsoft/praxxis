@@ -6,7 +6,7 @@ import os
 
 def sync_libraries(library_root, library_db):
     """ loads libraries from the library root you supply, into the library db"""
-    from src.mtool.cli import display
+    from src.mtool.display import display_library
     from src.mtool.util import sqlite_util
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
@@ -17,7 +17,7 @@ def sync_libraries(library_root, library_db):
     for directory in directories:
         this_library_root = os.path.join(library_root, directory)
         sync_library(this_library_root, library_db)
-        display.display_loaded_library(this_library_root, first)
+        display_library.display_loaded_library(this_library_root, first)
         #first = False
 
 
@@ -38,7 +38,8 @@ def sync_library(library_root, library_db):
 def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
     from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.display import display_library
+    from src.mtool.display import display_error
     from src.mtool.notebook import notebook
     first = True
     for library_root, dirs, files in os.walk(library_root, topdown=False):
@@ -47,14 +48,14 @@ def sync_notebooks(library_root, library_db, library_name):
             if(file_extension == ".ipynb"):
                 file_root = os.path.join(library_root, name)
                 if first:
-                    display.loaded_notebook_message()
+                    display_library.loaded_notebook_message()
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     for environment in notebook_data._environmentVars:
                         sqlite_util.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
-                    display.display_loaded_notebook(name)
+                    display_library.display_loaded_notebook(name)
                 except:
-                    display.notebook_load_error(name)
+                    display_error.notebook_load_error(name)
 
                 sqlite_util.load_notebook(library_db, file_root, file_name, library_name)
                 first = False

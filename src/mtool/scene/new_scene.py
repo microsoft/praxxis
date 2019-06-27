@@ -6,7 +6,7 @@ def new_scene(args, scene_root, history_db):
     """ creates a new scene, and sets that scene to the current scene""" 
     import os
     from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.display import display_scene
     from src.mtool.scene import scene 
     
     if hasattr(args, "name"):
@@ -28,5 +28,5 @@ def new_scene(args, scene_root, history_db):
     sqlite_util.init_scene(db_file, name)
     sqlite_util.update_current_scene(history_db, name)
     
-    display.display_new_scene(name)
+    display_scene.display_new_scene(name)
     

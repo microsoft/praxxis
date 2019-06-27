@@ -7,7 +7,7 @@ def resume_scene(args, scene_root, history_db):
     import os
 
     from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.display import display_scene
     from src.mtool.scene import scene
 
     if hasattr(args, "name"):
@@ -25,4 +25,4 @@ def resume_scene(args, scene_root, history_db):
     sqlite_util.mark_resumed_scene(history_db, name)
     sqlite_util.update_current_scene(history_db, name)
     
-    display.display_resume_scene(name)
+    display_scene.display_resume_scene(name)

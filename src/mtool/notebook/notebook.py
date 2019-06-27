@@ -11,8 +11,8 @@ def get_notebook_by_ordinal(scene_db, name):
     if f"{name}".isdigit():
         name = sqlite_util.get_notebook_by_ord(scene_db, name)
         if name == None:
-            from src.mtool.cli import display
-            display.notebook_does_not_exist_error(name)
+            from src.mtool.display import display_error
+            display_error.notebook_does_not_exist_error(name)
             return
         return(name[0])   
 
@@ -20,7 +20,7 @@ def get_notebook_by_ordinal(scene_db, name):
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
     def __init__(self, notebook_data):
-        from src.mtool.cli import display
+        from src.mtool.display import display_error
         #TODO: add support for reading from a URL
         self.name = notebook_data[1]
         notebook_path = notebook_data[0]
@@ -34,7 +34,7 @@ class Notebook:
             f = open(self._path)
             self.extract_params(f)
         except(FileNotFoundError):
-            display.notebook_does_not_exist_error(self.name)
+            display_error.notebook_does_not_exist_error(self.name)
     
     def getpath(self):
         """returns the path of the notebook"""
