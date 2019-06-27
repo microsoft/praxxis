@@ -7,11 +7,13 @@ import os
 def sync_libraries(library_root, library_db):
     """ loads libraries from the library root you supply, into the library db"""
     from src.mtool.display import display_library
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util.sqlite import sqlite_environment
+
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
-    sqlite_util.clear_loaded_libararies(library_db)   
-    sqlite_util.clear_notebook_environments(library_db)   
+    sqlite_library.clear_loaded_libararies(library_db)   
+    sqlite_environment.clear_notebook_environments(library_db)   
     
     first = True
     for directory in directories:
@@ -23,7 +25,7 @@ def sync_libraries(library_root, library_db):
 
 def sync_library(library_root, library_db):
     """ loads the individual library specified by the library root passed in, into the library db""" 
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_library
     readme_location = os.path.join(library_root, "README.md")
     readme_data = "No Readme"
     dirname = library_root.split(os.path.sep)[-1]
@@ -31,13 +33,13 @@ def sync_library(library_root, library_db):
          f = open(readme_location, "r")
          readme_data = "  ".join(f.readlines()[:3])
 
-    sqlite_util.load_library(library_db, library_root, readme_data, dirname)
+    sqlite_library.load_library(library_db, library_root, readme_data, dirname)
     sync_notebooks(library_root, library_db, dirname)
 
 
 def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_library
     from src.mtool.display import display_library
     from src.mtool.display import display_error
     from src.mtool.notebook import notebook
@@ -52,10 +54,10 @@ def sync_notebooks(library_root, library_db, library_name):
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     for environment in notebook_data._environmentVars:
-                        sqlite_util.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
+                        sqlite_library.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
                     display_library.display_loaded_notebook(name)
                 except:
                     display_error.notebook_load_error(name)
 
-                sqlite_util.load_notebook(library_db, file_root, file_name, library_name)
+                sqlite_library.load_notebook(library_db, file_root, file_name, library_name)
                 first = False

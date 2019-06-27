@@ -185,28 +185,30 @@ def default(arg):
  
 def init(_root):
     from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.display import display_library
+    from src.mtool.display import display_notebook
+    from src.mtool.display import display_scene
     from src.mtool.scene import new_scene
 
     os.mkdir(_root)
 
     #library init
     os.mkdir(_library_root)
-    display.display_init_libraries_folder(_library_root)
+    display_library.display_init_libraries_folder(_library_root)
     sqlite_util.init_library_db(_library_db)
-    display.display_init_libraries_db(_library_db)
+    display_library.display_init_libraries_db(_library_db)
     
     #outfile init
     os.mkdir(_outfile_root)
-    display.display_init_run_notebook(_outfile_root)
+    display_notebook.display_init_run_notebook(_outfile_root)
     
     #scene init
     default_scene_name = 'scene'
     os.mkdir(_scene_root)
-    display.display_init_scene_folder(_scene_root)
+    display_scene.display_init_scene_folder(_scene_root)
     sqlite_util.init_current_scene(_history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, _scene_root, _history_db)
-    display.display_init_scene_db(_history_db)
+    display_scene.display_init_scene_db(_history_db)
 
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")

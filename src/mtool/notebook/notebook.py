@@ -7,9 +7,9 @@ import os
 
 def get_notebook_by_ordinal(scene_db, name):
     """gets scene by ordinal using the sqlite history db"""
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_notebook
     if f"{name}".isdigit():
-        name = sqlite_util.get_notebook_by_ord(scene_db, name)
+        name = sqlite_notebook.get_notebook_by_ord(scene_db, name)
         if name == None:
             from src.mtool.display import display_error
             display_error.notebook_does_not_exist_error(name)

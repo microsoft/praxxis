@@ -33,7 +33,8 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
     from src.mtool.notebook import notebook
     from src.mtool.notebook import open_notebook 
     from src.mtool.util import telemetry
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.util.sqlite import sqlite_scene
 
     from datetime import datetime
 
@@ -43,7 +44,7 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
     if tmp_name != None:
         name = tmp_name
 
-    notebook_data = sqlite_util.get_notebook(library_db, name)
+    notebook_data = sqlite_notebook.get_notebook(library_db, name)
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)
@@ -56,7 +57,7 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
         display_notebook.display_run_notebook(local_copy)
 
     timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
-    sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
+    sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
     telemetry.send(root, local_copy, current_scene_db)
 
 
@@ -86,11 +87,11 @@ def execute(db_file, notebook, outfile_root):
 
 def pull_params(db_file, environmentVars):
     """Returns a dictionary of all overridden parameters for notebook"""
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_environment
 
     injects = {}
     for var in environmentVars:
-        value = sqlite_util.get_env(db_file, var[0])
+        value = sqlite_environment.get_env(db_file, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
             injects[var] = value

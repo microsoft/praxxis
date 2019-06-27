@@ -5,7 +5,7 @@ This file creates a new scene
 def new_scene(args, scene_root, history_db):
     """ creates a new scene, and sets that scene to the current scene""" 
     import os
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.display import display_scene
     from src.mtool.scene import scene 
     
@@ -25,8 +25,8 @@ def new_scene(args, scene_root, history_db):
     os.mkdir(directory)
     db_file = os.path.join(directory, f"{name}.db")
     
-    sqlite_util.init_scene(db_file, name)
-    sqlite_util.update_current_scene(history_db, name)
+    sqlite_scene.init_scene(db_file, name)
+    sqlite_scene.update_current_scene(history_db, name)
     
     display_scene.display_new_scene(name)
     

@@ -217,7 +217,7 @@ def main(command_line=None):
 
 def start():
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
-    from src.mtool.cli import function_switcher
+    from src.mtool.util import function_switcher
     if len(sys.argv) > 1:
         arg1 = sys.argv[1]
         if arg1.isnumeric():
