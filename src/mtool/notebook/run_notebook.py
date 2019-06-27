@@ -32,9 +32,20 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
         display_notebook.display_run_notebook(local_copy)
 
     timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
+<<<<<<< HEAD
     sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
     telemetry.send(root, local_copy, current_scene_db)
+=======
+    sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
+>>>>>>> telemetry runs as subprocess
 
+    import subprocess
+    import os
+    import sys
+    f = os.path.join(os.path.dirname(__file__),  "..\\util")
+    os.chdir(f)
+    subprocess.Popen([sys.executable, "telemetry.py", root, local_copy, current_scene_db])
+    
 
 def execute(db_file, notebook, outfile_root):
     """Handles papermill execution for notebook"""
