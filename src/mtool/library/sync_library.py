@@ -40,6 +40,8 @@ def sync_library(library_root, library_db):
 def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
     from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util.sqlite import sqlite
+
     from src.mtool.display import display_library
     from src.mtool.display import display_error
     from src.mtool.notebook import notebook
@@ -51,10 +53,11 @@ def sync_notebooks(library_root, library_db, library_name):
                 file_root = os.path.join(library_root, name)
                 if first:
                     display_library.loaded_notebook_message()
+
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     for environment in notebook_data._environmentVars:
-                        sqlite_library.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
+                        sqlite_environment.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
                     display_library.display_loaded_notebook(name)
                 except:
                     display_error.notebook_load_error(name)

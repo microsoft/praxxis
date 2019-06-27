@@ -28,8 +28,8 @@ _query_end = 100
 
 def get_current_scene_db():
     """calls the function to get the location of the history db"""
-    from src.mtool.util import sqlite_util
-    scene = sqlite_util.get_current_scene(_history_db)
+    from src.mtool.util.sqlite import sqlite_scene
+    scene = sqlite_scene.get_current_scene(_history_db)
     return os.path.join(_scene_root, scene, f"{scene}.db")
 
 
@@ -184,7 +184,9 @@ def default(arg):
     return
  
 def init(_root):
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.util.sqlite import sqlite_telemetry
     from src.mtool.display import display_library
     from src.mtool.display import display_notebook
     from src.mtool.display import display_scene
@@ -195,7 +197,7 @@ def init(_root):
     #library init
     os.mkdir(_library_root)
     display_library.display_init_libraries_folder(_library_root)
-    sqlite_util.init_library_db(_library_db)
+    sqlite_library.init_library_db(_library_db)
     display_library.display_init_libraries_db(_library_db)
     
     #outfile init
@@ -206,13 +208,13 @@ def init(_root):
     default_scene_name = 'scene'
     os.mkdir(_scene_root)
     display_scene.display_init_scene_folder(_scene_root)
-    sqlite_util.init_current_scene(_history_db, default_scene_name)
+    sqlite_scene.init_current_scene(_history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, _scene_root, _history_db)
     display_scene.display_init_scene_db(_history_db)
 
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")
-    sqlite_util.init_user_info(user_id)
+    sqlite_telemetry.init_user_info(user_id)
 
 
 def command(argument):
