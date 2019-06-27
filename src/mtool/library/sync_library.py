@@ -11,7 +11,8 @@ def sync_libraries(library_root, library_db):
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
     sqlite_util.clear_loaded_libararies(library_db)   
-        
+    sqlite_util.clear_notebook_environments(library_db)   
+    
     first = True
     for directory in directories:
         this_library_root = os.path.join(library_root, directory)
@@ -45,12 +46,15 @@ def sync_notebooks(library_root, library_db, library_name):
             file_name, file_extension = os.path.splitext(name)
             if(file_extension == ".ipynb"):
                 file_root = os.path.join(library_root, name)
-
-                notebook_data = notebook.Notebook([file_root, file_name, library_name])
-
-                for environment in notebook_data._environmentVars:
-                    sqlite_util.set_notebook_environments(library_db, file_name, environment[0], environment[1])
+                if first:
+                    display.loaded_notebook_message()
+                try:
+                    notebook_data = notebook.Notebook([file_root, file_name, library_name])
+                    for environment in notebook_data._environmentVars:
+                        sqlite_util.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
+                    display.display_loaded_notebook(name)
+                except:
+                    display.notebook_load_error(name)
 
                 sqlite_util.load_notebook(library_db, file_root, file_name, library_name)
-                display.display_loaded_notebook(name, first)
                 first = False

@@ -56,12 +56,12 @@ def display_loaded_library(root, first):
         print(f"\t{root}")
 
 
-def display_loaded_notebook(name, first):
-    """the display function for loaded notebooks"""
-    if first:
-        print(f"Loaded notebook:\n\t{name}")
-    else:
-        print(f"\t{name}")
+def loaded_notebook_message():
+    print("Loaded notebook:")
+
+
+def display_loaded_notebook(name):
+    print(f"\t{name}")
 
 
 def display_libraries(libraries):
@@ -148,10 +148,27 @@ def display_run_notebook(filename):
     output = nbconvert.exporters.export(nbconvert.MarkdownExporter(), filename)[0]
     print(output)
 
-
 def display_init_run_notebook(outfile_root):
     """the display function for initializing the notebooks directory"""
     print(f"Created outfile directory at {outfile_root}")
+
+
+def display_view_env(envs, set_envs):
+    from colorama import init, Fore, Style
+    init()
+    if envs == []:
+        print("No parameters")
+    else:
+        set_envs = dict(set_envs)
+        envs = dict(envs)
+        for name in envs:
+            print(f"{name} = ", end="")
+            if name in set_envs:
+                print(f"{Fore.BLUE}{set_envs[name]}{Style.RESET_ALL}" )
+            else:
+                print(name)
+
+
 
 
 def display_history(current_scene, notebooks):
@@ -162,6 +179,7 @@ def display_history(current_scene, notebooks):
     for notebook in notebooks:
         print(f"  {num}.\t{notebook[0]}\t{notebook[2]}\t\t{notebook[1]}")
         num -= 1
+
 
 def display_search(search_term, notebooks):
     """the display function for showing the results of the current search"""
@@ -209,4 +227,10 @@ def papermill_error(error):
 def no_tagged_cell_warning():
     """the warning display for having no tagged cell"""
     print("Warning: no tagged cell located. No parameters will be injected for this notebook.")
+
+
+def notebook_load_error(name):
+    from colorama import init, Fore, Style
+    init()
+    print(f"\t{Fore.RED}there is something wrong with {name}. mtool will still load it, but it might not run.{Style.RESET_ALL}")
     

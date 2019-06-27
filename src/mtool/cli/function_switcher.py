@@ -39,6 +39,12 @@ def run_notebook(arg):
     current_scene_db = get_current_scene_db()
     run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db, _library_root, _library_db)
     return
+
+
+def view_notebook_env(arg):
+    from src.mtool.environment import list_env
+    current_scene_db = get_current_scene_db()
+    list_env.list_notebook_env(arg, _library_db, current_scene_db)
  
 
 def open_notebook(arg):
@@ -143,6 +149,12 @@ def list_env(arg):
     return
 
 
+def view_library_env(arg):
+    from src.mtool.environment import list_env
+    current_scene_db = get_current_scene_db()
+    list_env.list_library_env(arg, _library_db, current_scene_db)
+
+
 def add_library(arg):
     """calls the function to add a library"""
     ##TODO: implement this
@@ -209,6 +221,7 @@ def command(argument):
 
     switcher = {
         "run_notebook": run_notebook,
+        "view_notebook_env": view_notebook_env,
         "open_notebook": open_notebook,
         "search_notebooks": search_notebook,
         "list_notebooks": list_notebook,
@@ -225,6 +238,7 @@ def command(argument):
         "set_env": set_env,
         "delete_env": delete_env,
         "list_env": list_env,
+        "view_library_env": view_library_env,
         "sync_library": sync_library
     }
     if hasattr(argument, "which"):

@@ -137,6 +137,27 @@ def set_notebook_environments(db_file, notebook_name, environment_name, environm
     conn.close()
 
 
+def clear_notebook_environments(db_file):
+    """empties the notebook environment table""" 
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    clear_environment = f'DELETE FROM "Environment"'
+    cur.execute(clear_environment)
+    conn.commit()
+    conn.close()
+    pass
+
+
+def get_library_environments(db_file, library_name):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_library_envs = f'SELECT Name, Value from "Environment" Where NotebookName = (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}")'
+    cur.execute(get_library_envs)
+    environments = cur.fetchall()
+    conn.close()
+    return environments
+
+
 def delete_scene(db_file, name):
     """Deletes the specified scene"""
     conn = create_connection(db_file)
@@ -307,6 +328,18 @@ def list_env(db_file, start, end):
     return rows
 
 
+def get_all_env(db_file):
+    """returns a list of set environment variables in the scene"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC'
+    cur.execute(list_env)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
 def get_env(db_file, var_name):
     """get the value of the specified environment variable""" 
     conn = create_connection(db_file)
@@ -353,6 +386,7 @@ def delete_env(db_file, name):
     cur.execute(env)
     exists = cur.fetchall()
     if exists == []:
+        conn.close()
         return 0
     else:
         delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
@@ -360,6 +394,16 @@ def delete_env(db_file, name):
         conn.commit()
         conn.close()
         return 1
+
+
+def list_notebook_env(db_file, notebook_name):
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    env = f'SELECT Name, Value from "Environment" WHERE NotebookName = "{notebook_name}"'
+    cur.execute(env)
+    rows = cur.fetchall()
+    conn.close()
+    return rows
 
 def clear_loaded_libararies(db_file):
     conn = create_connection(db_file)
