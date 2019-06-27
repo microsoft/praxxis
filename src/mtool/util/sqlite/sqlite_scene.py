@@ -263,4 +263,3 @@ def get_scene_by_ord(db_file, ordinal):
     if rows == []:
         return ""
     return rows[0][0]
-
