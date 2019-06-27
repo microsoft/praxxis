@@ -255,7 +255,7 @@ def get_notebook_history(db_file):
     """gets the notebook history from a scene"""
     conn = create_connection(db_file)
     cur = conn.cursor()
-    get_notebook_history = f'SELECT * FROM "History" ORDER BY Timestamp LIMIT 10'
+    get_notebook_history = f'SELECT * FROM "History" ORDER BY Timestamp'
     cur.execute(get_notebook_history)
     conn.commit()
     rows = cur.fetchall()
@@ -266,6 +266,7 @@ def get_notebook_history(db_file):
 def init_user_info(db_file):
     """From name of database file, creates and initializes user info"""
     import uuid
+    import getpass
 
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -274,6 +275,8 @@ def init_user_info(db_file):
     create_telem_permissions = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("TELEMETRY", 1)'
     create_host = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Host", ?)'
     create_url = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
+    create_user = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Username", ?)'
+    create_pswd = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("Password", ?)'
     id_val = str(uuid.uuid4())
     
     cur.execute(create_userinfo_table)
@@ -281,9 +284,13 @@ def init_user_info(db_file):
     cur.execute(create_telem_permissions)
     #TODO: figure out where to put input of server info (hint: not here)
     host = input("Enter an IP address for the host server: ")
-    url = input("Enter the URL of the HDFS location to save files (hint: should end in mtool): ")
+    url = "https://{0}:30443/gateway/default/webhdfs/v1/mtool"
+    username = input("Enter your username for connecting to the server: ")
+    pswd = getpass.getpass()
     cur.execute(create_host, (host,))
     cur.execute(create_url, (url,))
+    cur.execute(create_user, (username,))
+    cur.execute(create_pswd, (pswd,))
     conn.commit()
     conn.close()
     
@@ -435,7 +442,7 @@ def get_notebook_by_ord(db_file, ordinal):
     return item
 
 
-def write_list(db_file, notebook_list):
+def write_list(db_file, notebook_list, path_list = []):
     """creates the list of notebooks in list"""
     conn = create_connection(db_file)
     cur = conn.cursor()
@@ -444,10 +451,23 @@ def write_list(db_file, notebook_list):
     insert_line = f'INSERT INTO "NotebookList" (DATA, PATH) VALUES (?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
-    cur.executemany(insert_line, notebook_list)
+    if path_list == []:
+        cur.executemany(insert_line, notebook_list)
+    else:
+        cur.executemany(insert_line, (notebook_list, path_list))
     conn.commit()
     conn.close()
 
+def get_notebook_path(db_file, notebook, library):
+    """gets notebook path from libraries/notebooks"""
+    conn = create_connection(db_file)
+    cur = conn.cursor()
+    get_notebook_path = f"SELECT ROOT FROM 'Notebooks' WHERE NAME=? AND LIBRARYNAME=?"
+    cur.execute(get_notebook_path, (notebook, library))
+    conn.commit()
+    path = cur.fetchone()[0]
+    conn.close()
+    return path
     
 def get_telemetry_info(db_file, key):
     """gets the telemetry information:"""

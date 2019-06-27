@@ -51,7 +51,7 @@ def open_notebook(arg):
 def search_notebook(arg):
     """calls the function to search a notebook"""
     from src.mtool.notebook import search_notebook
-    search_notebook.search_notebook(arg, _library_db, _query_start, _query_end)
+    search_notebook.search_notebook(arg, _library_db, get_current_scene_db(), _query_start, _query_end)
     return
 
 
@@ -73,7 +73,7 @@ def history(arg):
     """calls the function to display scene history"""
     from src.mtool.scene import history
     current_scene_db = get_current_scene_db()
-    history.history(arg, _history_db, current_scene_db)
+    history.history(arg, _history_db, _library_db, current_scene_db)
     return
 
 
@@ -168,7 +168,6 @@ def default(arg):
     """calls the default function, which is to display the current scene."""
     ##TODO:set up running notebook as default 
     from src.mtool.scene import current_scene
-
     current_scene.current_scene(_scene_root, _history_db)
     return
  

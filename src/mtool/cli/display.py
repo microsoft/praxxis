@@ -146,6 +146,7 @@ def display_run_notebook(filename):
     print("\nNotebook output:")
     
     output = nbconvert.exporters.export(nbconvert.MarkdownExporter(), filename)[0]
+    print(output)
 
 
 def display_init_run_notebook(outfile_root):
@@ -156,10 +157,11 @@ def display_init_run_notebook(outfile_root):
 def display_history(current_scene, notebooks):
     """the display function for showing the history of the current scene"""
     print(f"History for scene {current_scene}")
-    print(f"\tTIMESTAMP\t\tNOTEBOOK\t\tLIBRARY")
+    print(f"\tTIMESTAMP\t\tLIBRARY\t\t\tNOTEBOOK")
+    num = len(notebooks)
     for notebook in notebooks:
-        print(f"\t{notebook[0]}\t{notebook[1]}\t{notebook[2]}")
-
+        print(f"  {num}.\t{notebook[0]}\t{notebook[2]}\t\t{notebook[1]}")
+        num -= 1
 
 def display_search(search_term, notebooks):
     """the display function for showing the results of the current search"""
@@ -170,6 +172,7 @@ def display_search(search_term, notebooks):
         print(f"\t{counter}.\t{notebook[0]}")
     if len(notebooks) == 0:
         print("\tNo results found")
+    return notebooks
 
 
 def scene_does_not_exist_error(name):

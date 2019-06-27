@@ -71,10 +71,47 @@ sync_library_path_help="load library from a specific directory into mtool"
 history_help="history of what you've done in the current scene"
 
 
-def main(command_line=None):
-    """creates all of the argparse parsers and returns the args passed in"""
+mtool_ascii_art = r"""
+               ▒▒ |                        ▒▒ |
+▒▒▒▒▒▒\▒▒▒▒\ ▒▒▒▒▒▒\    ▒▒▒▒▒▒\   ▒▒▒▒▒▒\  ▒▒ |
+▒▒  _▒▒  _▒▒\\_▒▒  _|  ▒▒  __▒▒\ ▒▒  __▒▒\ ▒▒ |
+▒▒ / ▒▒ / ▒▒ | ▒▒ |    ▒▒ /  ▒▒ |▒▒ /  ▒▒ |▒▒ |
+▒▒ | ▒▒ | ▒▒ | ▒▒ |▒▒\ ▒▒ |  ▒▒ |▒▒ |  ▒▒ |▒▒ |
+▒▒ | ▒▒ | ▒▒ | \▒▒▒▒  |\▒▒▒▒▒▒  |\▒▒▒▒▒▒  |▒▒ |
+\__| \__| \__|  \____/  \______/  \______/ \__|
+"""
 
-    parser = argparse.ArgumentParser('mtool')
+class helpFormatter (argparse.RawDescriptionHelpFormatter):
+    def _format_action(self, action):
+        import re
+        if action.dest == "command":
+            new_choices = []
+            for choice in action.choices:
+                if len(choice) <= 2:
+                    new_choices.append(choice)
+            action.choices = new_choices
+        parts = super()._format_action(action)  
+             
+        if action.help == run_notebook_help:
+            parts = f'Notebooks: \n{parts}'
+        if action.help == new_scene_help:
+            parts = f'Scene: \n{parts}'
+        if action.help == add_library_help:
+            parts = f'Library: \n{parts}'
+        if action.help == set_env_help:
+            parts = f'Environment: \n{parts}'
+
+
+        return parts
+
+
+def main(command_line=None):
+    """creates all of the argparse parsers and returns the args passed in""" 
+
+    parser = argparse.ArgumentParser(description=mtool_ascii_art, 
+                                    formatter_class=helpFormatter, 
+                                    usage="Notebooks: r, o, s, l, h, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, Environment:se , sv, de, le")
+                                    
     subparsers = parser.add_subparsers(dest='command')
     
     run_notebook = subparsers.add_parser('run', aliases=["r"], help=run_notebook_help)
@@ -84,6 +121,7 @@ def main(command_line=None):
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
+    open_notebook.add_argument('html', nargs="?", help=run_notebook_environment_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
@@ -117,7 +155,7 @@ def main(command_line=None):
     resume_scene.set_defaults(which=resume_scene_command)
 
     delete_scene = subparsers.add_parser('deletescene', aliases=["ds"], help=delete_scene_help)
-    delete_scene.add_argument('name', help=delete_scene_name_help)
+    delete_scene.add_argument('name', nargs="?", help=delete_scene_name_help)
     delete_scene.set_defaults(which=delete_scene_command)
 
     list_scene = subparsers.add_parser('listscenes', aliases=["ls"], help=list_scene_help)
@@ -155,7 +193,7 @@ def main(command_line=None):
     list_env.set_defaults(which=list_env_command)
 
     args = parser.parse_args(command_line)
-    
+
     if len(sys.argv[1:])==0:
         parser.print_help()
         print()    
@@ -165,6 +203,21 @@ def main(command_line=None):
 def start():
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.cli import function_switcher
+    if len(sys.argv) > 1:
+        arg1 = sys.argv[1]
+        if arg1.isnumeric():
+            arg = argparse.Namespace
+
+            if len(sys.argv) > 2:
+                arg.html = sys.argv[2]
+            else:
+                arg.html = None
+
+            arg.command = 'r'
+            arg.notebook = arg1
+            arg.which = run_notebook_command
+            function_switcher.command(arg)
+            return 
     function_switcher.command(main())
 
 
