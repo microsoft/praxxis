@@ -93,14 +93,13 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
         parts = super()._format_action(action)  
              
         if action.help == run_notebook_help:
-            parts = f'Notebooks: \n{parts}'
-        if action.help == new_scene_help:
+            parts = f"""Notebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
+        elif action.help == new_scene_help:
             parts = f'Scene: \n{parts}'
-        if action.help == add_library_help:
-            parts = f'Library: \n{parts}'
-        if action.help == set_env_help:
+        elif action.help == set_env_help:
             parts = f'Environment: \n{parts}'
-
+        elif action.help == add_library_help:
+            parts = f'Library: \n{parts}'
 
         return parts
 
@@ -161,21 +160,6 @@ def main(command_line=None):
     list_scene = subparsers.add_parser('listscenes', aliases=["ls"], help=list_scene_help)
     list_scene.set_defaults(which=list_scene_command)
 
-    add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
-    add_library.add_argument('path', help=add_library_path_help)
-    add_library.set_defaults(which=add_library_command)
-
-    remove_library = subparsers.add_parser('removelibrary', aliases=["rl"], help=remove_library_help)
-    remove_library.add_argument('path', help=remove_library_path_help)
-    remove_library.set_defaults(which=remove_library_command)
-
-    list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
-    list_libraries.set_defaults(which=list_library_command)
-
-    sync_library = subparsers.add_parser('synclibrary', aliases=["sl"], help=sync_library_help)
-    sync_library.add_argument('path', nargs="?", help=sync_library_path_help)
-    sync_library.set_defaults(which=sync_library_command)
-
     set_env = subparsers.add_parser('setenv', aliases=["se"], help=set_env_help)
     set_env.add_argument('name', help=set_env_name_help)
     set_env.add_argument('value', help=set_env_value_help)
@@ -191,6 +175,21 @@ def main(command_line=None):
 
     list_env = subparsers.add_parser('listenv', aliases=["le"], help=list_env_help)
     list_env.set_defaults(which=list_env_command)
+
+    add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
+    add_library.add_argument('path', help=add_library_path_help)
+    add_library.set_defaults(which=add_library_command)
+
+    remove_library = subparsers.add_parser('removelibrary', aliases=["rl"], help=remove_library_help)
+    remove_library.add_argument('path', help=remove_library_path_help)
+    remove_library.set_defaults(which=remove_library_command)
+
+    list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
+    list_libraries.set_defaults(which=list_library_command)
+
+    sync_library = subparsers.add_parser('synclibrary', aliases=["sl"], help=sync_library_help)
+    sync_library.add_argument('path', nargs="?", help=sync_library_path_help)
+    sync_library.set_defaults(which=sync_library_command)
 
     args = parser.parse_args(command_line)
 
