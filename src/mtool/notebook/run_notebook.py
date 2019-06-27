@@ -33,8 +33,12 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
 
     timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
 <<<<<<< HEAD
+<<<<<<< HEAD
     sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
     telemetry.send(root, local_copy, current_scene_db)
+=======
+    sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
+>>>>>>> telemetry runs as subprocess
 =======
     sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
 >>>>>>> telemetry runs as subprocess
