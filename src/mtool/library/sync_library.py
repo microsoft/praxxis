@@ -40,7 +40,7 @@ def sync_library(library_root, library_db):
 def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
     from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite
+    from src.mtool.util.sqlite import sqlite_environment
 
     from src.mtool.display import display_library
     from src.mtool.display import display_error
