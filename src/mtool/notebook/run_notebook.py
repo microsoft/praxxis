@@ -26,6 +26,7 @@ Also check string concat and other optimizers.
 #TODO: should have a way to view all defaults in a notebook 
 #TODO: have a way to load all environment variables for a library?
 
+import threading
 
 def run_notebook(args, root, outfile_root, current_scene_db, library_root, library_db):
     """runs a single notebook specified in args and sends telemetry"""
@@ -61,8 +62,14 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
 
     timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
     sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
-    telemetry.send(root, local_copy, current_scene_db)
 
+    import subprocess
+    import os
+    import sys
+    f = os.path.join(os.path.dirname(__file__),  "..\\util")
+    os.chdir(f)
+    subprocess.Popen([sys.executable, "telemetry.py", root, local_copy, current_scene_db])
+    
 
 def execute(db_file, notebook, outfile_root):
     """Handles papermill execution for notebook"""
