@@ -103,10 +103,8 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
 
         return parts
 
-
 def main(command_line=None):
     """creates all of the argparse parsers and returns the args passed in""" 
-
     parser = argparse.ArgumentParser(description=mtool_ascii_art, 
                                     formatter_class=helpFormatter, 
                                     usage="Notebooks: r, o, s, l, h, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, Environment:se , sv, de, le")

@@ -5,9 +5,7 @@ This file is responsible for running all of the functions identified by app.py
 import os
 import sys
 
-## database roots for mtool. Should be changed to remove hard coding
 if(sys.platform == "linux"):
-    ## TODO: make this directory less of a risky place
     _root = os.path.join (os.path.expanduser('~/mtool'))
     _azure_data_studio_location = os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
 
