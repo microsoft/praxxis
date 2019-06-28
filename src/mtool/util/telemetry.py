@@ -18,10 +18,11 @@ def send(root, local_copy, current_scene_db):
     user_info_db = os.path.join(root, "user_id.db")
 
     # TODO: clean up this query vvv 
-    host = [sqlite_telemetry.get_telemetry_info(user_info_db, "Host")]
-    url = sqlite_telemetry.get_telemetry_info(user_info_db, "URL")
-    username = sqlite_telemetry.get_telemetry_info(user_info_db, "Username")
-    pswd =  sqlite_telemetry.get_telemetry_info(user_info_db, "Password")
+    host = [sqlite_util.get_telemetry_info(user_info_db, "Host")]
+    print(host)
+#    url = sqlite_util.get_telemetry_info(user_info_db, "URL")
+#    username = sqlite_util.get_telemetry_info(user_info_db, "Username")
+#    pswd =  sqlite_util.get_telemetry_info(user_info_db, "Password")
 
     installation_identifier = sqlite_telemetry.get_telemetry_info(user_info_db, "ID")
     scene_identifier = sqlite_telemetry.get_scene_id(current_scene_db)
