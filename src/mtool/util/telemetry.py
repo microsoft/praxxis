@@ -6,7 +6,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import requests
 from requests.auth import HTTPBasicAuth
 
-from src.mtool.util import sqlite_util
+from src.mtool.util.sqlite import sqlite_telemetry
 
 # Include the helpers subfolder folder
 #
@@ -17,13 +17,14 @@ def send(root, local_copy, current_scene_db):
     
     user_info_db = os.path.join(root, "user_id.db")
 
-    host = [sqlite_util.get_telemetry_info(user_info_db, "Host")]
-    url = sqlite_util.get_telemetry_info(user_info_db, "URL")
-    username = sqlite_util.get_telemetry_info(user_info_db, "Username")
-    pswd =  sqlite_util.get_telemetry_info(user_info_db, "Password")
+    # TODO: clean up this query vvv 
+    host = [sqlite_telemetry.get_telemetry_info(user_info_db, "Host")]
+    url = sqlite_telemetry.get_telemetry_info(user_info_db, "URL")
+    username = sqlite_telemetry.get_telemetry_info(user_info_db, "Username")
+    pswd =  sqlite_telemetry.get_telemetry_info(user_info_db, "Password")
 
-    installation_identifier = sqlite_util.get_telemetry_info(user_info_db, "ID")
-    scene_identifier = sqlite_util.get_scene_id(current_scene_db)
+    installation_identifier = sqlite_telemetry.get_telemetry_info(user_info_db, "ID")
+    scene_identifier = sqlite_telemetry.get_scene_id(current_scene_db)
 
     # TODO: Enable round-robin for all nodes in the K8s cluster (nodePort)
     web_hdfs_endpoint = url.format(host[0])
