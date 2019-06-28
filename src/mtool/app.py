@@ -8,6 +8,7 @@ import sys
 
 ## these are the commands passed into function_switcher.py
 run_notebook_command = "run_notebook"
+view_notebook_env_command="view_notebook_env"
 list_notebooks_command="list_notebooks"
 search_notebooks_command="search_notebooks"
 open_notebook_command="open_notebook"
@@ -26,11 +27,14 @@ sync_library_command="sync_library"
 set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
+view_library_env_command="view_library_env"
 search_env_command="search_env"
 ## notebook help strings
 run_notebook_help="run notebook"
 run_notebook_notebook_help="notebook to run"
 run_notebook_environment_help="html flag for opening in web"
+view_notebook_env_help="displays the environments for the notebook"
+view_notebook_env_notebook_help="the notebook to view environment for"
 open_notebook_help="open notebook in Azure Data Studio"
 open_notebook_notebook_help="notebook to open"
 list_notebooks_help="list notebooks to run, by ordinal."
@@ -59,6 +63,8 @@ delete_env_name_help="name of the environment variable to delete"
 search_env_help="search for environment variable names"
 search_env_term_help="search term for environment variable"
 list_env_help="list environment variables"
+view_library_env_help="list all environments in a library of notebooks"
+view_library_env_name_help="the name of the library you want to list for"
 ## library help strings
 add_library_help="install library of notebooks to mtool"
 add_library_path_help="the path to the library you want to add"
@@ -91,7 +97,6 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
                     new_choices.append(choice)
             action.choices = new_choices
         parts = super()._format_action(action)  
-             
         if action.help == run_notebook_help:
             parts = f"""Notebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
         elif action.help == new_scene_help:
@@ -109,7 +114,7 @@ def main(command_line=None):
 
     parser = argparse.ArgumentParser(description=mtool_ascii_art, 
                                     formatter_class=helpFormatter, 
-                                    usage="Notebooks: r, o, s, l, h, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, Environment:se , sv, de, le")
+                                    usage="Notebooks: r, o, s, l, h, v, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, Environment:se , sv, de, le")
                                     
     subparsers = parser.add_subparsers(dest='command')
     
@@ -117,6 +122,10 @@ def main(command_line=None):
     run_notebook.add_argument('notebook', help=run_notebook_notebook_help)
     run_notebook.add_argument('html', nargs="?", help=run_notebook_environment_help)
     run_notebook.set_defaults(which=run_notebook_command)
+
+    view_notebook_envs = subparsers.add_parser('viewenvs', aliases=["v"], help=view_notebook_env_help)
+    view_notebook_envs.add_argument('notebook', help=view_notebook_env_notebook_help)
+    view_notebook_envs.set_defaults(which=view_notebook_env_command)
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
@@ -126,6 +135,7 @@ def main(command_line=None):
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
     search_notebooks.add_argument('term', help=search_notebooks_term_help)
     search_notebooks.set_defaults(which=search_notebooks_command)
+
 
     list_notebooks = subparsers.add_parser('list', aliases=["l"], help=list_notebooks_help)
     list_notebooks.set_defaults(which=list_notebooks_command)
@@ -176,6 +186,10 @@ def main(command_line=None):
     list_env = subparsers.add_parser('listenv', aliases=["le"], help=list_env_help)
     list_env.set_defaults(which=list_env_command)
 
+    view_library_env = subparsers.add_parser('viewlibenv', aliases=["vl"], help=view_library_env_help)
+    view_library_env.add_argument('name', help=view_library_env_name_help)
+    view_library_env.set_defaults(which=view_library_env_command)
+
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)
     add_library.set_defaults(which=add_library_command)
@@ -191,6 +205,7 @@ def main(command_line=None):
     sync_library.add_argument('path', nargs="?", help=sync_library_path_help)
     sync_library.set_defaults(which=sync_library_command)
 
+
     args = parser.parse_args(command_line)
 
     if len(sys.argv[1:])==0:
@@ -202,11 +217,12 @@ def main(command_line=None):
 def start():
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
 
+    # prevents mtool from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
         return
 
-    from src.mtool.cli import function_switcher
+    from src.mtool.util import function_switcher
     if len(sys.argv) > 1:
         arg1 = sys.argv[1]
         if arg1.isnumeric():

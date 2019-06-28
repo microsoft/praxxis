@@ -8,7 +8,7 @@ setuptools.setup(
      name='mtool', 
      python_requires = '>=3.7.*, >=3.6.*', 
      version='0.0.0',
-     author="Skyler Clark",
+     author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
      author_email="example@microsoft.com",
      description="mtool",
      long_description=long_description,

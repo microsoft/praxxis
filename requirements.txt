@@ -3,3 +3,4 @@ requests
 papermill
 ijson
 ipykernel 
+setuptools

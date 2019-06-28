@@ -28,8 +28,8 @@ _query_end = 100
 
 def get_current_scene_db():
     """calls the function to get the location of the history db"""
-    from src.mtool.util import sqlite_util
-    scene = sqlite_util.get_current_scene(_history_db)
+    from src.mtool.util.sqlite import sqlite_scene
+    scene = sqlite_scene.get_current_scene(_history_db)
     return os.path.join(_scene_root, scene, f"{scene}.db")
 
 
@@ -39,6 +39,12 @@ def run_notebook(arg):
     current_scene_db = get_current_scene_db()
     run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db, _library_root, _library_db)
     return
+
+
+def view_notebook_env(arg):
+    from src.mtool.environment import list_env
+    current_scene_db = get_current_scene_db()
+    list_env.list_notebook_env(arg, _library_db, current_scene_db)
  
 
 def open_notebook(arg):
@@ -143,6 +149,12 @@ def list_env(arg):
     return
 
 
+def view_library_env(arg):
+    from src.mtool.environment import list_env
+    current_scene_db = get_current_scene_db()
+    list_env.list_library_env(arg, _library_db, current_scene_db)
+
+
 def add_library(arg):
     """calls the function to add a library"""
     ##TODO: implement this
@@ -172,33 +184,37 @@ def default(arg):
     return
  
 def init(_root):
-    from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.util.sqlite import sqlite_telemetry
+    from src.mtool.display import display_library
+    from src.mtool.display import display_notebook
+    from src.mtool.display import display_scene
     from src.mtool.scene import new_scene
 
     os.mkdir(_root)
 
     #library init
     os.mkdir(_library_root)
-    display.display_init_libraries_folder(_library_root)
-    sqlite_util.init_library_db(_library_db)
-    display.display_init_libraries_db(_library_db)
+    display_library.display_init_libraries_folder(_library_root)
+    sqlite_library.init_library_db(_library_db)
+    display_library.display_init_libraries_db(_library_db)
     
     #outfile init
     os.mkdir(_outfile_root)
-    display.display_init_run_notebook(_outfile_root)
+    display_notebook.display_init_run_notebook(_outfile_root)
     
     #scene init
     default_scene_name = 'scene'
     os.mkdir(_scene_root)
-    display.display_init_scene_folder(_scene_root)
-    sqlite_util.init_current_scene(_history_db, default_scene_name)
+    display_scene.display_init_scene_folder(_scene_root)
+    sqlite_scene.init_current_scene(_history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, _scene_root, _history_db)
-    display.display_init_scene_db(_history_db)
+    display_scene.display_init_scene_db(_history_db)
 
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")
-    sqlite_util.init_user_info(user_id)
+    sqlite_telemetry.init_user_info(user_id)
 
 
 def command(argument):
@@ -209,6 +225,7 @@ def command(argument):
 
     switcher = {
         "run_notebook": run_notebook,
+        "view_notebook_env": view_notebook_env,
         "open_notebook": open_notebook,
         "search_notebooks": search_notebook,
         "list_notebooks": list_notebook,
@@ -225,6 +242,7 @@ def command(argument):
         "set_env": set_env,
         "delete_env": delete_env,
         "list_env": list_env,
+        "view_library_env": view_library_env,
         "sync_library": sync_library
     }
     if hasattr(argument, "which"):
