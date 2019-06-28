@@ -42,4 +42,4 @@ def papermill_error(error):
 
 def no_tagged_cell_warning():
     """the warning display for having no tagged cell"""
-    print("{Fore.YELLOW}Warning: no tagged cell located. No parameters will be injected for this notebook.")
+    print(f"{Fore.YELLOW}Warning: no tagged cell located. No parameters will be injected for this notebook.")
