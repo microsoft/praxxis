@@ -1,3 +1,7 @@
+"""
+This file contains all of the sqlite functions for environments
+"""
+
 def get_notebook_environments(db_file, name):
     """gets the scene ID from the scene db"""
     from src.mtool.util.sqlite import connection

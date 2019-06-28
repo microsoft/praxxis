@@ -1,3 +1,7 @@
+"""
+This file contains all of the sqlite functions for libraries
+"""
+
 def init_library_db(db_file):
     """initializes the library database"""
     from src.mtool.util.sqlite import connection

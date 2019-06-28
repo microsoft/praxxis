@@ -3,7 +3,7 @@ This file lists all of the environment variables
 """
 
 def list_env(args, scene_root, history_db, start, end):
-    """lists the environment variables by getting them out of the scene"""
+    """lists the environment variables in scene"""
     import os
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.util.sqlite import sqlite_environment
@@ -18,7 +18,7 @@ def list_env(args, scene_root, history_db, start, end):
 
 
 def list_notebook_env(args, library_db, current_scene_db):
-    """lists environments set to defaults in the notebook and set in the scene"""
+    """List all environments in the current notebook"""
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.notebook import notebook
     from src.mtool.display import display_env
@@ -35,6 +35,7 @@ def list_notebook_env(args, library_db, current_scene_db):
 
 
 def list_library_env(args, library_db, current_scene_db):
+    """Lists all environments in the """
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
 

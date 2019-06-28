@@ -6,7 +6,6 @@ import argparse
 import os
 import sys
 
-
 ## these are the commands passed into function_switcher.py
 run_notebook_command = "run_notebook"
 view_notebook_env_command="view_notebook_env"

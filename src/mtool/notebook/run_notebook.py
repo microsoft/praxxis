@@ -1,41 +1,16 @@
 """
 This file runs a notebook. Results are either printed to the console or 
 opened as an html output in the web browser, depending on user input.
-
-Dependencies within mtool:  notebook.py, scene.py, open_notebook.py,
-    telemetry.py
 """
-
-"""
-TIMING INFO: notebook runs 
-avg without injection, without telemetry: 3.904 s (4 runs)
-avg with    injection, without telemetry: 3.881 s (3 runs)
-avg with    injection, with    telemetry: 5.556 s (4 runs)
-
-injection does not appear to add substantial processing time; the difference 
-between injection enabled and disabled does not appear to be statistically
-significant. 
-
-telemetry is a huge time drag, adding an average of 1.675 seconds simply to 
-send the data to HDFS. At this rate, might be easier to thread that process?
-Also check string concat and other optimizers.
-"""
-
-
-#TODO: want to print defaults and overridden vals before execution
-#TODO: should have a way to view all defaults in a notebook 
-#TODO: have a way to load all environment variables for a library?
-
 
 def run_notebook(args, root, outfile_root, current_scene_db, library_root, library_db):
     """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.display import display_notebook
     from src.mtool.notebook import notebook
     from src.mtool.notebook import open_notebook 
-    from src.mtool.util import telemetry
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.util.sqlite import sqlite_scene
-
+    from src.mtool.util import telemetry
     from datetime import datetime
 
     name = args.notebook

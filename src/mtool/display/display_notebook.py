@@ -1,3 +1,7 @@
+"""
+This file contains all of the display functions for notebooks
+"""
+
 def display_list_notebook(notebooks):
     """the display function for listing notebooks"""
     print(f"Notebooks:")

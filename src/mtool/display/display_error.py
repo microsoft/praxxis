@@ -1,3 +1,7 @@
+"""
+This file contains all of the error messages
+"""
+
 def env_not_found_error(name):
     """the error display for environments not being found"""
     print(f"{name} not found")

@@ -1,3 +1,7 @@
+"""
+This file contains the create connection function used by all pf the sqlite files
+"""
+
 import sqlite3
 from sqlite3 import Error
 

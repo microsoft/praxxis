@@ -1,3 +1,7 @@
+"""
+This file contains all of the sqlite functions for scenes
+"""
+
 def init_scene(db_file, name):
     """initializes the scene db"""
     #TODO: handle strings
@@ -6,7 +10,6 @@ def init_scene(db_file, name):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
@@ -14,7 +17,6 @@ def init_scene(db_file, name):
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
     create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
-    
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_list_table)
     cur.execute(create_environment_table)

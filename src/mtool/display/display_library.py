@@ -1,3 +1,7 @@
+"""
+This file contains all of the display functions for libraries
+"""
+
 def display_init_libraries_folder(root):
     """the display function for creating new libraries folder"""
     print(f"Created libraries directory at {root}")

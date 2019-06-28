@@ -1,3 +1,7 @@
+"""
+This file contains all of the sqlite functions for scenes
+"""
+
 def get_scene_id(db_file):
     """gets the scene ID from the scene db"""
     from src.mtool.util.sqlite import connection

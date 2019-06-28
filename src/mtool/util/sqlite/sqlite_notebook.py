@@ -1,3 +1,7 @@
+"""
+This file contains the sqlite functions for notebooks
+"""
+
 def list_notebooks(db_file, start, end):
     """lists all loaded notebooks"""
     from src.mtool.util.sqlite import connection

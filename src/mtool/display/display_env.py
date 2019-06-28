@@ -1,3 +1,7 @@
+"""
+This file contains all of the display functions for environments
+"""
+
 def display_delete_env(name):
     """ the display function for deleted environments"""
     print(f"{name} deleted")

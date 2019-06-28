@@ -1,3 +1,7 @@
+"""
+This file contains all of the display functions for scenes
+"""
+
 def display_change_scene(name):
     """the display function for chaging scene name"""
     print(f"Scene changed to: {name}")
