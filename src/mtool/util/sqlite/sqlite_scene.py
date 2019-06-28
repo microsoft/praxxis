@@ -23,6 +23,7 @@ def init_scene(db_file, name):
     conn.commit()
     conn.close()
 
+
 def check_ended(db_file, name, conn, cur):
     """checks if a scene has ended"""
     ended = f'SELECT Ended from "SceneHistory" WHERE Name = "{name}"'
@@ -236,6 +237,7 @@ def dump_scene_list(db_file):
     cur.execute(reset_counter)
     conn.commit()
     conn.close()
+
 
 def write_scene_list(db_file, scene_list):
     """writes to scene list table"""

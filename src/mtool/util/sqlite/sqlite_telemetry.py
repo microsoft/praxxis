@@ -43,7 +43,7 @@ def init_user_info(db_file):
     cur.execute(create_pswd, (pswd,))
     conn.commit()
     conn.close()
-    
+
 
 def get_telemetry_info(db_file, key):
     """gets the telemetry information:"""

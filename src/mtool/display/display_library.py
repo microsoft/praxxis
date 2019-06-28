@@ -28,4 +28,3 @@ def display_libraries(libraries):
     """the display function for listing libraries""" 
     libraries = "\n\t".join(list(sum(libraries, ())))
     print(f"Loaded libraries:\n\t{libraries}")
-

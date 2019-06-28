@@ -11,6 +11,7 @@ def list_notebooks(db_file, start, end):
     conn.close()
     return rows
 
+
 def get_notebook(db_file, name):
     """returns a specific notebook"""
     from src.mtool.util.sqlite import connection
@@ -38,6 +39,7 @@ def get_notebook_by_ord(db_file, ordinal):
     conn.close()
     return item
 
+
 def write_list(db_file, notebook_list, path_list = []):
     """creates the list of notebooks in list"""
     from src.mtool.util.sqlite import connection
@@ -55,6 +57,7 @@ def write_list(db_file, notebook_list, path_list = []):
         cur.executemany(insert_line, (notebook_list, path_list))
     conn.commit()
     conn.close()
+
 
 def get_notebook_path(db_file, notebook, library):
     """gets notebook path from libraries/notebooks"""

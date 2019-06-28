@@ -24,8 +24,6 @@ def last_active_scene_error(name):
     print(f"{name} is your last active scene. Make a new scene, or resume an old one.")
 
 
-
-
 def scene_ended_error(name):
     """the error display for trying to switch to an ended scene"""
     print(f"can't switch to {name}, because the scene has ended. Resume the scene or make a new one")
@@ -40,5 +38,3 @@ def papermill_error(error):
 def no_tagged_cell_warning():
     """the warning display for having no tagged cell"""
     print("Warning: no tagged cell located. No parameters will be injected for this notebook.")
-
-
