@@ -17,10 +17,12 @@ def send(root, local_copy, current_scene_db):
     
     user_info_db = os.path.join(root, "user_id.db")
 
+    
     host = [sqlite_util.get_telemetry_info(user_info_db, "Host")]
-    url = sqlite_util.get_telemetry_info(user_info_db, "URL")
-    username = sqlite_util.get_telemetry_info(user_info_db, "Username")
-    pswd =  sqlite_util.get_telemetry_info(user_info_db, "Password")
+    print(host)
+#    url = sqlite_util.get_telemetry_info(user_info_db, "URL")
+#    username = sqlite_util.get_telemetry_info(user_info_db, "Username")
+#    pswd =  sqlite_util.get_telemetry_info(user_info_db, "Password")
 
     installation_identifier = sqlite_util.get_telemetry_info(user_info_db, "ID")
     scene_identifier = sqlite_util.get_scene_id(current_scene_db)

@@ -448,12 +448,21 @@ def get_telemetry_info(db_file, key):
     """gets the telemetry information:"""
     conn = create_connection(db_file)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key = ?'
-    cur.execute(query, (key,))
+    query = f'SELECT Value FROM "UserInfo" WHERE Key in ("Host", "URL", "Username", "Password") ORDER BY Key'
+    cur.execute(query)
     conn.commit()
-    item = cur.fetchone()
+    item = cur.fetchall()
+    print(item)
+    item[0] = item[0][0]
+    item.insert(1, item[2][0])
+    item.insert(2, item[4][0])
+    item[3] = item[4][0]
+    item.pop()
+    print(item)
+    """
     if item != None:
         item = item[0] # remove tuple wrapping
+    """
     conn.close()
     return item
 
