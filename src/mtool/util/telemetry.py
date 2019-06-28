@@ -45,6 +45,6 @@ def send(root, local_copy, current_scene_db):
     route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(web_hdfs_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
 
     payload = {'op': 'CREATE'}
-
-    r = requests.put(route, data=local_copy, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
-    r.raise_for_status()
+    with open(local_copy, 'rb' ) as f:
+        r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
+        r.raise_for_status()

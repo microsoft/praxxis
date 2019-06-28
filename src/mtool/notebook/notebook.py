@@ -31,8 +31,9 @@ class Notebook:
         self.library_name = notebook_data[2]
 
         try:
-            f = open(self._path)
+            f = open(self._path, encoding='utf-8')
             self.extract_params(f)
+            f.close()
         except(FileNotFoundError):
             display_error.notebook_does_not_exist_error(self.name)
     
