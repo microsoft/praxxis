@@ -217,6 +217,7 @@ def main(command_line=None):
 def start():
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
 
+    # prevents mtool from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
         return
