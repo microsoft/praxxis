@@ -5,6 +5,7 @@ This file is responsible for running all of the functions identified by app.py
 import os
 import sys
 
+#checks what platform you're on to see where to put mtool root
 if(sys.platform == "linux"):
     _root = os.path.join (os.path.expanduser('~/mtool'))
     _azure_data_studio_location = os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
@@ -19,6 +20,8 @@ _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
+_telemetry_db = os.path.join(_root, "user_id.db")
+_default_scene_name = 'scene'
 
 _query_start = 0
 _query_end = 100
@@ -181,7 +184,18 @@ def default(arg):
     current_scene.current_scene(_scene_root, _history_db)
     return
  
-def init(_root):
+def init(
+        root, 
+        library_root, 
+        library_db, 
+        outfile_root, 
+        scene_root, 
+        history_db, 
+        telemetry_db,
+        default_scene_name,
+        telemetry = True,
+        ):
+
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.util.sqlite import sqlite_telemetry
@@ -190,36 +204,43 @@ def init(_root):
     from src.mtool.display import display_scene
     from src.mtool.scene import new_scene
 
-    os.mkdir(_root)
+    os.mkdir(root)
 
     #library init
-    os.mkdir(_library_root)
-    display_library.display_init_libraries_folder(_library_root)
-    sqlite_library.init_library_db(_library_db)
-    display_library.display_init_libraries_db(_library_db)
+    os.mkdir(library_root)
+    display_library.display_init_libraries_folder(library_root)
+    sqlite_library.init_library_db(library_db)
+    display_library.display_init_libraries_db(library_db)
     
     #outfile init
-    os.mkdir(_outfile_root)
-    display_notebook.display_init_run_notebook(_outfile_root)
+    os.mkdir(outfile_root)
+    display_notebook.display_init_run_notebook(outfile_root)
     
     #scene init
-    default_scene_name = 'scene'
-    os.mkdir(_scene_root)
-    display_scene.display_init_scene_folder(_scene_root)
-    sqlite_scene.init_current_scene(_history_db, default_scene_name)
-    new_scene.new_scene(default_scene_name, _scene_root, _history_db)
-    display_scene.display_init_scene_db(_history_db)
+    
+    os.mkdir(scene_root)
+    display_scene.display_init_scene_folder(scene_root)
+    sqlite_scene.init_current_scene(history_db, default_scene_name)
+    new_scene.new_scene(default_scene_name, scene_root, history_db)
+    display_scene.display_init_scene_db(history_db)
 
     # telemetry info init
-    user_id = os.path.join(_root, "user_id.db")
-    sqlite_telemetry.init_user_info(user_id)
+    if telemetry:
+        sqlite_telemetry.init_user_info(telemetry_db)
 
 
 def command(argument):
     """uses a dictionary as a switch statement to determine which funciton to run."""
     ##Creates the mtool folder if it doesn't exist
     if not os.path.exists(_root):
-        init(_root)
+        init(_root, 
+            _library_root, 
+            _library_db,
+            _outfile_root,
+            _scene_root,
+            _history_db,
+            _telemetry_db,
+            _default_scene_name)
 
     switcher = {
         "run_notebook": run_notebook,

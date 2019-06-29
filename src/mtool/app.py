@@ -208,7 +208,8 @@ def main(command_line=None):
 
     if len(sys.argv[1:])==0:
         parser.print_help()
-        print()    
+        print()
+    print(args)    
     return args
 
 
