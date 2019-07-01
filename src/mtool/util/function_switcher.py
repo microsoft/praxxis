@@ -206,6 +206,7 @@ def init(
     from src.mtool.display import display_notebook
     from src.mtool.display import display_scene
     from src.mtool.scene import new_scene
+    from src.mtool.scene import scene
 
     os.mkdir(root)
 
@@ -224,7 +225,9 @@ def init(
     os.mkdir(scene_root)
     display_scene.display_init_scene_folder(scene_root)
     sqlite_scene.init_current_scene(history_db, default_scene_name)
-    new_scene.new_scene(default_scene_name, scene_root, history_db)
+    scene_db = new_scene.new_scene(default_scene_name, scene_root, history_db)
+    scene.init_scene(scene_db, _history_db, default_scene_name)
+
     display_scene.display_init_scene_db(history_db)
 
     # telemetry info init

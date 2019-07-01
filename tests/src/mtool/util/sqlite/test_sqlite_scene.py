@@ -3,13 +3,13 @@ Tests the sqlite scene db
 """
 from tests.src import global_vars
 
-def test_init_history_db(db_file = global_vars.HISTORY_DB):
+def test_init_history_db(history_db):
     """
     tests the initializing of the history db for columns and tables
     """
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(history_db)
     cur = conn.cursor()
     check_scene_history_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneHistory';"
     check_scene_list_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneList';"
@@ -37,13 +37,13 @@ def test_init_history_db(db_file = global_vars.HISTORY_DB):
     assert set(notebook_columns) == set(['ID', 'Name'])
 
 
-def test_init_scene_db(db_file = global_vars.HISTORY_DB, name = global_vars.DEFAULT_SCENE_NAME):
+def test_init_scene_db(history_db):
     """
     tests the initalizing of the scene db
     """
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(history_db)
     cur = conn.cursor()
     check_scene_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneMetaData';"
     check_notebook_list_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookList';"
@@ -85,7 +85,7 @@ def test_init_scene_db(db_file = global_vars.HISTORY_DB, name = global_vars.DEFA
     history_columns = [description[0] for description in cur.description]
     conn.close()
 
-    assert set(scene_metadata_columns) == set(['ID', 'Ended', 'Name'])
+    assert set(scene_metadata_columns) == set(['ID', 'Ended', 'Name']) 
     assert set(notebook_list_columns) == set(['ID', 'Data', 'Path'])
     assert set(environment_columns) == set(['Name', 'Value'])
     assert set(history_columns) == set(['Timestamp', 'Notebook', 'Library'])

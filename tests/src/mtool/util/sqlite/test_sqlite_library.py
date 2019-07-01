@@ -4,13 +4,13 @@ Tests the sqlite library db
 """
 from tests.src import global_vars
 
-def test_init_library_db(db_file = global_vars.LIBRARY_DB):
+def test_init_library_db(library_db):
     """
     tests the initializing of the library db for columns and tables
     """
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
     check_library_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='LibraryMetadata';"
     check_notebooks_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebooks';"
