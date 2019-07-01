@@ -26,3 +26,4 @@ def resume_scene(args, scene_root, history_db):
     sqlite_scene.update_current_scene(history_db, name)
     
     display_scene.display_resume_scene(name)
+    

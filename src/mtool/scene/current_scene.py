@@ -10,4 +10,3 @@ def current_scene(scene_root, history_db):
 
     display_scene.display_current_scene(sqlite_scene.get_current_scene(history_db))
     
-    

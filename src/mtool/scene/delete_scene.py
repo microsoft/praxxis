@@ -37,5 +37,3 @@ def delete_scene(args, scene_root, history_db):
     else:
         display_error.scene_does_not_exist_error(name)
     
-
-            

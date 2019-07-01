@@ -30,6 +30,3 @@ def end_scene(args, scene_root, history_db, current_scene_db):
         display_scene.display_end_scene_success(name)
     else:
         display_error.last_active_scene_error(name)
-
-        
-    
