@@ -49,6 +49,18 @@ def test_init_history_db(db_file = global_vars.HISTORY_DB):
     assert history
     assert scene_list
 
+    check_scene_history_columns = f"SELECT * FROM 'SceneHistory';"
+    check_scene_list_columns = f"SELECT * FROM 'SceneList';"
+
+    cur.execute(check_scene_history_columns)
+    library_metadata_columns = [description[0] for description in cur.description]
+
+    cur.execute(check_scene_list_columns)
+    notebook_columns = [description[0] for description in cur.description]
+
+    assert library_metadata_columns == ['ID', 'Name', 'Ended']
+    assert notebook_columns == ['ID', 'Name']
+
 
 def test_init_library_db(db_file = global_vars.LIBRARY_DB):
     from src.mtool.util.sqlite import connection
@@ -71,3 +83,20 @@ def test_init_library_db(db_file = global_vars.LIBRARY_DB):
     assert library_metadata
     assert notebooks
     assert environment
+
+    check_library_metadata_columns = f"SELECT * FROM'LibraryMetadata';"
+    check_notebooks_columns = f"SELECT * FROM 'Notebooks';"
+    check_environment_columns = f"SELECT * FROM 'Environment';"
+
+    cur.execute(check_library_metadata_columns)
+    library_metadata_columns = [description[0] for description in cur.description]
+
+    cur.execute(check_notebooks_columns)
+    notebook_columns = [description[0] for description in cur.description]
+
+    cur.execute(check_environment_columns)
+    environment_columns = [description[0] for description in cur.description]
+
+    assert library_metadata_columns == ['Root', 'Readme', 'Name']
+    assert notebook_columns == ['Root', 'Name', 'LibraryName']
+    assert environment_columns == ['Name', 'Value', 'NotebookName']
