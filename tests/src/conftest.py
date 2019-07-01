@@ -5,6 +5,7 @@ import os
 def init_root(tmpdir_factory):
     return tmpdir_factory.mktemp('mtool')
 
+
 @pytest.fixture(scope="session")
 def scene_root(init_root):
     return os.path.join(init_root, "test_scene")
@@ -33,6 +34,7 @@ def history_db(init_root):
 @pytest.fixture(scope="session")
 def telemetry_db(init_root):
     return os.path.join(init_root, "user_id.db")
+
 
 @pytest.fixture(scope="session")
 def default_scene_name():
