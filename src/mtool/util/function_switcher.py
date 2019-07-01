@@ -87,7 +87,10 @@ def history(arg):
 def new_scene(arg):
     """calls the function to create a new scene"""
     from src.mtool.scene import new_scene
-    new_scene.new_scene(arg, _scene_root, _history_db)
+    from src.mtool.scene import scene
+    
+    scene_db = new_scene.new_scene(arg, _scene_root, _history_db)
+    scene.init_scene(scene_db, _scene_root, _history_db)
     return
  
 
@@ -263,7 +266,8 @@ def command(argument):
         "list_env": list_env,
         "view_library_env": view_library_env,
         "sync_library": sync_library
-    }
+        }
+
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
     else:

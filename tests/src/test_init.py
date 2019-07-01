@@ -8,6 +8,7 @@ def test_initializer():
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_scene
     from tests.src.mtool.util.sqlite import test_sqlite_scene
+    from tests.src.mtool.util.sqlite import test_sqlite_library
     from tests.src import global_vars
 
     if not os.path.exists(global_vars.ROOT):
@@ -20,7 +21,7 @@ def test_initializer():
 
     if not os.path.exists(global_vars.LIBRARY_DB):
         sqlite_library.init_library_db(global_vars.LIBRARY_DB)
-        test_sqlite_scene.test_init_library_db(global_vars.LIBRARY_DB)
+        test_sqlite_library.test_init_library_db(global_vars.LIBRARY_DB)
         assert os.path.exists(global_vars.LIBRARY_DB)
     
     if not os.path.exists(global_vars.OUTFILE_ROOT):
@@ -34,3 +35,12 @@ def test_initializer():
     if not os.path.exists(global_vars.HISTORY_DB):
         sqlite_scene.init_current_scene(global_vars.HISTORY_DB, global_vars.DEFAULT_SCENE_NAME)
         assert os.path.exists(global_vars.HISTORY_DB)
+
+
+def test_scene_initializer():
+    from tests.src import global_vars
+    from tests.src.mtool.util.sqlite import test_sqlite_scene
+    from tests.src.mtool.scene import test_new_scene
+
+    test_new_scene.test_new_scene()
+    test_sqlite_scene.test_init_scene_db(global_vars.HISTORY_DB, global_vars.DEFAULT_SCENE_NAME)
