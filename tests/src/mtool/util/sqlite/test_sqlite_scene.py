@@ -2,7 +2,7 @@
 Tests the sqlite scene db
 """
 
-def test_init_history_db(history_db):
+def test_init_history_db(setup, history_db):
     """
     tests the initializing of the history db for columns and tables
     """
@@ -37,7 +37,7 @@ def test_init_history_db(history_db):
     assert set(notebook_columns) == set(['ID', 'Name'])
 
 
-def init_scene_db(scene_db=""):
+def init_scene_db(setup, scene_db=""):
     """
     tests the initalizing of the scene db
     """

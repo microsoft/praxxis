@@ -3,7 +3,7 @@
 Tests the sqlite library db
 """
 
-def test_init_library_db(library_db):
+def test_init_library_db(setup, library_db):
     """
     tests the initializing of the library db for columns and tables
     """
