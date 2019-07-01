@@ -1,12 +1,12 @@
 """
 Tests the sqlite scene db
 """
-from tests.src import global_vars
 
 def test_init_history_db(history_db):
     """
     tests the initializing of the history db for columns and tables
     """
+
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(history_db)
@@ -37,15 +37,15 @@ def test_init_history_db(history_db):
     assert set(notebook_columns) == set(['ID', 'Name'])
 
 
-def test_init_scene_db(history_db):
+def init_scene_db(scene_db=""):
     """
     tests the initalizing of the scene db
     """
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(history_db)
+    conn = connection.create_connection(scene_db)
     cur = conn.cursor()
-    check_scene_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneMetaData';"
+    check_scene_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneMetadata';"
     check_notebook_list_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookList';"
     check_environment_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Environment';"
     check_history_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='History';"
@@ -67,8 +67,8 @@ def test_init_scene_db(history_db):
     assert environment
     assert history
 
-    check_scene_metadata_columns = f"SELECT * FROM 'SceneHistory';"
-    check_notebook_list_columns = f"SELECT * FROM 'SceneList';"
+    check_scene_metadata_columns = f"SELECT * FROM 'SceneMetadata';"
+    check_notebook_list_columns = f"SELECT * FROM 'NotebookList';"
     check_environment_columns = f"SELECT * FROM 'Environment';"
     check_history_columns = f"SELECT * FROM 'History';"
 

@@ -2,7 +2,6 @@
 """
 Tests the sqlite library db
 """
-from tests.src import global_vars
 
 def test_init_library_db(library_db):
     """

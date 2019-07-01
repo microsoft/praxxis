@@ -3,7 +3,6 @@ import sys
 import os
 
 from src.mtool.util import function_switcher
-from tests.src import global_vars
 
 def test_initializer(init_root, library_root, library_db, outfile_root, scene_root, history_db, default_scene_name):
     from src.mtool.util.sqlite import sqlite_library
@@ -38,13 +37,12 @@ def test_initializer(init_root, library_root, library_db, outfile_root, scene_ro
 
 
 def test_scene_initializer(init_root, default_scene_name, scene_root, history_db):
-    from tests.src import global_vars
     from tests.src.mtool.util.sqlite import test_sqlite_scene
     from tests.src.mtool.scene import test_new_scene
     from tests.src.mtool.scene import test_scene
 
     scene_db = test_new_scene.test_new_scene(init_root, default_scene_name, scene_root, history_db)
-    test_scene.test_init_scene(init_root, history_db, default_scene_name, scene_db)
+    test_scene.init_scene(init_root, history_db, default_scene_name, scene_db)
 
-    test_sqlite_scene.test_init_scene_db(history_db)
+    test_sqlite_scene.init_scene_db(scene_db)
 

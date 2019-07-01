@@ -1,5 +1,3 @@
-from tests.src import global_vars
-
 def test_new_scene(init_root, default_scene_name, scene_root, history_db):
     from src.mtool.scene import new_scene
     import os 
