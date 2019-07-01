@@ -136,7 +136,6 @@ def main(command_line=None):
     search_notebooks.add_argument('term', help=search_notebooks_term_help)
     search_notebooks.set_defaults(which=search_notebooks_command)
 
-
     list_notebooks = subparsers.add_parser('list', aliases=["l"], help=list_notebooks_help)
     list_notebooks.set_defaults(which=list_notebooks_command)
 

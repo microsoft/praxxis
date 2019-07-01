@@ -227,6 +227,20 @@ def get_notebook_history(db_file):
     return rows
 
 
+def get_recent_history(db_file, seq_length):
+    """Gets last <seq_length> file names from a scene"""
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(db_file)
+    cur = conn.cursor()
+    get_recent_history = f'SELECT Notebook FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    cur.execute(get_recent_history, (seq_length,))
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
 def dump_scene_list(db_file):
     """empties the scene list table""" 
     from src.mtool.util.sqlite import connection

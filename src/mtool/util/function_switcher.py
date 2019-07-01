@@ -21,6 +21,7 @@ _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
+_user_info_db = os.path.join(_root, "user_id.db")
 
 _query_start = 0
 _query_end = 100
@@ -71,8 +72,10 @@ def list_notebook(arg):
 
 def next_notebook(arg):
     """calls the function to get the next notebook"""
-    ##TODO  implement this
-    return "coming soon"
+    from src.mtool.notebook import what_next
+    current_scene_db = get_current_scene_db()
+    what_next.what_next(arg, _user_info_db, current_scene_db)
+    return 
 
 
 def history(arg):
