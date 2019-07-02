@@ -78,7 +78,7 @@ def get_outputname(notebook, outfile_root):
     import os
     from datetime import datetime
 
-    timestamp = datetime.today().strftime("%Y%m%d-%H%M%S")
+    timestamp = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     filename = f"{timestamp}-{notebook.library_name}-{notebook.name}.ipynb"
     
     outputname = os.path.join(outfile_root, filename)
