@@ -55,7 +55,7 @@ def get_telemetry_info(db_file):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password") ORDER BY Key="Password", Key="Username", Key="URL", Key="Host"'
+    query = f'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY Key="ID", Key="Password", Key="Username", Key="URL", Key="Host"'
     cur.execute(query)
     conn.commit()
     info = cur.fetchall()

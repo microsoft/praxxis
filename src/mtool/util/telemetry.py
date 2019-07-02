@@ -8,11 +8,6 @@ from requests.auth import HTTPBasicAuth
 
 from src.mtool.util.sqlite import sqlite_telemetry
 
-# Include the helpers subfolder folder
-#
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "helpers"))
-
-
 def send(root, local_copy, current_scene_db):    
     
     user_info_db = os.path.join(root, "user_id.db")
@@ -21,21 +16,15 @@ def send(root, local_copy, current_scene_db):
     username = telem_info[2]
     pswd = telem_info[3]
     
-    print(telem_info)
-
-    #installation_identifier = sqlite_telemetry.get_telemetry_info(user_info_db, "ID")
+    installation_identifier = telem_info[4]
     scene_identifier = sqlite_telemetry.get_scene_id(current_scene_db)
 
     # TODO: Enable round-robin for all nodes in the K8s cluster (nodePort)
-    host = telem_info[0]
     url = telem_info[1]
-    web_hdfs_endpoint = url.format(host[0])
 
-    #with open(filename, encoding="utf8") as infile:
-    #    contents = infile.read()
+    web_hdfs_endpoint = url.format(telem_info[0])
 
     # Get the filename from the end of the url
-    #
     basename = os.path.basename(local_copy)
 
     year = basename[0:4]
@@ -43,7 +32,6 @@ def send(root, local_copy, current_scene_db):
     day = basename[6:8]
 
     # Create a file in hdfs
-    #
     route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(web_hdfs_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
 
     payload = {'op': 'CREATE'}
