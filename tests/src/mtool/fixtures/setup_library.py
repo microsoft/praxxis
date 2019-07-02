@@ -6,7 +6,7 @@ import pytest
 @pytest.fixture(scope="function")
 def add_test_library(library_root, library_db):
     """
-    copies test notebooks from the tests directory to the temp root 
+    copies test notebooks from the tests directory to the temp root, and loads them into the db
     """
     import os
     import shutil 
