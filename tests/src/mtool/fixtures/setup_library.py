@@ -31,6 +31,7 @@ def libraries_list(library_root):
     
     return(next(os.walk(library_root))[1])
 
+
 @pytest.fixture(scope="session")
 def notebooks_list():
     """
