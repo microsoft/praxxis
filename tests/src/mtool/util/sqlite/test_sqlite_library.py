@@ -1,4 +1,3 @@
-
 """
 Tests the sqlite library db
 """

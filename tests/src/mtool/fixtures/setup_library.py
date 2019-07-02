@@ -1,7 +1,13 @@
+"""
+adds test library to temp directories and does a few useful operations on them
+"""
 import pytest
 
 @pytest.fixture(scope="session")
-def add_test_notebooks(library_root):
+def add_test_library(library_root):
+    """
+    copies test notebooks from the tests directory to the temp root 
+    """
     import os
     import shutil 
 
@@ -11,7 +17,10 @@ def add_test_notebooks(library_root):
 
 
 @pytest.fixture(scope="session")
-def notebooks_list(add_test_notebooks):
+def notebooks_list(add_test_library):
+    """
+    returns a list of the notebooks loaded in the temp library
+    """
     import os
 
     return(os.listdir(os.path.join('tests', 'test_notebooks')))
@@ -19,6 +28,9 @@ def notebooks_list(add_test_notebooks):
 
 @pytest.fixture(scope="session")
 def libraries_list(library_root):
+    """
+    returns a list of libraries loaded
+    """
     import os
     
     return(next(os.walk(library_root))[1])
