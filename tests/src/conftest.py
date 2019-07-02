@@ -7,3 +7,4 @@ from tests.src.mtool.fixtures.set_roots import init_root, library_root, library_
 from tests.src.mtool.fixtures.setup_environment import setup, setup_sqlite
 from tests.src.mtool.fixtures.setup_library import notebooks_list, libraries_list, add_test_library
 from tests.src.mtool.fixtures.set_test_envs import set_many_envs
+from tests.src.mtool.fixtures.setup_scenes import create_many_scenes

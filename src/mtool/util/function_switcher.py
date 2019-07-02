@@ -89,8 +89,8 @@ def new_scene(arg):
     from src.mtool.scene import new_scene
     from src.mtool.scene import scene
     
-    scene_db = new_scene.new_scene(arg, _scene_root, _history_db)
-    scene.init_scene(scene_db, _scene_root, _history_db)
+    scene_data = new_scene.new_scene(arg, _scene_root, _history_db)
+    scene.init_scene(scene_data[0], _history_db, scene_data[1])
     return
  
 
@@ -224,8 +224,8 @@ def init(
     os.mkdir(scene_root)
     display_scene.display_init_scene_folder(scene_root)
     sqlite_scene.init_current_scene(history_db, default_scene_name)
-    scene_db = new_scene.new_scene(default_scene_name, scene_root, history_db)
-    scene.init_scene(scene_db, _history_db, default_scene_name)
+    scene_data = new_scene.new_scene(default_scene_name, scene_root, history_db)
+    scene.init_scene(scene_data[0], _history_db, scene_data[1])
 
     display_scene.display_init_scene_db(history_db)
 

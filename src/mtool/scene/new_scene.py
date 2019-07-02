@@ -25,4 +25,4 @@ def new_scene(args, scene_root, history_db):
     db_file = os.path.join(directory, f"{name}.db")
         
     display_scene.display_new_scene(name)
-    return db_file
+    return (db_file, name)
