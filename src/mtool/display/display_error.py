@@ -9,7 +9,7 @@ def env_not_found_error(name):
     """the error display for environments not being found"""
     print(f"{Fore.RED}environment {name} not found")
 
-    
+
 def notebook_load_error(name):
     print(f"\t{Fore.RED}there is something wrong with {name}. mtool will still load it, but it might not run.{Style.RESET_ALL}")
 

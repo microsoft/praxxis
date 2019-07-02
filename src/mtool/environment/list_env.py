@@ -2,19 +2,17 @@
 This file lists all of the environment variables
 """
 
-def list_env(args, scene_root, history_db, start, end):
+def list_env(args, scene_root, history_db, current_scene_db, start, end):
     """lists the environment variables in scene"""
     import os
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
     
-    scene = sqlite_scene.get_current_scene(history_db)
+    env_list = sqlite_environment.list_env(current_scene_db, start, end)
 
-    directory = os.path.join(scene_root, scene)
-    db_file = os.path.join(directory, f"{scene}.db")
-
-    display_env.display_list_env(sqlite_environment.list_env(db_file, start, end))
+    display_env.display_list_env(env_list)
+    return env_list
 
 
 def list_notebook_env(args, library_db, current_scene_db):

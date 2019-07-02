@@ -148,8 +148,9 @@ def delete_env(arg):
 
 def list_env(arg):
     """calls the function to list environments in current scene"""
-    from src.mtool.environment import list_env       
-    list_env.list_env(arg, _scene_root, _history_db, _query_start, _query_end)
+    from src.mtool.environment import list_env   
+    current_scene = get_current_scene_db(_history_db)    
+    list_env.list_env(arg, _scene_root, _history_db, current_scene, _query_start, _query_end)
     return
 
 
