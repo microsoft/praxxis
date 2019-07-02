@@ -31,7 +31,7 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
     else:
         display_notebook.display_run_notebook(local_copy)
 
-    timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
+    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M.%S")
     sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
     telemetry.send(root, local_copy, current_scene_db)
 
