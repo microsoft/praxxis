@@ -33,8 +33,7 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
 
     timestamp = datetime.today().strftime("%Y-%m-%d %H:%M.%S")
     sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
-    sqlite_util.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
-    
+
     import subprocess
     import os
     import sys
