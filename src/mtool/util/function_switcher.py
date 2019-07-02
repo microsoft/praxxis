@@ -16,6 +16,7 @@ else:
     _azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
 
+_user_info_db = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
@@ -175,6 +176,11 @@ def sync_library(arg):
     sync_library.sync_libraries(_library_root, _library_db)
     return
 
+def update_settings(arg):
+    """calls the function to open the settings utility"""
+    from src.mtool.util import update_settings
+    update_settings.update_settings(_user_info_db)
+    return
 
 def default(arg):
     """calls the default function, which is to display the current scene."""
@@ -243,7 +249,8 @@ def command(argument):
         "delete_env": delete_env,
         "list_env": list_env,
         "view_library_env": view_library_env,
-        "sync_library": sync_library
+        "sync_library": sync_library,
+        "update_settings": update_settings
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)

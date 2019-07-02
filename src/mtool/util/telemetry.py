@@ -17,17 +17,18 @@ def send(root, local_copy, current_scene_db):
     
     user_info_db = os.path.join(root, "user_id.db")
 
-    # TODO: clean up this query vvv 
-    host = [sqlite_util.get_telemetry_info(user_info_db, "Host")]
-    print(host)
-#    url = sqlite_util.get_telemetry_info(user_info_db, "URL")
-#    username = sqlite_util.get_telemetry_info(user_info_db, "Username")
-#    pswd =  sqlite_util.get_telemetry_info(user_info_db, "Password")
+    telem_info = sqlite_telemetry.get_telemetry_info(user_info_db)
+    username = telem_info[2]
+    pswd = telem_info[3]
+    
+    print(telem_info)
 
-    installation_identifier = sqlite_telemetry.get_telemetry_info(user_info_db, "ID")
+    #installation_identifier = sqlite_telemetry.get_telemetry_info(user_info_db, "ID")
     scene_identifier = sqlite_telemetry.get_scene_id(current_scene_db)
 
     # TODO: Enable round-robin for all nodes in the K8s cluster (nodePort)
+    host = telem_info[0]
+    url = telem_info[1]
     web_hdfs_endpoint = url.format(host[0])
 
     #with open(filename, encoding="utf8") as infile:

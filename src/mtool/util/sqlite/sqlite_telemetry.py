@@ -49,17 +49,31 @@ def init_user_info(db_file):
     conn.close()
 
 
-def get_telemetry_info(db_file, key):
+def get_telemetry_info(db_file):
     """gets the telemetry information:"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key = ?'
-    cur.execute(query, (key,))
+    query = f'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password") ORDER BY Key="Password", Key="Username", Key="URL", Key="Host"'
+    cur.execute(query)
     conn.commit()
-    item = cur.fetchone()
-    if item != None:
-        item = item[0] # remove tuple wrapping
+    info = cur.fetchall()
+    if info != None:
+        for i in range(len(info)):
+            info[i] = info[i][0]
     conn.close()
-    return item
+    return info
+
+def write_setting(db_file, setting, value):
+    """changes the value of setting"""
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(db_file)
+    cur = conn.cursor()
+    update = f'UPDATE "UserInfo" SET Value = ? WHERE Key = ?'
+    cur.execute(update, (value, setting))
+    conn.commit()
+    conn.close()
+    return 
+     
