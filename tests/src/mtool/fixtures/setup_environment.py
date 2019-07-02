@@ -46,15 +46,8 @@ def setup_sqlite(setup, library_db, init_root, history_db, default_scene_name, s
     """
     sets up sqlite databases for the rest of the tests
     """
-    from tests.src.mtool.util.sqlite import test_sqlite_library
-    from tests.src.mtool.scene import test_new_scene
-    from tests.src.mtool.util.sqlite import test_sqlite_scene
-    from src.mtool.util.sqlite import sqlite_scene
-    from tests.src.mtool.scene import test_scene
+    from src.mtool.scene import new_scene
+    from src.mtool.scene import scene
 
-    test_sqlite_library.test_init_library_db(setup, library_db)
-    
-    scene_db = test_new_scene.test_new_scene(setup, init_root, default_scene_name, scene_root, history_db)
-    
-    test_sqlite_scene.test_init_history_db(setup, history_db)
-    test_scene.init_scene(setup, init_root, history_db, default_scene_name, scene_db)
+    scene_db = new_scene.new_scene(default_scene_name, scene_root, history_db)
+    scene.init_scene(scene_db, history_db, default_scene_name)
