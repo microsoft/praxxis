@@ -27,45 +27,45 @@ _query_start = 0
 _query_end = 100
 
 
-def get_current_scene_db(history_db):
+def get_current_scene_db(scene_root, history_db):
     """calls the function to get the location of the history db"""
     from src.mtool.util.sqlite import sqlite_scene
     scene = sqlite_scene.get_current_scene(history_db)
-    return os.path.join(_scene_root, scene, f"{scene}.db")
+    return os.path.join(scene_root, scene, f"{scene}.db")
 
 
 def run_notebook(arg):
     """calls the function to run a notebook"""
     from src.mtool.notebook import run_notebook
-    current_scene_db = get_current_scene_db(_history_db)
+    current_scene_db = get_current_scene_db(_scene_root, _history_db)
     run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db, _library_root, _library_db)
     return
 
 
 def view_notebook_env(arg):
     from src.mtool.environment import list_env
-    current_scene_db = get_current_scene_db(_history_db)
+    current_scene_db = get_current_scene_db(_scene_root, _history_db)
     list_env.list_notebook_env(arg, _library_db, current_scene_db)
  
 
 def open_notebook(arg):
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
-    open_notebook.open_notebook(arg, get_current_scene_db(_history_db), _library_db, _azure_data_studio_location)
+    open_notebook.open_notebook(arg, get_current_scene_db(_scene_root, _history_db), _library_db, _azure_data_studio_location)
     return
  
 
 def search_notebook(arg):
     """calls the function to search a notebook"""
     from src.mtool.notebook import search_notebook
-    search_notebook.search_notebook(arg, _library_db, get_current_scene_db(_history_db), _query_start, _query_end)
+    search_notebook.search_notebook(arg, _library_db, get_current_scene_db(_scene_root, _history_db), _query_start, _query_end)
     return
 
 
 def list_notebook(arg):
     """calls the function to list notebooks"""
     from src.mtool.notebook import list_notebook
-    current_scene_db = get_current_scene_db(_history_db)
+    current_scene_db = get_current_scene_db(_scene_root, _history_db)
     list_notebook.list_notebook(_scene_root, _library_root, _library_db, current_scene_db, _query_start, _query_end)
     return
 
@@ -79,7 +79,7 @@ def next_notebook(arg):
 def history(arg):
     """calls the function to display scene history"""
     from src.mtool.scene import history
-    current_scene_db = get_current_scene_db(_history_db)
+    current_scene_db = get_current_scene_db(_scene_root, _history_db)
     history.history(arg, _history_db, _library_db, current_scene_db)
     return
 
@@ -95,7 +95,7 @@ def new_scene(arg):
 def end_scene(arg):
     """calls the function to end a scene"""
     from src.mtool.scene import end_scene
-    current_scene = get_current_scene_db(_history_db)
+    current_scene = get_current_scene_db(_scene_root, _history_db)
     end_scene.end_scene(arg, _scene_root, _history_db, current_scene)
     return
  
@@ -131,7 +131,7 @@ def list_scene(arg):
 def set_env(arg):
     """calls the function to set an environment"""
     from src.mtool.environment import set_env
-    current_scene = get_current_scene_db(_history_db)
+    current_scene = get_current_scene_db(_scene_root, _history_db)
     set_env.set_env(arg, _scene_root, _history_db, current_scene)
     return
 
@@ -139,7 +139,7 @@ def set_env(arg):
 def delete_env(arg):
     """calls the function to delete an environment"""
     from src.mtool.environment import delete_env
-    current_scene = get_current_scene_db(_history_db)
+    current_scene = get_current_scene_db(_scene_root, _history_db)
     delete_env.delete_env(arg, _scene_root, _history_db, current_scene)
     return
 
@@ -147,14 +147,14 @@ def delete_env(arg):
 def list_env(arg):
     """calls the function to list environments in current scene"""
     from src.mtool.environment import list_env   
-    current_scene = get_current_scene_db(_history_db)    
+    current_scene = get_current_scene_db(_scene_root, _history_db)    
     list_env.list_env(arg, _scene_root, _history_db, current_scene, _query_start, _query_end)
     return
 
 
 def view_library_env(arg):
     from src.mtool.environment import list_env
-    current_scene_db = get_current_scene_db(_history_db)
+    current_scene_db = get_current_scene_db(_scene_root, _history_db)
     list_env.list_library_env(arg, _library_db, current_scene_db)
 
 
