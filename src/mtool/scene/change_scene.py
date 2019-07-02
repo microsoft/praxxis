@@ -23,8 +23,11 @@ def change_scene(args, scene_root, history_db):
 
     if ended == -1:
         display_error.scene_does_not_exist_error(name)
+        return "error"
     elif ended:
         display_error.scene_ended_error(name)
+        return "ended"
     else:
         sqlite_scene.update_current_scene(history_db, name)
         display_scene.display_change_scene(name)
+        return name

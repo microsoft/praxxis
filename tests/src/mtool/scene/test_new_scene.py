@@ -10,7 +10,5 @@ def test_new_scene(setup, init_root, default_scene_name, scene_root, history_db)
     import os 
 
     db_file = new_scene.new_scene(default_scene_name, scene_root, history_db)[0]
-    assert not os.path.exists(db_file)
-
-    return db_file
-    
+    print(db_file)
+    assert os.path.exists(db_file)

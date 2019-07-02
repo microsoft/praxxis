@@ -50,4 +50,3 @@ def setup_sqlite(setup, library_db, init_root, history_db, default_scene_name, s
     from src.mtool.scene import scene
 
     scene_data = new_scene.new_scene(default_scene_name, scene_root, history_db)
-    scene.init_scene(scene_data[0], history_db, scene_data[1])
