@@ -10,7 +10,6 @@ def sync_libraries(library_root, library_db):
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_environment
 
-
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
     sqlite_library.clear_loaded_libararies(library_db)   
     sqlite_environment.clear_notebook_environments(library_db)   

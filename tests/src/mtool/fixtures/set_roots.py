@@ -67,3 +67,18 @@ def default_scene_name():
     """
     return "scene"
 
+
+@pytest.fixture(scope="session")
+def current_scene_db(history_db):
+    from src.mtool.util import function_switcher
+    return function_switcher.get_current_scene_db(history_db)
+    
+
+@pytest.fixture(scope="session")
+def start():
+    return 0
+
+
+@pytest.fixture(scope="session")
+def stop():
+    return 100
