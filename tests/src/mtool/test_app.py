@@ -10,7 +10,6 @@ def test_0_args():
     namespace = app.main([])
     assert namespace.command == None
 
-#//TODO: finish commenting and writing tests for app.py
 
 def test_run():
     run(['r', "test"])
@@ -222,6 +221,7 @@ def list_scene(command):
     assert namespace.command == 'ls' or namespace.command == "listscenes"
     assert namespace.which == "list_scene"
 
+
 def set_env(command):
     """
     tests if the set env command is running properly 
@@ -232,6 +232,7 @@ def set_env(command):
     assert namespace.name == "test"
     assert namespace.value == "test"
 
+
 def search_env(command):
     """
     tests if the set env command is running properly 
@@ -240,6 +241,7 @@ def search_env(command):
     assert namespace.command == 'sv' or namespace.command == "searchenv"
     assert namespace.which == "search_env"
     assert namespace.term == "test"
+
 
 def delete_env(command):
     """
@@ -250,6 +252,7 @@ def delete_env(command):
     assert namespace.which == "delete_env"
     assert namespace.name == "test"
 
+
 def list_env(command):
     """
     tests if the list env command is running properly 
@@ -257,6 +260,7 @@ def list_env(command):
     namespace = app.main(command)
     assert namespace.command == 'le' or namespace.command == "listenv"
     assert namespace.which == "list_env"
+
 
 def view_library_env(command):
     """
@@ -267,6 +271,7 @@ def view_library_env(command):
     assert namespace.which == "view_library_env"
     assert namespace.name == "test"
 
+
 def add_library(command):
     """
     tests if the add library command is running properly 
@@ -275,6 +280,7 @@ def add_library(command):
     assert namespace.command == 'al' or namespace.command == "addlibrary"
     assert namespace.which == "add_library"
     assert namespace.path == "test"
+
 
 def remove_library(command):
     """
@@ -285,6 +291,7 @@ def remove_library(command):
     assert namespace.which == "remove_library"
     assert namespace.path == "test"
 
+
 def list_library(command):
     """
     tests if the list library command is running properly 
@@ -292,6 +299,7 @@ def list_library(command):
     namespace = app.main(command)
     assert namespace.command == 'll' or namespace.command == "listlibrary"
     assert namespace.which == "list_library"
+
 
 def sync_library(command):
     """
