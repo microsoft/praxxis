@@ -29,6 +29,7 @@ delete_env_command="delete_env"
 list_env_command="list_env"
 view_library_env_command="view_library_env"
 search_env_command="search_env"
+update_settings_command="update_settings"
 ## notebook help strings
 run_notebook_help="run notebook"
 run_notebook_notebook_help="notebook to run"
@@ -75,6 +76,7 @@ sync_library_help="load libraries into mtool. Default loads from predefined libr
 sync_library_path_help="load library from a specific directory into mtool"
 ## misc help strings
 history_help="history of what you've done in the current scene"
+update_settings_help="update telemetry and security settings"
 
 
 mtool_ascii_art = r"""
@@ -201,6 +203,8 @@ def main(command_line=None):
     sync_library.add_argument('path', nargs="?", help=sync_library_path_help)
     sync_library.set_defaults(which=sync_library_command)
 
+    update_settings = subparsers.add_parser('updatesettings', aliases=['u'], help=update_settings_help)
+    update_settings.set_defaults(which=update_settings_command)
 
     args = parser.parse_args(command_line)
 
