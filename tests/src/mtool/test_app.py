@@ -111,6 +111,10 @@ def test_sync_library():
     sync_library(['synclibrary'])
     sync_library(['sl'])
 
+def test_update_settings():
+    update_settings(['updatesettings'])
+    update_settings(['u'])
+
 def run(command):
     namespace = app.main(command)
     assert namespace.command == 'r' or namespace.command == "run"
@@ -302,3 +306,13 @@ def sync_library(command):
     assert namespace.which == "sync_library"
     if "path" in command:
         assert namespace.path == "test"
+
+def update_settings(command):
+    """
+    tests if the update setting command is running properly 
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'u' or namespace.command == "updatesettings"
+    assert namespace.which == "update_settings"
+
+
