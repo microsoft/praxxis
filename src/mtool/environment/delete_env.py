@@ -15,10 +15,12 @@ def delete_env(args, scene_root, history_db, current_scene_db):
         name = sqlite_environment.get_env_by_ord(current_scene_db, int(name))
         if name == "":
             display_error.env_not_found_error(args.name)
-            return
+            return "env_not_found"
 
     if(sqlite_environment.delete_env(current_scene_db, name)):
         display_env.display_delete_env(name)
+        return name
     else:
         display_error.env_not_found_error(name)
+        return "env_not_found"
     
