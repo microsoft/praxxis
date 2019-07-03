@@ -32,21 +32,26 @@ def test_search_notebook():
     search_notebook(['s', 'test'])
     search_notebook(['search', 'test'])
 
+
 def test_list_notebooks():
     list_notebooks(['list'])
     list_notebooks(['l'])
+
 
 def test_history():
     history(['history'])
     history(['h'])
 
+
 def test_next_notebook():
     next_notebook(['whatnext'])
     next_notebook(['n'])
 
+
 def test_new_scene():
     new_scene(['newscene', 'test'])
     new_scene(['ns', 'test'])
+
 
 def test_end_scene():
     end_scene(['endscene', 'test'])
@@ -54,13 +59,16 @@ def test_end_scene():
     end_scene(['endscene'])
     end_scene(['es'])
 
+
 def test_change_scene():
     change_scene(['changescene', 'test'])
     change_scene(['cs', 'test'])
 
+
 def test_resume_scene():
     resume_scene(['resumescene', 'test'])
     resume_scene(['rs', 'test'])
+
 
 def test_delete_scene():
     delete_scene(['deletescene', 'test'])
@@ -68,17 +76,21 @@ def test_delete_scene():
     delete_scene(['deletescene'])
     delete_scene(['ds'])
 
+
 def test_list_scene():
     list_scene(['listscenes'])
     list_scene(['ls'])
+
 
 def test_set_env():
     set_env(['setenv', 'test', 'test'])
     set_env(['se', 'test', 'test'])
 
+
 def test_search_env():
     search_env(['searchenv', 'test'])
     search_env(['sv', 'test'])
+
 
 def test_delete_env():
     delete_env(['deleteenv', 'test'])
@@ -88,27 +100,33 @@ def test_list_env():
     list_env(['listenv'])
     list_env(['le'])
 
+
 def test_view_library_env():
     view_library_env(['viewlibenv', 'test'])
     view_library_env(['vl', 'test'])
+
 
 def test_add_library():
     add_library(['addlibrary', 'test'])
     add_library(['al', 'test'])
 
+
 def test_remove_library():
     remove_library(['removelibrary', 'test'])
     remove_library(['rl', 'test'])
 
+
 def test_list_library():
     list_library(['listlibrary'])
     list_library(['ll'])
+
 
 def test_sync_library():
     sync_library(['synclibrary', 'test'])
     sync_library(['sl', 'test'])
     sync_library(['synclibrary'])
     sync_library(['sl'])
+
 
 def run(command):
     namespace = app.main(command)
@@ -134,6 +152,7 @@ def open_notebook(command):
     if "html" in command:
         assert namespace.html == "html"
 
+
 def search_notebook(command):
     namespace = app.main(command)
     assert namespace.command == 's' or namespace.command == "search"
@@ -149,6 +168,7 @@ def list_notebooks(command):
     assert namespace.command == 'l' or namespace.command == "list"
     assert namespace.which == "list_notebooks"
 
+
 def history(command):
     """
     tests if the history command is running properly 
@@ -156,6 +176,7 @@ def history(command):
     namespace = app.main(command)
     assert namespace.command == 'h' or namespace.command == "history"
     assert namespace.which == "history"
+
 
 def next_notebook(command):
     """
@@ -165,6 +186,7 @@ def next_notebook(command):
     assert namespace.command == 'n' or namespace.command == "whatnext"
     assert namespace.which == "next_notebook"
 
+
 def new_scene(command):
     """
     tests if the new scene command is running properly 
@@ -173,6 +195,7 @@ def new_scene(command):
     assert namespace.command == 'ns' or namespace.command == "newscene"
     assert namespace.which == "new_scene"
     assert namespace.name == "test"
+
 
 def end_scene(command):
     """
@@ -184,6 +207,7 @@ def end_scene(command):
     if "test" in command:
         assert namespace.name == "test"
 
+
 def change_scene(command):
     """
     tests if the change scene command is running properly 
@@ -193,6 +217,7 @@ def change_scene(command):
     assert namespace.which == "change_scene"
     assert namespace.name == "test"
 
+
 def resume_scene(command):
     """
     tests if the resume scene command is running properly 
@@ -201,6 +226,7 @@ def resume_scene(command):
     assert namespace.command == 'rs' or namespace.command == "resumescene"
     assert namespace.which == "resume_scene"
     assert namespace.name == "test"
+
 
 def delete_scene(command):
     """
