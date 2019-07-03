@@ -153,7 +153,6 @@ def main(command_line=None):
 
     change_scene = subparsers.add_parser('changescene', aliases=["cs"], help=change_scene_help)
     change_scene.add_argument('name', help=change_scene_name_help)
-    change_scene.add_argument('environment', nargs="?", help=change_scene_environment_help)
     change_scene.set_defaults(which=change_scene_command)
 
     resume_scene = subparsers.add_parser('resumescene', aliases=["rs"], help=resume_scene_help)
