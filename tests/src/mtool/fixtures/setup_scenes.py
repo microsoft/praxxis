@@ -28,6 +28,19 @@ def create_one_scene(scene_root, history_db, current_scene_db):
     yield 
     delete_scene.delete_scene(name1, scene_root, history_db)
 
+@pytest.fixture(scope="function")
+def create_ended_scene(scene_root, history_db, current_scene_db):
+    from src.mtool.scene import new_scene
+    from src.mtool.scene import delete_scene
+    from src.mtool.scene import end_scene
+    from tests.src.mtool.util import dummy_name_object
+
+    name1 = dummy_name_object.make_dummy_object("generated_ended_scene")
+    new_scene.new_scene(name1, scene_root, history_db)
+    end_scene.end_scene(name1, scene_root, history_db, current_scene_db)
+    yield 
+    delete_scene.delete_scene(name1, scene_root, history_db)
+
 
 @pytest.fixture(scope="function")
 def generate_short_history(setup, add_test_library, init_root, outfile_root, current_scene_db, library_root, library_db):
@@ -36,3 +49,4 @@ def generate_short_history(setup, add_test_library, init_root, outfile_root, cur
 
     notebook1 = dummy_name_object.make_dummy_notebook("DIR001 - dir")
     run_notebook.run_notebook(notebook1, init_root, outfile_root, current_scene_db, library_root, library_db)
+

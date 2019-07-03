@@ -20,3 +20,8 @@ def make_dummy_notebook(notebook, html=""):
     dummy_notebook.notebook = notebook
     dummy_notebook.html = html
     return dummy_notebook
+
+def make_dummy_scene(name):
+    dummy_scene = Dummy_Object()
+    dummy_scene.name = name
+    return dummy_scene
