@@ -17,3 +17,5 @@ def init_scene(scene_db, history_db, name):
     from src.mtool.util.sqlite import sqlite_scene
     sqlite_scene.init_scene(scene_db, name)
     sqlite_scene.update_current_scene(history_db, name)
+    return (scene_db, name)
+

@@ -122,11 +122,11 @@ def get_env_by_ord(db_file, ordinal):
     return rows[0][0]
 
 
-def delete_env(db_file, name):
+def delete_env(current_scene_db, name):
     """Delete an environment variable"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     env = f'SELECT * from "Environment" WHERE Name = "{name}"'
     cur.execute(env)

@@ -61,6 +61,19 @@ def telemetry_db(init_root):
 
 
 @pytest.fixture(scope="session")
+def ads_location(init_root):
+    """
+    defines the ads location for opening
+    """
+    import sys
+    if(sys.platform == "linux"):
+        return os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
+    else:
+        return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
+
+
+
+@pytest.fixture(scope="session")
 def default_scene_name():
     """
     defines the default scene name for testing
@@ -69,9 +82,9 @@ def default_scene_name():
 
 
 @pytest.fixture(scope="session")
-def current_scene_db(history_db):
+def current_scene_db(init_root, scene_root, history_db):
     from src.mtool.util import function_switcher
-    return function_switcher.get_current_scene_db(history_db)
+    return function_switcher.get_current_scene_db(scene_root, history_db)
     
 
 @pytest.fixture(scope="session")

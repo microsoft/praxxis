@@ -2,7 +2,7 @@
 This file lists all of the environment variables
 """
 
-def list_env(args, scene_root, history_db, current_scene_db, start, end):
+def list_env(current_scene_db, start, end):
     """lists the environment variables in scene"""
     import os
     from src.mtool.util.sqlite import sqlite_scene
