@@ -18,7 +18,7 @@ def display_settings(settings, values):
 
 
 def display_menu_prompt():
-    return input("Enter the ordinal of the setting to update (enter 0 to exit): ")
+    return input("Enter the ordinal of the setting to update (enter q to exit): ")
 
 
 def display_value_prompt(setting, setting_help):
