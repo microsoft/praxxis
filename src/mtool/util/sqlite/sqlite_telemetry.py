@@ -15,7 +15,7 @@ def get_scene_id(db_file):
     return id
 
 
-def init_user_info(db_file):
+def init_user_info(db_file, send_telemetry=1):
     """From name of database file, creates and initializes user info"""
     import uuid
     import getpass
@@ -26,7 +26,7 @@ def init_user_info(db_file):
     cur = conn.cursor()
     create_userinfo_table = f'CREATE TABLE "UserInfo" (Key TEXT PRIMARY KEY, Value TEXT)'
     create_user_id = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("ID",?)'
-    create_telem_permissions = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("TELEMETRY", 1)'
+    create_telem_permissions = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("TELEMETRY", {send_telemetry})'
     create_host = f'INSERT INTO "UserInfo" (Key) VALUES ("Host")'
     create_url = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
     create_user = f'INSERT INTO "UserInfo" (Key) VALUES ("Username")'
