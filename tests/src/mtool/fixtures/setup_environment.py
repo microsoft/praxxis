@@ -11,7 +11,12 @@ def setup(init_root, library_root, library_db, outfile_root, scene_root, history
     """
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.util import function_switcher
     from src.mtool.scene import new_scene
+    from src.mtool.scene import list_scene
+    from src.mtool.environment import list_env
+    from src.mtool.library import list_library
+    from src.mtool.notebook import list_notebook
 
     if not os.path.exists(init_root):
         os.mkdir(init_root)
@@ -39,13 +44,10 @@ def setup(init_root, library_root, library_db, outfile_root, scene_root, history
 
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     yield 
-    from src.mtool.scene import list_scene
-    from src.mtool.environment import list_env
-    from src.mtool.util import function_switcher
-    from src.mtool.library import list_library
-    
-    current_scene_db = function_switcher.get_current_scene_db(scene_root, history_db)
 
+    current_scene_db = function_switcher.get_current_scene_db(scene_root, history_db)
     assert len(list_scene.list_scene(init_root, history_db)) == 1
     assert len(list_env.list_env(current_scene_db, start, stop)) == 0
     assert len(list_library.list_library(library_root, library_db)) == 0
+    assert len(list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)) == 0
+    
