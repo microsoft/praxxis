@@ -196,6 +196,7 @@ def init(_root):
     from src.mtool.display import display_library
     from src.mtool.display import display_notebook
     from src.mtool.display import display_scene
+    from src.mtool.display import display_error
     from src.mtool.scene import new_scene
 
     os.mkdir(_root)
@@ -221,6 +222,7 @@ def init(_root):
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")
     sqlite_telemetry.init_user_info(user_id)
+    display_error.display_telem_not_init()
 
 
 def command(argument):
