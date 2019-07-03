@@ -189,11 +189,11 @@ def get_active_scenes(db_file):
     return rows
 
 
-def get_ended_scenes(history_db):
+def get_ended_scenes(db_file):
     """returns a list of all ended scenes"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(history_db)
+    conn = connection.create_connection(db_file)
     cur = conn.cursor()
     get_ended_scenes = f'SELECT DISTINCT Name from "SceneHistory" WHERE Ended = 1'
     cur.execute(get_ended_scenes)
