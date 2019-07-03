@@ -17,6 +17,7 @@ def test_run():
     run(["run", "test"])
     run(["run", "test", "html"])
 
+
 def test_view_envs():
     view_envs(['v', 'test'])
     view_envs(['viewenvs', 'test'])
@@ -96,15 +97,15 @@ def test_add_library():
     add_library(['addlibrary', 'test'])
     add_library(['al', 'test'])
 
-def remove_library():
+def test_remove_library():
     remove_library(['removelibrary', 'test'])
     remove_library(['rl', 'test'])
 
-def list_library():
+def test_list_library():
     list_library(['listlibrary'])
     list_library(['ll'])
 
-def sync_library():
+def test_sync_library():
     sync_library(['synclibrary', 'test'])
     sync_library(['sl', 'test'])
     sync_library(['synclibrary'])
@@ -300,8 +301,4 @@ def sync_library(command):
     assert namespace.command == 'sl' or namespace.command == "synclibrary"
     assert namespace.which == "sync_library"
     if "path" in command:
-        assert namespace.name == "test"
-
-
-
-
+        assert namespace.path == "test"
