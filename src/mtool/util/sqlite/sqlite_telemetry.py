@@ -118,7 +118,6 @@ def write_settings(db_file, settings, values):
         write_setting(db_file, setting, values[setting])
 
 def add_to_backlog(db_file, local_copy, scene_id, error):
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!")
     """adds this file to the telemetry backlog"""
     from src.mtool.util.sqlite import connection
 

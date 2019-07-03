@@ -35,19 +35,6 @@ def send(user_info_db, local_copy, scene_identifier):
         r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
         r.raise_for_status()
 
-def attemptSend(user_info_db, local_copy, scene_identifier):
-    i = 0
-    try:            
-        send(user_info_db, local_copy, scene_identifier)
-        sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
-    except Exception as e:
-        if i == 0:
-            i += 1
-            print("????????????????????????????????????????????")
-            sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e))
-            i+=1
-       
-
 if __name__ == "__main__":
     user_info_db = sys.argv[1]
 
