@@ -38,7 +38,7 @@ def run_notebook(arg):
     """calls the function to run a notebook"""
     from src.mtool.notebook import run_notebook
     current_scene_db = get_current_scene_db()
-    run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db, _library_root, _library_db)
+    run_notebook.run_notebook(arg, _user_info_db, _outfile_root, current_scene_db, _library_root, _library_db)
     return
 
 

@@ -3,7 +3,7 @@ This file contains all of the error messages
 """
 
 from colorama import init, Fore, Style
-init()
+init(autoreset=True)
 
 def env_not_found_error(name):
     """the error display for environments not being found"""
@@ -39,7 +39,14 @@ def papermill_error(error):
         print(f"{Fore.RED}PAPERMILL ERROR")
         print(error)
 
-
 def no_tagged_cell_warning():
     """the warning display for having no tagged cell"""
     print(f"{Fore.YELLOW}Warning: no tagged cell located. No parameters will be injected for this notebook.")
+
+def settings_invalid_ordinal(userIn):
+    """the error display for bad ordinal input"""
+    print(f"{Fore.RED}Bad input: {userIn} is not an ordinal in the list. Please try again.")
+
+def display_telem_off():
+    """the warning display for telemetry being off"""
+    print(f"{Fore.YELLOW}Warning: telemetry is disabled.")

@@ -3,14 +3,14 @@ This file runs a notebook. Results are either printed to the console or
 opened as an html output in the web browser, depending on user input.
 """
 
-def run_notebook(args, root, outfile_root, current_scene_db, library_root, library_db):
+def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db):
     """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.display import display_notebook
     from src.mtool.notebook import notebook
     from src.mtool.notebook import open_notebook 
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.util.sqlite import sqlite_scene
-    from src.mtool.util import telemetry
+    from src.mtool.util.sqlite import sqlite_telemetry 
     from datetime import datetime
 
     name = args.notebook
@@ -34,13 +34,16 @@ def run_notebook(args, root, outfile_root, current_scene_db, library_root, libra
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M.%S")
     sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
 
-    import subprocess
-    import os
-    import sys
-    f = os.path.join(os.path.dirname(__file__),  "..\\util")
-    os.chdir(f)
-    subprocess.Popen([sys.executable, "telemetry.py", root, local_copy, current_scene_db])
-    
+    if sqlite_telemetry.telem_on(user_info_db):
+        import subprocess
+        import os
+        import sys
+        f = os.path.join(os.path.dirname(__file__),  "..\\util")
+        os.chdir(f)
+        subprocess.Popen([sys.executable, "telemetry.py", user_info_db, local_copy, current_scene_db])
+    else:
+        from src.mtool.display import display_error
+        display_error.display_telem_off()    
 
 def execute(db_file, notebook, outfile_root):
     """Handles papermill execution for notebook"""

@@ -49,10 +49,21 @@ def init_user_info(db_file):
     conn.close()
 
 
+def telem_on(db_file):
+    """returns boolean of whether telemetry is enabled"""
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(db_file)
+    cur = conn.cursor()
+    query = f'SELECT Value FROM "UserInfo" WHERE Key = "TELEMETRY"'
+    cur.execute(query)
+    conn.commit()
+    response = cur.fetchone()[0]
+    return str(response) == str(1) # True if telemetry is on 
+
 def get_telemetry_info(db_file):
     """gets the telemetry information:"""
     from src.mtool.util.sqlite import connection
-
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
     query = f'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY Key="ID", Key="Password", Key="Username", Key="URL", Key="Host"'
@@ -64,6 +75,20 @@ def get_telemetry_info(db_file):
             info[i] = info[i][0]
     conn.close()
     return info
+
+def get_settings(db_file, settings):
+    """gets the current value of each setting"""
+    from src.mtool.util.sqlite import connection
+
+    values = {}
+    conn = connection.create_connection(db_file)
+    cur = conn.cursor()
+    query = f'SELECT Value FROM "UserInfo" WHERE Key=?'
+    for setting in settings:
+        cur.execute(query, (setting,))
+        conn.commit()
+        values[setting] = cur.fetchone()[0]
+    return values
 
 def write_setting(db_file, setting, value):
     """changes the value of setting"""
@@ -77,3 +102,6 @@ def write_setting(db_file, setting, value):
     conn.close()
     return 
      
+def write_settings(db_file, settings, values):
+    for setting in settings:
+        write_setting(db_file, setting, values[setting])

@@ -4,38 +4,30 @@ from src.mtool.display import display_settings
 
 def update_settings(user_info_db):
     SETTINGS = ["TELEMETRY", "URL", "Host", "Username", "Password"]
-    descriptions = ["Set 0 to disable telemetry, 1 to enable", "WARNING: do not alter if using SQL Server BDC",
+    settings_help = ["Set 0 to disable telemetry, 1 to enable", "WARNING-- do not alter if using SQL Server BDC \n\t(default: https://{0}:30443/gateway/default/webhdfs/v1/mtool)",
         "IP address of server", "Your username", "Your password"]
 
-    telem_values = sqlite_telemetry.get_telemetry_info(user_info_db)
-    telem_values[3] = "*******" #don't pass display anything sensitive
-    # (password doesn't print anyway but in case we change that)
-
+    values = sqlite_telemetry.get_settings(user_info_db, SETTINGS)
+    
     display_settings.display_opening_message()
 
-    done = False
-    while not done:
-        display_settings.display_settings(SETTINGS, telem_values)
+    display_settings.display_settings(SETTINGS, values)
+    userIn = display_settings.display_menu_prompt()
+    while userIn != '0':
+        try:
+            ordinal = int(userIn)
+            if(ordinal in range(1, len(SETTINGS)+1)):
+                setting = SETTINGS[ordinal-1]
+                setting_help = settings_help[ordinal-1]
+                values[setting] = display_settings.display_value_prompt(setting, setting_help)
+                sqlite_telemetry.write_setting(user_info_db, setting, values[setting])
+                display_settings.display_value_updated(setting, values[setting])
+            else:
+                raise ValueError
+        except ValueError:
+            from src.mtool.display import display_error
+            display_error.settings_invalid_ordinal(userIn)
+
+        display_settings.display_settings(SETTINGS, values)
         userIn = display_settings.display_menu_prompt()
-
-        if (userIn == '0' or userIn == 'exit'):
-            done = True
-        else:
-            try:
-                ordinal = int(userIn)
-                if(ordinal in range(1, len(SETTINGS)+1)):
-                    change_setting(SETTINGS[int(userIn) - 1], user_info_db)
-                    telem_values = sqlite_telemetry.get_telemetry_info(user_info_db)
-                else:
-                    raise ValueError
-            except ValueError:
-                print("no")
             
-
-
-
-def change_setting(setting, user_info_db):
-    changeVal = display_settings.display_value_prompt(setting)
-    sqlite_telemetry.write_setting(user_info_db, setting, changeVal)
-    display_settings.display_value_updated(setting, changeVal)
-    

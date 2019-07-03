@@ -8,9 +8,8 @@ from requests.auth import HTTPBasicAuth
 
 from src.mtool.util.sqlite import sqlite_telemetry
 
-def send(root, local_copy, current_scene_db):    
+def send(user_info_db, local_copy, current_scene_db):    
     
-    user_info_db = os.path.join(root, "user_id.db")
 
     telem_info = sqlite_telemetry.get_telemetry_info(user_info_db)
     username = telem_info[2]
