@@ -10,6 +10,7 @@ class Dummy_Object():
     library_name = ""
     _hasParameters = ""
 
+
 def make_dummy_object(name="", value="", term="", notebook="", html=""):
     dummy_object = Dummy_Object()
     dummy_object.name = name
