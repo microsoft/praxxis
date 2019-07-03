@@ -4,9 +4,9 @@ def test_set_env(setup, scene_root, history_db, current_scene_db, start, stop):
     from src.mtool.environment import set_env
     from src.mtool.environment import list_env
     from src.mtool.environment import delete_env
-    from tests.src.mtool.util import dummy_name_object
+    from tests.src.mtool.util import dummy_object
 
-    name1 = dummy_name_object.make_dummy_object("test", "test")
+    name1 = dummy_object.make_dummy_environment("test", "test")
 
     set_env.set_env(name1, scene_root, history_db, current_scene_db)
     result = list_env.list_env(current_scene_db, start, stop)

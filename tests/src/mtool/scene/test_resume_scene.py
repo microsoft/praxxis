@@ -1,6 +1,6 @@
 def test_resume_scene(setup, scene_root, history_db):
     from src.mtool.scene import resume_scene
-    from tests.src.mtool.util import dummy_name_object
+    from tests.src.mtool.util import dummy_object
     from src.mtool.util.sqlite import sqlite_scene
 
     # notebook1 = dummy_name_object.make_dummy_scene("generated_ended_scene")
