@@ -72,9 +72,11 @@ def get_notebook_path(db_file, notebook, library):
     get_notebook_path = f"SELECT ROOT FROM 'Notebooks' WHERE NAME=? AND LIBRARYNAME=?"
     cur.execute(get_notebook_path, (notebook, library))
     conn.commit()
-    path = cur.fetchone()[0]
+    path = cur.fetchone()
     conn.close()
-    return path
+    if path == None:
+        return None
+    return path[0]
     
 
 def search_notebooks(db_file, search_term, start, end):

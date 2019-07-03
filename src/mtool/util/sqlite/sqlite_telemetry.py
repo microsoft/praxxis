@@ -15,14 +15,14 @@ def get_scene_id(db_file):
     return id
 
 
-def init_user_info(db_file, send_telemetry=1):
+def init_user_info(telemetry_db, send_telemetry=1):
     """From name of database file, creates and initializes user info"""
     import uuid
     import getpass
 
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(telemetry_db)
     cur = conn.cursor()
     create_userinfo_table = f'CREATE TABLE "UserInfo" (Key TEXT PRIMARY KEY, Value TEXT)'
     create_user_id = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("ID",?)'
@@ -45,6 +45,7 @@ def init_user_info(db_file, send_telemetry=1):
     cur.execute(create_telemetry_table)
     conn.commit()
     conn.close()
+
 
 def telem_init(db_file):
     """returns boolean of whether telemetry was ever set up

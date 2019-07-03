@@ -268,3 +268,15 @@ def get_scene_by_ord(db_file, ordinal):
     if rows == []:
         return ""
     return rows[0][0]
+
+
+def clear_history(current_scene_db):
+    """empties the history table""" 
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(current_scene_db)
+    cur = conn.cursor()
+    clear_history = f'DELETE FROM "History"'
+    cur.execute(clear_history)
+    conn.commit()
+    conn.close()
