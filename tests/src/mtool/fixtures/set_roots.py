@@ -61,6 +61,19 @@ def telemetry_db(init_root):
 
 
 @pytest.fixture(scope="session")
+def ads_location(init_root):
+    """
+    defines the ads location for opening
+    """
+    import sys
+    if(sys.platform == "linux"):
+        return os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
+    else:
+        return os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
+
+
+
+@pytest.fixture(scope="session")
 def default_scene_name():
     """
     defines the default scene name for testing

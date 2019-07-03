@@ -4,7 +4,7 @@ This file displays the history in the current scene.
 TODO: should give warning/error when notebook can't be found in current libraries?
 """
 
-def history(args, history_db, library_db, current_scene_db):
+def history(history_db, library_db, current_scene_db):
     """displays the notebook history of the sceen"""
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.util.sqlite import sqlite_notebook
@@ -22,4 +22,5 @@ def history(args, history_db, library_db, current_scene_db):
         path = sqlite_notebook.get_notebook_path(library_db, notebook_info[1], notebook_info[2])
         notebooks.insert(0, (notebook_info[1], path))
     sqlite_notebook.write_list(current_scene_db, notebooks)
+    return notebooks
         

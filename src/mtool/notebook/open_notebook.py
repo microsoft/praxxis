@@ -18,8 +18,10 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     notebook_filename = notebook_data[0]
     if args.html == "html":
         display_as_html(notebook_filename)
+        return("html_success")
     else:
         subprocess.Popen([ads_location, notebook_filename])
+        return("ads_success")
 
 
 def display_as_html(filename, html_outputfile = None):
