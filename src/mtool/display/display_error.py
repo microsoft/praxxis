@@ -16,12 +16,18 @@ def notebook_load_error(name):
 
 def scene_does_not_exist_error(name):
     """the error display for scenes not existing"""
-    print(f"{Fore.RED}scene {name} does not exist")
+    if name == None:
+        print(f"{Fore.RED}scene does not exist")
+    else:
+        print(f"{Fore.RED}scene {name} does not exist")
 
 
 def notebook_does_not_exist_error(name):
     """the error display for notebooks not existing"""
-    print(f"{Fore.RED}scene {name} does not exist")
+    if name == None:
+        print(f"{Fore.RED}notebook does not exist")
+    else:
+        print(f"{Fore.RED}notebook {name} does not exist")
 
 
 def last_active_scene_error(name):

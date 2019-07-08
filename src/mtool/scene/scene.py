@@ -7,9 +7,7 @@ def get_scene_by_ordinal(args, name, history_db):
     if f"{name}".isdigit():
         name = sqlite_scene.get_scene_by_ord(history_db, int(name))
         if name == "":
-            from src.mtool.display import display_error
-            display_error.scene_does_not_exist_error(args.name)
-            return ""
+            return None
         return(name)
 
 

@@ -21,6 +21,8 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
         name = tmp_name
 
     notebook_data = sqlite_notebook.get_notebook(library_db, name)
+    if notebook_data == 1:
+        return 1
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)

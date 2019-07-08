@@ -26,6 +26,10 @@ def delete_scene(args, scene_root, history_db):
     if tmp_name != None:
         name = tmp_name
 
+    if name == None:
+        display_error.scene_does_not_exist_error(name)
+        return 1
+
     directory = os.path.join(scene_root, name)
 
     if os.path.exists(directory):

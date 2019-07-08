@@ -27,6 +27,8 @@ def get_notebook(db_file, name):
     conn.commit()
     rows = cur.fetchall()
     conn.close()
+    if rows == []:
+        return 1
     return rows[0]
 
 
