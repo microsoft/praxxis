@@ -23,19 +23,6 @@ def test_help_formatter():
     data = formatter._format_action(library)
     assert data.split('\n')[0] == "Library: "
 
-
-def test_start():
-    from src.mtool import app
-
-    sys.argv = [""]
-    assert app.start()
-
-    sys.argv = ["", "1"]
-    assert app.start().command == 'r'
-
-
-
-
 def test_0_args():
     """
     this tests the 0 args command.

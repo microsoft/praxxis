@@ -14,7 +14,11 @@ class Dummy_Object():
     choices = ""
     option_strings = ""
     metavar=""
+    _path = ""
 
+    def getpath(self):
+        """returns the path of the notebook"""
+        return self._path
 
 def make_dummy_object(name="", value="", term="", notebook="", html=""):
     dummy_object = Dummy_Object()
@@ -24,10 +28,13 @@ def make_dummy_object(name="", value="", term="", notebook="", html=""):
     return dummy_object
 
 
-def make_dummy_notebook(html=""):
+def make_dummy_notebook(html="", path=""):
+    import os
+
     dummy_notebook = Dummy_Object()
     dummy_notebook.notebook = "DIR001 - dir"
     dummy_notebook.library_name = "test_notebooks"
+    dummy_notebook._path = os.path.join(path, "DIR001 - dir.ipynb")
     dummy_notebook._hasParameters = False
 
     dummy_notebook.html = html

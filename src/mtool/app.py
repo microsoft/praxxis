@@ -215,14 +215,14 @@ def main(command_line=None):
     return args
 
 
-def start():
+def start(args=None):
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.util import function_switcher
-
+    
     # prevents mtool from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
-        return 0
+        return 1
 
     if len(sys.argv) > 1:
         arg1 = sys.argv[1]
@@ -240,7 +240,7 @@ def start():
             function_switcher.command(arg)
             return arg
     function_switcher.command(main())
-    return 1
+    return 0
 
 
 if __name__ == "__main__":
