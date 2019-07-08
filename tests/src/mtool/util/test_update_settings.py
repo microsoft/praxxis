@@ -18,4 +18,3 @@ def test_edit_settings(setup, setup_telemetry, telemetry_db):
     from src.mtool.util import update_settings
 
     update_settings.edit_settings(1, update_settings.get_values(telemetry_db), telemetry_db)
-    
