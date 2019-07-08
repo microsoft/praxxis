@@ -354,27 +354,35 @@ def init_scene(scene_root, history_db, default_scene_name):
     display_scene.display_init_scene_db(history_db)
 
 
-def init_telemetry(telemetry_db):
+def init_telemetry(telemetry_db, send_telemetry = 1):
     from src.mtool.util.sqlite import sqlite_telemetry
     from src.mtool.display import display_error
 
-    sqlite_telemetry.init_user_info(telemetry_db)
+    sqlite_telemetry.init_user_info(telemetry_db, send_telemetry)
     display_error.display_telem_not_init()
 
 
 
-def command(argument):
+def command(argument,
+            root = _root,
+            library_root = _library_root, 
+            library_db = _library_db,
+            outfile_root = _outfile_root,
+            scene_root = _scene_root,
+            history_db = _history_db,
+            telemetry_db = _telemetry_db,
+            default_scene_name = _default_scene_name):
     """uses a dictionary as a switch statement to determine which funciton to run."""
     ##Creates the mtool folder if it doesn't exist
 
-    init(_root, 
-        _library_root, 
-        _library_db,
-        _outfile_root,
-        _scene_root,
-        _history_db,
-        _telemetry_db,
-        _default_scene_name)
+    init(root, 
+         library_root, 
+         library_db,
+         outfile_root,
+         scene_root,
+         history_db,
+         telemetry_db,
+         default_scene_name)
 
     switcher = {
         "run_notebook": run_notebook,

@@ -48,7 +48,7 @@ def test_next_notebook():
     assert function_switcher.next_notebook(notebook) == "coming soon"
 
 
-def test_history(setup, generate_short_history, scene_root, history_db, library_db, current_scene_db):
+def test_history(setup, setup_telemetry, generate_short_history, scene_root, history_db, library_db, current_scene_db):
     assert len(function_switcher.history("", scene_root, history_db, library_db, current_scene_db)) == 1
 
 
@@ -126,7 +126,77 @@ def test_sync_library(setup, library_root, library_db):
     assert libraries == 0
 
 
-def test_init(init_root, library_rot, library_db, outfile_root, history_db, telemetry_db, default_scene_name):
-    function_switcher.init(init_root, library_rot, library_db, outfile_root, history_db, telemetry_db, default_scene_name, False)
+def test_init(setup, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name):
+    pass
+    import shutil 
+    import os 
     
+    assert os.path.exists(init_root)
+    shutil.rmtree(init_root)
+    assert not os.path.exists(init_root)
+    function_switcher.init(init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name, False)
     
+    assert os.path.exists(init_root)
+    assert os.path.exists(library_root)
+    assert os.path.exists(library_db)
+    assert os.path.exists(outfile_root)
+    assert os.path.exists(scene_root)
+    assert os.path.exists(history_db)
+    assert os.path.exists(telemetry_db)
+
+    os.remove(telemetry_db)
+
+def test_init_library(setup, library_root, library_db):
+    import shutil 
+    import os 
+    
+    assert os.path.exists(library_root)
+    assert os.path.exists(library_db)
+    shutil.rmtree(library_root)
+    assert not os.path.exists(library_root)
+    
+    function_switcher.init_library(library_root, library_db)
+    
+    assert os.path.exists(library_root)
+    assert os.path.exists(library_db)
+
+
+def test_init_outfile(setup, outfile_root):
+    import shutil 
+    import os 
+
+    assert os.path.exists(outfile_root)
+    shutil.rmtree(outfile_root)
+    assert not os.path.exists(outfile_root)
+
+    function_switcher.init_outfile(outfile_root)
+
+    assert os.path.exists(outfile_root)
+
+
+def test_init_scene(setup, scene_root, history_db, default_scene_name):
+    import shutil 
+    import os 
+
+    assert os.path.exists(scene_root)
+    assert os.path.exists(history_db)
+    shutil.rmtree(scene_root)
+    os.remove(history_db)
+    assert not os.path.exists(scene_root)
+    
+    function_switcher.init_scene(scene_root, history_db, default_scene_name)
+
+    assert os.path.exists(scene_root)
+
+
+def test_init_telemetry(setup, telemetry_db):
+    import os 
+
+    if os.path.exists(telemetry_db):
+        os.remove(telemetry_db)
+    assert not os.path.exists(telemetry_db)
+    
+    function_switcher.init_telemetry(telemetry_db, 0)
+
+    assert os.path.exists(telemetry_db)
+    os.remove(telemetry_db)
