@@ -27,9 +27,13 @@ def list_notebook_env(args, library_db, current_scene_db):
         name = tmp_name
 
     sqlite_environment.get_all_env(current_scene_db)
+
+    environments = sqlite_environment.list_notebook_env(library_db, name)
     
-    display_env.display_view_env(sqlite_environment.list_notebook_env(library_db, name), 
+    display_env.display_view_env(environments, 
                                       sqlite_environment.get_all_env(current_scene_db))
+    
+    return environments
 
 
 def list_library_env(args, library_db, current_scene_db):

@@ -40,5 +40,3 @@ def notebooks_list():
     import os
 
     return(os.listdir(os.path.join('tests', 'test_notebooks')))
-
-

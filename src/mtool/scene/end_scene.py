@@ -2,6 +2,8 @@
 This file ends the specified scene
 """
 
+##TODO: make all of these strings I return into proper errors.
+
 def end_scene(args, scene_root, history_db, current_scene_db):
     """Ends a scene"""
     from src.mtool.util.sqlite import sqlite_scene
@@ -29,7 +31,7 @@ def end_scene(args, scene_root, history_db, current_scene_db):
     elif allow_end_scene:
         sqlite_scene.end_scene(current_scene_db, name)
         display_scene.display_end_scene_success(name)
-        return("success")
+        return(name)
     else:
         display_error.last_active_scene_error(name)
         return("last_active_scene")

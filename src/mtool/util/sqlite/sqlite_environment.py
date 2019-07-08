@@ -14,11 +14,11 @@ def get_notebook_environments(db_file, name):
     conn.close()
     return id
 
-def set_notebook_environments(db_file, notebook_name, environment_name, environment_value):
+def set_notebook_environments(library_db, notebook_name, environment_name, environment_value):
     """set or update an environment variable"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
     set_env = f'INSERT OR IGNORE INTO "Environment" (Name, Value, NotebookName) VALUES(?, ?, ?)'
     update_env = f'UPDATE "Environment" SET Value = ? WHERE Name = ? AND NotebookName = ?'

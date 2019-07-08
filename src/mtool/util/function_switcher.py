@@ -35,40 +35,85 @@ def get_current_scene_db(scene_root, history_db):
     return os.path.join(scene_root, scene, f"{scene}.db")
 
 
-def run_notebook(arg):
+def run_notebook(arg, 
+                 user_info_db = _user_info_db, 
+                 outfile_root = _outfile_root, 
+                 library_root = _library_root, 
+                 library_db = _library_db, 
+                 scene_root = _scene_root,
+                 history_db = _history_db,
+                 current_scene_db = None):
     """calls the function to run a notebook"""
     from src.mtool.notebook import run_notebook
-    current_scene_db = get_current_scene_db(_scene_root, _history_db)
-    run_notebook.run_notebook(arg, _user_info_db, _outfile_root, current_scene_db, _library_root, _library_db)
-    return
+    
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
+
+    current_scene_db = get_current_scene_db(scene_root, history_db)
+    run_notebook.run_notebook(arg, user_info_db, outfile_root, current_scene_db, library_root, library_db)
+    return 0
 
 
-def view_notebook_env(arg):
+def view_notebook_env(arg, 
+                      library_db = _library_db, 
+                      current_scene_db = None):
     from src.mtool.environment import list_env
-    current_scene_db = get_current_scene_db(_scene_root, _history_db)
-    list_env.list_notebook_env(arg, _library_db, current_scene_db)
+
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(_scene_root, _history_db)
+
+    envs = list_env.list_notebook_env(arg, library_db, current_scene_db)
+    return envs
  
 
-def open_notebook(arg):
+def open_notebook(arg, 
+                  scene_root = _scene_root,
+                  history_db = _history_db,
+                  library_db = _library_db,
+                  azure_data_studio_location = _azure_data_studio_location,
+                  current_scene_db = None):
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
-    open_notebook.open_notebook(arg, get_current_scene_db(_scene_root, _history_db), _library_db, _azure_data_studio_location)
-    return
+
+
+
+    open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location)
+    return 0
  
 
-def search_notebook(arg):
+def search_notebook(arg,
+                    scene_root = _scene_root,
+                    history_db = _history_db,
+                    library_db = _library_db,
+                    query_start = _query_start,
+                    query_end = _query_end,
+                    current_scene_db = None
+                    ):
     """calls the function to search a notebook"""
     from src.mtool.notebook import search_notebook
-    search_notebook.search_notebook(arg, _library_db, get_current_scene_db(_scene_root, _history_db), _query_start, _query_end)
-    return
 
 
-def list_notebook(arg):
+
+    notebooks = search_notebook.search_notebook(arg, library_db, current_scene_db, query_start, query_end)
+    return notebooks
+
+
+def list_notebook(arg,
+                  scene_root = _scene_root,
+                  history_db = _history_db,
+                  library_root = _library_root,
+                  library_db = _library_db,
+                  query_start = _query_start,
+                  query_end = _query_end,
+                  current_scene_db = None):
     """calls the function to list notebooks"""
     from src.mtool.notebook import list_notebook
-    current_scene_db = get_current_scene_db(_scene_root, _history_db)
-    list_notebook.list_notebook(_scene_root, _library_root, _library_db, current_scene_db, _query_start, _query_end)
-    return
+
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
+    
+    notebook_list = list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, query_start, query_end)
+    return notebook_list
 
 
 def next_notebook(arg):
@@ -77,63 +122,96 @@ def next_notebook(arg):
     return "coming soon"
 
 
-def history(arg):
+def history(arg, 
+            scene_root = _scene_root,
+            history_db = _history_db,
+            library_db = _library_db, 
+            current_scene_db = None):
     """calls the function to display scene history"""
     from src.mtool.scene import history
-    current_scene_db = get_current_scene_db(_scene_root, _history_db)
-    history.history(_history_db, _library_db, current_scene_db)
-    return
+
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
+
+    history_list = history.history(history_db, library_db, current_scene_db)
+    return history_list
 
 
-def new_scene(arg):
+def new_scene(arg,
+              scene_root = _scene_root,
+              history_db = _history_db):
     """calls the function to create a new scene"""
     from src.mtool.scene import new_scene
     from src.mtool.scene import scene
-    new_scene.new_scene(arg, _scene_root, _history_db)
-    return
+    new_scene = new_scene.new_scene(arg, scene_root, history_db)
+    return new_scene
  
 
-def end_scene(arg):
+def end_scene(arg, 
+              scene_root = _scene_root,
+              history_db = _history_db,
+              current_scene_db = None):
     """calls the function to end a scene"""
     from src.mtool.scene import end_scene
-    current_scene = get_current_scene_db(_scene_root, _history_db)
-    end_scene.end_scene(arg, _scene_root, _history_db, current_scene)
-    return
+
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
+
+    current_scene = get_current_scene_db(scene_root, history_db)
+    ended = end_scene.end_scene(arg, scene_root, history_db, current_scene)
+    return ended
  
 
-def change_scene(arg):
+def change_scene(arg,
+                 scene_root = _scene_root,
+                 history_db = _history_db):
     """calls the function to change the current scene"""
     from src.mtool.scene import change_scene
-    change_scene.change_scene(arg, _scene_root, _history_db)
-    return
+    scene = change_scene.change_scene(arg, scene_root, history_db)
+    return scene
  
 
-def resume_scene(arg):
+def resume_scene(arg, 
+                 scene_root = _scene_root,
+                 history_db = _history_db):
     """calls the function to resume an ended scene"""
     from src.mtool.scene import resume_scene
-    resume_scene.resume_scene(arg, _scene_root, _history_db)
-    return
+    
+    resumed = resume_scene.resume_scene(arg, scene_root, history_db)
+    return resumed
  
 
-def delete_scene(arg):
+def delete_scene(arg, 
+                 scene_root = _scene_root,
+                 history_db = _history_db):
     """ calls the function to delete a scene"""
     from src.mtool.scene import delete_scene
-    delete_scene.delete_scene(arg, _scene_root, _history_db)
-    return
+    
+    deleted = delete_scene.delete_scene(arg, scene_root, history_db)
+    return deleted
 
 
-def list_scene(arg):
+def list_scene(arg, 
+               scene_root = _scene_root, 
+               history_db = _history_db):
     """calls the function to list scenes"""
     from src.mtool.scene import list_scene
     list_scene.list_scene(_scene_root, _history_db)
     return
 
 
-def set_env(arg):
+def set_env(arg, 
+            scene_root = _scene_root,
+            history_db = _history_db,
+            current_scene_db = None):
     """calls the function to set an environment"""
     from src.mtool.environment import set_env
-    current_scene = get_current_scene_db(_scene_root, _history_db)
-    set_env.set_env(arg, _scene_root, _history_db, current_scene)
+
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
+
+    current_scene_db = get_current_scene_db(scene_root, history_db)
+    set_env.set_env(arg, scene_root, history_db, current_scene_db)
     return
 
 

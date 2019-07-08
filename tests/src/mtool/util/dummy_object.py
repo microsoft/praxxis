@@ -41,6 +41,19 @@ def make_dummy_notebook(html="", path=""):
     return dummy_notebook
 
 
+def make_dummy_notebook_params(html = "", path=""):
+    import os
+
+    dummy_notebook = Dummy_Object()
+    dummy_notebook.notebook = "param inject print"
+    dummy_notebook.library_name = "test_notebooks"
+    dummy_notebook._path = os.path.join(path, "param inject print.ipynb")
+    dummy_notebook._hasParameters = True
+
+    dummy_notebook.html = html
+    return dummy_notebook
+
+
 def make_dummy_scene(name):
     dummy_scene = Dummy_Object()
     dummy_scene.name = name
