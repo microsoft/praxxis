@@ -9,6 +9,11 @@ class Dummy_Object():
     html = ""
     library_name = ""
     _hasParameters = ""
+    dest = ""
+    help = ""
+    choices = ""
+    option_strings = ""
+    metavar=""
 
 
 def make_dummy_object(name="", value="", term="", notebook="", html=""):
@@ -46,3 +51,11 @@ def make_dummy_environment(name, value):
     dummy_environment.name = name
     dummy_environment.value = value
     return dummy_environment
+
+
+def make_dummy_action(dest, choices, help):
+    dummy_action = Dummy_Object()
+    dummy_action.dest = dest
+    dummy_action.choices = choices
+    dummy_action.help = help
+    return dummy_action

@@ -2,6 +2,28 @@ from src.mtool import app
 import sys
 import pytest
 
+
+def test_help_formatter():
+    import argparse 
+    from src.mtool.app import helpFormatter
+    from tests.src.mtool.util import dummy_object
+
+    notebook = dummy_object.make_dummy_action("command", "", "run notebook")
+    scene = dummy_object.make_dummy_action("command", "", "new scene")
+    environment = dummy_object.make_dummy_action("command", "", "set environment variable for current scene")
+    library = dummy_object.make_dummy_action("command", "", "install library of notebooks to mtool")
+
+    formatter = helpFormatter(argparse.RawDescriptionHelpFormatter)
+    data = formatter._format_action(notebook)
+    assert data.split('\n')[0] == "Notebooks: "
+    data = formatter._format_action(scene)
+    assert data.split('\n')[0] == "Scene: "
+    data = formatter._format_action(environment)
+    assert data.split('\n')[0] == "Environment: "
+    data = formatter._format_action(library)
+    assert data.split('\n')[0] == "Library: "
+
+
 def test_0_args():
     """
     this tests the 0 args command.
@@ -342,6 +364,7 @@ def sync_library(command):
     if "path" in command:
         assert namespace.path == "test"
 
+
 def update_settings(command):
     """
     tests if the update setting command is running properly 
@@ -349,5 +372,3 @@ def update_settings(command):
     namespace = app.main(command)
     assert namespace.command == 'u' or namespace.command == "updatesettings"
     assert namespace.which == "update_settings"
-
-
