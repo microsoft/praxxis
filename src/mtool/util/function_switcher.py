@@ -24,6 +24,7 @@ _history_db = os.path.join(_scene_root, "current_scene.db")
 _telemetry_db = os.path.join(_root, "user_id.db")
 _default_scene_name = 'scene'
 
+
 _query_start = 0
 _query_end = 100
 
@@ -211,31 +212,46 @@ def set_env(arg,
         current_scene_db = get_current_scene_db(scene_root, history_db)
 
     current_scene_db = get_current_scene_db(scene_root, history_db)
-    set_env.set_env(arg, scene_root, history_db, current_scene_db)
-    return
+    env = set_env.set_env(arg, scene_root, history_db, current_scene_db)
+    return env
 
 
-def delete_env(arg):
+def delete_env(arg, 
+               scene_root = _scene_root,
+               history_db = _history_db,
+               current_scene_db = None):
     """calls the function to delete an environment"""
     from src.mtool.environment import delete_env
-    current_scene = get_current_scene_db(_scene_root, _history_db)
-    delete_env.delete_env(arg, _scene_root, _history_db, current_scene)
-    return
+
+    env = delete_env.delete_env(arg, scene_root, history_db, current_scene_db)
+    return env
 
 
-def list_env(arg):
+def list_env(arg,
+             scene_root = _scene_root,
+             history_db = _history_db,
+             query_start = _query_start,
+             query_end = _query_end, 
+             current_scene_db = None):
     """calls the function to list environments in current scene"""
     from src.mtool.environment import list_env   
-    current_scene = get_current_scene_db(_scene_root, _history_db)    
-    list_env.list_env(current_scene, _query_start, _query_end)
-    return
+
+    env = list_env.list_env(current_scene_db, query_start, query_end)
+    return env
 
 
-def view_library_env(arg):
+def view_library_env(arg, 
+                     scene_root = _scene_root,
+                     history_db = _history_db,
+                     library_db = _library_db,
+                     current_scene_db = None):
     from src.mtool.environment import list_env
-    current_scene_db = get_current_scene_db(_scene_root, _history_db)
-    list_env.list_library_env(arg, _library_db, current_scene_db)
+    
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
 
+    envs = list_env.list_library_env(arg, library_db, current_scene_db)
+    return envs
 
 def add_library(arg):
     """calls the function to add a library"""
@@ -243,32 +259,40 @@ def add_library(arg):
     return "coming soon"
 
 
-def list_library(arg):
+def list_library(arg, 
+                 library_root = _library_root,
+                 library_db = _library_db):
     """calls the function to list loaded libraries"""
     from src.mtool.library import list_library
-    list_library.list_library(_library_root, _library_db)
-    return
+    libraries = list_library.list_library(library_root, library_db)
+    return libraries
 
 
-def sync_library(arg):
+def sync_library(arg, 
+                 library_root = _library_root,
+                 library_db = _library_db):
     """calls the function to load libraries"""
     from src.mtool.library import sync_library
-    sync_library.sync_libraries(_library_root, _library_db)
-    return
+    libraries = sync_library.sync_libraries(library_root, library_db)
+    return libraries
 
-def update_settings(arg):
+def update_settings(arg,
+                    user_info_db = _user_info_db):
     """calls the function to open the settings utility"""
     from src.mtool.util import update_settings
-    update_settings.update_settings(_user_info_db)
-    return
+    settings = update_settings.update_settings(user_info_db)
+    return settings
 
-def default(arg):
+def default(arg, 
+            scene_root = _scene_root,
+            history_db = _history_db):
     """calls the default function, which is to display the current scene."""
     ##TODO:set up running notebook as default 
     from src.mtool.scene import current_scene
-    current_scene.current_scene(_scene_root, _history_db)
-    return
- 
+    current_scene = current_scene.current_scene(scene_root, history_db)
+    return current_scene
+
+
 def init(
         root, 
         library_root, 
@@ -281,53 +305,76 @@ def init(
         telemetry = True,
         ):
 
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_scene
-    from src.mtool.util.sqlite import sqlite_telemetry
-    from src.mtool.display import display_library
-    from src.mtool.display import display_notebook
-    from src.mtool.display import display_scene
-    from src.mtool.display import display_error
-    from src.mtool.scene import new_scene
-    from src.mtool.scene import scene
-
-    os.mkdir(root)
+    if not os.path.exists(root):
+        os.mkdir(root)
 
     #library init
+    if not os.path.exists(library_root):
+        init_library(library_root, library_db)
+    
+    #outfile init
+    if not os.path.exists(outfile_root):
+        init_outfile(outfile_root)
+
+    #scene init
+    if not os.path.exists(scene_root):
+        init_scene(scene_root, history_db, default_scene_name)
+
+    # telemetry info init
+    if not os.path.exists(telemetry_db):
+        init_telemetry(telemetry_db)
+
+
+def init_library(library_root, library_db):
+    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.display import display_library
+    
     os.mkdir(library_root)
     display_library.display_init_libraries_folder(library_root)
     sqlite_library.init_library_db(library_db)
     display_library.display_init_libraries_db(library_db)
-    
-    #outfile init
+
+
+def init_outfile(outfile_root):
+    from src.mtool.display import display_notebook
+
     os.mkdir(outfile_root)
     display_notebook.display_init_run_notebook(outfile_root)
-    
-    #scene init
+
+
+def init_scene(scene_root, history_db, default_scene_name):
+    from src.mtool.display import display_scene
+    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.scene import new_scene
+
     os.mkdir(scene_root)
     display_scene.display_init_scene_folder(scene_root)
     sqlite_scene.init_current_scene(history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     display_scene.display_init_scene_db(history_db)
 
-    # telemetry info init
-    user_id = os.path.join(_root, "user_id.db")
-    sqlite_telemetry.init_user_info(user_id)
+
+def init_telemetry(telemetry_db):
+    from src.mtool.util.sqlite import sqlite_telemetry
+    from src.mtool.display import display_error
+
+    sqlite_telemetry.init_user_info(telemetry_db)
     display_error.display_telem_not_init()
+
 
 
 def command(argument):
     """uses a dictionary as a switch statement to determine which funciton to run."""
     ##Creates the mtool folder if it doesn't exist
-    if not os.path.exists(_root):
-        init(_root, 
-            _library_root, 
-            _library_db,
-            _outfile_root,
-            _scene_root,
-            _history_db,
-            _telemetry_db,
-            _default_scene_name)
+
+    init(_root, 
+        _library_root, 
+        _library_db,
+        _outfile_root,
+        _scene_root,
+        _history_db,
+        _telemetry_db,
+        _default_scene_name)
 
     switcher = {
         "run_notebook": run_notebook,

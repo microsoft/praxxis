@@ -44,7 +44,7 @@ def get_library_environments(db_file, library_name):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    get_library_envs = f'SELECT Name, Value from "Environment" Where NotebookName = (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}")'
+    get_library_envs = f'SELECT Name, Value from "Environment" Where NotebookName IN (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}")'
     cur.execute(get_library_envs)
     environments = cur.fetchall()
     conn.close()

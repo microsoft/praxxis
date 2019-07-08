@@ -41,7 +41,13 @@ def list_library_env(args, library_db, current_scene_db):
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
 
-    name = args.name 
-    display_env.display_view_env(sqlite_environment.get_library_environments(library_db, name),
+    if hasattr(args, "name"):
+        name = args.name
+    else:
+        name = args
+            
+    environments = sqlite_environment.get_library_environments(library_db, name)
+    display_env.display_view_env(environments,
                              sqlite_environment.get_all_env(current_scene_db))
-    
+
+    return environments

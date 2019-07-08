@@ -88,5 +88,45 @@ def test_delete_scene(setup, create_one_scene, scene_root, history_db):
     assert delete_scene == "generated_one_scene"
 
 
-def test_set_env():
-    pass
+def test_set_env(setup, scene_root, history_db, current_scene_db):
+    from src.mtool.environment import delete_env
+    env = dummy_object.make_dummy_environment("test_set_env", "test")
+
+    set_env = function_switcher.set_env(env, scene_root, history_db)
+    assert set_env.name == "test_set_env"
+    delete_env.delete_env(env, scene_root, history_db, current_scene_db)
+
+
+def test_delete_env(setup, set_one_env, scene_root, history_db, current_scene_db):
+    assert function_switcher.delete_env("generated_single_env", scene_root, history_db, current_scene_db) == "generated_single_env"
+
+
+def test_list_env(setup, set_one_env, scene_root, history_db, start, stop, current_scene_db):
+    envs = function_switcher.list_env("", scene_root, history_db, start, stop, current_scene_db)
+    
+    assert len(envs) == 1
+
+
+def test_view_library_env(setup, add_test_library, scene_root, history_db, library_db, current_scene_db):
+    envs = function_switcher.view_library_env("test_notebooks", scene_root, history_db, library_db, current_scene_db)
+    assert len(envs) == 2
+
+
+def test_add_library():
+    assert function_switcher.add_library("") == "coming soon"
+
+
+def test_list_library(setup, add_test_library, library_root, library_db):
+    libraries = function_switcher.list_library("", library_root, library_db)
+    assert len(libraries) == 1
+
+
+def test_sync_library(setup, library_root, library_db):
+    libraries = function_switcher.sync_library("", library_root, library_db)
+    assert libraries == 0
+
+
+def test_init(init_root, library_rot, library_db, outfile_root, history_db, telemetry_db, default_scene_name):
+    function_switcher.init(init_root, library_rot, library_db, outfile_root, history_db, telemetry_db, default_scene_name, False)
+    
+    

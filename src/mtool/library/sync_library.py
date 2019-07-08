@@ -20,6 +20,7 @@ def sync_libraries(library_root, library_db):
         sync_library(this_library_root, library_db)
         display_library.display_loaded_library(this_library_root, first)
         #first = False
+    return 0
 
 
 def sync_library(library_root, library_db):
