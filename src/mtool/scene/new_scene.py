@@ -22,9 +22,9 @@ def new_scene(args, scene_root, history_db):
         directory = f"{directory}-{i}"
         name = f"{name}-{i}"
     os.mkdir(directory)
-    db_file = os.path.join(directory, f"{name}.db")
+    scene_db = os.path.join(directory, f"{name}.db")
         
     display_scene.display_new_scene(name)
-    scene.init_scene(db_file, history_db, name)
+    scene.init_scene(scene_db, history_db, name)
     
-    return (db_file, name)
+    return (scene_db, name)
