@@ -7,7 +7,7 @@ init(autoreset=True)
 
 def env_not_found_error(name):
     """the error display for environments not being found"""
-    print(f"{Fore.RED}environment {name} not found")
+    return(f"{Fore.RED}environment {name} not found")
 
 
 def notebook_load_error(name):
@@ -22,12 +22,12 @@ def scene_does_not_exist_error(name):
         print(f"{Fore.RED}scene {name} does not exist")
 
 
-def notebook_does_not_exist_error(name):
+def notebook_not_found_error(name):
     """the error display for notebooks not existing"""
     if name == None:
-        print(f"{Fore.RED}notebook does not exist")
+        return(f"{Fore.RED}notebook does not exist")
     else:
-        print(f"{Fore.RED}notebook {name} does not exist")
+        return(f"{Fore.RED}notebook {name} does not exist")
 
 
 def last_active_scene_error(name):

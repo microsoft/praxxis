@@ -220,6 +220,9 @@ def delete_env(arg,
                current_scene_db = None):
     """calls the function to delete an environment"""
     from src.mtool.environment import delete_env
+    
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
 
     env = delete_env.delete_env(arg, scene_root, history_db, current_scene_db)
     return env
@@ -233,6 +236,9 @@ def list_env(arg,
              current_scene_db = None):
     """calls the function to list environments in current scene"""
     from src.mtool.environment import list_env   
+    
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(scene_root, history_db)
 
     env = list_env.list_env(current_scene_db, query_start, query_end)
     return env

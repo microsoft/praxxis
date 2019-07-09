@@ -109,6 +109,7 @@ def set_env(db_file, name, value):
 def get_env_by_ord(db_file, ordinal):
     """get an environment variable by ord"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
@@ -118,13 +119,15 @@ def get_env_by_ord(db_file, ordinal):
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        return ""
+        conn.close()
+        raise error.EnvNotFoundError(ordinal)
     return rows[0][0]
 
 
 def delete_env(current_scene_db, name):
     """Delete an environment variable"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -133,7 +136,7 @@ def delete_env(current_scene_db, name):
     exists = cur.fetchall()
     if exists == []:
         conn.close()
-        return 0
+        raise error.EnvNotFoundError(name)
     else:
         delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
         cur.execute(delete_env)

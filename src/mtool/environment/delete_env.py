@@ -7,6 +7,9 @@ def delete_env(args, scene_root, history_db, current_scene_db):
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
     from src.mtool.display import display_error
+    from src.mtool.util import error
+    from colorama import init, Fore, Style
+    init(autoreset=True)
 
     if hasattr(args, "name"):
         name = args.name
@@ -15,15 +18,14 @@ def delete_env(args, scene_root, history_db, current_scene_db):
         
     if f"{name}".isdigit():
         #checking if the user passed an ordinal instead of a string
-        name = sqlite_environment.get_env_by_ord(current_scene_db, int(name))
-        if name == "":
-            display_error.env_not_found_error(args.name)
-            return 1
-
-    if(sqlite_environment.delete_env(current_scene_db, name)):
-        display_env.display_delete_env(name)
+        try:
+            name = sqlite_environment.get_env_by_ord(current_scene_db, int(name))
+        except error.EnvNotFoundError as e:
+            print(f"{Fore.RED}{e}")
+            return error.EnvNotFoundError
+    try: 
+        sqlite_environment.delete_env(current_scene_db, name)
         return name
-    else:
-        display_error.env_not_found_error(name)
-        return 1
-    
+    except error.EnvNotFoundError as e:
+        print(f"{Fore.RED}{e}")
+        return error.EnvNotFoundError
