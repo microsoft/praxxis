@@ -30,7 +30,6 @@ def delete_env(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-
     env = delete_env.delete_env(arg, scene_root, history_db, current_scene_db)
     return env
 
@@ -62,7 +61,6 @@ def view_library_env(arg,
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
-
 
     envs = list_env.list_library_env(arg, library_db, current_scene_db)
     return envs
