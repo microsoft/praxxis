@@ -1,4 +1,8 @@
-def init_library(library_root, library_db):
+from src.mtool.util.roots import _library_root
+from src.mtool.util.roots import _library_db
+
+def init_library(library_root = _library_root, 
+                 library_db = _library_db):
     import os
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.display import display_library
@@ -16,8 +20,8 @@ def add_library(arg):
 
 
 def list_library(arg, 
-                 library_root,
-                 library_db):
+                 library_root = _library_root,
+                 library_db = _library_db):
     """calls the function to list loaded libraries"""
     from src.mtool.library import list_library
     libraries = list_library.list_library(library_root, library_db)
@@ -25,8 +29,8 @@ def list_library(arg,
 
 
 def sync_library(arg, 
-                 library_root,
-                 library_db):
+                 library_root = _library_root,
+                 library_db = _library_db):
     """calls the function to load libraries"""
     from src.mtool.library import sync_library
     libraries = sync_library.sync_libraries(library_root, library_db)

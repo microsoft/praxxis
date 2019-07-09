@@ -217,7 +217,7 @@ def main(command_line=None):
 
 def start(args=None):
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
-    from src.mtool.util import function_switcher
+    from src.mtool.util import cli
     
     # prevents mtool from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
@@ -237,9 +237,9 @@ def start(args=None):
             arg.command = 'r'
             arg.notebook = arg1
             arg.which = run_notebook_command
-            function_switcher.command(arg)
+            cli.command(arg)
             return arg
-    function_switcher.command(main())
+    cli.command(main())
     return 0
 
 

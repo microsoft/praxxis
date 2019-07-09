@@ -1,4 +1,11 @@
-def init_scene(scene_root, history_db, default_scene_name):
+from src.mtool.util.roots import _scene_root
+from src.mtool.util.roots import _history_db
+from src.mtool.util.roots import _default_scene_name
+from src.mtool.util.roots import _library_db
+
+def init_scene(scene_root = _scene_root, 
+               history_db = _history_db, 
+               default_scene_name = _default_scene_name):
     import os
     from src.mtool.display import display_scene
     from src.mtool.util.sqlite import sqlite_scene
@@ -12,8 +19,8 @@ def init_scene(scene_root, history_db, default_scene_name):
 
 
 def new_scene(arg,
-              scene_root,
-              history_db):
+              scene_root = _scene_root,
+              history_db = _history_db):
     """calls the function to create a new scene"""
     from src.mtool.scene import new_scene
     from src.mtool.scene import scene
@@ -22,23 +29,23 @@ def new_scene(arg,
 
 
 def end_scene(arg, 
-              scene_root,
-              history_db,
+              scene_root = _scene_root,
+              history_db = _history_db,
               current_scene_db = None):
     """calls the function to end a scene"""
     from src.mtool.scene import end_scene
-    from src.mtool.util import function_switcher
+    from src.mtool.util import roots
     
     if current_scene_db == None:
-        current_scene_db = function_switcher.get_current_scene_db(scene_root, history_db)
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     ended = end_scene.end_scene(arg, scene_root, history_db, current_scene_db)
     return ended
 
 
 def change_scene(arg,
-                 scene_root,
-                 history_db):
+                 scene_root = _scene_root,
+                 history_db = _history_db):
     """calls the function to change the current scene"""
     from src.mtool.scene import change_scene
 
@@ -51,8 +58,8 @@ def change_scene(arg,
      
 
 def resume_scene(arg, 
-                 scene_root,
-                 history_db):
+                 scene_root = _scene_root,
+                 history_db = _history_db):
     """calls the function to resume an ended scene"""
     from src.mtool.scene import resume_scene
     
@@ -64,8 +71,8 @@ def resume_scene(arg,
  
 
 def delete_scene(arg, 
-                 scene_root,
-                 history_db):
+                 scene_root = _scene_root,
+                 history_db = _history_db):
     """ calls the function to delete a scene"""
     from src.mtool.scene import delete_scene
     
@@ -77,8 +84,8 @@ def delete_scene(arg,
 
 
 def list_scene(arg, 
-               scene_root, 
-               history_db):
+               scene_root = _scene_root, 
+               history_db = _history_db):
     """calls the function to list scenes"""
     from src.mtool.scene import list_scene
     list_scene.list_scene(scene_root, history_db)
@@ -87,16 +94,25 @@ def list_scene(arg,
 
 
 def history(arg, 
-            scene_root,
-            history_db,
-            library_db, 
+            scene_root = _scene_root,
+            history_db = _history_db,
+            library_db = _library_db, 
             current_scene_db = None):
     """calls the function to display scene history"""
     from src.mtool.scene import history
-    from src.mtool.util import function_switcher
+    from src.mtool.util import roots
     
     if current_scene_db == None:
-        current_scene_db = function_switcher.get_current_scene_db(scene_root, history_db)
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     history_list = history.history(history_db, library_db, current_scene_db)
     return history_list
+
+
+def current_scene(arg, 
+            scene_root = _scene_root,
+            history_db = _history_db):
+    """calls the default function, which is to display the current scene."""
+    from src.mtool.scene import current_scene
+    current_scene = current_scene.current_scene(scene_root, history_db)
+    return current_scene
