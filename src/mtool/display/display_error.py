@@ -36,12 +36,12 @@ def end_ended_scene_error(name):
 
 def last_active_scene_error(name):
     """the error display for trying to end the last active scene"""
-    print(f"{Fore.RED}{name} is your last active scene. Make a new scene, or resume an old one.")
+    return(f"{Fore.RED}{name} is your last active scene. Make a new scene, or resume an old one.")
 
 
 def scene_ended_error(name):
     """the error display for trying to switch to an ended scene"""
-    print(f"{Fore.RED}can't switch to {name}, because the scene has ended. Resume the scene or make a new one.")
+    return(f"{Fore.RED}can't switch to {name}, because the scene has ended. Resume the scene or make a new one.")
     
 
 def papermill_error(error):
@@ -53,17 +53,21 @@ def no_tagged_cell_warning():
     """the warning display for having no tagged cell"""
     print(f"{Fore.YELLOW}Warning: no tagged cell located. No parameters will be injected for this notebook.")
 
+
 def settings_invalid_ordinal(userIn):
     """the error display for bad ordinal input"""
     print(f"{Fore.RED}Bad input: {userIn} is not an ordinal in the list. Please try again.")
+
 
 def telem_off_warning():
     """the warning display for telemetry being off"""
     print(f"{Fore.YELLOW}Warning: telemetry is disabled. Turn it on in the settings utility (m u)")
 
+
 def telem_not_init_warning():
     """the warning display for uninitialized telemetry"""
     print(f"{Fore.YELLOW}Warning: telemetry is not set up. Use the settings utility (m u) to enable it.")
+
 
 def display_telem_unsent(backlog):
     """the warning display for unsent telemetry"""
