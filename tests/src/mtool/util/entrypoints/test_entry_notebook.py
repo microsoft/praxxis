@@ -36,6 +36,9 @@ def test_open_notebook(setup, add_test_library, scene_root, history_db, library_
 
 
 def test_run_notebook(setup, add_test_library, setup_telemetry, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db):
+    import os
     notebook = dummy_object.make_dummy_notebook()
 
     assert entry_notebook.run_notebook(notebook, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db) == 0
+    os.remove(telemetry_db)
+    assert not os.path.exists(telemetry_db)

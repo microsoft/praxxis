@@ -19,10 +19,10 @@ def test_init(setup, init_root, library_root, library_db, outfile_root, scene_ro
     assert os.path.exists(telemetry_db)
 
     os.remove(telemetry_db)
+    assert not os.path.exists(telemetry_db)
 
 def test_get_current_scene_db(setup, scene_root, history_db):
     import os
     
     current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     assert os.path.basename(current_scene_db) == "scene.db"
-

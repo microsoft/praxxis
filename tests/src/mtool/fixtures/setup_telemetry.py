@@ -8,3 +8,4 @@ def setup_telemetry(telemetry_db):
     sqlite_telemetry.init_user_info(telemetry_db, 0)
     yield
     os.remove(telemetry_db)
+    assert not os.path.exists(telemetry_db)

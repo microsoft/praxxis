@@ -25,10 +25,10 @@ def test_set_env(setup, scene_root, history_db, current_scene_db):
     delete_env.delete_env(env, scene_root, history_db, current_scene_db)
 
 
-def test_view_notebook_env(setup, add_test_library, library_db):
+def test_view_notebook_env(setup, add_test_library, scene_root, library_db, history_db, current_scene_db):
     import os
 
     notebook = dummy_object.make_dummy_notebook_params()
-    envs = entry_environment.view_notebook_env(notebook, library_db)
+    envs = entry_environment.view_notebook_env(notebook, scene_root, library_db, history_db, current_scene_db)
     
     assert len(envs) == 2

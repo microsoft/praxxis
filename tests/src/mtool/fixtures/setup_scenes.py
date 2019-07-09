@@ -60,10 +60,10 @@ def generate_short_history(setup, setup_telemetry, add_test_library, telemetry_d
     from src.mtool.notebook import run_notebook
     from tests.src.mtool.util import dummy_object
     from src.mtool.util.sqlite import sqlite_scene
+    import os
 
     notebook1 = dummy_object.make_dummy_notebook()
     run_notebook.run_notebook(notebook1, telemetry_db, outfile_root, current_scene_db, library_root, library_db)
     yield 
     sqlite_scene.clear_history(current_scene_db)
     
-

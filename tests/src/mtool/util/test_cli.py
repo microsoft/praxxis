@@ -25,4 +25,5 @@ def test_command(setup, init_root,
     assert result == []
 
     os.remove(telemetry_db)
+    assert not os.path.exists(telemetry_db)
     assert 0
