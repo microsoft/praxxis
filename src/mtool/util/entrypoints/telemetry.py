@@ -4,4 +4,4 @@ def init_telemetry(telemetry_db,
     from src.mtool.display import display_error
 
     sqlite_telemetry.init_user_info(telemetry_db, send_telemetry)
-    display_error.display_telem_not_init()
+    display_error.telem_not_init_warning()

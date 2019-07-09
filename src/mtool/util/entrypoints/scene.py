@@ -69,7 +69,10 @@ def delete_scene(arg,
     """ calls the function to delete a scene"""
     from src.mtool.scene import delete_scene
     
-    deleted = delete_scene.delete_scene(arg, scene_root, history_db)
+    try:
+        deleted = delete_scene.delete_scene(arg, scene_root, history_db)
+    except Exception as e:
+        raise e
     return deleted
 
 

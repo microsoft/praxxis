@@ -33,10 +33,12 @@ def check_ended(db_file, name, conn, cur):
      
     ended = f'SELECT Ended from "SceneHistory" WHERE Name = "{name}"'
     cur.execute(ended)
-    ended = cur.fetchall()
+    ended = cur.fetchone()
     if ended == []:
-        raise error.SceneNotFoundError
-    return ended[0][0]
+        raise error.SceneNotFoundError(name)
+    elif ended[0]:
+        raise error.EndEndedSceneError(name)
+    return ended
 
 
 def init_current_scene(db_file, scene_name):
@@ -99,6 +101,7 @@ def get_current_scene(db_file):
 
 def delete_scene(db_file, name):
     """Deletes the specified scene"""
+    import itertools
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
 
@@ -106,13 +109,15 @@ def delete_scene(db_file, name):
     cur = conn.cursor()
 
     try:
-        ended = check_ended(db_file, name, conn, cur)
+        check_ended(db_file, name, conn, cur)
     except error.SceneNotFoundError as e:
         raise e
+    except error.EndEndedSceneError:
+        pass
         
     active_scenes = get_active_scenes(db_file)
 
-    if len(active_scenes) <= 1 and ended != 1:
+    if len(active_scenes) <= 1 and name in list(itertools.chain(*active_scenes))  :
         raise error.LastActiveSceneError(name)
     else:
         delete_scene = f'DELETE FROM "SceneHistory" WHERE Name = "{name}"'
@@ -137,24 +142,27 @@ def end_scene(db_file, name):
 def mark_ended_scene(db_file, name):
     """marks a scene as ended in the history db"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
 
-    ended = check_ended(db_file, name, conn, cur)
-    if ended == -1:
-        return -1
+    try:
+        check_ended(db_file, name, conn, cur)
+    except error.SceneNotFoundError as e:
+        raise e
+    except error.EndEndedSceneError as e:
+        raise e
 
     active_scenes = get_active_scenes(db_file)
-    if len(active_scenes) <= 1 and ended != 1:
-        return 0
+    if len(active_scenes) <= 1:
+        raise error.LastActiveSceneError(name)
     else:
         end_scene = f'UPDATE "SceneHistory" SET Ended = 1 WHERE Name = "{name}"'
         cur.execute(end_scene)
         conn.commit()
         conn.close()
-        return 1
-    return 0
+        return 0
 
 
 def mark_resumed_scene(db_file, name):

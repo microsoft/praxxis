@@ -11,6 +11,7 @@ def delete_scene(args, scene_root, history_db):
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.display import display_scene
     from src.mtool.display import display_error
+    from src.mtool.util import error
     from src.mtool.scene import scene
 
     if hasattr(args, "name"):
@@ -22,25 +23,26 @@ def delete_scene(args, scene_root, history_db):
         name = args
 
 
-    tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
+    try:
+        tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
+    except error.SceneNotFoundError as e:
+        raise e
+    except error.EndEndedSceneError as e:
+        pass
+        
     if tmp_name != None:
         name = tmp_name
-
-    if name == None:
-        display_error.scene_does_not_exist_error(name)
-        return 1
 
     directory = os.path.join(scene_root, name)
 
     if os.path.exists(directory):
-        if sqlite_scene.delete_scene(history_db, name):
+        try:
+            sqlite_scene.delete_scene(history_db, name)
             shutil.rmtree(directory)
             display_scene.display_delete_scene_success(name)
             return name
-        else:
-            display_error.last_active_scene_error(name)
-            return 1
+        except error.LastActiveSceneError as e:
+            raise e
     else:
-        display_error.scene_does_not_exist_error(name)
-        return 1
+        raise error.SceneNotFoundError(name)
     

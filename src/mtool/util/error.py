@@ -46,3 +46,12 @@ class LastActiveSceneError(Exception):
     def __str__(self):
         from src.mtool.display import display_error
         return str(display_error.last_active_scene_error(self.name))
+
+
+class EndEndedSceneError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.end_ended_scene_error(self.name))

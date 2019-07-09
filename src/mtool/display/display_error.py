@@ -30,6 +30,10 @@ def notebook_not_found_error(name):
         return(f"{Fore.RED}notebook {name} does not exist")
 
 
+def end_ended_scene_error(name):
+    return(f"{Fore.RED}{name} is already ended.")
+
+
 def last_active_scene_error(name):
     """the error display for trying to end the last active scene"""
     print(f"{Fore.RED}{name} is your last active scene. Make a new scene, or resume an old one.")

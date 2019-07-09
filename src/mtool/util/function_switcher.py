@@ -163,9 +163,12 @@ def resume_scene(args):
 def delete_scene(args):
     from src.mtool.util.entrypoints import scene
 
-    scene.delete_scene(args,
+    try:
+        scene.delete_scene(args,
                        _scene_root, 
                        _history_db),
+    except Exception as e:
+        print(e)
 
 
 def list_scene(args): 
