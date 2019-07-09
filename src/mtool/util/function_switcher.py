@@ -75,6 +75,9 @@ def open_notebook(arg,
                   current_scene_db = None):
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
+    
+    if current_scene_db == None:
+        current_scene_db = get_current_scene_db(_scene_root, _history_db)
 
     open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location)
     return 0

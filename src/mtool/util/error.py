@@ -5,7 +5,7 @@ class NotebookNotFoundError(Exception):
 
     def __str__(self):
         from src.mtool.display import display_error
-        return repr(display_error.notebook_not_found_error(self.name))
+        return str(display_error.notebook_not_found_error(self.name))
 
 
 class EnvNotFoundError(Exception):

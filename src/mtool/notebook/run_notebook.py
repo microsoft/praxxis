@@ -12,17 +12,26 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     from src.mtool.notebook import open_notebook 
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.util import error
     from datetime import datetime
 
     name = args.notebook
 
-    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    try:
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    except error.NotebookNotFoundError as e:
+        print(e)
+        return error.NotebookNotFoundError
+
     if tmp_name != None:
         name = tmp_name
 
-    notebook_data = sqlite_notebook.get_notebook(library_db, name)
-    if notebook_data == 1:
-        return 1
+    try:
+        notebook_data = sqlite_notebook.get_notebook(library_db, name)
+    except error.NotebookNotFoundError as e:
+        print(e)
+        return error.NotebookNotFoundError
+
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)

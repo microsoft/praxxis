@@ -8,26 +8,31 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.notebook import notebook
     from src.mtool.display import display_error
+    from src.mtool.util import error
 
     name = args.notebook
     
-    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    try:
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    except error.NotebookNotFoundError as e:
+        print(e)
+        return error.NotebookNotFoundError
     if tmp_name != None:
         name = tmp_name
 
-    notebook_data = sqlite_notebook.get_notebook(library_db, name)
-
-    if notebook_data == 1:
-        display_error.notebook_does_not_exist_error(name)
-        return 1
+    try:
+        notebook_data = sqlite_notebook.get_notebook(library_db, name)
+    except error.NotebookNotFoundError as e:
+        print(e)
+        return error.NotebookNotFoundError
 
     notebook_filename = notebook_data[0]
     if args.html == "html":
         display_as_html(notebook_filename)
-        return("html_success")
+        return 0
     else:
         subprocess.Popen([ads_location, notebook_filename])
-        return("ads_success")
+        return 0
 
 
 def display_as_html(filename, html_outputfile = None):

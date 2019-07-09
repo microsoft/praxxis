@@ -92,11 +92,11 @@ def get_env(db_file, var_name):
     conn.close()
     return value
 
-def set_env(db_file, name, value):
+def set_env(current_scene_db, name, value):
     """set or update an environment variable"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     set_env = f'INSERT OR IGNORE INTO "Environment"(Name, Value) VALUES("{name}", "{value}")'
     upate_env = f'UPDATE "Environment" SET Value = "{value}" WHERE Name = "{name}"'
@@ -106,12 +106,12 @@ def set_env(db_file, name, value):
     conn.close()
 
 
-def get_env_by_ord(db_file, ordinal):
+def get_env_by_ord(current_scene_db, ordinal):
     """get an environment variable by ord"""
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {ordinal-1}, {ordinal}'
     cur.execute(list_env)

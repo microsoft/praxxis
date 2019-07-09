@@ -53,7 +53,7 @@ def sync_notebooks(library_root, library_db, library_name):
                 file_root = os.path.join(library_root, name)
                 if first:
                     display_library.loaded_notebook_message()
-
+                    
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     for environment in notebook_data._environmentVars:

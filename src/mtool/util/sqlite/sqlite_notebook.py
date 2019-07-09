@@ -16,11 +16,12 @@ def list_notebooks(db_file, start, end):
     return rows
 
 
-def get_notebook(db_file, name):
+def get_notebook(library_db, name):
     """returns a specific notebook"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
     get_notebook = f'SELECT * FROM "Notebooks" WHERE Name = "{name}" LIMIT 0, 1'
     cur.execute(get_notebook)
@@ -28,21 +29,24 @@ def get_notebook(db_file, name):
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        return 1
+        raise error.NotebookNotFoundError(name)
     return rows[0]
 
 
-def get_notebook_by_ord(db_file, ordinal):
+def get_notebook_by_ord(current_scene_db, ordinal):
     """Returns list item referenced by input ordinal"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     query = f'SELECT Data FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
     cur.execute(query)
     conn.commit()
     item = cur.fetchone()
     conn.close()
+    if item == None:
+        raise error.NotebookNotFoundError
     return item
 
 
