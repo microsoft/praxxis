@@ -55,44 +55,37 @@ def default(arg,
 
 def run_notebook(args):
     from src.mtool.util.entrypoints import notebook
-    try:
-        notebook.run_notebook(args, 
+    
+    notebook.run_notebook(args, 
                  _user_info_db, 
                  _outfile_root, 
                  _library_root, 
                  _library_db, 
                  _scene_root,
                  _history_db)
-    except Exception as e:
-        print(e)
 
 
 def open_notebook(args):
     from src.mtool.util.entrypoints import notebook
     
-    try:
-        notebook.open_notebook(args, 
+    notebook.open_notebook(args, 
                            _scene_root,
                            _history_db,
                            _library_db,
                            _azure_data_studio_location)
-    except Exception as e:
-        print(e)
 
 
 def search_notebooks(args):
     from src.mtool.util.entrypoints import notebook
 
-    try:
-        notebook.search_notebook(args, 
+
+    notebook.search_notebook(args, 
                              _scene_root,
                              _history_db,
                              _library_db,
                              _query_start,
                              _query_end,
                              _azure_data_studio_location)
-    except Exception as e:
-        print(e)
 
 
 def list_notebooks(args):
@@ -131,44 +124,34 @@ def new_scene(args):
 def end_scene(args): 
     from src.mtool.util.entrypoints import scene
 
-    try:
-        scene.end_scene(args,
+    scene.end_scene(args,
                     _scene_root,
                     _history_db)
-    except Exception as e:
-        print(e)
 
                 
 def change_scene(args):
     from src.mtool.util.entrypoints import scene
 
-    try:
-        scene.change_scene(args,
+    scene.change_scene(args,
                        _scene_root,
                        _history_db)
-    except Exception as e:
-        print(e)
+
 
 def resume_scene(args):
     from src.mtool.util.entrypoints import scene
 
-    try:
-        scene.resume_scene(args,
+    scene.resume_scene(args,
                        _scene_root, 
                        _history_db)
-    except Exception as e:
-        print(e)
+
 
 
 def delete_scene(args):
     from src.mtool.util.entrypoints import scene
 
-    try:
-        scene.delete_scene(args,
+    scene.delete_scene(args,
                        _scene_root, 
                        _history_db),
-    except Exception as e:
-        print(e)
 
 
 def list_scene(args): 
@@ -207,9 +190,11 @@ def set_env(args):
     environment.set_env(args, 
                         _scene_root,
                         _history_db)
+
+
 def delete_env(args): 
     from src.mtool.util.entrypoints import environment
-
+    
     environment.delete_env(args,
                            _scene_root, 
                            _history_db)
@@ -332,8 +317,9 @@ def command(argument,
         func = switcher.get(argument.which)
     else:
         func = default
-    
-    
 
-    return func(argument)
+    try:
+        func(argument)
+    except Exception as e:
+        print(e)
     

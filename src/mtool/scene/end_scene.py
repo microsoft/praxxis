@@ -8,7 +8,6 @@ def end_scene(args, scene_root, history_db, current_scene_db):
     """Ends a scene"""
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.display import display_scene
-    from src.mtool.display import display_error
     from src.mtool.scene import scene
     from src.mtool.util import error
     

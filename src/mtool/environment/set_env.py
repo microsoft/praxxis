@@ -19,8 +19,7 @@ def set_env(args, scene_root, history_db, current_scene_db):
         try:
             name = sqlite_environment.get_env_by_ord(current_scene_db, int(name))
         except error.EnvNotFoundError as e:
-            print(e)
-            return error.EnvNotFoundError
+            raise e
 
     sqlite_environment.set_env(current_scene_db, name, args.value)
     display_env.display_set_env(name, args.value)

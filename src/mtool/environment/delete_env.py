@@ -20,11 +20,9 @@ def delete_env(args, scene_root, history_db, current_scene_db):
         try:
             name = sqlite_environment.get_env_by_ord(current_scene_db, int(name))
         except error.EnvNotFoundError as e:
-            print(f"{Fore.RED}{e}")
-            return error.EnvNotFoundError
+            raise e
     try: 
         sqlite_environment.delete_env(current_scene_db, name)
         return name
     except error.EnvNotFoundError as e:
-        print(f"{Fore.RED}{e}")
-        return error.EnvNotFoundError
+        raise e
