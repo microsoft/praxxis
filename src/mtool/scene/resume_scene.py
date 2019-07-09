@@ -23,6 +23,8 @@ def resume_scene(args, scene_root, history_db):
         sqlite_scene.check_scene_ended(history_db, name)
     except error.SceneNotFoundError as e:
         raise e
+    except error.SceneEndedError:
+        pass
 
     scene = os.path.join(scene_root, name, f"{name}.db" )
 

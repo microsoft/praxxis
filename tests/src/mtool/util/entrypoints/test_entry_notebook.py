@@ -35,7 +35,7 @@ def test_open_notebook(setup, add_test_library, scene_root, history_db, library_
     assert entry_notebook.open_notebook(notebook, scene_root, history_db, library_db, ads_location, current_scene_db) == 0
 
 
-def test_run_notebook(setup, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db):
+def test_run_notebook(setup, add_test_library, setup_telemetry, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db):
     notebook = dummy_object.make_dummy_notebook()
 
     assert entry_notebook.run_notebook(notebook, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db) == 0

@@ -34,7 +34,7 @@ def check_ended(history_db, name, conn, cur):
     ended = f'SELECT Ended from "SceneHistory" WHERE Name = "{name}"'
     cur.execute(ended)
     ended = cur.fetchone()
-    if ended == []:
+    if ended == None:
         raise error.SceneNotFoundError(name)
     elif ended[0]:
         raise error.EndEndedSceneError(name)
@@ -117,7 +117,7 @@ def delete_scene(history_db, name):
         
     active_scenes = get_active_scenes(history_db)
 
-    if len(active_scenes) <= 1 and name in list(itertools.chain(*active_scenes))  :
+    if len(active_scenes) <= 1 and name in list(itertools.chain(*active_scenes)):
         raise error.LastActiveSceneError(name)
     else:
         delete_scene = f'DELETE FROM "SceneHistory" WHERE Name = "{name}"'
@@ -143,6 +143,7 @@ def mark_ended_scene(history_db, name):
     """marks a scene as ended in the history db"""
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
+    import itertools
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -155,7 +156,7 @@ def mark_ended_scene(history_db, name):
         raise e
 
     active_scenes = get_active_scenes(history_db)
-    if len(active_scenes) <= 1:
+    if len(active_scenes) <= 1 and name in list(itertools.chain(*active_scenes)) :
         raise error.LastActiveSceneError(name)
     else:
         end_scene = f'UPDATE "SceneHistory" SET Ended = 1 WHERE Name = "{name}"'
