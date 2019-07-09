@@ -69,4 +69,7 @@ def command(argument,
         func(argument)
     except Exception as e:
         print(e)
+        return e
+    return 0
+
     
