@@ -1,6 +1,5 @@
 def test_telemetry(setup, current_scene_db, add_test_library, outfile_root, library_root):
     import os
-    from src.mtool.util import telemetry
     from src.mtool.notebook import run_notebook
     from tests.src.mtool.util import dummy_object
 

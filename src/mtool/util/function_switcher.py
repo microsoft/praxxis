@@ -76,8 +76,6 @@ def open_notebook(arg,
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
 
-
-
     open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location)
     return 0
  
@@ -410,7 +408,7 @@ def command(argument,
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
     else:
-        func=default
+        func = default
     
     return func(argument)
     

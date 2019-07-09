@@ -7,13 +7,19 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     import subprocess
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.notebook import notebook
+    from src.mtool.display import display_error
 
     name = args.notebook
     
     tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
     if tmp_name != None:
         name = tmp_name
+
     notebook_data = sqlite_notebook.get_notebook(library_db, name)
+
+    if notebook_data == 1:
+        display_error.notebook_does_not_exist_error(name)
+        return 1
 
     notebook_filename = notebook_data[0]
     if args.html == "html":

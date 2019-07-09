@@ -15,6 +15,7 @@ class Dummy_Object():
     option_strings = ""
     metavar=""
     _path = ""
+    which = ""
 
     def getpath(self):
         """returns the path of the notebook"""
@@ -79,3 +80,9 @@ def make_dummy_action(dest, choices, help):
     dummy_action.choices = choices
     dummy_action.help = help
     return dummy_action
+
+
+def make_dummy_input(which):
+    dummy_input = Dummy_Object()
+    dummy_input.which = which
+    return dummy_input
