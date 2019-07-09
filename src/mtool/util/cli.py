@@ -21,11 +21,11 @@ def command(argument,
             telemetry_db = _telemetry_db,
             default_scene_name = _default_scene_name):
     """uses a dictionary as a switch statement to determine which funciton to run."""
-    from src.mtool.util.entrypoints import environment
-    from src.mtool.util.entrypoints import library
-    from src.mtool.util.entrypoints import notebook
-    from src.mtool.util.entrypoints import scene
-    from src.mtool.util.entrypoints import telemetry
+    from src.mtool.util.entrypoints import entry_environment
+    from src.mtool.util.entrypoints import entry_library
+    from src.mtool.util.entrypoints import entry_notebook
+    from src.mtool.util.entrypoints import entry_scene
+    from src.mtool.util.entrypoints import entry_telemetry
     from src.mtool.util import roots
 
     roots.init(root, 
@@ -38,32 +38,32 @@ def command(argument,
          default_scene_name)
 
     switcher = {
-        "run_notebook": notebook.run_notebook,
-        "view_notebook_env": environment.view_notebook_env,
-        "open_notebook": notebook.open_notebook,
-        "search_notebooks": notebook.search_notebook,
-        "list_notebooks": notebook.list_notebook,
-        "history": scene.history,
-        "next_notebook": notebook.next_notebook,
-        "new_scene": scene.new_scene,
-        "end_scene": scene.end_scene,
-        "change_scene": scene.change_scene,
-        "resume_scene": scene.resume_scene,
-        "delete_scene": scene.delete_scene,
-        "list_scene": scene.list_scene,
-        "add_library": library.add_library,
-        "list_library": library.list_library,
-        "set_env": environment.set_env,
-        "delete_env": environment.delete_env,
-        "list_env": environment.list_env,
-        "view_library_env": environment.view_library_env,
-        "sync_library": library.sync_library,
-        "update_settings": telemetry.update_settings
+        "run_notebook": entry_notebook.run_notebook,
+        "view_notebook_env": entry_environment.view_notebook_env,
+        "open_notebook": entry_notebook.open_notebook,
+        "search_notebooks": entry_notebook.search_notebook,
+        "list_notebooks": entry_notebook.list_notebook,
+        "history": entry_scene.history,
+        "next_notebook": entry_notebook.next_notebook,
+        "new_scene": entry_scene.new_scene,
+        "end_scene": entry_scene.end_scene,
+        "change_scene": entry_scene.change_scene,
+        "resume_scene": entry_scene.resume_scene,
+        "delete_scene": entry_scene.delete_scene,
+        "list_scene": entry_scene.list_scene,
+        "add_library": entry_library.add_library,
+        "list_library": entry_library.list_library,
+        "set_env": entry_environment.set_env,
+        "delete_env": entry_environment.delete_env,
+        "list_env": entry_environment.list_env,
+        "view_library_env": entry_environment.view_library_env,
+        "sync_library": entry_library.sync_library,
+        "update_settings": entry_telemetry.update_settings
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
     else:
-        func = scene.current_scene
+        func = entry_scene.current_scene
 
     try:
         func(argument)

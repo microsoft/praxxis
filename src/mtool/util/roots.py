@@ -45,27 +45,27 @@ def init(
         telemetry = True,
         ):
     import os
-    from src.mtool.util.entrypoints import environment
-    from src.mtool.util.entrypoints import library
-    from src.mtool.util.entrypoints import notebook
-    from src.mtool.util.entrypoints import scene
-    from src.mtool.util.entrypoints import telemetry
+    from src.mtool.util.entrypoints import entry_environment
+    from src.mtool.util.entrypoints import entry_library
+    from src.mtool.util.entrypoints import entry_notebook
+    from src.mtool.util.entrypoints import entry_scene
+    from src.mtool.util.entrypoints import entry_telemetry
 
     if not os.path.exists(root):
         os.mkdir(root)
 
     #library init
     if not os.path.exists(library_root):
-        library.init_library(library_root, library_db)
+        entry_library.init_library(library_root, library_db)
     
     #outfile init
     if not os.path.exists(outfile_root):
-        notebook.init_outfile(outfile_root)
+        entry_notebook.init_outfile(outfile_root)
 
     #scene init
     if not os.path.exists(scene_root):
-        scene.init_scene(scene_root, history_db, default_scene_name)
+        entry_scene.init_scene(scene_root, history_db, default_scene_name)
 
     # telemetry info init
     if not os.path.exists(telemetry_db):
-        telemetry.init_telemetry(telemetry_db)
+        entry_telemetry.init_telemetry(telemetry_db)
