@@ -119,7 +119,6 @@ def get_env_by_ord(current_scene_db, ordinal):
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        conn.close()
         raise error.EnvNotFoundError(ordinal)
     return rows[0][0]
 

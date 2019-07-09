@@ -3,12 +3,15 @@
 def get_scene_by_ordinal(args, name, history_db):
     """gets scene by ordinal using the sqlite history db"""
     from src.mtool.util.sqlite import sqlite_scene
-    
+    from src.mtool.util import error
+
     if f"{name}".isdigit():
-        name = sqlite_scene.get_scene_by_ord(history_db, int(name))
-        if name == "":
-            return None
-        return(name)
+        try:
+            name = sqlite_scene.get_scene_by_ord(history_db, int(name))
+        except error.SceneNotFoundError as e:
+            raise e
+        else:
+            return(name)
 
 
 def init_scene(scene_db, history_db, name):

@@ -7,7 +7,6 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     import subprocess
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.notebook import notebook
-    from src.mtool.display import display_error
     from src.mtool.util import error
 
     name = args.notebook
@@ -15,16 +14,15 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     try:
         tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
     except error.NotebookNotFoundError as e:
-        print(e)
-        return error.NotebookNotFoundError
+        raise e
+    
     if tmp_name != None:
         name = tmp_name
 
     try:
         notebook_data = sqlite_notebook.get_notebook(library_db, name)
     except error.NotebookNotFoundError as e:
-        print(e)
-        return error.NotebookNotFoundError
+        raise e
 
     notebook_filename = notebook_data[0]
     if args.html == "html":

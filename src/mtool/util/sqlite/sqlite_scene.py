@@ -29,11 +29,13 @@ def init_scene(db_file, name):
 
 def check_ended(db_file, name, conn, cur):
     """checks if a scene has ended"""
+    from src.mtool.util import error
+     
     ended = f'SELECT Ended from "SceneHistory" WHERE Name = "{name}"'
     cur.execute(ended)
     ended = cur.fetchall()
     if ended == []:
-        return -1
+        raise error.SceneNotFoundError
     return ended[0][0]
 
 
@@ -51,21 +53,22 @@ def init_current_scene(db_file, scene_name):
     conn.close()
 
 
-def check_scene_ended(db_file, scene_name):
+def check_scene_ended(history_db, scene_name):
     """checks if scene has ended"""
     #TODO: handle strings
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(history_db)
     cur = conn.cursor()
     check_scene_exists = f'SELECT Ended from "SceneHistory" WHERE Name = "{scene_name}"'
     cur.execute(check_scene_exists)
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        return -1
-    else:
-        return rows[0][0]
+        raise error.SceneNotFoundError(scene_name)
+    elif rows[0][0]:
+        raise error.SceneEndedError(scene_name)
 
 
 def update_current_scene(db_file, scene_name):
@@ -97,24 +100,26 @@ def get_current_scene(db_file):
 def delete_scene(db_file, name):
     """Deletes the specified scene"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
 
-    ended = check_ended(db_file, name, conn, cur)
-    if ended == -1:
-        return 0
+    try:
+        ended = check_ended(db_file, name, conn, cur)
+    except error.SceneNotFoundError as e:
+        raise e
         
     active_scenes = get_active_scenes(db_file)
+
     if len(active_scenes) <= 1 and ended != 1:
-        return 0
+        raise error.LastActiveSceneError(name)
     else:
         delete_scene = f'DELETE FROM "SceneHistory" WHERE Name = "{name}"'
         cur.execute(delete_scene)
         conn.commit()
         conn.close()
-        return 1
-    return 0
+        return 0
 
 
 def end_scene(db_file, name):
@@ -257,6 +262,7 @@ def write_scene_list(db_file, scene_list):
 def get_scene_by_ord(db_file, ordinal):
     """gets scene by ordinal"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
@@ -266,7 +272,7 @@ def get_scene_by_ord(db_file, ordinal):
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        return ""
+        raise error.SceneNotFoundError(ordinal)
     return rows[0][0]
 
 

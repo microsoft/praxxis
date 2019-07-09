@@ -20,8 +20,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     try:
         tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
     except error.NotebookNotFoundError as e:
-        print(e)
-        return error.NotebookNotFoundError
+        raise e
 
     if tmp_name != None:
         name = tmp_name
@@ -29,14 +28,17 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     try:
         notebook_data = sqlite_notebook.get_notebook(library_db, name)
     except error.NotebookNotFoundError as e:
-        print(e)
-        return error.NotebookNotFoundError
+        raise e
 
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)
 
-    local_copy = execute(current_scene_db, notebook, outfile_root)
+    try:
+        local_copy = execute(current_scene_db, notebook, outfile_root)
+    except Exception as e:
+        raise e
+    
     if args.html == "html":
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
@@ -52,10 +54,11 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
 def telemetry(user_info_db, local_copy, current_scene_id):
     if not sqlite_telemetry.telem_init(user_info_db):
         from src.mtool.display import display_error
-        display_error.display_telem_not_init() 
+        display_error.telem_not_init_warning() 
     elif not sqlite_telemetry.telem_on(user_info_db):
         from src.mtool.display import display_error
-        display_error.display_telem_off()    
+        display_error.telem_off_warning()    
+
     else: # telemetry initalized and on     
         backlog = sqlite_telemetry.backlog_size(user_info_db) 
         if backlog != 0:        
@@ -82,13 +85,13 @@ def execute(db_file, notebook, outfile_root):
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
-            display_error.papermill_error(e)
+            raise e
     else:
         display_error.no_tagged_cell_warning()
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy)
         except Exception as e:
-            display_error.papermill_error(e)
+            raise e
 
     #need local output -- temp? or just send it directly to HDFS
     return local_copy

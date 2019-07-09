@@ -6,7 +6,6 @@ def delete_env(args, scene_root, history_db, current_scene_db):
     """deletes the environment variable specified in args. Can be passed only a name or an ordinal"""
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
-    from src.mtool.display import display_error
     from src.mtool.util import error
     from colorama import init, Fore, Style
     init(autoreset=True)

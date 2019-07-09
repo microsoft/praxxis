@@ -7,7 +7,6 @@ def set_env(args, scene_root, history_db, current_scene_db):
     """sets the environment by making a sqlite call"""
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
-    from src.mtool.display import display_error
     from src.mtool.util import error
 
     if hasattr(args, "name"):

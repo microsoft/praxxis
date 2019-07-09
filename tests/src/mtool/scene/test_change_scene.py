@@ -10,7 +10,6 @@ def test_change_scene(setup, create_many_scenes, init_root, scene_root, history_
 
     scene = current_scene.current_scene(scene_root, history_db)
     status = change_scene.change_scene(default_scene_name, scene_root, history_db)
-    print(list_scene.list_scene(init_root, history_db))
-
+    
     assert status == default_scene_name
     assert status != scene

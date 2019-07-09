@@ -14,12 +14,12 @@ def notebook_load_error(name):
     print(f"\t{Fore.RED}there is something wrong with {name}. mtool will still load it, but it might not run.{Style.RESET_ALL}")
 
 
-def scene_does_not_exist_error(name):
+def scene_not_found_error(name):
     """the error display for scenes not existing"""
     if name == None:
-        print(f"{Fore.RED}scene does not exist")
+        return(f"{Fore.RED}scene does not exist")
     else:
-        print(f"{Fore.RED}scene {name} does not exist")
+        return(f"{Fore.RED}scene {name} does not exist")
 
 
 def notebook_not_found_error(name):
@@ -37,8 +37,8 @@ def last_active_scene_error(name):
 
 def scene_ended_error(name):
     """the error display for trying to switch to an ended scene"""
-    print(f"{Fore.RED}can't switch to {name}, because the scene has ended. Resume the scene or make a new one")
-
+    print(f"{Fore.RED}can't switch to {name}, because the scene has ended. Resume the scene or make a new one.")
+    
 
 def papermill_error(error):
         """the error display for papermill errors"""
@@ -53,11 +53,11 @@ def settings_invalid_ordinal(userIn):
     """the error display for bad ordinal input"""
     print(f"{Fore.RED}Bad input: {userIn} is not an ordinal in the list. Please try again.")
 
-def display_telem_off():
+def telem_off_warning():
     """the warning display for telemetry being off"""
     print(f"{Fore.YELLOW}Warning: telemetry is disabled. Turn it on in the settings utility (m u)")
 
-def display_telem_not_init():
+def telem_not_init_warning():
     """the warning display for uninitialized telemetry"""
     print(f"{Fore.YELLOW}Warning: telemetry is not set up. Use the settings utility (m u) to enable it.")
 
