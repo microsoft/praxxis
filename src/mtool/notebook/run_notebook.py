@@ -73,7 +73,7 @@ def telemetry(user_info_db, local_copy, current_scene_id):
         subprocess.Popen([sys.executable, "telemetry.py", user_info_db, local_copy, current_scene_id])
 
 
-def execute(db_file, notebook, outfile_root):
+def execute(current_scene_db, notebook, outfile_root):
     """Handles papermill execution for notebook"""
     import papermill
     from src.mtool.display import display_error
@@ -81,7 +81,7 @@ def execute(db_file, notebook, outfile_root):
     local_copy = get_outputname(notebook, outfile_root)
 
     if (notebook._hasParameters): 
-        injects = pull_params(db_file, notebook._environmentVars)
+        injects = pull_params(current_scene_db, notebook._environmentVars)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
@@ -97,13 +97,13 @@ def execute(db_file, notebook, outfile_root):
     return local_copy
 
 
-def pull_params(db_file, environmentVars):
+def pull_params(current_scene_db, environmentVars):
     """Returns a dictionary of all overridden parameters for notebook"""
     from src.mtool.util.sqlite import sqlite_environment
 
     injects = {}
     for var in environmentVars:
-        value = sqlite_environment.get_env(db_file, var[0])
+        value = sqlite_environment.get_env(current_scene_db, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
             injects[var] = value
