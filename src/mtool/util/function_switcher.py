@@ -16,6 +16,7 @@ else:
     _azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
 
+_user_info_db = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
@@ -37,7 +38,7 @@ def run_notebook(arg):
     """calls the function to run a notebook"""
     from src.mtool.notebook import run_notebook
     current_scene_db = get_current_scene_db()
-    run_notebook.run_notebook(arg, _root, _outfile_root, current_scene_db, _library_root, _library_db)
+    run_notebook.run_notebook(arg, _user_info_db, _outfile_root, current_scene_db, _library_root, _library_db)
     return
 
 
@@ -175,6 +176,11 @@ def sync_library(arg):
     sync_library.sync_libraries(_library_root, _library_db)
     return
 
+def update_settings(arg):
+    """calls the function to open the settings utility"""
+    from src.mtool.util import update_settings
+    update_settings.update_settings(_user_info_db)
+    return
 
 def default(arg):
     """calls the default function, which is to display the current scene."""
@@ -190,6 +196,7 @@ def init(_root):
     from src.mtool.display import display_library
     from src.mtool.display import display_notebook
     from src.mtool.display import display_scene
+    from src.mtool.display import display_error
     from src.mtool.scene import new_scene
 
     os.mkdir(_root)
@@ -215,6 +222,7 @@ def init(_root):
     # telemetry info init
     user_id = os.path.join(_root, "user_id.db")
     sqlite_telemetry.init_user_info(user_id)
+    display_error.display_telem_not_init()
 
 
 def command(argument):
@@ -243,7 +251,8 @@ def command(argument):
         "delete_env": delete_env,
         "list_env": list_env,
         "view_library_env": view_library_env,
-        "sync_library": sync_library
+        "sync_library": sync_library,
+        "update_settings": update_settings
     }
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
