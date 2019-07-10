@@ -25,7 +25,6 @@ def test_command(setup,
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
     assert result == []
 
-
     dummy_input = dummy_object.make_dummy_input("open_notebook")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
     assert result == 0
