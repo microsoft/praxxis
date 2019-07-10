@@ -90,6 +90,7 @@ def get_env(current_scene_db, var_name):
     conn.close()
     return value
 
+
 def set_env(current_scene_db, name, value):
     """set or update an environment variable"""
     from src.mtool.util.sqlite import connection

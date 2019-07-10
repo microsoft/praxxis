@@ -11,20 +11,22 @@ def test_command(setup,
          history_db,
          telemetry_db,
          default_scene_name,
-         current_scene_db):
+         current_scene_db, start, stop):
     import os
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.notebook import list_notebook
 
-    input = dummy_object.make_dummy_input("run_notebook")
-    result = cli.command(input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
+    dummy_input = dummy_object.make_dummy_input("run_notebook")
+
+    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
     sqlite_scene.clear_history(current_scene_db)
     assert result == 0
 
-    input = dummy_object.make_dummy_input("view_notebook_env")
-    result = cli.command(input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
+    dummy_input = dummy_object.make_dummy_input("view_notebook_env")
+    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
     assert result == []
 
 
-    input = dummy_object.make_dummy_input("open_notebook")
-    result = cli.command(input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
+    dummy_input = dummy_object.make_dummy_input("open_notebook")
+    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
     assert result == 0

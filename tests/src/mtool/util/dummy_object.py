@@ -33,9 +33,9 @@ def make_dummy_notebook(html="", path=""):
     import os
 
     dummy_notebook = Dummy_Object()
-    dummy_notebook.notebook = "DIR001 - dir"
+    dummy_notebook.notebook = "test_notebook"
     dummy_notebook.library_name = "test_notebooks"
-    dummy_notebook._path = os.path.join(path, "DIR001 - dir.ipynb")
+    dummy_notebook._path = os.path.join(path, "test_notebook.ipynb")
     dummy_notebook._hasParameters = False
 
     dummy_notebook.html = html
@@ -46,9 +46,9 @@ def make_dummy_notebook_params(html = "", path=""):
     import os
 
     dummy_notebook = Dummy_Object()
-    dummy_notebook.notebook = "param inject print"
+    dummy_notebook.notebook = "test_param_inject"
     dummy_notebook.library_name = "test_notebooks"
-    dummy_notebook._path = os.path.join(path, "param inject print.ipynb")
+    dummy_notebook._path = os.path.join(path, "test_param_inject.ipynb")
     dummy_notebook._hasParameters = True
 
     dummy_notebook.html = html
@@ -63,7 +63,7 @@ def make_dummy_scene(name):
 
 def make_dummy_search():
     dummy_search = Dummy_Object()
-    dummy_search.term = "DIR"
+    dummy_search.term = "test"
     return dummy_search
 
 
@@ -85,5 +85,5 @@ def make_dummy_action(dest, choices, help):
 def make_dummy_input(which):
     dummy_input = Dummy_Object()
     dummy_input.which = which
-    dummy_input.notebook = "DIR001 - dir"
+    dummy_input.notebook = "1"
     return dummy_input
