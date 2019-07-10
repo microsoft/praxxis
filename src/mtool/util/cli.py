@@ -68,8 +68,7 @@ def command(argument,
     try:
         output = func(argument)
     except Exception as e:
-        print(e)
-        return e
+        raise e
     return output
 
     

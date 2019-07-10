@@ -28,14 +28,17 @@ def test_0_args():
     this tests the 0 args command.
     this should have no command, since the 0 args case gets handled manually
     """
+    import argparse
+
     namespace = app.main([])
-    assert namespace.command == None
+    assert namespace.__class__ == argparse.Namespace
 
 
 def test_run():
     run(['r', "test"])
     run(["run", "test"])
     run(["run", "test", "html"])
+
 
 
 def test_view_envs():
@@ -155,25 +158,24 @@ def test_update_settings():
 
 
 def run(command):
+
     namespace = app.main(command)
     assert namespace.command == 'r' or namespace.command == "run"
-    assert namespace.which == "run_notebook"
     assert namespace.notebook == "test"
     if "html" in command:
         assert namespace.html == "html"
-
+    
 
 def view_envs(command):
     namespace = app.main(command)
+    
     assert namespace.command == 'v' or namespace.command == 'viewenvs'
-    assert namespace.which == "view_notebook_env"
     assert namespace.notebook == 'test'
 
 
 def open_notebook(command):
     namespace = app.main(command)
     assert namespace.command == 'o' or namespace.command == "open"
-    assert namespace.which == "open_notebook"
     assert namespace.notebook == "test"
     if "html" in command:
         assert namespace.html == "html"
@@ -181,8 +183,8 @@ def open_notebook(command):
 
 def search_notebook(command):
     namespace = app.main(command)
+    print(namespace)
     assert namespace.command == 's' or namespace.command == "search"
-    assert namespace.which == 'search_notebooks'
     assert namespace.term == "test"
 
 
@@ -192,7 +194,6 @@ def list_notebooks(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'l' or namespace.command == "list"
-    assert namespace.which == "list_notebooks"
 
 
 def history(command):
@@ -201,7 +202,6 @@ def history(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'h' or namespace.command == "history"
-    assert namespace.which == "history"
 
 
 def next_notebook(command):
@@ -210,7 +210,6 @@ def next_notebook(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'n' or namespace.command == "whatnext"
-    assert namespace.which == "next_notebook"
 
 
 def new_scene(command):
@@ -219,7 +218,6 @@ def new_scene(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'ns' or namespace.command == "newscene"
-    assert namespace.which == "new_scene"
     assert namespace.name == "test"
 
 
@@ -229,7 +227,6 @@ def end_scene(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'es' or namespace.command == "endscene"
-    assert namespace.which == "end_scene"
     if "test" in command:
         assert namespace.name == "test"
 
@@ -240,7 +237,6 @@ def change_scene(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'cs' or namespace.command == "changescene"
-    assert namespace.which == "change_scene"
     assert namespace.name == "test"
 
 
@@ -250,7 +246,6 @@ def resume_scene(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'rs' or namespace.command == "resumescene"
-    assert namespace.which == "resume_scene"
     assert namespace.name == "test"
 
 
@@ -260,7 +255,6 @@ def delete_scene(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'ds' or namespace.command == "deletescene"
-    assert namespace.which == "delete_scene"
     if "test" in command:
         assert namespace.name == "test"
 
@@ -271,7 +265,6 @@ def list_scene(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'ls' or namespace.command == "listscenes"
-    assert namespace.which == "list_scene"
 
 
 def set_env(command):
@@ -280,7 +273,6 @@ def set_env(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'se' or namespace.command == "setenv"
-    assert namespace.which == "set_env"
     assert namespace.name == "test"
     assert namespace.value == "test"
 
@@ -291,7 +283,6 @@ def search_env(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'sv' or namespace.command == "searchenv"
-    assert namespace.which == "search_env"
     assert namespace.term == "test"
 
 
@@ -301,7 +292,6 @@ def delete_env(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'de' or namespace.command == "deleteenv"
-    assert namespace.which == "delete_env"
     assert namespace.name == "test"
 
 
@@ -311,7 +301,6 @@ def list_env(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'le' or namespace.command == "listenv"
-    assert namespace.which == "list_env"
 
 
 def view_library_env(command):
@@ -320,7 +309,6 @@ def view_library_env(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'vl' or namespace.command == "viewlibenv"
-    assert namespace.which == "view_library_env"
     assert namespace.name == "test"
 
 
@@ -330,7 +318,6 @@ def add_library(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'al' or namespace.command == "addlibrary"
-    assert namespace.which == "add_library"
     assert namespace.path == "test"
 
 
@@ -340,7 +327,6 @@ def remove_library(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'rl' or namespace.command == "removelibrary"
-    assert namespace.which == "remove_library"
     assert namespace.path == "test"
 
 
@@ -350,7 +336,6 @@ def list_library(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'll' or namespace.command == "listlibrary"
-    assert namespace.which == "list_library"
 
 
 def sync_library(command):
@@ -359,7 +344,6 @@ def sync_library(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'sl' or namespace.command == "synclibrary"
-    assert namespace.which == "sync_library"
     if "path" in command:
         assert namespace.path == "test"
 
@@ -370,4 +354,15 @@ def update_settings(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'u' or namespace.command == "updatesettings"
-    assert namespace.which == "update_settings"
+
+
+def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
+    from src.mtool import app
+    from src.mtool.notebook import list_notebook
+
+    list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)
+
+    
+    assert app.start(["", "1"]) == 0
+
+    

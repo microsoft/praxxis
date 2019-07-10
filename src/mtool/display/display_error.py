@@ -34,6 +34,11 @@ def end_ended_scene_error(name):
     return(f"{Fore.RED}{name} is already ended.")
 
 
+def version_error():
+    import sys
+    return("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
+
+
 def last_active_scene_error(name):
     """the error display for trying to end the last active scene"""
     return(f"{Fore.RED}{name} is your last active scene. Make a new scene, or resume an old one.")
