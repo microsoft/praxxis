@@ -14,7 +14,6 @@ def test_command(setup,
          current_scene_db):
     import os
     from src.mtool.util.sqlite import sqlite_scene
-    from src.mtool.notebook import list_notebook
 
     dummy_input = dummy_object.make_dummy_input("run_notebook")
 
