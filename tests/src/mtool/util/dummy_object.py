@@ -85,4 +85,5 @@ def make_dummy_action(dest, choices, help):
 def make_dummy_input(which):
     dummy_input = Dummy_Object()
     dummy_input.which = which
+    dummy_input.notebook = "DIR001 - dir"
     return dummy_input

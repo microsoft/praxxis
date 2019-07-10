@@ -51,6 +51,6 @@ def test_new_scene(setup, scene_root, history_db):
     delete_scene.delete_scene("generated_new_scene", scene_root, history_db)
 
 
-def test_history(setup, setup_telemetry, generate_short_history, scene_root, history_db, library_db, current_scene_db):
+def test_history(setup, generate_short_history, scene_root, history_db, library_db, current_scene_db):
     assert len(entry_scene.history("", scene_root, history_db, library_db, current_scene_db)) == 1
 

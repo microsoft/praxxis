@@ -66,10 +66,10 @@ def command(argument,
         func = entry_scene.current_scene
 
     try:
-        func(argument)
+        output = func(argument)
     except Exception as e:
         print(e)
         return e
-    return 0
+    return output
 
     

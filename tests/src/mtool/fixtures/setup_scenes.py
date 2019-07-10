@@ -56,7 +56,7 @@ def create_ended_scene(scene_root, history_db, current_scene_db):
         pass
 
 @pytest.fixture(scope="function")
-def generate_short_history(setup, setup_telemetry, add_test_library, telemetry_db, outfile_root, current_scene_db, library_root, library_db):
+def generate_short_history(setup, add_test_library, telemetry_db, outfile_root, current_scene_db, library_root, library_db):
     from src.mtool.notebook import run_notebook
     from tests.src.mtool.util import dummy_object
     from src.mtool.util.sqlite import sqlite_scene

@@ -8,11 +8,14 @@ def test_command(setup, init_root,
          scene_root,
          history_db,
          telemetry_db,
-         default_scene_name):
+         default_scene_name,
+         current_scene_db):
     import os
+    from src.mtool.util.sqlite import sqlite_scene
 
     input = dummy_object.make_dummy_input("run_notebook")
     result = cli.command(input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
+    sqlite_scene.clear_history(current_scene_db)
     assert result == 0
 
     input = dummy_object.make_dummy_input("view_notebook_env")
@@ -22,6 +25,4 @@ def test_command(setup, init_root,
 
     input = dummy_object.make_dummy_input("open_notebook")
     result = cli.command(input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
-    assert result == []
-
-    assert 0
+    assert result == 0
