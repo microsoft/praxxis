@@ -359,10 +359,22 @@ def update_settings(command):
 def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
     from src.mtool import app
     from src.mtool.notebook import list_notebook
+    from src.mtool.util.sqlite import sqlite_scene
+    import sys
 
     list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)
-
     
     assert app.start(["", "1"]) == 0
 
+    sys.argv = ["", "r", "1"]
+    assert app.start() == 0
+
+    assert app.start(["", "99"]) == 1
+
+    sys.argv = ["", "r", "99"]
+    assert app.start() == 1
+
+    sys.argv = [""]
+    assert app.start() == 1
     
+    sqlite_scene.clear_history(current_scene_db)

@@ -10,10 +10,12 @@ def init_library_db(library_db):
     cur = conn.cursor()
     create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Root TEXT PRIMARY KEY, Readme TEXT, Name TEXT)'
     create_notebook_table = f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
-    create_environment_table = f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT, NotebookName TEXT, FOREIGN KEY(NotebookName) REFERENCES "Notebooks"(Name))'
+    create_environment_table = f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
+    create_notebook_environment_table = f'CREATE TABLE "NotebookEnvironment" (EnvironmentName TEXT, NotebookName TEXT, PRIMARY KEY(EnvironmentName, NotebookName), FOREIGN KEY(NotebookName) REFERENCES "Notebooks"(Name), FOREIGN KEY(EnvironmentName) REFERENCES "Environment"(Name))'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_table)
     cur.execute(create_environment_table)
+    cur.execute(create_notebook_environment_table)
     conn.commit()
     conn.close()
 

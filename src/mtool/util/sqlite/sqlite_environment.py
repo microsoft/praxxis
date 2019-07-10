@@ -8,10 +8,13 @@ def set_notebook_environments(library_db, notebook_name, environment_name, envir
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    set_env = f'INSERT OR IGNORE INTO "Environment" (Name, Value, NotebookName) VALUES(?, ?, ?)'
-    update_env = f'UPDATE "Environment" SET Value = ? WHERE Name = ? AND NotebookName = ?'
-    cur.execute(set_env, (environment_name, environment_value, notebook_name))
-    cur.execute(update_env, (environment_name, environment_value, notebook_name))
+    set_notebook_env = f'INSERT OR IGNORE INTO "NotebookEnvironment" (EnvironmentName, NotebookName) VALUES(?, ?)'
+    set_env = f'INSERT OR IGNORE INTO "Environment" (Name, Value) VALUES(?, ?)'    
+    update_env = f'UPDATE "Environment" SET Value = ? WHERE Name = ?'
+
+    cur.execute(set_notebook_env, (environment_name, notebook_name))
+    cur.execute(set_env, (environment_name, environment_value))
+    cur.execute(update_env, (environment_name, environment_value))
     conn.commit()
     conn.close()
 
@@ -32,7 +35,7 @@ def get_library_environments(library_db, library_name):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library_envs = f'SELECT Name, Value from "Environment" Where NotebookName IN (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}")'
+    get_library_envs = f'SELECT Name, Value from "Environment" WHERE Name in (SELECT EnvironmentName FROM NotebookEnvironment WHERE NotebookName IN (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}"))'
     cur.execute(get_library_envs)
     environments = cur.fetchall()
     conn.close()
@@ -76,7 +79,7 @@ def get_env(current_scene_db, var_name):
     get_env = f'SELECT Value FROM "Environment" WHERE Name = ?'
     cur.execute(get_env, (var_name,))
     conn.commit()
-    value = cur.fetchone()   #just a value, not the tuple
+    value = cur.fetchone()
     conn.close()
     return value
 
@@ -136,7 +139,7 @@ def list_notebook_env(library_db, notebook_name):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    env = f'SELECT Name, Value from "Environment" WHERE NotebookName = "{notebook_name}"'
+    env = f'SELECT Name, Value from "Environment" WHERE Name in (SELECT EnvironmentName from NotebookEnvironment WHERE NotebookName = "{notebook_name}")'
     cur.execute(env)
     rows = cur.fetchall()
     conn.close()

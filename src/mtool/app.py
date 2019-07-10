@@ -246,11 +246,11 @@ def start(args=None):
                 print(e)
                 return 1
             return 0
-
     try:
         cli.command(main())
     except Exception as e:
         print(e)
+        return 1
     return 0
 
 
