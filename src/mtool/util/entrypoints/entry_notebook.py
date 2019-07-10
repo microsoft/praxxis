@@ -30,7 +30,7 @@ def run_notebook(arg,
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
-
+    
     try:
         run_notebook.run_notebook(arg, user_info_db, outfile_root, current_scene_db, library_root, library_db)
     except Exception as e:

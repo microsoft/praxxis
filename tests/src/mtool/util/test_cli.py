@@ -1,7 +1,9 @@
 from src.mtool.util import cli
 from tests.src.mtool.util import dummy_object
 
-def test_command(setup, add_test_library, init_root, 
+def test_command(setup, 
+         add_test_library, 
+         init_root, 
          library_root, 
          library_db,
          outfile_root,

@@ -10,7 +10,6 @@ def list_notebooks(library_db, start, end):
     cur = conn.cursor()
     list_libraries = f'SELECT Name, Root FROM "Notebooks" LIMIT {start}, {end}'
     cur.execute(list_libraries)
-    conn.commit()
     rows = cur.fetchall()
     conn.close()
     return rows
