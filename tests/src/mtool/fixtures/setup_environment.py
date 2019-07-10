@@ -5,7 +5,7 @@ import pytest
 import os
 
 @pytest.fixture(scope="session")
-def setup(init_root, library_root, library_db, outfile_root, scene_root, history_db, default_scene_name, start, stop):
+def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene_root, history_db, default_scene_name, start, stop):
     """
     sets up directories in the temp dir
     """
@@ -17,6 +17,8 @@ def setup(init_root, library_root, library_db, outfile_root, scene_root, history
     from src.mtool.environment import list_env
     from src.mtool.library import list_library
     from src.mtool.notebook import list_notebook
+    from src.mtool.util.sqlite import sqlite_telemetry
+
 
     if not os.path.exists(init_root):
         os.mkdir(init_root)
@@ -42,9 +44,11 @@ def setup(init_root, library_root, library_db, outfile_root, scene_root, history
         sqlite_scene.init_current_scene(history_db, default_scene_name)
         assert os.path.exists(history_db)
 
+    if not os.path.exists(telemetry_db):
+        sqlite_telemetry.init_user_info(telemetry_db, 0)
+
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     yield 
-
     current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     assert len(list_scene.list_scene(init_root, history_db)) == 1
     assert len(list_env.list_env(current_scene_db, start, stop)) == 0

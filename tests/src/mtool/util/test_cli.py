@@ -24,6 +24,4 @@ def test_command(setup, init_root,
     result = cli.command(input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name)
     assert result == []
 
-    os.remove(telemetry_db)
-    assert not os.path.exists(telemetry_db)
     assert 0

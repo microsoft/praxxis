@@ -16,5 +16,6 @@ def test_value_error(setup, setup_telemetry, telemetry_db):
 @patch('builtins.input', lambda *args: 'nn')
 def test_edit_settings(setup, setup_telemetry, telemetry_db):
     from src.mtool.telemetry import update_settings
+    import os 
 
     update_settings.edit_settings(1, update_settings.get_values(telemetry_db), telemetry_db)

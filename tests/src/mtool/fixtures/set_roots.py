@@ -52,7 +52,7 @@ def history_db(init_root):
     return os.path.join(init_root, "history.db")
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def telemetry_db(init_root):
     """
     defines the user id database for testing 
