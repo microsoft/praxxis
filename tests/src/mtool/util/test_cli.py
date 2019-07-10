@@ -11,7 +11,7 @@ def test_command(setup,
          history_db,
          telemetry_db,
          default_scene_name,
-         current_scene_db, start, stop):
+         current_scene_db):
     import os
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.notebook import list_notebook
