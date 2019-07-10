@@ -233,6 +233,7 @@ def main(command_line=None):
 def start(args=None):
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.util import cli
+    from src.mtool.util import error
     
     if args == None:
         args = sys.argv
@@ -257,13 +258,19 @@ def start(args=None):
             arg.which = run_notebook_command
             try:
                 cli.command(arg)
-            except Exception as e:
+            except error.NotebookNotFoundError as e:
                 print(e)
                 return 1
             return 0
     try:
         cli.command(main())
-    except Exception as e:
+    except (error.EndEndedSceneError, 
+            error.EnvNotFoundError, 
+            error.LastActiveSceneError, 
+            error.LibraryNotFoundError, 
+            error.NotebookNotFoundError, 
+            error.SceneEndedError, 
+            error.SceneNotFoundError)as e:
         print(e)
         return 1
     return 0

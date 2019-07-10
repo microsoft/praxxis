@@ -21,7 +21,6 @@ def delete_scene(args, scene_root, history_db):
     else:
         name = args
 
-
     try:
         tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
     except error.SceneNotFoundError as e:
@@ -44,4 +43,3 @@ def delete_scene(args, scene_root, history_db):
             raise e
     else:
         raise error.SceneNotFoundError(name)
-    
