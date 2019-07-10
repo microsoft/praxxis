@@ -28,6 +28,8 @@ set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
 view_library_env_command="view_library_env"
+pull_notebook_env_command = "pull_notebook_env"
+pull_library_env_command = "pull_library_env"
 search_env_command="search_env"
 update_settings_command="update_settings"
 ## notebook help strings
@@ -66,6 +68,10 @@ search_env_term_help="search term for environment variable"
 list_env_help="list environment variables"
 view_library_env_help="list all environments in a library of notebooks"
 view_library_env_name_help="the name of the library you want to list for"
+pull_notebook_env_help = "pull environments out of a notebook into your current scene"
+pull_notebook_env_name_help = "the name of the notebook to pull environments from"
+pull_library_env_help = "pull environments out of a library into your current scene"
+pull_library_env_name_help = "the name of the library to pull the environments from"
 ## library help strings
 add_library_help="install library of notebooks to mtool"
 add_library_path_help="the path to the library you want to add"
@@ -187,6 +193,15 @@ def main(command_line=None):
     view_library_env = subparsers.add_parser('viewlibenv', aliases=["vl"], help=view_library_env_help)
     view_library_env.add_argument('name', help=view_library_env_name_help)
     view_library_env.set_defaults(which=view_library_env_command)
+
+    pull_notebook_env = subparsers.add_parser('pullenv', aliases=['p'], help=pull_notebook_env_help)
+    pull_notebook_env.add_argument('notebook', help = pull_notebook_env_name_help)
+    pull_notebook_env.set_defaults(which = pull_notebook_env_command)
+
+    pull_library_env = subparsers.add_parser('pullenvlib', aliases=['pl'], help=pull_library_env_help)
+    pull_library_env.add_argument('name', help = pull_library_env_name_help)
+    pull_library_env.set_defaults(which = pull_library_env_command)
+
 
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)

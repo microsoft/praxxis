@@ -32,6 +32,13 @@ def clear_notebook_environments(library_db):
 
 def get_library_environments(library_db, library_name):
     from src.mtool.util.sqlite import connection
+    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util import error
+
+    try:
+        sqlite_library.check_library_exists(library_db, library_name)
+    except error.LibraryNotFoundError as e:
+        raise e
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -95,6 +102,19 @@ def set_env(current_scene_db, name, value):
     cur.execute(upate_env)
     conn.commit()
     conn.close()
+
+
+def set_many_envs(current_scene_db, env_list):
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(current_scene_db)
+    cur = conn.cursor()
+    set_env = f'INSERT OR IGNORE INTO "Environment"(Name, Value) VALUES(?,?)'
+    cur.executemany(set_env, env_list)
+    conn.commit()
+    conn.close()
+
+
 
 
 def get_env_by_ord(current_scene_db, ordinal):

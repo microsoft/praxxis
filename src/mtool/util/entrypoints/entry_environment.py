@@ -80,3 +80,32 @@ def view_notebook_env(arg,
     envs = list_env.list_notebook_env(arg, library_db, current_scene_db)
     return envs
  
+
+def pull_notebook_env(arg,
+                      library_db = _library_db,
+                      scene_root = _scene_root,
+                      history_db = _history_db,
+                      current_scene_db = None):
+    from src.mtool.environment import pull_env
+    from src.mtool.util import roots
+
+
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+
+    pull_env.pull_notebook_environment(arg, library_db, current_scene_db)
+
+
+def pull_library_env(arg,
+                      library_db = _library_db,
+                      scene_root = _scene_root,
+                      history_db = _history_db,
+                      current_scene_db = None):
+    from src.mtool.environment import pull_env
+    from src.mtool.util import roots
+
+
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+
+    pull_env.pull_library_environment(arg, library_db, current_scene_db)

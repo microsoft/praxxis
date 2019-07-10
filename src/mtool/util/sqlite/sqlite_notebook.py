@@ -36,7 +36,6 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     """Returns list item referenced by input ordinal"""
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
-
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     query = f'SELECT Data FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
@@ -44,6 +43,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     conn.commit()
     item = cur.fetchone()
     conn.close()
+
     if item == None:
         raise error.NotebookNotFoundError
     return item

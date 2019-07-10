@@ -55,3 +55,13 @@ class EndEndedSceneError(Exception):
     def __str__(self):
         from src.mtool.display import display_error
         return str(display_error.end_ended_scene_error(self.name))
+
+
+class LibraryNotFoundError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.library_not_found_error(self.name))
+

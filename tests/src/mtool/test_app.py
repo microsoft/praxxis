@@ -130,6 +130,10 @@ def test_view_library_env():
     view_library_env(['vl', 'test'])
 
 
+def test_pull_notebook_env():
+    pull_notebook_env(['pullenv', 'test'])
+    pull_notebook_env(['p', 'test'])
+
 def test_add_library():
     add_library(['addlibrary', 'test'])
     add_library(['al', 'test'])
@@ -310,6 +314,12 @@ def view_library_env(command):
     namespace = app.main(command)
     assert namespace.command == 'vl' or namespace.command == "viewlibenv"
     assert namespace.name == "test"
+
+
+def pull_notebook_env(command):
+    namespace = app.main(command)
+    assert namespace.command == 'p' or namespace.command == "pullenv"
+    assert namespace.notebook == "test"
 
 
 def add_library(command):

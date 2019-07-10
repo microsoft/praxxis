@@ -57,9 +57,12 @@ def command(argument,
         "delete_env": entry_environment.delete_env,
         "list_env": entry_environment.list_env,
         "view_library_env": entry_environment.view_library_env,
+        "pull_notebook_env": entry_environment.pull_notebook_env,
+        "pull_library_env": entry_environment.pull_library_env,
         "sync_library": entry_library.sync_library,
         "update_settings": entry_telemetry.update_settings
     }
+
     if hasattr(argument, "which"):
         func = switcher.get(argument.which)
     else:

@@ -34,6 +34,10 @@ def end_ended_scene_error(name):
     return(f"{Fore.RED}{name} is already ended.")
 
 
+def library_not_found_error(name):
+    return(f"{Fore.RED}Library {name} does not exist or is not loaded.")
+
+
 def version_error():
     import sys
     return("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
