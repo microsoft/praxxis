@@ -102,7 +102,10 @@ def add_notebook(arg,
                 library_db = _library_db):
     from src.mtool.notebook import add_notebook
 
-    add_notebook.add_notebook(arg, library_db)
+    try:
+        add_notebook.add_notebook(arg, library_db)
+    except Exception as e:
+        raise e
 
 
 def remove_notebook(arg, 
