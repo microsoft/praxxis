@@ -10,7 +10,18 @@ def add_notebook(args, library_db):
         if os.path.isdir(path):
             raise error.NotFileError(path)
         if file_extension == ".ipynb":
-            from src.mtool.util.sqlite import sqlite_library                  
+            from src.mtool.util.sqlite import sqlite_library
+            from src.mtool.util.sqlite import sqlite_notebook
+            from src.mtool.display import display_error
+            from src.mtool.util import error
+
+            try:
+                sqlite_notebook.check_notebook_exists(library_db, file_name)
+            except error.NotebookNotFoundError:
+                pass
+            else:
+                display_error.duplicate_notebook_warning(file_name)
+
             sqlite_library.load_notebook(library_db, path, file_name, "none")
         else:
             raise error.NotNotebookError(path)

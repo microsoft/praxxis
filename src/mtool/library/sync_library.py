@@ -11,9 +11,7 @@ def sync_libraries(library_root, library_db):
     from src.mtool.util.sqlite import sqlite_environment
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
-    sqlite_library.clear_loaded_libararies(library_db)   
-    sqlite_environment.clear_notebook_environments(library_db)   
-    
+
     first = True
     for directory in directories:
         this_library_root = os.path.join(library_root, directory)
@@ -41,11 +39,14 @@ def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_environment
+    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.util import error
 
     from src.mtool.display import display_library
     from src.mtool.display import display_error
     from src.mtool.notebook import notebook
     first = True
+    duplicates = []
     for library_root, dirs, files in os.walk(library_root, topdown=False):
         for name in files:
             # for every notebook in the files found by the os.walk
@@ -69,6 +70,15 @@ def sync_notebooks(library_root, library_db, library_name):
                     display_error.notebook_load_error(name)
                     #if there was a problem loading the notebook, show an error.
 
+                try:
+                    sqlite_notebook.check_notebook_exists(library_db, file_name)
+                except error.NotebookNotFoundError:
+                    pass
+                else:
+                    duplicates.append(name)
+
                 sqlite_library.load_notebook(library_db, file_root, file_name, library_name)
                 #finally, load the notebook's data into the db
                 first = False
+    if(duplicates != []):
+        display_error.duplicate_sync_warning(duplicates)

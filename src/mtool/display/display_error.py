@@ -45,9 +45,23 @@ def not_directory_error(name):
 def not_file_error(name):
     return(f"{Fore.RED}{name} is a directory. Are you trying to add a library?")
 
+
 def not_notebook_error(name):
     return(f"{Fore.RED}The file {name} is not a notebook file.")
 
+
+def duplicate_notebook_warning(name):
+    print(f"{Fore.YELLOW}The notebook {name} has already been loaded. Reimporting.")
+
+
+def duplicate_sync_warning(duplicates):
+    if len(duplicates) == 1:
+        print(f"{Fore.YELLOW}The notebook {duplicates[0]} was already loaded. Reimporting.")
+    else:
+        print(f"{Fore.YELLOW}The notebooks")
+        for duplicate in duplicates:
+            print(f"{Fore.YELLOW}\t{duplicate}")
+        print(f"{Fore.YELLOW}were already loaded. Reimporting. ")
 
 
 def version_error():
