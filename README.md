@@ -37,9 +37,5 @@ mtool runs on libraries of notebooks, allowing every command on your system to b
 ##### Environments
 mtool uses parameterized jupyter notebooks to inject environments into code cells. By saving environments through mtool, envionments are saved through sessions and restarts, and are documented in an easily accessible format, allowing you to run every notebook with absolute certainty. 
 
-
-## Docs
-Accessible in markdown format in the docs folder
-
 ## Extra mtool 
 For more infromation on how to use m tool type m --help into the command 
