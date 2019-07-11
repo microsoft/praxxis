@@ -3,27 +3,25 @@ This file contains the Notebook class, with methods for loading in a .ipynb
 file and checking its parameterization information.
 """
 
-import os
-
-
-
-
-def get_notebook_by_ordinal(scene_db, name):
+def get_notebook_by_ordinal(current_scene_db, name):
     """gets scene by ordinal using the sqlite history db"""
-    from src.mtool.util import sqlite_util
+    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.util import error
     if f"{name}".isdigit():
-        name = sqlite_util.get_notebook_by_ord(scene_db, name)
-        if name == None:
-            from src.mtool.cli import display
-            display.notebook_does_not_exist_error(name)
-            return
-        return(name[0])   
+        try:
+            name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
+        except error.NotebookNotFoundError as e:
+            raise e
+        else:
+            return(name[0])   
 
 
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
-    def __init__(self, notebook_data, library_path):
-        from src.mtool.cli import display
+    def __init__(self, notebook_data):
+        from src.mtool.display import display_error
+        import os
+
         #TODO: add support for reading from a URL
         self.name = notebook_data[1]
         notebook_path = notebook_data[0]
@@ -34,10 +32,11 @@ class Notebook:
         self.library_name = notebook_data[2]
 
         try:
-            f = open(self._path)
+            f = open(self._path, encoding='utf-8')
             self.extract_params(f)
+            f.close()
         except(FileNotFoundError):
-            display.notebook_does_not_exist_error(self.name)
+            print(display_error.notebook_not_found_error(self.name))
     
     def getpath(self):
         """returns the path of the notebook"""
@@ -66,4 +65,9 @@ class Notebook:
             lines = source.splitlines()
         for line in lines:
             if "=" in line and not line.startswith("#"):
-                self._environmentVars.append(line.split("=")[0].strip())
+                environment = line.split("=")
+                name = environment[0]
+                value = environment[1].split("#")[0].strip()
+                if value == "\"\"":
+                    value = None               
+                self._environmentVars.append([name, value])
