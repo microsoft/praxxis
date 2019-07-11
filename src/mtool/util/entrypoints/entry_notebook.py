@@ -88,7 +88,7 @@ def list_notebook(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    notebook_list = list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, query_start, query_end)
+    notebook_list = list_notebook.list_notebook(library_db, current_scene_db, query_start, query_end)
     return notebook_list
 
 
@@ -96,3 +96,17 @@ def next_notebook(arg):
     """calls the function to get the next notebook"""
     ##TODO  implement this
     return "coming soon"
+
+
+def remove_notebook(arg, 
+                    scene_root = _scene_root,
+                    history_db = _history_db,
+                    library_db = _library_db, 
+                    current_scene_db = None):
+    from src.mtool.notebook import remove_notebook
+    from src.mtool.util import roots
+
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+
+    remove_notebook.remove_notebook(arg, library_db, current_scene_db)

@@ -2,7 +2,7 @@
 This file prints a list of all notebook libraries installed on this machine.
 """
 
-def list_library(library_root, library_db):
+def list_library(library_db):
     """grabs the list of libraries from the libraries db, and displays through 
     its display function"""
     from src.mtool.util.sqlite import sqlite_library

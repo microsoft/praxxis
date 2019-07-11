@@ -14,16 +14,20 @@ search_notebooks_command="search_notebooks"
 open_notebook_command="open_notebook"
 history_command="history"
 next_notebook_command="next_notebook"
+remove_notebook_command = "remove_notebook"
+
 new_scene_command = "new_scene"
 end_scene_command="end_scene"
 change_scene_command="change_scene"
 resume_scene_command="resume_scene"
 delete_scene_command="delete_scene"
 list_scene_command="list_scene"
+
 add_library_command="add_library"
 list_library_command="list_library"
 remove_library_command="remove_library"
 sync_library_command="sync_library"
+
 set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
@@ -31,6 +35,7 @@ view_library_env_command="view_library_env"
 pull_notebook_env_command = "pull_notebook_env"
 pull_library_env_command = "pull_library_env"
 search_env_command="search_env"
+
 update_settings_command="update_settings"
 ## notebook help strings
 run_notebook_help="run notebook"
@@ -44,6 +49,8 @@ list_notebooks_help="list notebooks to run, by ordinal."
 search_notebooks_help="search for notebooks matching search term"
 search_notebooks_term_help ="search term for notebooks"
 next_notebook_help="model based prediction of what to do next in the current scene"
+remove_notebook_help = "remove notebook by name"
+remove_notebook_name_help = "name of notebook to remove"
 ## scene help strings 
 new_scene_help="new scene"
 new_scene_name_help="name of new scene"
@@ -76,7 +83,7 @@ pull_library_env_name_help = "the name of the library to pull the environments f
 add_library_help="install library of notebooks to mtool"
 add_library_path_help="the path to the library you want to add"
 remove_library_help="remove library of notebooks mtool"
-remove_library_path_help="path of the library you want to remove"
+remove_library_name_help="name of the library you want to remove"
 list_libraries_help="list libraries currently installed"
 sync_library_help="load libraries into mtool. Default loads from predefined library path"
 sync_library_path_help="load library from a specific directory into mtool"
@@ -151,6 +158,11 @@ def main(command_line=None):
     next_notebook = subparsers.add_parser('whatnext', aliases=["n"], help=next_notebook_help)
     next_notebook.set_defaults(which=next_notebook_command)
 
+    remove_notebook = subparsers.add_parser('removenotebook', aliases=["r"], help=remove_notebook_help)
+    remove_notebook.add_argument('name', help=remove_notebook_name_help)
+    remove_notebook.set_defaults(which=remove_notebook_command)
+
+
     new_scene = subparsers.add_parser('newscene', aliases=["ns"], help=new_scene_help)
     new_scene.add_argument('name', help=new_scene_name_help)
     new_scene.set_defaults(which=new_scene_command)
@@ -207,7 +219,7 @@ def main(command_line=None):
     add_library.set_defaults(which=add_library_command)
 
     remove_library = subparsers.add_parser('removelibrary', aliases=["rl"], help=remove_library_help)
-    remove_library.add_argument('path', help=remove_library_path_help)
+    remove_library.add_argument('name', help=remove_library_name_help)
     remove_library.set_defaults(which=remove_library_command)
 
     list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
