@@ -3,16 +3,17 @@ This file contains the Notebook class, with methods for loading in a .ipynb
 file and checking its parameterization information.
 """
 
-def get_notebook_by_ordinal(scene_db, name):
+def get_notebook_by_ordinal(current_scene_db, name):
     """gets scene by ordinal using the sqlite history db"""
     from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.util import error
     if f"{name}".isdigit():
-        name = sqlite_notebook.get_notebook_by_ord(scene_db, name)
-        if name == None:
-            from src.mtool.display import display_error
-            display_error.notebook_does_not_exist_error(name)
-            return
-        return(name[0])   
+        try:
+            name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
+        except error.NotebookNotFoundError as e:
+            raise e
+        else:
+            return(name[0])   
 
 
 class Notebook:
@@ -35,7 +36,7 @@ class Notebook:
             self.extract_params(f)
             f.close()
         except(FileNotFoundError):
-            display_error.notebook_does_not_exist_error(self.name)
+            print(display_error.notebook_not_found_error(self.name))
     
     def getpath(self):
         """returns the path of the notebook"""

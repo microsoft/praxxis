@@ -10,7 +10,6 @@ def sync_libraries(library_root, library_db):
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_environment
 
-
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
     sqlite_library.clear_loaded_libararies(library_db)   
     sqlite_environment.clear_notebook_environments(library_db)   
@@ -21,6 +20,7 @@ def sync_libraries(library_root, library_db):
         sync_library(this_library_root, library_db)
         display_library.display_loaded_library(this_library_root, first)
         #first = False
+    return 0
 
 
 def sync_library(library_root, library_db):
@@ -53,7 +53,7 @@ def sync_notebooks(library_root, library_db, library_name):
                 file_root = os.path.join(library_root, name)
                 if first:
                     display_library.loaded_notebook_message()
-
+                    
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     for environment in notebook_data._environmentVars:

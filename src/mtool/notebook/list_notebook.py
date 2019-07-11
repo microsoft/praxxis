@@ -10,3 +10,4 @@ def list_notebook(scene_root, library_root, library_db, current_scene_db, start,
     notebooks = sqlite_notebook.list_notebooks(library_db, start, stop)
     sqlite_notebook.write_list(current_scene_db, notebooks)
     display_notebook.display_list_notebook(notebooks)
+    return notebooks

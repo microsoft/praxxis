@@ -2,19 +2,17 @@
 This file lists all of the environment variables
 """
 
-def list_env(args, scene_root, history_db, start, end):
+def list_env(current_scene_db, start, end):
     """lists the environment variables in scene"""
     import os
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
     
-    scene = sqlite_scene.get_current_scene(history_db)
+    env_list = sqlite_environment.list_env(current_scene_db, start, end)
 
-    directory = os.path.join(scene_root, scene)
-    db_file = os.path.join(directory, f"{scene}.db")
-
-    display_env.display_list_env(sqlite_environment.list_env(db_file, start, end))
+    display_env.display_list_env(env_list)
+    return env_list
 
 
 def list_notebook_env(args, library_db, current_scene_db):
@@ -29,17 +27,32 @@ def list_notebook_env(args, library_db, current_scene_db):
         name = tmp_name
 
     sqlite_environment.get_all_env(current_scene_db)
+
+    environments = sqlite_environment.list_notebook_env(library_db, name)
     
-    display_env.display_view_env(sqlite_environment.list_notebook_env(library_db, name), 
+    display_env.display_view_env(environments, 
                                       sqlite_environment.get_all_env(current_scene_db))
+    
+    return environments
 
 
 def list_library_env(args, library_db, current_scene_db):
     """Lists all environments in the """
     from src.mtool.util.sqlite import sqlite_environment
     from src.mtool.display import display_env
+    from src.mtool.util import error
 
-    name = args.name 
-    display_env.display_view_env(sqlite_environment.get_library_environments(library_db, name),
-                             sqlite_environment.get_all_env(current_scene_db))
+    if hasattr(args, "name"):
+        name = args.name
+    else:
+        name = args
+            
+    try:
+        environments = sqlite_environment.get_library_environments(library_db, name)
+    except error.LibraryNotFoundError as e:
+        raise e
     
+    display_env.display_view_env(environments,
+                             sqlite_environment.get_all_env(current_scene_db))
+
+    return environments

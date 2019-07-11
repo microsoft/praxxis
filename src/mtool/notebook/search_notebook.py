@@ -10,3 +10,4 @@ def search_notebook(args, library_db, current_scene_db, start, end):
     search_term = args.term
     notebook_list = display_notebook.display_search(search_term, sqlite_notebook.search_notebooks(library_db, search_term, start, end))
     sqlite_notebook.write_list(current_scene_db, notebook_list)
+    return notebook_list

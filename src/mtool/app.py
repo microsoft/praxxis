@@ -6,7 +6,7 @@ import argparse
 import os
 import sys
 
-## these are the commands passed into function_switcher.py
+## these are the commands passed into cli.py
 run_notebook_command = "run_notebook"
 view_notebook_env_command="view_notebook_env"
 list_notebooks_command="list_notebooks"
@@ -28,6 +28,8 @@ set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
 view_library_env_command="view_library_env"
+pull_notebook_env_command = "pull_notebook_env"
+pull_library_env_command = "pull_library_env"
 search_env_command="search_env"
 update_settings_command="update_settings"
 ## notebook help strings
@@ -66,6 +68,10 @@ search_env_term_help="search term for environment variable"
 list_env_help="list environment variables"
 view_library_env_help="list all environments in a library of notebooks"
 view_library_env_name_help="the name of the library you want to list for"
+pull_notebook_env_help = "pull environments out of a notebook into your current scene"
+pull_notebook_env_name_help = "the name of the notebook to pull environments from"
+pull_library_env_help = "pull environments out of a library into your current scene"
+pull_library_env_name_help = "the name of the library to pull the environments from"
 ## library help strings
 add_library_help="install library of notebooks to mtool"
 add_library_path_help="the path to the library you want to add"
@@ -110,10 +116,8 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
 
         return parts
 
-
 def main(command_line=None):
     """creates all of the argparse parsers and returns the args passed in""" 
-
     parser = argparse.ArgumentParser(description=mtool_ascii_art, 
                                     formatter_class=helpFormatter, 
                                     usage="Notebooks: r, o, s, l, h, v, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, Environment:se , sv, de, le")
@@ -157,7 +161,6 @@ def main(command_line=None):
 
     change_scene = subparsers.add_parser('changescene', aliases=["cs"], help=change_scene_help)
     change_scene.add_argument('name', help=change_scene_name_help)
-    change_scene.add_argument('environment', nargs="?", help=change_scene_environment_help)
     change_scene.set_defaults(which=change_scene_command)
 
     resume_scene = subparsers.add_parser('resumescene', aliases=["rs"], help=resume_scene_help)
@@ -191,6 +194,15 @@ def main(command_line=None):
     view_library_env.add_argument('name', help=view_library_env_name_help)
     view_library_env.set_defaults(which=view_library_env_command)
 
+    pull_notebook_env = subparsers.add_parser('pullenv', aliases=['p'], help=pull_notebook_env_help)
+    pull_notebook_env.add_argument('notebook', help = pull_notebook_env_name_help)
+    pull_notebook_env.set_defaults(which = pull_notebook_env_command)
+
+    pull_library_env = subparsers.add_parser('pullenvlib', aliases=['pl'], help=pull_library_env_help)
+    pull_library_env.add_argument('name', help = pull_library_env_name_help)
+    pull_library_env.set_defaults(which = pull_library_env_command)
+
+
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)
     add_library.set_defaults(which=add_library_command)
@@ -213,35 +225,55 @@ def main(command_line=None):
 
     if len(sys.argv[1:])==0:
         parser.print_help()
-        print()    
+        print()
+    
     return args
 
 
-def start():
+def start(args=None):
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
+    from src.mtool.util import cli
+    from src.mtool.util import error
+    
+    if args == None:
+        args = sys.argv
 
     # prevents mtool from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
-        return
+        return 1
 
-    from src.mtool.util import function_switcher
-    if len(sys.argv) > 1:
-        arg1 = sys.argv[1]
+    if len(args) > 1:
+        arg1 = args[1]
         if arg1.isnumeric():
             arg = argparse.Namespace
 
-            if len(sys.argv) > 2:
-                arg.html = sys.argv[2]
+            if len(args) > 2:
+                arg.html = args[2]
             else:
                 arg.html = None
 
             arg.command = 'r'
             arg.notebook = arg1
             arg.which = run_notebook_command
-            function_switcher.command(arg)
-            return 
-    function_switcher.command(main())
+            try:
+                cli.command(arg)
+            except error.NotebookNotFoundError as e:
+                print(e)
+                return 1
+            return 0
+    try:
+        cli.command(main())
+    except (error.EndEndedSceneError, 
+            error.EnvNotFoundError, 
+            error.LastActiveSceneError, 
+            error.LibraryNotFoundError, 
+            error.NotebookNotFoundError, 
+            error.SceneEndedError, 
+            error.SceneNotFoundError)as e:
+        print(e)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
