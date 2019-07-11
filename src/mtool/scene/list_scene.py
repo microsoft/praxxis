@@ -19,3 +19,4 @@ def list_scene(root, history_db):
 
     display_scene.display_list_scene(ended_scenes, active_scenes, current_scene)
 
+    return(ended_scenes + active_scenes)

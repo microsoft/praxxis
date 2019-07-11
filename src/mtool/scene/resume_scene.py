@@ -9,6 +9,7 @@ def resume_scene(args, scene_root, history_db):
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.display import display_scene
     from src.mtool.scene import scene
+    from src.mtool.util import error
 
     if hasattr(args, "name"):
         name = args.name
@@ -18,6 +19,12 @@ def resume_scene(args, scene_root, history_db):
     tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
     if tmp_name != None:
         name = tmp_name
+    try:
+        sqlite_scene.check_scene_ended(history_db, name)
+    except error.SceneNotFoundError as e:
+        raise e
+    except error.SceneEndedError:
+        pass
 
     scene = os.path.join(scene_root, name, f"{name}.db" )
 
@@ -26,3 +33,5 @@ def resume_scene(args, scene_root, history_db):
     sqlite_scene.update_current_scene(history_db, name)
     
     display_scene.display_resume_scene(name)
+    return name
+    

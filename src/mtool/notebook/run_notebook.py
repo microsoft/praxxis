@@ -12,20 +12,33 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     from src.mtool.notebook import open_notebook 
     from src.mtool.util.sqlite import sqlite_notebook
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.util import error
     from datetime import datetime
 
     name = args.notebook
 
-    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    try:
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    except error.NotebookNotFoundError as e:
+        raise e
+
     if tmp_name != None:
         name = tmp_name
 
-    notebook_data = sqlite_notebook.get_notebook(library_db, name)
+    try:
+        notebook_data = sqlite_notebook.get_notebook(library_db, name)
+    except error.NotebookNotFoundError as e:
+        raise e
+
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)
 
-    local_copy = execute(current_scene_db, notebook, outfile_root)
+    try:
+        local_copy = execute(current_scene_db, notebook, outfile_root)
+    except Exception as e:
+        raise e
+    
     if args.html == "html":
         html_outputfile = f"{local_copy.split('.')[0]}.html"
         open_notebook.display_as_html(local_copy, html_outputfile)
@@ -41,10 +54,11 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
 def telemetry(user_info_db, local_copy, current_scene_id):
     if not sqlite_telemetry.telem_init(user_info_db):
         from src.mtool.display import display_error
-        display_error.display_telem_not_init() 
+        display_error.telem_not_init_warning() 
     elif not sqlite_telemetry.telem_on(user_info_db):
         from src.mtool.display import display_error
-        display_error.display_telem_off()    
+        display_error.telem_off_warning()    
+
     else: # telemetry initalized and on     
         backlog = sqlite_telemetry.backlog_size(user_info_db) 
         if backlog != 0:        
@@ -54,12 +68,12 @@ def telemetry(user_info_db, local_copy, current_scene_id):
         import subprocess
         import os
         import sys
-        f = os.path.join(os.path.dirname(__file__),  "..\\util")
+        f = os.path.join(os.path.dirname(__file__),  ".." , "telemetry")
         os.chdir(f)
         subprocess.Popen([sys.executable, "telemetry.py", user_info_db, local_copy, current_scene_id])
 
 
-def execute(db_file, notebook, outfile_root):
+def execute(current_scene_db, notebook, outfile_root):
     """Handles papermill execution for notebook"""
     import papermill
     from src.mtool.display import display_error
@@ -67,29 +81,29 @@ def execute(db_file, notebook, outfile_root):
     local_copy = get_outputname(notebook, outfile_root)
 
     if (notebook._hasParameters): 
-        injects = pull_params(db_file, notebook._environmentVars)
+        injects = pull_params(current_scene_db, notebook._environmentVars)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
-            display_error.papermill_error(e)
+            raise e
     else:
         display_error.no_tagged_cell_warning()
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy)
         except Exception as e:
-            display_error.papermill_error(e)
+            raise e
 
     #need local output -- temp? or just send it directly to HDFS
     return local_copy
 
 
-def pull_params(db_file, environmentVars):
+def pull_params(current_scene_db, environmentVars):
     """Returns a dictionary of all overridden parameters for notebook"""
     from src.mtool.util.sqlite import sqlite_environment
 
     injects = {}
     for var in environmentVars:
-        value = sqlite_environment.get_env(db_file, var[0])
+        value = sqlite_environment.get_env(current_scene_db, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
             injects[var] = value

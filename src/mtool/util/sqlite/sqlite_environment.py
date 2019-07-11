@@ -2,36 +2,27 @@
 This file contains all of the sqlite functions for environments
 """
 
-def get_notebook_environments(db_file, name):
-    """gets the scene ID from the scene db"""
-    from src.mtool.util.sqlite import connection
-
-    conn = connection.create_connection(db_file)
-    cur = conn.cursor()
-    get_notebook_environment = f'SELECT * FROM "Environment" WHERE NotebookName = "{name}"'
-    cur.execute(get_notebook_environment)
-    id = cur.fetchall()
-    conn.close()
-    return id
-
-def set_notebook_environments(db_file, notebook_name, environment_name, environment_value):
+def set_notebook_environments(library_db, notebook_name, environment_name, environment_value):
     """set or update an environment variable"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    set_env = f'INSERT OR IGNORE INTO "Environment" (Name, Value, NotebookName) VALUES(?, ?, ?)'
-    update_env = f'UPDATE "Environment" SET Value = ? WHERE Name = ? AND NotebookName = ?'
-    cur.execute(set_env, (environment_name, environment_value, notebook_name))
-    cur.execute(update_env, (environment_name, environment_value, notebook_name))
+    set_notebook_env = f'INSERT OR IGNORE INTO "NotebookEnvironment" (EnvironmentName, NotebookName) VALUES(?, ?)'
+    set_env = f'INSERT OR IGNORE INTO "Environment" (Name, Value) VALUES(?, ?)'    
+    update_env = f'UPDATE "Environment" SET Value = ? WHERE Name = ?'
+
+    cur.execute(set_notebook_env, (environment_name, notebook_name))
+    cur.execute(set_env, (environment_name, environment_value))
+    cur.execute(update_env, (environment_name, environment_value))
     conn.commit()
     conn.close()
 
-def clear_notebook_environments(db_file):
+def clear_notebook_environments(library_db):
     """empties the notebook environment table""" 
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
     clear_environment = f'DELETE FROM "Environment"'
     cur.execute(clear_environment)
@@ -39,23 +30,30 @@ def clear_notebook_environments(db_file):
     conn.close()
     
 
-def get_library_environments(db_file, library_name):
+def get_library_environments(library_db, library_name):
     from src.mtool.util.sqlite import connection
+    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util import error
 
-    conn = connection.create_connection(db_file)
+    try:
+        sqlite_library.check_library_exists(library_db, library_name)
+    except error.LibraryNotFoundError as e:
+        raise e
+
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library_envs = f'SELECT Name, Value from "Environment" Where NotebookName = (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}")'
+    get_library_envs = f'SELECT Name, Value from "Environment" WHERE Name in (SELECT EnvironmentName FROM NotebookEnvironment WHERE NotebookName IN (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}"))'
     cur.execute(get_library_envs)
     environments = cur.fetchall()
     conn.close()
     return environments
 
 
-def list_env(db_file, start, end):
+def list_env(current_scene_db, start, end):
     """returns a list of set environment variables in the scene"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {start}, {end}'
     cur.execute(list_env)
@@ -65,11 +63,11 @@ def list_env(db_file, start, end):
     return rows
 
 
-def get_all_env(db_file):
+def get_all_env(current_scene_db):
     """returns a list of set environment variables in the scene"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC'
     cur.execute(list_env)
@@ -79,24 +77,25 @@ def get_all_env(db_file):
     return rows
 
 
-def get_env(db_file, var_name):
+def get_env(current_scene_db, var_name):
     """get the value of the specified environment variable""" 
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     get_env = f'SELECT Value FROM "Environment" WHERE Name = ?'
     cur.execute(get_env, (var_name,))
     conn.commit()
-    value = cur.fetchone()   #just a value, not the tuple
+    value = cur.fetchone()
     conn.close()
     return value
 
-def set_env(db_file, name, value):
+
+def set_env(current_scene_db, name, value):
     """set or update an environment variable"""
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     set_env = f'INSERT OR IGNORE INTO "Environment"(Name, Value) VALUES("{name}", "{value}")'
     upate_env = f'UPDATE "Environment" SET Value = "{value}" WHERE Name = "{name}"'
@@ -106,11 +105,25 @@ def set_env(db_file, name, value):
     conn.close()
 
 
-def get_env_by_ord(db_file, ordinal):
-    """get an environment variable by ord"""
+def set_many_envs(current_scene_db, env_list):
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
+    cur = conn.cursor()
+    set_env = f'INSERT OR IGNORE INTO "Environment"(Name, Value) VALUES(?,?)'
+    cur.executemany(set_env, env_list)
+    conn.commit()
+    conn.close()
+
+
+
+
+def get_env_by_ord(current_scene_db, ordinal):
+    """get an environment variable by ord"""
+    from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
+
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     list_env = f'SELECT * FROM "Environment" ORDER BY Name DESC LIMIT {ordinal-1}, {ordinal}'
     cur.execute(list_env)
@@ -118,22 +131,23 @@ def get_env_by_ord(db_file, ordinal):
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        return ""
+        raise error.EnvNotFoundError(ordinal)
     return rows[0][0]
 
 
-def delete_env(db_file, name):
+def delete_env(current_scene_db, name):
     """Delete an environment variable"""
     from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     env = f'SELECT * from "Environment" WHERE Name = "{name}"'
     cur.execute(env)
     exists = cur.fetchall()
     if exists == []:
         conn.close()
-        return 0
+        raise error.EnvNotFoundError(name)
     else:
         delete_env = f'DELETE FROM "Environment" where Name = "{name}"'
         cur.execute(delete_env)
@@ -141,12 +155,12 @@ def delete_env(db_file, name):
         conn.close()
         return 1
 
-def list_notebook_env(db_file, notebook_name):
+def list_notebook_env(library_db, notebook_name):
     from src.mtool.util.sqlite import connection
 
-    conn = connection.create_connection(db_file)
+    conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    env = f'SELECT Name, Value from "Environment" WHERE NotebookName = "{notebook_name}"'
+    env = f'SELECT Name, Value from "Environment" WHERE Name in (SELECT EnvironmentName from NotebookEnvironment WHERE NotebookName = "{notebook_name}")'
     cur.execute(env)
     rows = cur.fetchall()
     conn.close()
