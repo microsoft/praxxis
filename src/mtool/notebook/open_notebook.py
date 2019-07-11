@@ -27,6 +27,8 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     notebook_filename = notebook_data[0]
     if args.html == "html":
         display_as_html(notebook_filename)
+    elif args.html == "jupyter":
+        open_jupyter(notebook_filename)
     else:
         subprocess.Popen([ads_location, notebook_filename])
     return 0
@@ -50,3 +52,14 @@ def display_as_html(filename, html_outputfile = None):
         with open(html_outputfile, 'w+') as f:
             f.write(output)
         webbrowser.open(html_outputfile)
+
+
+def open_jupyter(filepath):
+    import subprocess
+    import os
+    import sys
+    
+    f = os.path.join(os.path.dirname(__file__),  ".." , "util", )
+    os.chdir(f)
+
+    subprocess.Popen([sys.executable, "open_jupyter.py", filepath], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
