@@ -202,7 +202,6 @@ def main(command_line=None):
     pull_library_env.add_argument('name', help = pull_library_env_name_help)
     pull_library_env.set_defaults(which = pull_library_env_command)
 
-
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)
     add_library.set_defaults(which=add_library_command)

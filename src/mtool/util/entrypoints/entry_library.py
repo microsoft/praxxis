@@ -13,11 +13,13 @@ def init_library(library_root = _library_root,
     display_library.display_init_libraries_db(library_db)
 
 
-def add_library(arg):
+def add_library(arg,
+                library_root = _library_root,
+                library_db = _library_db):
     """calls the function to add a library"""
-    ##TODO: implement this
-    return "coming soon"
+    from src.mtool.library import add_library
 
+    add_library.add_library(arg, library_root, library_db)
 
 def list_library(arg, 
                  library_root = _library_root,
