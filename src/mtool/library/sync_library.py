@@ -80,5 +80,5 @@ def sync_notebooks(library_root, library_db, library_name):
                 sqlite_library.load_notebook(library_db, file_root, file_name, library_name)
                 #finally, load the notebook's data into the db
                 first = False
-    if(duplicates != []):
+    if not duplicates == []:
         display_error.duplicate_sync_warning(duplicates)
