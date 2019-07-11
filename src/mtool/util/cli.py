@@ -19,7 +19,8 @@ def command(argument,
             scene_root = _scene_root,
             history_db = _history_db,
             telemetry_db = _telemetry_db,
-            default_scene_name = _default_scene_name):
+            default_scene_name = _default_scene_name,
+            test = False):
     """uses a dictionary as a switch statement to determine which funciton to run."""
     from src.mtool.util.entrypoints import entry_environment
     from src.mtool.util.entrypoints import entry_library
@@ -67,7 +68,10 @@ def command(argument,
         func = switcher.get(argument.which)
     else:
         func = entry_scene.current_scene
-
+    
+    if(test):
+        return func
+        
     try:
         output = func(argument)
     except Exception as e:
