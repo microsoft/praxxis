@@ -39,11 +39,15 @@ def library_not_found_error(name):
 
 
 def not_directory_error(name):
-    return(f"{Fore.RED}Library {name} is not a directory. Are you trying to add a notebook?")
+    return(f"{Fore.RED}{name} is not a directory. Are you trying to add a notebook?")
 
 
 def not_file_error(name):
-    return(f"{Fore.RED}Notebook {name} is a directory. Are you trying to add a library?")
+    return(f"{Fore.RED}{name} is a directory. Are you trying to add a library?")
+
+def not_notebook_error(name):
+    return(f"{Fore.RED}The file {name} is not a notebook file.")
+
 
 
 def version_error():

@@ -15,6 +15,7 @@ open_notebook_command="open_notebook"
 history_command="history"
 next_notebook_command="next_notebook"
 remove_notebook_command = "remove_notebook"
+add_notebook_command = "add_notebook"
 
 new_scene_command = "new_scene"
 end_scene_command="end_scene"
@@ -51,6 +52,8 @@ search_notebooks_term_help ="search term for notebooks"
 next_notebook_help="model based prediction of what to do next in the current scene"
 remove_notebook_help = "remove notebook by name"
 remove_notebook_name_help = "name of notebook to remove"
+add_notebook_help = "add a notebook to mtool"
+add_notebook_path_help = "the path of the notebook you want to load"
 ## scene help strings 
 new_scene_help="new scene"
 new_scene_name_help="name of new scene"
@@ -157,6 +160,11 @@ def main(command_line=None):
 
     next_notebook = subparsers.add_parser('whatnext', aliases=["n"], help=next_notebook_help)
     next_notebook.set_defaults(which=next_notebook_command)
+
+
+    add_notebook = subparsers.add_parser('addnotebook', aliases=["a"], help=add_notebook_help)
+    add_notebook.add_argument('path', help=add_notebook_path_help)
+    add_notebook.set_defaults(which=add_notebook_command)
 
     remove_notebook = subparsers.add_parser('removenotebook', aliases=["r"], help=remove_notebook_help)
     remove_notebook.add_argument('name', help=remove_notebook_name_help)
@@ -282,7 +290,9 @@ def start(args=None):
             error.NotebookNotFoundError, 
             error.SceneEndedError, 
             error.SceneNotFoundError,
-            error.NotDirectoryError)as e:
+            error.NotDirectoryError,
+            error.NotFileError, 
+            error.NotNotebookError)as e:
         print(e)
         return 1
     return 0

@@ -98,6 +98,13 @@ def next_notebook(arg):
     return "coming soon"
 
 
+def add_notebook(arg, 
+                library_db = _library_db):
+    from src.mtool.notebook import add_notebook
+
+    add_notebook.add_notebook(arg, library_db)
+
+
 def remove_notebook(arg, 
                     scene_root = _scene_root,
                     history_db = _history_db,

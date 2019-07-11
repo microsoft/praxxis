@@ -16,5 +16,3 @@ def add_library(args, library_root, library_db):
                 raise error.NotDirectoryError(path)
         else: 
             raise error.LibraryNotFoundError
-
-                
