@@ -87,3 +87,10 @@ def make_dummy_input(which):
     dummy_input.which = which
     dummy_input.notebook = "1"
     return dummy_input
+
+
+def make_dummy_library():
+    dummy_library = Dummy_Object()
+
+    dummy_library.name = "test_notebooks"
+    return dummy_library
