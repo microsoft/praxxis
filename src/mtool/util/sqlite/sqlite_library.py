@@ -107,9 +107,9 @@ def remove_notebook(library_db, name):
     
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
+    clear_environment = f'DELETE FROM NotebookEnvironment Where NotebookName IN (SELECT Name FROM "Notebooks" WHERE Name = "{name}")'
     clear_notebook = f'DELETE FROM Notebooks WHERE Name = "{name}"'
-    clear_environment = f'DELETE FROM NotebookEnvironment Where NotebookName IN (SELECT Name FROM Notebooks WHERE LibraryName = "{name}")'
-    cur.execute(clear_notebook)
     cur.execute(clear_environment)
+    cur.execute(clear_notebook)
     conn.commit()
     conn.close()

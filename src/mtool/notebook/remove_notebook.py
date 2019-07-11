@@ -17,4 +17,3 @@ def remove_notebook(args, library_db, current_scene_db):
     
     sqlite_library.remove_notebook(library_db, name)
     display_notebook.display_remove_success(name)
-    
