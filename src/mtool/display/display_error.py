@@ -38,6 +38,14 @@ def library_not_found_error(name):
     return(f"{Fore.RED}Library {name} does not exist or is not loaded.")
 
 
+def not_directory_error(name):
+    return(f"{Fore.RED}Library {name} is not a directory. Are you trying to add a notebook?")
+
+
+def not_file_error(name):
+    return(f"{Fore.RED}Notebook {name} is a directory. Are you trying to add a library?")
+
+
 def version_error():
     import sys
     return("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")

@@ -18,8 +18,10 @@ def add_library(arg,
                 library_db = _library_db):
     """calls the function to add a library"""
     from src.mtool.library import add_library
-
-    add_library.add_library(arg, library_root, library_db)
+    try:
+        add_library.add_library(arg, library_root, library_db)
+    except Exception as e:
+        raise e
 
 
 def remove_library(arg, 

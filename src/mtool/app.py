@@ -281,7 +281,8 @@ def start(args=None):
             error.LibraryNotFoundError, 
             error.NotebookNotFoundError, 
             error.SceneEndedError, 
-            error.SceneNotFoundError)as e:
+            error.SceneNotFoundError,
+            error.NotDirectoryError)as e:
         print(e)
         return 1
     return 0
