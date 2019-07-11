@@ -46,6 +46,7 @@ view_notebook_env_help="displays the environments for the notebook"
 view_notebook_env_notebook_help="the notebook to view environment for"
 open_notebook_help="open notebook in Azure Data Studio"
 open_notebook_notebook_help="notebook to open"
+open_notebook_environment_help="open notebook in jupyter ads or html"
 list_notebooks_help="list notebooks to run, by ordinal."
 search_notebooks_help="search for notebooks matching search term"
 search_notebooks_term_help ="search term for notebooks"
@@ -145,7 +146,7 @@ def main(command_line=None):
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
-    open_notebook.add_argument('html', nargs="?", help=run_notebook_environment_help)
+    open_notebook.add_argument('environment', nargs="?", help=open_notebook_environment_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
@@ -169,7 +170,6 @@ def main(command_line=None):
     remove_notebook = subparsers.add_parser('removenotebook', aliases=["rm"], help=remove_notebook_help)
     remove_notebook.add_argument('name', help=remove_notebook_name_help)
     remove_notebook.set_defaults(which=remove_notebook_command)
-
 
     new_scene = subparsers.add_parser('newscene', aliases=["ns"], help=new_scene_help)
     new_scene.add_argument('name', help=new_scene_name_help)

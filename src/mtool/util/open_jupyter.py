@@ -3,9 +3,11 @@ if __name__ == "__main__":
     import nbopen
     import subprocess
     import os
+    import webbrowser
+    import logging
 
-    os.environ["CATALYST_LOG_LEVEL"] = "15"
-    #this sets the log level for catalyst, the ipython logger to 15. 
-    #15 corresponds to the critical warning level.
-
-    nbopen.main([str(sys.argv[1])])
+    try:        
+        nbopen.main([str(sys.argv[1])])
+    except webbrowser.Error as e:
+        print(e)
+        print("Ctrl-C to exit")

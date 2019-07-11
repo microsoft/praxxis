@@ -25,12 +25,14 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
         raise e
 
     notebook_filename = notebook_data[0]
-    if args.html == "html":
+    if args.environment == "html":
         display_as_html(notebook_filename)
-    elif args.html == "jupyter":
+    elif args.environment == "jupyter":
         open_jupyter(notebook_filename)
-    else:
+    elif args.environment == "ads":
         subprocess.Popen([ads_location, notebook_filename])
+    else:
+        open_jupyter(notebook_filename)
     return 0
 
 
@@ -57,9 +59,23 @@ def display_as_html(filename, html_outputfile = None):
 def open_jupyter(filepath):
     import subprocess
     import os
-    import sys
-    
+    import sys    
     f = os.path.join(os.path.dirname(__file__),  ".." , "util", )
     os.chdir(f)
 
-    subprocess.Popen([sys.executable, "open_jupyter.py", filepath], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    try:
+        process = subprocess.Popen([sys.executable, "open_jupyter.py", filepath], stdout=subprocess.PIPE)
+    except webbrowser.Error as e:
+        return 1
+
+    try:
+        while True:
+            output = process.stdout.readline()
+            if output == '' and process.poll() is not None:
+                break
+            if output:
+                print (output.strip())
+        rc = process.poll()
+        return rc
+    except KeyboardInterrupt:
+        sys.exit(0)
