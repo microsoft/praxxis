@@ -3,10 +3,9 @@ This file creates a new scene
 """
 
 def new_scene(args, scene_root, history_db):
-    """ creates a new scene, and sets that scene to the current scene""" 
+    """ creates a new scene db file""" 
     import os
-    from src.mtool.util import sqlite_util
-    from src.mtool.cli import display
+    from src.mtool.display import display_scene
     from src.mtool.scene import scene 
     
     if hasattr(args, "name"):
@@ -23,10 +22,9 @@ def new_scene(args, scene_root, history_db):
         directory = f"{directory}-{i}"
         name = f"{name}-{i}"
     os.mkdir(directory)
-    db_file = os.path.join(directory, f"{name}.db")
+    scene_db = os.path.join(directory, f"{name}.db")
+        
+    display_scene.display_new_scene(name)
+    scene.init_scene(scene_db, history_db, name)
     
-    sqlite_util.init_scene(db_file, name)
-    sqlite_util.update_current_scene(history_db, name)
-    
-    display.display_new_scene(name)
-    
+    return (scene_db, name)

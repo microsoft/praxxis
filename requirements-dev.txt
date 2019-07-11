@@ -5,3 +5,5 @@ ijson
 ipykernel 
 pytest
 pytest-runner
+mock
+setuptools
