@@ -11,7 +11,7 @@ def add_library(args, library_root, library_db):
             if os.path.isdir(path):
                 from src.mtool.library import sync_library
 
-                sync_library.sync_library(path, library_db)
+                sync_library.sync_library(os.path.abspath(path), library_db)
             else:
                 raise error.NotDirectoryError(path)
         else: 

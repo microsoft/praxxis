@@ -21,8 +21,8 @@ def add_notebook(args, library_db):
                 pass
             else:
                 display_error.duplicate_notebook_warning(file_name)
-
-            sqlite_library.load_notebook(library_db, path, file_name, "none")
+            
+            sqlite_library.load_notebook(library_db, os.path.abspath(path), file_name, "none")
         else:
             raise error.NotNotebookError(path)
     else:

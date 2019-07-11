@@ -23,7 +23,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
         notebook_data = sqlite_notebook.get_notebook(library_db, name)
     except error.NotebookNotFoundError as e:
         raise e
-
+    
     notebook_filename = notebook_data[0]
     if args.environment == "html":
         display_as_html(notebook_filename)
@@ -63,10 +63,9 @@ def open_jupyter(filepath):
     f = os.path.join(os.path.dirname(__file__),  ".." , "util", )
     os.chdir(f)
 
-    try:
-        process = subprocess.Popen([sys.executable, "open_jupyter.py", filepath], stdout=subprocess.PIPE)
-    except webbrowser.Error as e:
-        return 1
+    
+    process = subprocess.Popen([sys.executable, "open_jupyter.py", filepath], stdout=subprocess.PIPE)
+
 
     try:
         while True:
