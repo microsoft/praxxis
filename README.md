@@ -9,7 +9,7 @@
 ```
 
 ## Introduction
-mtool is a task interface built on big data and machine learning. Using your own local storage pool to collect data on your habits when running notebooks, mtool will learn about the problems you are solving, correlate that with the problems everyone else is solving, and predict the next notebook you should run without interrupting your workflow. It is a tool based on a collaborative paradigm of problem solving, allowing every person to leverage everyone's knowledge to come to a solution more quickly.
+mtool is a task interface built on big data and machine learning. Using your own storage pool to collect data on your habits when running notebooks, mtool will learn about the problems you are solving, correlate that with the problems everyone else is solving, and predict the next notebook you should run without interrupting your workflow. It is a tool based on a collaborative paradigm of problem solving, allowing every person to leverage everyone's knowledge to come to a solution more quickly.
 
 Using mtool, any command can be run, documented, and reproduced using executable code cells in jupyter notebooks. By using notebooks to execute, mtool enforces that your your workflows are well documented and replicable, allowing even the least technical user to jump in right where you left off. In exchange, even the most frustrating sequence of commands can be processed by simply typing "m 1".
 
