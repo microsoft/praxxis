@@ -166,7 +166,7 @@ def main(command_line=None):
     add_notebook.add_argument('path', help=add_notebook_path_help)
     add_notebook.set_defaults(which=add_notebook_command)
 
-    remove_notebook = subparsers.add_parser('removenotebook', aliases=["r"], help=remove_notebook_help)
+    remove_notebook = subparsers.add_parser('removenotebook', aliases=["rm"], help=remove_notebook_help)
     remove_notebook.add_argument('name', help=remove_notebook_name_help)
     remove_notebook.set_defaults(which=remove_notebook_command)
 
