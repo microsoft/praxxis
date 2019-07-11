@@ -48,19 +48,27 @@ def sync_notebooks(library_root, library_db, library_name):
     first = True
     for library_root, dirs, files in os.walk(library_root, topdown=False):
         for name in files:
+            # for every notebook in the files found by the os.walk
             file_name, file_extension = os.path.splitext(name)
             if(file_extension == ".ipynb"):
+                # if the file is a notebook file
                 file_root = os.path.join(library_root, name)
+                #set the file root for the db 
                 if first:
                     display_library.loaded_notebook_message()
-                    
+                    #if it's the first notebook, display notebook loaded message
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
+                    #create a notebook object out of the file data
                     for environment in notebook_data._environmentVars:
+                        #load the environment variables out of the notebook object and into the db
                         sqlite_environment.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
                     display_library.display_loaded_notebook(name)
+                    #display that the library has been successfully loaded
                 except:
                     display_error.notebook_load_error(name)
+                    #if there was a problem loading the notebook, show an error.
 
                 sqlite_library.load_notebook(library_db, file_root, file_name, library_name)
+                #finally, load the notebook's data into the db
                 first = False
