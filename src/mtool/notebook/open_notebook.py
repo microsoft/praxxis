@@ -32,7 +32,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location, test = False
     elif args.environment == "ads":
         subprocess.Popen([ads_location, notebook_filename])
     else:
-        open_jupyter(notebook_filename, test)
+        open_editor()
     return 0
 
 
@@ -77,3 +77,23 @@ def open_jupyter(filepath, test):
         return rc
     except KeyboardInterrupt:
         sys.exit(0)
+
+
+def open_editor():
+    import sys, tempfile, os
+    from subprocess import call
+
+    EDITOR = os.environ.get('EDITOR','vim') #that easy!
+
+    initial_message = b"" # if you want to set up the file somehow
+
+    with tempfile.NamedTemporaryFile(suffix=".tmp") as tf:
+        tf.write(initial_message)
+        tf.flush()
+        call([EDITOR, tf.name])
+
+        # do the parsing with `tf` using regular File operations.
+        # for instance:
+        tf.seek(0)
+        edited_message = tf.read()
+        print (edited_message.decode("utf-8"))
