@@ -2,7 +2,7 @@
 This file opens a notebook in Azure Data Studio.
 """
 
-def open_notebook(args, current_scene_db, library_db, ads_location, test = False):
+def open_notebook(args, current_scene_db, library_db, ads_location, editor, test = False):
     """Opens a notebook, by getting the filename and then opening from the ads binary location"""
     import subprocess
     from src.mtool.util.sqlite import sqlite_notebook
@@ -32,7 +32,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location, test = False
     elif args.environment == "ads":
         subprocess.Popen([ads_location, notebook_filename])
     else:
-        open_editor()
+        open_editor(notebook_filename, editor)
     return 0
 
 
@@ -79,21 +79,9 @@ def open_jupyter(filepath, test):
         sys.exit(0)
 
 
-def open_editor():
+def open_editor(notebook_filename, editor):
     import sys, tempfile, os
     from subprocess import call
+    EDITOR = os.environ.get('EDITOR', editor)
 
-    EDITOR = os.environ.get('EDITOR','vim') #that easy!
-
-    initial_message = b"" # if you want to set up the file somehow
-
-    with tempfile.NamedTemporaryFile(suffix=".tmp") as tf:
-        tf.write(initial_message)
-        tf.flush()
-        call([EDITOR, tf.name])
-
-        # do the parsing with `tf` using regular File operations.
-        # for instance:
-        tf.seek(0)
-        edited_message = tf.read()
-        print (edited_message.decode("utf-8"))
+    call([EDITOR, notebook_filename])
