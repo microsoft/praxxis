@@ -37,7 +37,7 @@ def command(argument,
          history_db,
          telemetry_db,
          default_scene_name)
-
+    
     switcher = {
         "run_notebook": entry_notebook.run_notebook,
         "view_notebook_env": entry_environment.view_notebook_env,

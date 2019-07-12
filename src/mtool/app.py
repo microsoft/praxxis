@@ -249,7 +249,7 @@ def main(command_line=None):
     return args
 
 
-def start(args=None):
+def start(args=None, test = False):
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.util import cli
     from src.mtool.util import error
@@ -261,6 +261,8 @@ def start(args=None):
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
         return 1
+
+    print(test)
 
     if len(args) > 1:
         arg1 = args[1]
@@ -275,14 +277,17 @@ def start(args=None):
             arg.command = 'r'
             arg.notebook = arg1
             arg.which = run_notebook_command
+            func = 0
             try:
-                cli.command(arg)
+                func = cli.command(arg, test=test)
             except error.NotebookNotFoundError as e:
                 print(e)
                 return 1
-            return 0
+            return func
+        
+    func = 0
     try:
-        cli.command(main())
+        func = cli.command(main(), test=test)
     except (error.EndEndedSceneError, 
             error.EnvNotFoundError, 
             error.LastActiveSceneError, 
@@ -295,7 +300,7 @@ def start(args=None):
             error.NotNotebookError)as e:
         print(e)
         return 1
-    return 0
+    return func
 
 
 if __name__ == "__main__":

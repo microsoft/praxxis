@@ -98,8 +98,9 @@ def make_dummy_library():
 
 
 def make_dummy_library_path():
-    dummy_library_path = Dummy_Object()
     import os
 
+    dummy_library_path = Dummy_Object()
     dummy_library_path.path = os.path.abspath(os.path.join('tests', 'test_notebooks'))
+    dummy_library_path.name = "test_notebooks"
     return dummy_library_path

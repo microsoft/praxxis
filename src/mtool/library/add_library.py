@@ -1,4 +1,4 @@
-def add_library(args, library_root, library_db):
+def add_library(args, library_db):
     from urllib.parse import urlparse
     from src.mtool.util import error
     import os

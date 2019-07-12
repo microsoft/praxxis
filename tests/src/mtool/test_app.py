@@ -134,9 +134,9 @@ def test_pull_notebook_env():
     pull_notebook_env(['pullenv', 'test'])
     pull_notebook_env(['p', 'test'])
 
-def test_add_library(library_db):
-    add_library(['addlibrary', 'test'], library_db)
-    add_library(['al', 'test'], library_db)
+def test_add_library():
+    add_library(['addlibrary', 'test'])
+    add_library(['al', 'test'])
 
 
 def test_remove_library():
@@ -322,7 +322,7 @@ def pull_notebook_env(command):
     assert namespace.notebook == "test"
 
 
-def add_library(command, library_db):
+def add_library(command):
     """
     tests if the add library command is running properly 
     """
@@ -331,7 +331,6 @@ def add_library(command, library_db):
     namespace = app.main(command)
     assert namespace.command == 'al' or namespace.command == "addlibrary"
     assert namespace.path == "test"
-    assert len(list_library.list_library(library_db)) == 0
 
 
 def remove_library(command):
@@ -371,23 +370,26 @@ def update_settings(command):
 
 def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
     from src.mtool import app
-    from src.mtool.notebook import list_notebook
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.notebook import run_notebook
+    from src.mtool.util import error
     import sys
-
-    list_notebook.list_notebook(library_db, current_scene_db, start, stop)
     
-    assert app.start(["", "1"]) == 0
+    assert app.start(["", "2"], True).__class__ == run_notebook.run_notebook.__class__ 
 
     sys.argv = ["", "r", "1"]
-    assert app.start() == 0
+    assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 
 
-    assert app.start(["", "99"]) == 1
+    try:
+        app.start(["", "99"])
+    except error.NotebookNotFoundError:
+        assert 1
 
-    sys.argv = ["", "r", "99"]
-    assert app.start() == 1
+    try:
+        sys.argv = ["", "r", "99"]
+    except error.NotebookNotFoundError:
+        assert 1
 
     sys.argv = [""]
-    assert app.start() == 1
+    assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 
     
-    sqlite_scene.clear_history(current_scene_db)

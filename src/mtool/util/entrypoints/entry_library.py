@@ -14,12 +14,11 @@ def init_library(library_root = _library_root,
 
 
 def add_library(arg,
-                library_root = _library_root,
                 library_db = _library_db):
     """calls the function to add a library"""
     from src.mtool.library import add_library
     try:
-        add_library.add_library(arg, library_root, library_db)
+        add_library.add_library(arg, library_db)
     except Exception as e:
         raise e
     return 0

@@ -25,14 +25,13 @@ def test_list_library(setup, add_test_library, library_db):
     assert len(libraries) == 1
 
 
-def test_add_library(library_db): 
+def test_add_library(setup, library_db): 
     from src.mtool.util import error
     from tests.src.mtool.util import dummy_object
     from src.mtool.library import remove_library
+    from src.mtool.library import list_library
 
-    library_path = dummy_object.make_dummy_library_path()
+    dummy_library = dummy_object.make_dummy_library_path()
+    entry_library.add_library(dummy_library, library_db)
 
-    assert entry_library.add_library(library_path) == 0
-
-    dummy_library = dummy_object.make_dummy_library()
     remove_library.remove_library(dummy_library, library_db)

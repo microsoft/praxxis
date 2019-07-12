@@ -11,6 +11,8 @@ def add_test_library(library_root, library_db):
     import os
     import shutil 
     from src.mtool.library import sync_library
+    from src.mtool.library import remove_library
+    from tests.src.mtool.util import dummy_object
 
     library_location = os.path.join(library_root, 'test_notebooks')
     
@@ -19,8 +21,9 @@ def add_test_library(library_root, library_db):
 
     sync_library.sync_libraries(library_root, library_db)   
     yield 
+    dummy_library = dummy_object.make_dummy_library()
+    remove_library.remove_library(dummy_library, library_db)
     shutil.rmtree(library_location)
-    sync_library.sync_libraries(library_root, library_db)   
 
 
 @pytest.fixture
