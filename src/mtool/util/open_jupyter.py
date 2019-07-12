@@ -1,10 +1,7 @@
 if __name__ == "__main__":
     import sys
     import nbopen
-    import subprocess
-    import os
     import webbrowser
-    import logging
     
     try:        
         nbopen.main([str(sys.argv[1])])

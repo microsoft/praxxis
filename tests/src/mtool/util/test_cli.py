@@ -21,7 +21,7 @@ def test_command(setup,
     from src.mtool.environment import list_env
     from src.mtool.notebook import open_notebook
 
-    list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)
+    list_notebook.list_notebook(library_db, current_scene_db, start, stop)
 
     dummy_input = dummy_object.make_dummy_input("run_notebook")
 

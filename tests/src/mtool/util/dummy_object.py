@@ -16,6 +16,8 @@ class Dummy_Object():
     metavar=""
     _path = ""
     which = ""
+    path = ""
+    environment=""
 
     def getpath(self):
         """returns the path of the notebook"""
@@ -29,7 +31,7 @@ def make_dummy_object(name="", value="", term="", notebook="", html=""):
     return dummy_object
 
 
-def make_dummy_notebook(html="", path=""):
+def make_dummy_notebook(html="", path="", environment=""):
     import os
 
     dummy_notebook = Dummy_Object()
@@ -37,7 +39,7 @@ def make_dummy_notebook(html="", path=""):
     dummy_notebook.library_name = "test_notebooks"
     dummy_notebook._path = os.path.join(path, "test_notebook.ipynb")
     dummy_notebook._hasParameters = False
-
+    dummy_notebook.environment = environment
     dummy_notebook.html = html
     return dummy_notebook
 
@@ -91,6 +93,13 @@ def make_dummy_input(which):
 
 def make_dummy_library():
     dummy_library = Dummy_Object()
-
     dummy_library.name = "test_notebooks"
     return dummy_library
+
+
+def make_dummy_library_path():
+    dummy_library_path = Dummy_Object()
+    import os
+
+    dummy_library_path.path = os.path.abspath(os.path.join('tests', 'test_notebooks'))
+    return dummy_library_path

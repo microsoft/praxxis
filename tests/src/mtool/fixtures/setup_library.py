@@ -13,6 +13,7 @@ def add_test_library(library_root, library_db):
     from src.mtool.library import sync_library
 
     library_location = os.path.join(library_root, 'test_notebooks')
+    
     shutil.copytree(os.path.join('tests', 'test_notebooks'), os.path.join(library_root,  'test_notebooks'))
     assert os.path.exists(library_location)
 

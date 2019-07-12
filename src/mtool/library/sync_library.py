@@ -24,9 +24,17 @@ def sync_libraries(library_root, library_db):
 def sync_library(library_root, library_db):
     """ loads the individual library specified by the library root passed in, into the library db""" 
     from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.util import error
+
+
     readme_location = os.path.join(library_root, "README.md")
     readme_data = "No Readme"
     dirname = library_root.split(os.path.sep)[-1]
+
+    counter = 0
+    while sqlite_library.library_exists(library_db, dirname):
+        dirname = f"{dirname}-{counter + 1}"
+
     if os.path.isfile(readme_location):
          f = open(readme_location, "r")
          readme_data = "  ".join(f.readlines()[:3])

@@ -22,6 +22,7 @@ def add_library(arg,
         add_library.add_library(arg, library_root, library_db)
     except Exception as e:
         raise e
+    return 0
 
 
 def remove_library(arg, 
@@ -32,7 +33,6 @@ def remove_library(arg,
 
 
 def list_library(arg, 
-                 library_root = _library_root,
                  library_db = _library_db):
     """calls the function to list loaded libraries"""
     from src.mtool.library import list_library

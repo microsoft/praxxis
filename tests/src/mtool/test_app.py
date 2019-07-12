@@ -23,7 +23,7 @@ def test_help_formatter():
     data = formatter._format_action(library)
     assert data.split('\n')[0] == "Library: "
 
-def test_0_args():
+def test_0_args(library_db):
     """
     this tests the 0 args command.
     this should have no command, since the 0 args case gets handled manually
@@ -134,9 +134,9 @@ def test_pull_notebook_env():
     pull_notebook_env(['pullenv', 'test'])
     pull_notebook_env(['p', 'test'])
 
-def test_add_library():
-    add_library(['addlibrary', 'test'])
-    add_library(['al', 'test'])
+def test_add_library(library_db):
+    add_library(['addlibrary', 'test'], library_db)
+    add_library(['al', 'test'], library_db)
 
 
 def test_remove_library():
@@ -182,7 +182,7 @@ def open_notebook(command):
     assert namespace.command == 'o' or namespace.command == "open"
     assert namespace.notebook == "test"
     if "html" in command:
-        assert namespace.html == "html"
+        assert namespace.environment == "html"
 
 
 def search_notebook(command):
@@ -322,13 +322,16 @@ def pull_notebook_env(command):
     assert namespace.notebook == "test"
 
 
-def add_library(command):
+def add_library(command, library_db):
     """
     tests if the add library command is running properly 
     """
+    from src.mtool.library import list_library
+
     namespace = app.main(command)
     assert namespace.command == 'al' or namespace.command == "addlibrary"
     assert namespace.path == "test"
+    assert len(list_library.list_library(library_db)) == 0
 
 
 def remove_library(command):
@@ -337,7 +340,7 @@ def remove_library(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'rl' or namespace.command == "removelibrary"
-    assert namespace.path == "test"
+    assert namespace.name == "test"
 
 
 def list_library(command):
@@ -372,7 +375,7 @@ def test_start(setup, add_test_library, scene_root, library_root, library_db, cu
     from src.mtool.util.sqlite import sqlite_scene
     import sys
 
-    list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)
+    list_notebook.list_notebook(library_db, current_scene_db, start, stop)
     
     assert app.start(["", "1"]) == 0
 

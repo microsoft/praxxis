@@ -2,7 +2,7 @@
 This file opens a notebook in Azure Data Studio.
 """
 
-def open_notebook(args, current_scene_db, library_db, ads_location):
+def open_notebook(args, current_scene_db, library_db, ads_location, test = False):
     """Opens a notebook, by getting the filename and then opening from the ads binary location"""
     import subprocess
     from src.mtool.util.sqlite import sqlite_notebook
@@ -28,11 +28,11 @@ def open_notebook(args, current_scene_db, library_db, ads_location):
     if args.environment == "html":
         display_as_html(notebook_filename)
     elif args.environment == "jupyter":
-        open_jupyter(notebook_filename)
+        open_jupyter(notebook_filename, test)
     elif args.environment == "ads":
         subprocess.Popen([ads_location, notebook_filename])
     else:
-        open_jupyter(notebook_filename)
+        open_jupyter(notebook_filename, test)
     return 0
 
 
@@ -56,16 +56,15 @@ def display_as_html(filename, html_outputfile = None):
         webbrowser.open(html_outputfile)
 
 
-def open_jupyter(filepath):
+def open_jupyter(filepath, test):
     import subprocess
     import os
     import sys    
-    f = os.path.join(os.path.dirname(__file__),  ".." , "util", )
-    os.chdir(f)
 
-    
-    process = subprocess.Popen([sys.executable, "open_jupyter.py", filepath], stdout=subprocess.PIPE)
+    process = subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "util", "open_jupyter.py"), filepath], stdout=subprocess.PIPE)
 
+    if test:
+        return
 
     try:
         while True:

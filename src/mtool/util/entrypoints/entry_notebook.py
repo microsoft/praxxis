@@ -43,7 +43,8 @@ def open_notebook(arg,
                   history_db = _history_db, 
                   library_db = _library_db,
                   azure_data_studio_location = _azure_data_studio_location,
-                  current_scene_db = None):
+                  current_scene_db = None,
+                  test = False):
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
     from src.mtool.util import roots
@@ -52,7 +53,7 @@ def open_notebook(arg,
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     try:
-        open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location)
+        open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location, True)
     except Exception as e:
         raise e
     return 0
