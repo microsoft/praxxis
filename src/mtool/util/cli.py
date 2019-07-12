@@ -10,6 +10,8 @@ from src.mtool.util.roots import _outfile_root
 from src.mtool.util.roots import _root
 from src.mtool.util.roots import _scene_root
 from src.mtool.util.roots import _telemetry_db
+from src.mtool.util.roots import _prediction_root
+from src.mtool.util.roots import _prediction_db
 
 def command(argument,
             root = _root,
@@ -19,6 +21,8 @@ def command(argument,
             scene_root = _scene_root,
             history_db = _history_db,
             telemetry_db = _telemetry_db,
+            prediction_root = _prediction_root,
+            prediction_db = _prediction_db,
             default_scene_name = _default_scene_name,
             test = False):
     """uses a dictionary as a switch statement to determine which funciton to run."""
@@ -27,7 +31,7 @@ def command(argument,
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_predictions
+    from src.mtool.util.entrypoints import entry_prediction
     from src.mtool.util import roots
 
     roots.init(root, 
@@ -37,7 +41,10 @@ def command(argument,
          scene_root,
          history_db,
          telemetry_db,
-         default_scene_name)
+         prediction_root,
+         prediction_db,
+         default_scene_name,
+         )
 
     switcher = {
         "run_notebook": entry_notebook.run_notebook,
@@ -63,11 +70,15 @@ def command(argument,
         "pull_library_env": entry_environment.pull_library_env,
         "sync_library": entry_library.sync_library,
         "update_settings": entry_telemetry.update_settings,
-        "add_rule": entry_predictions.add_rule,
-        "remove_rule": entry_predictions.remove_rule,
-        "list_rules": entry_predictions.list_rules,
-        "import_rules": entry_predictions.import_rules,
-        "update_model": entry_predictions.update_model
+        "new_ruleset": entry_prediction.new_ruleset,
+        "remove_ruleset": entry_prediction.remove_ruleset,
+        "list_rulesets": entry_prediction.list_rulesets,
+        "view_ruleset": entry_prediction.view_ruleset,
+        "edit_ruleset": entry_prediction.edit_ruleset,
+        "import_ruleset": entry_prediction.import_ruleset,
+        "activate_ruleset": entry_prediction.activate_ruleset,
+        "deactivate_ruleset": entry_prediction.deactivate_ruleset,
+        "update_model": entry_prediction.update_model
     }
 
     if hasattr(argument, "which"):

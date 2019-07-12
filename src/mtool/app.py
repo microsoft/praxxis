@@ -32,6 +32,16 @@ pull_notebook_env_command = "pull_notebook_env"
 pull_library_env_command = "pull_library_env"
 search_env_command="search_env"
 update_settings_command="update_settings"
+new_ruleset_command="new_ruleset"
+remove_ruleset_command="remove_ruleset"
+list_rulesets_command="list_rulesets"
+view_ruleset_command="view_ruleset"
+edit_ruleset_command="edit_ruleset"
+import_ruleset_command="import_ruleset"
+activate_ruleset_command="activate_ruleset"
+deactivate_ruleset_command="deactivate_ruleset"
+update_model_command="update_model"
+
 ## notebook help strings
 run_notebook_help="run notebook"
 run_notebook_notebook_help="notebook to run"
@@ -83,6 +93,17 @@ sync_library_path_help="load library from a specific directory into mtool"
 ## misc help strings
 history_help="history of what you've done in the current scene"
 update_settings_help="update telemetry and security settings"
+#prediction help strings
+new_ruleset_help="create a ruleset for the prediction rules engine"
+new_ruleset_name_help="the name of the new ruleset to create"
+remove_ruleset_help="remove a ruleset from the prediction rules engine"
+list_rulesets_help="list all rulesets available for the prediction rules engine"
+view_ruleset_help="view all rules in a ruleset"
+edit_ruleset_help="make changes to a ruleset"
+import_ruleset_help="import a ruleset file from outside mtool"
+activate_ruleset_help="activate ruleset(s) to use when making predictions"
+deactivate_ruleset_help="deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
+update_model_help="fetch newest version of model from storage pool"
 
 
 mtool_ascii_art = r"""
@@ -106,13 +127,15 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
             action.choices = new_choices
         parts = super()._format_action(action)  
         if action.help == run_notebook_help:
-            parts = f"""Notebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
+            parts = f"""\nNotebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
         elif action.help == new_scene_help:
-            parts = f'Scene: \n{parts}'
+            parts = f'\nScene: \n{parts}'
         elif action.help == set_env_help:
-            parts = f'Environment: \n{parts}'
+            parts = f'\nEnvironment: \n{parts}'
         elif action.help == add_library_help:
-            parts = f'Library: \n{parts}'
+            parts = f'\nLibrary: \n{parts}'
+        elif action.help == new_ruleset_help:
+            parts = f'\nPredictions: \n{parts}'
 
         return parts
 
@@ -202,7 +225,6 @@ def main(command_line=None):
     pull_library_env.add_argument('name', help = pull_library_env_name_help)
     pull_library_env.set_defaults(which = pull_library_env_command)
 
-
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)
     add_library.set_defaults(which=add_library_command)
@@ -220,6 +242,34 @@ def main(command_line=None):
 
     update_settings = subparsers.add_parser('updatesettings', aliases=['u'], help=update_settings_help)
     update_settings.set_defaults(which=update_settings_command)
+
+    new_ruleset = subparsers.add_parser('newruleset', aliases=['nr'], help=new_ruleset_help)
+    new_ruleset.add_argument('name', help=new_ruleset_name_help)
+    new_ruleset.set_defaults(which=new_ruleset_command)
+
+    remove_ruleset = subparsers.add_parser('removeruleset', aliases=['rr'], help=remove_ruleset_help)
+    remove_ruleset.set_defaults(which=remove_ruleset_command)
+
+    list_rulesets = subparsers.add_parser('listrulesets', aliases=['lr'], help=list_rulesets_help)
+    list_rulesets.set_defaults(which=list_rulesets_command)
+
+    import_ruleset = subparsers.add_parser('importruleset', aliases=['ir'], help=import_ruleset_help)
+    import_ruleset.set_defaults(which=import_ruleset_command)
+
+    view_ruleset = subparsers.add_parser('viewruleset', aliases=['vr'], help=view_ruleset_help)
+    view_ruleset.set_defaults(which=view_ruleset_command)
+
+    edit_ruleset = subparsers.add_parser('editruleset', aliases=['er'], help=edit_ruleset_help)
+    edit_ruleset.set_defaults(which=edit_ruleset_command)
+
+    activate_ruleset = subparsers.add_parser('activateruleset', aliases=['ar'], help=activate_ruleset_help)
+    activate_ruleset.set_defaults(which=activate_ruleset_command)
+
+    deactivate_ruleset = subparsers.add_parser('deactivateruleset', aliases=['dr'], help=deactivate_ruleset_help)
+    deactivate_ruleset.set_defaults(which=deactivate_ruleset_command)
+
+    update_model = subparsers.add_parser('updatemodel', aliases=['um'], help=update_model_help)
+    update_model.set_defaults(which=update_model_command)
 
     args = parser.parse_args(command_line)
 
@@ -242,6 +292,13 @@ def start(args=None):
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
         return 1
+    """
+    This should be somewhere less annoying
+    # warns if tensorflow is turbo broken
+    elif sys.version_info.major == 3 and sys.version_info.minor > 6:
+        print("mtool's model is built with tensorflow, which requires python <=3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable." +
+        " Consider changing your python version or running in a virtual environment to get model-based predictions for next actions.")
+    """
 
     if len(args) > 1:
         arg1 = args[1]

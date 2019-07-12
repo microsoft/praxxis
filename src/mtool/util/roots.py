@@ -18,7 +18,10 @@ _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
 _telemetry_db = os.path.join(_root, "user_id.db")
+_prediction_root = os.path.join(_root, "prediction")
+_prediction_db = os.path.join(_prediction_root, "prediction.db")
 _default_scene_name = 'scene'
+
 
 
 _query_start = 0
@@ -41,6 +44,8 @@ def init(
         scene_root, 
         history_db, 
         telemetry_db,
+        prediction_root, 
+        prediction_db,
         default_scene_name,
         telemetry = True,
         ):
@@ -50,7 +55,7 @@ def init(
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_predictions
+    from src.mtool.util.entrypoints import entry_prediction
 
     if not os.path.exists(root):
         os.mkdir(root)
@@ -70,5 +75,9 @@ def init(
     # telemetry info init
     if not os.path.exists(telemetry_db):
         entry_telemetry.init_telemetry(telemetry_db)
+
+    # predictions init
+    if not os.path.exists(prediction_db):
+        entry_prediction.init_prediction(prediction_root, prediction_db)
 
 
