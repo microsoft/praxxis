@@ -35,8 +35,7 @@ def list_library(arg,
                  library_db = _library_db):
     """calls the function to list loaded libraries"""
     from src.mtool.library import list_library
-    libraries = list_library.list_library(library_db)
-    return libraries
+    list_library.list_library(library_db)
 
 
 def sync_library(arg, 
@@ -44,5 +43,4 @@ def sync_library(arg,
                  library_db = _library_db):
     """calls the function to load libraries"""
     from src.mtool.library import sync_library
-    libraries = sync_library.sync_libraries(library_root, library_db)
-    return libraries
+    sync_library.sync_libraries(library_root, library_db)
