@@ -92,7 +92,19 @@ def list_notebook(arg,
     return notebook_list
 
 
-def next_notebook(arg):
+def next_notebook(arg, 
+                    user_info_db=_user_info_db,
+                    scene_root = _scene_root,
+                    history_db = _history_db, 
+                    current_scene_db = None):
     """calls the function to get the next notebook"""
-    ##TODO  implement this
+    from src.mtool.notebook import what_next
+    
+    
+    if current_scene_db == None:
+        from src.mtool.util.roots import get_current_scene_db
+        current_scene_db = get_current_scene_db(scene_root, history_db)
+
+    what_next.what_next(arg, user_info_db, current_scene_db)
+
     return "coming soon"

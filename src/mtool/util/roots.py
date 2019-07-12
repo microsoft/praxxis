@@ -50,6 +50,7 @@ def init(
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
+    from src.mtool.util.entrypoints import entry_predictions
 
     if not os.path.exists(root):
         os.mkdir(root)
@@ -69,3 +70,5 @@ def init(
     # telemetry info init
     if not os.path.exists(telemetry_db):
         entry_telemetry.init_telemetry(telemetry_db)
+
+

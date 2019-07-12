@@ -27,6 +27,7 @@ def command(argument,
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
+    from src.mtool.util.entrypoints import entry_predictions
     from src.mtool.util import roots
 
     roots.init(root, 
@@ -61,7 +62,12 @@ def command(argument,
         "pull_notebook_env": entry_environment.pull_notebook_env,
         "pull_library_env": entry_environment.pull_library_env,
         "sync_library": entry_library.sync_library,
-        "update_settings": entry_telemetry.update_settings
+        "update_settings": entry_telemetry.update_settings,
+        "add_rule": entry_predictions.add_rule,
+        "remove_rule": entry_predictions.remove_rule,
+        "list_rules": entry_predictions.list_rules,
+        "import_rules": entry_predictions.import_rules,
+        "update_model": entry_predictions.update_model
     }
 
     if hasattr(argument, "which"):
