@@ -262,8 +262,6 @@ def start(args=None, test = False):
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
         return 1
 
-    print(test)
-
     if len(args) > 1:
         arg1 = args[1]
         if arg1.isnumeric():
