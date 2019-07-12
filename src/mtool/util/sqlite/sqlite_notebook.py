@@ -84,6 +84,25 @@ def get_notebook_path(library_db, notebook, library):
     return path[0]
     
 
+def check_notebook_exists(library_db, name):
+    from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    check_exists = f'Select * FROM Notebooks WHERE Name = "{name}"'
+    cur.execute(check_exists)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+
+    if rows == []:
+        raise error.NotebookNotFoundError(name)
+    else:
+        return 0
+
+
+
 def search_notebooks(library_db, search_term, start, end):
     """searches notebooks for search term"""
     from src.mtool.util.sqlite import connection

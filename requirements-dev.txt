@@ -7,3 +7,4 @@ pytest
 pytest-runner
 mock
 setuptools
+nbopen

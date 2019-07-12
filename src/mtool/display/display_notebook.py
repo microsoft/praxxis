@@ -49,3 +49,7 @@ def display_search(search_term, notebooks):
     if len(notebooks) == 0:
         print("\tNo results found")
     return notebooks
+
+
+def display_remove_success(name):
+    print(f"Successfully removed notebook {name}")

@@ -38,6 +38,32 @@ def library_not_found_error(name):
     return(f"{Fore.RED}Library {name} does not exist or is not loaded.")
 
 
+def not_directory_error(name):
+    return(f"{Fore.RED}{name} is not a directory. Are you trying to add a notebook?")
+
+
+def not_file_error(name):
+    return(f"{Fore.RED}{name} is a directory. Are you trying to add a library?")
+
+
+def not_notebook_error(name):
+    return(f"{Fore.RED}The file {name} is not a notebook file.")
+
+
+def duplicate_notebook_warning(name):
+    print(f"{Fore.YELLOW}The notebook {name} has already been loaded. Reimporting.")
+
+
+def duplicate_sync_warning(duplicates):
+    if len(duplicates) == 1:
+        print(f"{Fore.YELLOW}The notebook {duplicates[0]} was already loaded. Reimporting.")
+    else:
+        print(f"{Fore.YELLOW}The notebooks")
+        for duplicate in duplicates:
+            print(f"{Fore.YELLOW}\t{duplicate}")
+        print(f"{Fore.YELLOW}were already loaded. Reimporting. ")
+
+
 def version_error():
     import sys
     return("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")

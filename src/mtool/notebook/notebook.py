@@ -66,7 +66,7 @@ class Notebook:
         for line in lines:
             if "=" in line and not line.startswith("#"):
                 environment = line.split("=")
-                name = environment[0]
+                name = environment[0].strip()
                 value = environment[1].split("#")[0].strip()
                 if value == "\"\"":
                     value = None               

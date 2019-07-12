@@ -10,8 +10,10 @@ def test_sync_library(setup, add_test_library, library_root, library_db, librari
     """
     from src.mtool.library import sync_library
     from src.mtool.library import list_library
+    from src.mtool.library import remove_library
+    from tests.src.mtool.util import dummy_object
     import os
 
     sync_library.sync_libraries(library_root, library_db)
         
-    assert set(libraries_list) == set(*list_library.list_library(library_root, library_db))
+    assert set(libraries_list) == set(*list_library.list_library(library_db))

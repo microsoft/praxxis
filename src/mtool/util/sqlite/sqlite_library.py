@@ -85,3 +85,49 @@ def check_library_exists(library_db, name):
     if rows == []:
         raise error.LibraryNotFoundError(name)
     return rows[0]
+
+
+def library_exists(library_db, name):
+    ## this shouldn't exist :((
+    from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Name = "{name}" LIMIT 0, 1'
+    cur.execute(get_library)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    if rows == []:
+        return False
+    return True
+
+
+
+def remove_library(library_db, name):
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    clear_library = f'DELETE FROM "LibraryMetadata" WHERE Name = "{name}"'
+    clear_notebooks = f'DELETE FROM "Notebooks" WHERE LibraryName = "{name}"'
+    clear_environment = f'DELETE FROM NotebookEnvironment Where NotebookName IN (SELECT Name FROM Notebooks WHERE LibraryName = "{name}")'
+    cur.execute(clear_library)
+    cur.execute(clear_notebooks)
+    cur.execute(clear_environment)
+    conn.commit()
+    conn.close()
+
+
+def remove_notebook(library_db, name):
+    from src.mtool.util.sqlite import connection
+    
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    clear_environment = f'DELETE FROM NotebookEnvironment Where NotebookName IN (SELECT Name FROM "Notebooks" WHERE Name = "{name}")'
+    clear_notebook = f'DELETE FROM Notebooks WHERE Name = "{name}"'
+    cur.execute(clear_environment)
+    cur.execute(clear_notebook)
+    conn.commit()
+    conn.close()
