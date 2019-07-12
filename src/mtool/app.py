@@ -300,7 +300,9 @@ def start(args=None, test = False):
             error.NotNotebookError)as e:
         print(e)
         return 1
-    return func
+    
+    if test:
+        return func
 
 
 if __name__ == "__main__":
