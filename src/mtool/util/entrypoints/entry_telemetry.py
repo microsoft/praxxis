@@ -14,5 +14,5 @@ def update_settings(arg,
                     user_info_db = _user_info_db):
     """calls the function to open the settings utility"""
     from src.mtool.telemetry import update_settings
-    update_settings.update_settings(user_info_db)
-
+    settings = update_settings.update_settings(user_info_db)
+    return settings

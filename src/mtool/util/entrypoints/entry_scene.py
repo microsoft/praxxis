@@ -24,8 +24,8 @@ def new_scene(arg,
     """calls the function to create a new scene"""
     from src.mtool.scene import new_scene
     from src.mtool.scene import scene
-    new_scene.new_scene(arg, scene_root, history_db)
-
+    new_scene = new_scene.new_scene(arg, scene_root, history_db)
+    return new_scene
 
 
 def end_scene(arg, 
@@ -39,7 +39,8 @@ def end_scene(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    end_scene.end_scene(arg, scene_root, history_db, current_scene_db)
+    ended = end_scene.end_scene(arg, scene_root, history_db, current_scene_db)
+    return ended
 
 
 def change_scene(arg,
@@ -88,6 +89,7 @@ def list_scene(arg,
     """calls the function to list scenes"""
     from src.mtool.scene import list_scene
     list_scene.list_scene(scene_root, history_db)
+    return
 
 
 
@@ -103,7 +105,8 @@ def history(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    history.history(history_db, library_db, current_scene_db)
+    history_list = history.history(history_db, library_db, current_scene_db)
+    return history_list
 
 
 def current_scene(arg, 
@@ -111,4 +114,5 @@ def current_scene(arg,
             history_db = _history_db):
     """calls the default function, which is to display the current scene."""
     from src.mtool.scene import current_scene
-    current_scene.current_scene(scene_root, history_db)
+    current_scene = current_scene.current_scene(scene_root, history_db)
+    return current_scene

@@ -70,7 +70,8 @@ def search_notebook(arg,
     """calls the function to search a notebook"""
     from src.mtool.notebook import search_notebook
 
-    search_notebook.search_notebook(arg, library_db, current_scene_db, query_start, query_end)
+    notebooks = search_notebook.search_notebook(arg, library_db, current_scene_db, query_start, query_end)
+    return notebooks
 
 
 def list_notebook(arg,
@@ -88,7 +89,8 @@ def list_notebook(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_notebook.list_notebook(library_db, current_scene_db, query_start, query_end)
+    notebook_list = list_notebook.list_notebook(library_db, current_scene_db, query_start, query_end)
+    return notebook_list
 
 
 def next_notebook(arg):

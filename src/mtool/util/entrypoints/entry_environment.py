@@ -15,7 +15,8 @@ def set_env(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    set_env.set_env(arg, scene_root, history_db, current_scene_db)
+    env = set_env.set_env(arg, scene_root, history_db, current_scene_db)
+    return env
 
 
 def delete_env(arg, 
@@ -29,7 +30,8 @@ def delete_env(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    delete_env.delete_env(arg, scene_root, history_db, current_scene_db)
+    env = delete_env.delete_env(arg, scene_root, history_db, current_scene_db)
+    return env
 
 
 def list_env(arg,
@@ -45,7 +47,8 @@ def list_env(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_env.list_env(current_scene_db, query_start, query_end)
+    env = list_env.list_env(current_scene_db, query_start, query_end)
+    return env
 
 
 def view_library_env(arg, 
@@ -59,7 +62,8 @@ def view_library_env(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_env.list_library_env(arg, library_db, current_scene_db)
+    envs = list_env.list_library_env(arg, library_db, current_scene_db)
+    return envs
 
 
 def view_notebook_env(arg, 
@@ -73,7 +77,8 @@ def view_notebook_env(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_env.list_notebook_env(arg, library_db, current_scene_db)
+    envs = list_env.list_notebook_env(arg, library_db, current_scene_db)
+    return envs
  
 
 def pull_notebook_env(arg,
