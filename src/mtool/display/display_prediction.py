@@ -14,3 +14,14 @@ def display_init_prediction_db(db_root):
 def display_new_ruleset(name):
     """the display function for creating a new ruleset"""
     print(f"Created new ruleset \"{name}\"")
+
+def display_ruleset_list(rulesets):
+    """the display function for listing rulesets"""
+    activation_messages = ["(INACTIVE)", "(ACTIVE)"]
+
+    print("Rulesets:")
+
+    i = 1
+    for ruleset in rulesets:
+        print(f'\t{i}.\t{ruleset[0]}\t\t{activation_messages[ruleset[1]]}')
+        i += 1

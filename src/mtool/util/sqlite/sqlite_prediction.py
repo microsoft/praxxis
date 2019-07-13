@@ -8,7 +8,7 @@ def init_prediction_db(prediction_db):
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    create_rules_table = f'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT)'
+    create_rules_table = f'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, Active INTEGER)'
     create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Link TEXT)'
     cur.execute(create_rules_table)
     cur.execute(create_models_table)
@@ -34,7 +34,7 @@ def init_ruleset(prediction_db, ruleset_name, ruleset_db):
     conn.close()
 
 
-def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
+def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root, active = 1):
     """adds ruleset to list"""
     from src.mtool.util.sqlite import connection
 
@@ -43,8 +43,8 @@ def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    add_rule = f'INSERT INTO "RulesEngine"(Name, Path) VALUES (?, ?)'
-    cur.execute(add_rule, (ruleset_name, ruleset_root))
+    add_rule = f'INSERT INTO "RulesEngine"(Name, Path, Active) VALUES (?, ?, ?)'
+    cur.execute(add_rule, (ruleset_name, ruleset_root, active))
     conn.commit()
     conn.close()
 
@@ -92,4 +92,16 @@ def get_ruleset_by_ord(prediction_db, ordinal):
         raise error.RulesetNotFoundError(ordinal)
     return rows[0][0]
 
+def get_all_rulesets(prediction_db, start, end):
+    """gets all rulesets and their activation state"""
+    from src.mtool.util.sqlite import connection
+    
+    conn = connection.create_connection(prediction_db)
+    cur = conn.cursor()
+    get_all_rulesets = f'SELECT Name, Active FROM "RulesEngine" ORDER BY ID LIMIT {start}, {end}'
+    cur.execute(get_all_rulesets)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
 
+    return rows

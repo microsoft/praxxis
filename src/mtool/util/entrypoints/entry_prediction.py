@@ -20,8 +20,10 @@ def remove_ruleset(arg,
     remove_ruleset.remove_ruleset(arg, prediction_root, prediction_db)
     return
 
-def list_rulesets(arg):
-    print("lr")
+def list_rulesets(arg,
+                    prediction_db = _prediction_db):
+    from src.mtool.predictions.rules_engine import list_rulesets
+    list_rulesets.list_rulesets(arg, prediction_db)
     return
 
 def view_ruleset(arg):
