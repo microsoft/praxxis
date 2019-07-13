@@ -5,3 +5,4 @@ ijson
 ipykernel 
 setuptools
 nbopen
+gitpython

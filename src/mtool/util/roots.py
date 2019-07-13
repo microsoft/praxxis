@@ -19,6 +19,7 @@ _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "current_scene.db")
 _telemetry_db = os.path.join(_root, "user_id.db")
 _default_scene_name = 'scene'
+_git_root = os.path.join(_library_root, "git_libraries")
 
 
 _query_start = 0

@@ -1,5 +1,6 @@
 from src.mtool.util.roots import _library_root
 from src.mtool.util.roots import _library_db
+from src.mtool.util.roots import _git_root
 
 def init_library(library_root = _library_root, 
                  library_db = _library_db):
@@ -14,11 +15,12 @@ def init_library(library_root = _library_root,
 
 
 def add_library(arg,
-                library_db = _library_db):
+                library_db = _library_db,
+                git_root = _git_root):
     """calls the function to add a library"""
     from src.mtool.library import add_library
     try:
-        add_library.add_library(arg, library_db)
+        add_library.add_library(arg, library_db, git_root)
     except Exception as e:
         raise e
     return 0

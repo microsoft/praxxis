@@ -8,3 +8,4 @@ pytest-runner
 mock
 setuptools
 nbopen
+gitpython
