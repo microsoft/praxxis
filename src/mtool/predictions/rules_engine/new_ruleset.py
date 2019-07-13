@@ -14,8 +14,18 @@ def new_ruleset(args, prediction_root, prediction_db):
         root = args.root
     else:
         root = prediction_root
-    
+
+        
     path = os.path.join(root, name)
+
+    """ #FIXME
+    if os.path.exists(directory):
+        i=1
+        while os.path.exists(f"{directory}-{i}"):
+            i+= 1
+        directory = f"{directory}-{i}"
+        name = f"{name}-{i}"
+    """
 
     sqlite_prediction.init_ruleset(prediction_db, name, path)
 

@@ -8,7 +8,7 @@ def init_prediction_db(prediction_db):
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    create_rules_table = f'CREATE TABLE "RulesEngine" (Name TEXT PRIMARY KEY, Link TEXT)'
+    create_rules_table = f'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT)'
     create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Link TEXT)'
     cur.execute(create_rules_table)
     cur.execute(create_models_table)
@@ -45,22 +45,7 @@ def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    add_rule = f'INSERT INTO "RulesEngine" VALUES (?, ?)'
+    add_rule = f'INSERT INTO "RulesEngine"(Name, Path) VALUES (?, ?)'
     cur.execute(add_rule, (ruleset_name, ruleset_root))
     conn.commit()
     conn.close()
-
-
-"""
-example on foreign keys 
-    create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Root TEXT PRIMARY KEY, Readme TEXT, Name TEXT)'
-    create_notebook_table = f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
-    create_environment_table = f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
-    create_notebook_environment_table = f'CREATE TABLE "NotebookEnvironment" (EnvironmentName TEXT, NotebookName TEXT, PRIMARY KEY(EnvironmentName, NotebookName), FOREIGN KEY(NotebookName) REFERENCES "Notebooks"(Name), FOREIGN KEY(EnvironmentName) REFERENCES "Environment"(Name))'
-    cur.execute(create_metadata_table)
-    cur.execute(create_notebook_table)
-    cur.execute(create_environment_table)
-    cur.execute(create_notebook_environment_table)
-    conn.commit()
-    conn.close()
-"""
