@@ -96,6 +96,7 @@ update_settings_help="update telemetry and security settings"
 #prediction help strings
 new_ruleset_help="create a ruleset for the prediction rules engine"
 new_ruleset_name_help="the name of the new ruleset to create"
+new_ruleset_path_help="(optional) path to location to save ruleset at"
 remove_ruleset_help="remove a ruleset from your machine"
 remove_ruleset_name_help="the name of the ruleset to remove"
 list_rulesets_help="list all rulesets available for the prediction rules engine"
@@ -103,6 +104,8 @@ view_ruleset_help="view all rules in a ruleset"
 edit_ruleset_help="make changes to a ruleset"
 import_ruleset_help="import a ruleset file from outside mtool"
 activate_ruleset_help="activate ruleset(s) to use when making predictions"
+activate_ruleset_name_help="name of the ruleset to activate"
+deactivate_ruleset_name_help="name of the ruleset to deactivate"
 deactivate_ruleset_help="deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
 update_model_help="fetch newest version of model from storage pool"
 
@@ -246,6 +249,7 @@ def main(command_line=None):
 
     new_ruleset = subparsers.add_parser('newruleset', aliases=['nr'], help=new_ruleset_help)
     new_ruleset.add_argument('name', help=new_ruleset_name_help)
+    new_ruleset.add_argument('path', nargs="?", help=new_ruleset_path_help)
     new_ruleset.set_defaults(which=new_ruleset_command)
 
     remove_ruleset = subparsers.add_parser('removeruleset', aliases=['rr'], help=remove_ruleset_help)
@@ -265,9 +269,11 @@ def main(command_line=None):
     edit_ruleset.set_defaults(which=edit_ruleset_command)
 
     activate_ruleset = subparsers.add_parser('activateruleset', aliases=['ar'], help=activate_ruleset_help)
+    activate_ruleset.add_argument('name', help=activate_ruleset_name_help)
     activate_ruleset.set_defaults(which=activate_ruleset_command)
 
     deactivate_ruleset = subparsers.add_parser('deactivateruleset', aliases=['dr'], help=deactivate_ruleset_help)
+    deactivate_ruleset.add_argument('name', help=deactivate_ruleset_name_help)
     deactivate_ruleset.set_defaults(which=deactivate_ruleset_command)
 
     update_model = subparsers.add_parser('updatemodel', aliases=['um'], help=update_model_help)

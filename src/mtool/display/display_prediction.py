@@ -15,6 +15,18 @@ def display_new_ruleset(name):
     """the display function for creating a new ruleset"""
     print(f"Created new ruleset \"{name}\"")
 
+def display_removed_ruleset(name):
+    """the display function for removing a ruleset"""
+    print(f"Removed ruleset \"{name}\"")
+
+def display_activate_ruleset(name):
+    """the display function for activating a ruleset"""
+    print(f"Ruleset \"{name}\" is active")
+
+def display_deactivate_ruleset(name):
+    """the display function for deactivating a ruleset"""
+    print(f"Ruleset \"{name}\" is no longer active")
+
 def display_ruleset_list(rulesets):
     """the display function for listing rulesets"""
     activation_messages = ["(INACTIVE)", "(ACTIVE)"]

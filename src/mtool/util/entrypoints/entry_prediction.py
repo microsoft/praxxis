@@ -2,6 +2,13 @@ from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
 from src.mtool.util.roots import _prediction_root
 from src.mtool.util.roots import _prediction_db
+from src.mtool.util.roots import _query_start
+from src.mtool.util.roots import _query_end
+
+"""
+TODO: error handling around name not found and activating/deactivating rulesets (warning?)
+TODO: testing ;)
+"""
 
 def new_ruleset(arg, 
                     prediction_root = _prediction_root,
@@ -16,14 +23,18 @@ def remove_ruleset(arg,
                     prediction_root = _prediction_root,
                     prediction_db = _prediction_db
                     ):
+    """calls the function to remove (delete) a ruleset"""
     from src.mtool.predictions.rules_engine import remove_ruleset
     remove_ruleset.remove_ruleset(arg, prediction_root, prediction_db)
     return
 
 def list_rulesets(arg,
-                    prediction_db = _prediction_db):
+                    prediction_db = _prediction_db,
+                    start = _query_start,
+                    end = _query_end):
+    """calls the function to list all rulesets"""
     from src.mtool.predictions.rules_engine import list_rulesets
-    list_rulesets.list_rulesets(arg, prediction_db)
+    list_rulesets.list_rulesets(arg, prediction_db, start, end)
     return
 
 def view_ruleset(arg):
@@ -38,12 +49,18 @@ def import_ruleset(arg):
     print("ir")
     return
 
-def activate_ruleset(arg):
-    print("ars")
+def activate_ruleset(arg,
+                    prediction_db = _prediction_db
+                    ):
+    from src.mtool.predictions.rules_engine import activate_ruleset
+    activate_ruleset.activate_ruleset(arg, prediction_db)
     return
 
-def deactivate_ruleset(arg):
-    print("drs")
+def deactivate_ruleset(arg,
+                    prediction_db = _prediction_db
+                    ):
+    from src.mtool.predictions.rules_engine import deactivate_ruleset
+    deactivate_ruleset.deactivate_ruleset(arg, prediction_db)
     return
 
 def update_model(arg):

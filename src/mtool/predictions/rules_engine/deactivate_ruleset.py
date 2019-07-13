@@ -1,7 +1,7 @@
 
-def remove_ruleset(args, prediction_root, prediction_db):
-    import os
+def deactivate_ruleset(args, prediction_db):
     from src.mtool.util.sqlite import sqlite_prediction
+    from src.mtool.display import display_prediction
     from src.mtool.predictions.rules_engine import rules
 
     if hasattr(args, "name"):
@@ -11,10 +11,5 @@ def remove_ruleset(args, prediction_root, prediction_db):
 
     name = rules.get_ruleset_by_ordinal(name, prediction_db)
 
-    path = sqlite_prediction.get_ruleset_path(prediction_db, name)
-    os.remove(path)
-
-    sqlite_prediction.remove_ruleset(prediction_db, name)
-
-    return
-
+    sqlite_prediction.deactivate_ruleset(prediction_db, name)
+    display_prediction.display_deactivate_ruleset(name)
