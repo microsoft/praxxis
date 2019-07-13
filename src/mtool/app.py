@@ -97,6 +97,7 @@ update_settings_help="update telemetry and security settings"
 new_ruleset_help="create a ruleset for the prediction rules engine"
 new_ruleset_name_help="the name of the new ruleset to create"
 remove_ruleset_help="remove a ruleset from the prediction rules engine"
+remove_ruleset_name_help="the name of the ruleset to remove"
 list_rulesets_help="list all rulesets available for the prediction rules engine"
 view_ruleset_help="view all rules in a ruleset"
 edit_ruleset_help="make changes to a ruleset"
@@ -248,6 +249,7 @@ def main(command_line=None):
     new_ruleset.set_defaults(which=new_ruleset_command)
 
     remove_ruleset = subparsers.add_parser('removeruleset', aliases=['rr'], help=remove_ruleset_help)
+    remove_ruleset.add_argument('name', help=remove_ruleset_name_help)
     remove_ruleset.set_defaults(which=remove_ruleset_command)
 
     list_rulesets = subparsers.add_parser('listrulesets', aliases=['lr'], help=list_rulesets_help)
