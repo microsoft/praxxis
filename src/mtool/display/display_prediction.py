@@ -10,3 +10,7 @@ def display_init_prediction_root(root):
 def display_init_prediction_db(db_root):
     """the display function for initializing the prediction db"""
     print(f"Created predictions database at {db_root}")
+
+def display_new_ruleset(name):
+    """the display function for creating a new ruleset"""
+    print(f"Created new ruleset \"{name}\"")

@@ -96,7 +96,7 @@ update_settings_help="update telemetry and security settings"
 #prediction help strings
 new_ruleset_help="create a ruleset for the prediction rules engine"
 new_ruleset_name_help="the name of the new ruleset to create"
-remove_ruleset_help="remove a ruleset from the prediction rules engine"
+remove_ruleset_help="remove a ruleset from your machine"
 remove_ruleset_name_help="the name of the ruleset to remove"
 list_rulesets_help="list all rulesets available for the prediction rules engine"
 view_ruleset_help="view all rules in a ruleset"
@@ -329,7 +329,8 @@ def start(args=None):
             error.LibraryNotFoundError, 
             error.NotebookNotFoundError, 
             error.SceneEndedError, 
-            error.SceneNotFoundError)as e:
+            error.SceneNotFoundError, 
+            error.RulesetNotFoundError)as e:
         print(e)
         return 1
     return 0

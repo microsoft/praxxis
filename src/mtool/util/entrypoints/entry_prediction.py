@@ -1,12 +1,3 @@
-"""
-from src.mtool.util.roots import _outfile_root
-from src.mtool.util.roots import _user_info_db
-from src.mtool.util.roots import _library_root
-from src.mtool.util.roots import _library_db
-from src.mtool.util.roots import _scene_root
-from src.mtool.util.roots import _history_db
-from src.mtool.util.roots import _azure_data_studio_location
-"""
 from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
 from src.mtool.util.roots import _prediction_root

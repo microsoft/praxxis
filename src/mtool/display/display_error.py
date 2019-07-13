@@ -3,7 +3,7 @@ This file contains all of the error messages
 """
 
 from colorama import init, Fore, Style
-init(autoreset=True)
+init(autoreset=True, convert=True)
 
 def env_not_found_error(name):
     """the error display for environments not being found"""
@@ -29,6 +29,12 @@ def notebook_not_found_error(name):
     else:
         return(f"{Fore.RED}notebook {name} does not exist")
 
+def ruleset_not_found_error(name):
+    """the error display for a ruleset not existing"""
+    if name == None:
+        return(f"{Fore.RED}ruleset does not exist")
+    else:
+        return(f"{Fore.RED}ruleset {name} does not exist")
 
 def end_ended_scene_error(name):
     return(f"{Fore.RED}{name} is already ended.")

@@ -16,7 +16,7 @@ def init_prediction_db(prediction_db):
     conn.close()
 
 def init_ruleset(prediction_db, ruleset_name, ruleset_db):
-    """creates a new ruleset database and adds to list"""
+    """creates a new ruleset database"""
     from src.mtool.util.sqlite import connection
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -33,7 +33,6 @@ def init_ruleset(prediction_db, ruleset_name, ruleset_db):
     conn.commit()
     conn.close()
 
-    add_ruleset_to_list(prediction_db, ruleset_name, ruleset_db)
 
 def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
     """adds ruleset to list"""
@@ -41,7 +40,6 @@ def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
 
     import os
     ruleset_name = os.path.basename(ruleset_root).split(".db")[0]
-    print(ruleset_name)
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
@@ -51,18 +49,47 @@ def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
     conn.close()
 
 def get_ruleset_path(prediction_db, name):
-    """returns a specific notebook"""
+    """returns the path to a ruleset"""
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    get_ruleset_path = f'SELECT "Link" FROM "RulesEngine" WHERE Name = {name} LIMIT 0, 1'
-    cur.execute(get_ruleset_path)
+    get_ruleset_path = f'SELECT Path FROM "RulesEngine" WHERE Name = ?'
+    cur.execute(get_ruleset_path, (name,))
+    conn.commit()
+    rows = cur.fetchone()
+    conn.close()
+    if rows == None:
+        raise error.RulesetNotFoundError(name)
+    return rows[0]
+
+def remove_ruleset(prediction_db, name):
+    """removes a ruleset from the list of rulesets"""
+    from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
+
+    conn = connection.create_connection(prediction_db)
+    cur = conn.cursor()
+    remove_ruleset = f'DELETE FROM "RulesEngine" WHERE Name = ?'
+    cur.execute(remove_ruleset, (name,))
+    conn.commit()
+    conn.close()
+
+def get_ruleset_by_ord(prediction_db, ordinal):
+    """gets ruleset by ordinal"""
+    from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
+
+    conn = connection.create_connection(prediction_db)
+    cur = conn.cursor()
+    get_ruleset_by_ord = f'SELECT Name FROM "RulesEngine" ORDER BY ID LIMIT {ordinal-1}, {ordinal}'
+    cur.execute(get_ruleset_by_ord)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        raise error.NotebookNotFoundError(name)
-    return rows[0]
+        raise error.RulesetNotFoundError(ordinal)
+    return rows[0][0]
+
 
