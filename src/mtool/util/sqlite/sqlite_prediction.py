@@ -49,3 +49,20 @@ def add_ruleset_to_list(prediction_db, ruleset_name, ruleset_root):
     cur.execute(add_rule, (ruleset_name, ruleset_root))
     conn.commit()
     conn.close()
+
+def get_ruleset_path(prediction_db, name):
+    """returns a specific notebook"""
+    from src.mtool.util.sqlite import connection
+    from src.mtool.util import error
+
+    conn = connection.create_connection(prediction_db)
+    cur = conn.cursor()
+    get_ruleset_path = f'SELECT "Link" FROM "RulesEngine" WHERE Name = {name} LIMIT 0, 1'
+    cur.execute(get_ruleset_path)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    if rows == []:
+        raise error.NotebookNotFoundError(name)
+    return rows[0]
+
