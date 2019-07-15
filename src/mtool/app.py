@@ -84,7 +84,7 @@ pull_notebook_env_name_help = "the name of the notebook to pull environments fro
 pull_library_env_help = "pull environments out of a library into your current scene"
 pull_library_env_name_help = "the name of the library to pull the environments from"
 ## library help strings
-add_library_help="install library of notebooks to mtool"
+add_library_help="add a library of notebooks to mtool, by local path or git remote"
 add_library_path_help="the path to the library you want to add"
 remove_library_help="remove library of notebooks mtool"
 remove_library_name_help="name of the library you want to remove"

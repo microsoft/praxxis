@@ -46,13 +46,13 @@ def sync_library(library_db, root, readme, name, remote=None):
     conn.close()
 
 
-def load_notebook(library_db, file_root, name, library):
+def load_notebook(library_db, file_root, name, library, remote=None):
     """load a notebook into the library db"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{file_root}", "{name}", "{library}")'
+    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{file_root}", "{name}", "{library}", "{remote}")'
     cur.execute(load_library)
     conn.commit()
     conn.close()
@@ -102,7 +102,6 @@ def library_exists(library_db, name):
     if rows == []:
         return False
     return True
-
 
 
 def remove_library(library_db, name):
