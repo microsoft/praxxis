@@ -5,6 +5,8 @@ This file handles the argument parsing, and is the entry point of the app
 import argparse
 import os
 import sys
+from colorama import init, Fore, Style
+init(autoreset=True)
 
 ## these are the commands passed into cli.py
 run_notebook_command = "run_notebook"
