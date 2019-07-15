@@ -115,6 +115,7 @@ remove_ruleset_name_help="the name of the ruleset to remove"
 list_rulesets_help="list all rulesets available for the prediction rules engine"
 view_ruleset_help="view all rules in a ruleset"
 edit_ruleset_help="make changes to a ruleset"
+edit_ruleset_name_help="the name of the ruleset to edit"
 import_ruleset_help="import a ruleset file from outside mtool"
 activate_ruleset_help="activate ruleset(s) to use when making predictions"
 activate_ruleset_name_help="name of the ruleset to activate"
@@ -288,6 +289,7 @@ def main(command_line=None):
     view_ruleset.set_defaults(which=view_ruleset_command)
 
     edit_ruleset = subparsers.add_parser('editruleset', aliases=['er'], help=edit_ruleset_help)
+    edit_ruleset.add_argument('name', help=edit_ruleset_name_help)
     edit_ruleset.set_defaults(which=edit_ruleset_command)
 
     activate_ruleset = subparsers.add_parser('activateruleset', aliases=['ar'], help=activate_ruleset_help)
