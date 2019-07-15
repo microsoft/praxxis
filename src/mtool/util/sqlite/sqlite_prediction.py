@@ -175,3 +175,5 @@ def deactivate_ruleset(prediction_db, name):
         conn.commit()
     conn.close()
     
+def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
+    

@@ -129,3 +129,9 @@ def display_telem_unsent(backlog):
     print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"m u\".")
     print(f"{Fore.YELLOW}Attempting to send {backlog+1} output files now.")
     
+def display_ruleset_num_input_warning(num):
+    """the warning display for a number being interpreted as a string in a ruleset"""
+    print(f"{Fore.YELLOW}Warning: The number {num} is not in the notebook list range and will be interpreted as the string \"{num}\"")
+
+def predictions_ordinal_not_in_list_error():
+    print(f"{Fore.RED}The input was invalid. Please re-enter your list of notebook predictions.")
