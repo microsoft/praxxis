@@ -11,6 +11,5 @@ def remove_library(args, library_db):
         raise e
 
     sqlite_library.remove_library(library_db, name)
-    #TODO: delete library folder 
     display_library.display_remove_success(name)
 
