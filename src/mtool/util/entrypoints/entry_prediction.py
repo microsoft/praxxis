@@ -2,6 +2,9 @@ from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
 from src.mtool.util.roots import _prediction_root
 from src.mtool.util.roots import _prediction_db
+from src.mtool.util.roots import _library_db
+from src.mtool.util.roots import _scene_root
+from src.mtool.util.roots import _history_db
 from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
 
@@ -42,10 +45,50 @@ def view_ruleset(arg):
     return
 
 def edit_ruleset(arg, 
+                    prediction_db = _prediction_db,
+                    library_db = _library_db, 
+                    current_scene_db = None,
+                    scene_root = _scene_root,
+                    history_db = _history_db,
+                    start = _query_start,
+                    end = _query_end):
+    from src.mtool.util import roots
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+
+    if arg.action == 'a':
+        add_rule_to_ruleset(arg, prediction_db)
+    elif arg.action == 'd':
+        delete_rule_from_ruleset(arg, prediction_db)
+    elif arg.action == 'm':
+        modify_rule_in_ruleset(arg, prediction_db)
+    return
+
+def add_rule_to_ruleset(arg,
+                    prediction_db = _prediction_db,
+                    library_db = _library_db, 
+                    current_scene_db = None,
+                    scene_root = _scene_root,
+                    history_db = _history_db,
+                    start = _query_start,
+                    end = _query_end
+                    ):
+    from src.mtool.util import roots
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+
+    from src.mtool.predictions.rules_engine import add_rule_to_ruleset
+    add_rule_to_ruleset.add_rule_to_ruleset(arg, prediction_db, library_db, current_scene_db, start, end)
+
+def delete_rule_from_ruleset(arg,
                     prediction_db = _prediction_db
                     ):
-    print("er")
-    return
+    print("d")
+
+def modify_rule_in_ruleset(arg,
+                    prediction_db = _prediction_db
+                    ):
+    print("M")
 
 def import_ruleset(arg):
     print("ir")
