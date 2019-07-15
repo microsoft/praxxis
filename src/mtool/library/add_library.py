@@ -7,6 +7,7 @@ def add_library(args, library_db, git_root):
     import giturlparse
     import re
     import os
+    import gc, stat
 
     path = args.path
 
@@ -36,7 +37,7 @@ def add_library(args, library_db, git_root):
         repo_root = os.path.join(git_root, repo_author, repo_name)
               
         if os.path.exists(repo_root):
-            shutil.rmtree(repo_root)
+            shutil.rmtree(repo_root, ignore_errors=False, onerror=onerror)
             display_error.repo_exists_warning()
 
         try:
@@ -50,3 +51,15 @@ def add_library(args, library_db, git_root):
         remote_https = giturlparse.parse(path).url2https
         
         sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}_{repo_name}", remote=path, remote_origin=remote_https)
+
+def onerror(func, path, exc_info):
+    import stat
+    import os 
+    ## https://stackoverflow.com/questions/1213706/what-user-do-python-scripts-run-as-in-windows
+
+    if not os.access(path, os.W_OK):
+        # Is the error an access error ?
+        os.chmod(path, stat.S_IWUSR)
+        func(path)
+    else:
+        raise Exception
