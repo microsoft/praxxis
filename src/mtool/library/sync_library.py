@@ -21,11 +21,10 @@ def sync_libraries(library_root, library_db):
     return 0
 
 
-def sync_library(library_root, library_db, library_name=None):
+def sync_library(library_root, library_db, library_name=None, remote=None):
     """ loads the individual library specified by the library root passed in, into the library db""" 
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util import error
-
 
     readme_location = os.path.join(library_root, "README.md")
     readme_data = "No Readme"
@@ -41,7 +40,7 @@ def sync_library(library_root, library_db, library_name=None):
          f = open(readme_location, "r")
          readme_data = "  ".join(f.readlines()[:3])
 
-    sqlite_library.load_library(library_db, library_root, readme_data, library_name)
+    sqlite_library.sync_library(library_db, library_root, readme_data, library_name, remote)
     sync_notebooks(library_root, library_db, library_name)
 
 

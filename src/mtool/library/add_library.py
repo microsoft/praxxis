@@ -50,4 +50,4 @@ def add_library(args, library_db, git_root):
                 os.rmdir(repo_author_root)
             sys.exit(0)
         
-        sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}/{repo_name}")
+        sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}_{repo_name}", remote=path)
