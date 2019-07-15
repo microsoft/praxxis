@@ -4,16 +4,15 @@ def add_library(args, library_db, git_root):
     from src.mtool.display import display_error
     from src.mtool.display import display_library
     from src.mtool.library import sync_library
-
+    import giturlparse
     import re
     import os
 
     path = args.path
 
-    remote = urlparse(path)
-    ssh = re.match(r".*[@].*\..*[:].*\.(git)", path)
-    
-    if remote.scheme == "" and not ssh:
+    remote = giturlparse.parse(path)
+
+    if not remote.valid:
         if os.path.exists(path):
             if os.path.isdir(path):
                 sync_library.sync_library(os.path.abspath(path), library_db)
@@ -31,10 +30,8 @@ def add_library(args, library_db, git_root):
             os.mkdir(git_root)
             display_library.display_init_git_library(git_root)
         
-        if ssh:
-            repo_author, repo_name  = path.split(':')[1].split('.')[0].split('/')
-        else:
-            repo_author, repo_name = remote.path[1:].split('/')
+        repo_author = remote.data["owner"]
+        repo_name = remote.data["repo"]
 
         repo_root = os.path.join(git_root, repo_author, repo_name)
               
@@ -50,4 +47,6 @@ def add_library(args, library_db, git_root):
                 os.rmdir(repo_author_root)
             sys.exit(0)
         
-        sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}_{repo_name}", remote=path)
+        remote_https = giturlparse.parse(path).url2https
+        
+        sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}_{repo_name}", remote=path, remote_origin=remote_https)

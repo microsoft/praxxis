@@ -6,3 +6,4 @@ ipykernel
 setuptools
 nbopen
 gitpython
+giturlparse

@@ -9,7 +9,7 @@ def init_library_db(library_db):
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Root TEXT PRIMARY KEY, Readme TEXT, Name TEXT, Remote TEXT)'
-    create_notebook_table = f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
+    create_notebook_table = f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, RawUrl TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
     create_environment_table = f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
     create_notebook_environment_table = f'CREATE TABLE "NotebookEnvironment" (EnvironmentName TEXT, NotebookName TEXT, PRIMARY KEY(EnvironmentName, NotebookName), FOREIGN KEY(NotebookName) REFERENCES "Notebooks"(Name), FOREIGN KEY(EnvironmentName) REFERENCES "Environment"(Name))'
     cur.execute(create_metadata_table)
@@ -18,6 +18,7 @@ def init_library_db(library_db):
     cur.execute(create_notebook_environment_table)
     conn.commit()
     conn.close()
+
 
 def clear_loaded_libararies(library_db):
     from src.mtool.util.sqlite import connection
@@ -46,13 +47,13 @@ def sync_library(library_db, root, readme, name, remote=None):
     conn.close()
 
 
-def load_notebook(library_db, file_root, name, library, remote=None):
+def load_notebook(library_db, file_root, name, library, raw_url=None):
     """load a notebook into the library db"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{file_root}", "{name}", "{library}", "{remote}")'
+    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName, RawUrl) VALUES("{file_root}", "{name}", "{library}", "{raw_url}")'
     cur.execute(load_library)
     conn.commit()
     conn.close()
