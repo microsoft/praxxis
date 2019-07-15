@@ -36,6 +36,20 @@ def ruleset_not_found_error(name):
     else:
         return(f"{Fore.RED}ruleset {name} does not exist")
 
+def ruleset_active_error(name):
+    """the error display for activating an active ruleset"""
+    if name == None:
+        return(f"{Fore.RED}ruleset is already active")
+    else:
+        return(f"{Fore.RED}ruleset {name} is already active")
+
+def ruleset_not_active_error(name):
+    """the error display for deactivating an inactive ruleset"""
+    if name == None:
+        return(f"{Fore.RED}ruleset is already inactive")
+    else:
+        return(f"{Fore.RED}ruleset {name} is already inactive")
+
 def end_ended_scene_error(name):
     return(f"{Fore.RED}{name} is already ended.")
 

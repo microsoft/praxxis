@@ -336,7 +336,9 @@ def start(args=None):
             error.NotebookNotFoundError, 
             error.SceneEndedError, 
             error.SceneNotFoundError, 
-            error.RulesetNotFoundError)as e:
+            error.RulesetNotFoundError,
+            error.RulesetActiveError,
+            error.RulesetNotActiveError)as e:
         print(e)
         return 1
     return 0

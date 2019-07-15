@@ -3,6 +3,7 @@ def activate_ruleset(args, prediction_db):
     from src.mtool.util.sqlite import sqlite_prediction
     from src.mtool.display import display_prediction
     from src.mtool.predictions.rules_engine import rules
+    from src.mtool.util import error
 
     if hasattr(args, "name"):
         name = args.name
@@ -11,5 +12,10 @@ def activate_ruleset(args, prediction_db):
 
     name = rules.get_ruleset_by_ordinal(name, prediction_db)
 
-    sqlite_prediction.activate_ruleset(prediction_db, name)
-    display_prediction.display_activate_ruleset(name)
+    try:
+        sqlite_prediction.activate_ruleset(prediction_db, name)
+        display_prediction.display_activate_ruleset(name)
+    except error.RulesetNotFoundError as e:
+        raise e
+    except error.RulesetActiveError as e:
+        raise e

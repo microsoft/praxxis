@@ -6,8 +6,8 @@ from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
 
 """
-TODO: error handling around name not found and activating/deactivating rulesets (warning?)
 TODO: testing ;)
+TODO: edit ruleset
 """
 
 def new_ruleset(arg, 
@@ -41,7 +41,9 @@ def view_ruleset(arg):
     print("vr")
     return
 
-def edit_ruleset(arg):
+def edit_ruleset(arg, 
+                    prediction_db = _prediction_db
+                    ):
     print("er")
     return
 
@@ -78,3 +80,4 @@ def init_prediction(prediction_root, prediction_db):
     sqlite_prediction.init_prediction_db(prediction_db)
     display_prediction.display_init_prediction_db(prediction_db)
     return
+

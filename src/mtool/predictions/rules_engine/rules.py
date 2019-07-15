@@ -10,5 +10,4 @@ def get_ruleset_by_ordinal(name, prediction_db):
             name = sqlite_prediction.get_ruleset_by_ord(prediction_db, int(name))
         except error.RulesetNotFoundError as e:
             raise e
-    else:
-        return(name)
+    return(name)

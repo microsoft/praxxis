@@ -83,7 +83,7 @@ def get_ruleset_by_ord(prediction_db, ordinal):
 
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    get_ruleset_by_ord = f'SELECT Name FROM "RulesEngine" ORDER BY Active, ID LIMIT {ordinal-1}, {ordinal}'
+    get_ruleset_by_ord = f'SELECT Name FROM "RulesEngine" ORDER BY Active DESC, ID LIMIT {ordinal-1}, {ordinal}'
     cur.execute(get_ruleset_by_ord)
     conn.commit()
     rows = cur.fetchall()
@@ -137,19 +137,41 @@ def get_inactive_rulesets(prediction_db):
 def activate_ruleset(prediction_db, name):
     """activates ruleset <name>"""
     from src.mtool.util.sqlite import connection
-    
+    from src.mtool.util import error
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    activate_ruleset = f'UPDATE RulesEngine SET Active = 1 WHERE Name = ?'
-    cur.execute(activate_ruleset, (name,))
-    conn.commit()
+    check_if_active = f'SELECT Active FROM "RulesEngine" WHERE Name = ?'
+    cur.execute(check_if_active, (name,))
+    result = cur.fetchone()
+
+    if result == None:
+        raise error.RulesetNotFoundError(name)
+    elif result[0] == 1:
+        raise error.RulesetActiveError(name)
+    else:
+        activate_ruleset = f'UPDATE RulesEngine SET Active = 1 WHERE Name = ?'
+        cur.execute(activate_ruleset, (name,))
+        conn.commit()
+    conn.close()
 
 def deactivate_ruleset(prediction_db, name):
     """deactivates ruleset <name>"""
     from src.mtool.util.sqlite import connection
-    
+    from src.mtool.util import error 
+
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    deactivate_ruleset = f'UPDATE RulesEngine SET Active = 0 WHERE Name = ?'
-    cur.execute(deactivate_ruleset, (name,))
-    conn.commit()
+    check_if_inactive = f'SELECT Active FROM "RulesEngine" WHERE Name = ?'
+    cur.execute(check_if_inactive, (name,))
+    result = cur.fetchone()
+
+    if result == None:
+        raise error.RulesetNotFoundError(name)
+    elif result[0] == 0:
+        raise error.RulesetNotActiveError(name)
+    else:
+        deactivate_ruleset = f'UPDATE RulesEngine SET Active = 0 WHERE Name = ?'
+        cur.execute(deactivate_ruleset, (name,))
+        conn.commit()
+    conn.close()
+    
