@@ -89,3 +89,29 @@ class LibraryNotFoundError(Exception):
         from src.mtool.display import display_error
         return str(display_error.library_not_found_error(self.name))
 
+
+class NotDirectoryError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.not_directory_error(self.name))
+
+    
+class NotFileError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.not_file_error(self.name))
+
+
+class NotNotebookError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.not_notebook_error(self.name))

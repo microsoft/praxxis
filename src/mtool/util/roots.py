@@ -21,6 +21,7 @@ _telemetry_db = os.path.join(_root, "user_id.db")
 _prediction_root = os.path.join(_root, "prediction")
 _prediction_db = os.path.join(_prediction_root, "prediction.db")
 _default_scene_name = 'scene'
+_git_root = os.path.join(_library_root, "git_libraries")
 
 
 

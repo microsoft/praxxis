@@ -43,7 +43,8 @@ def open_notebook(arg,
                   history_db = _history_db, 
                   library_db = _library_db,
                   azure_data_studio_location = _azure_data_studio_location,
-                  current_scene_db = None):
+                  current_scene_db = None,
+                  test = False):
     """calls the function to open a notebook"""
     from src.mtool.notebook import open_notebook
     from src.mtool.util import roots
@@ -52,7 +53,7 @@ def open_notebook(arg,
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     try:
-        open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location)
+        open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location, True)
     except Exception as e:
         raise e
     return 0
@@ -88,7 +89,7 @@ def list_notebook(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    notebook_list = list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, query_start, query_end)
+    notebook_list = list_notebook.list_notebook(library_db, current_scene_db, query_start, query_end)
     return notebook_list
 
 
@@ -99,12 +100,34 @@ def next_notebook(arg,
                     current_scene_db = None):
     """calls the function to get the next notebook"""
     from src.mtool.notebook import what_next
-    
-    
+
     if current_scene_db == None:
         from src.mtool.util.roots import get_current_scene_db
         current_scene_db = get_current_scene_db(scene_root, history_db)
 
     what_next.what_next(arg, user_info_db, current_scene_db)
 
-    return "coming soon"
+
+
+def add_notebook(arg, 
+                library_db = _library_db):
+    from src.mtool.notebook import add_notebook
+
+    try:
+        add_notebook.add_notebook(arg, library_db)
+    except Exception as e:
+        raise e
+
+
+def remove_notebook(arg, 
+                    scene_root = _scene_root,
+                    history_db = _history_db,
+                    library_db = _library_db, 
+                    current_scene_db = None):
+    from src.mtool.notebook import remove_notebook
+    from src.mtool.util import roots
+
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+
+    remove_notebook.remove_notebook(arg, library_db, current_scene_db)
