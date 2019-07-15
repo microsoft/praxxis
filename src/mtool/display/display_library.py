@@ -12,6 +12,9 @@ def display_init_libraries_db(db_root):
     print(f"Created libraries database at {db_root}")
 
 
+def display_init_git_library(root):
+    print(f"Created git library at {root}")
+
 def display_loaded_library(root, first):
     """the display function for loading libarires"""
     if first:

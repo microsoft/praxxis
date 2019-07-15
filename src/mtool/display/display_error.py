@@ -89,6 +89,10 @@ def no_tagged_cell_warning():
     print(f"{Fore.YELLOW}Warning: no tagged cell located. No parameters will be injected for this notebook.")
 
 
+def repo_exists_warning():
+    print(f"{Fore.YELLOW}That repo already exists. Cloning and reimporting.")
+
+
 def settings_invalid_ordinal(userIn):
     """the error display for bad ordinal input"""
     print(f"{Fore.RED}Bad input: {userIn} is not an ordinal in the list. Please try again.")
