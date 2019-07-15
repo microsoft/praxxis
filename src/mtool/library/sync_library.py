@@ -21,7 +21,7 @@ def sync_libraries(library_root, library_db):
     return 0
 
 
-def sync_library(library_root, library_db):
+def sync_library(library_root, library_db, library_name=None):
     """ loads the individual library specified by the library root passed in, into the library db""" 
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util import error
@@ -29,18 +29,20 @@ def sync_library(library_root, library_db):
 
     readme_location = os.path.join(library_root, "README.md")
     readme_data = "No Readme"
-    dirname = library_root.split(os.path.sep)[-1]
+
+    if library_name == None:
+        library_name = library_root.split(os.path.sep)[-1]
 
     counter = 0
-    while sqlite_library.library_exists(library_db, dirname):
-        dirname = f"{dirname}-{counter + 1}"
+    while sqlite_library.library_exists(library_db, library_name):
+        library_name = f"{library_name}-{counter + 1}"
 
     if os.path.isfile(readme_location):
          f = open(readme_location, "r")
          readme_data = "  ".join(f.readlines()[:3])
 
-    sqlite_library.load_library(library_db, library_root, readme_data, dirname)
-    sync_notebooks(library_root, library_db, dirname)
+    sqlite_library.load_library(library_db, library_root, readme_data, library_name)
+    sync_notebooks(library_root, library_db, library_name)
 
 
 def sync_notebooks(library_root, library_db, library_name):

@@ -3,6 +3,8 @@ def add_library(args, library_db, git_root):
     from src.mtool.util import error
     from src.mtool.display import display_error
     from src.mtool.display import display_library
+    from src.mtool.library import sync_library
+
     import re
     import os
 
@@ -14,8 +16,6 @@ def add_library(args, library_db, git_root):
     if remote.scheme == "" and not ssh:
         if os.path.exists(path):
             if os.path.isdir(path):
-                from src.mtool.library import sync_library
-
                 sync_library.sync_library(os.path.abspath(path), library_db)
             else:
                 raise error.NotDirectoryError(path)
@@ -30,8 +30,6 @@ def add_library(args, library_db, git_root):
         if not os.path.exists(git_root):
             os.mkdir(git_root)
             display_library.display_init_git_library(git_root)
-
-        ##TODO: break into a top level and a bottom level 
         
         if ssh:
             repo_author, repo_name  = path.split(':')[1].split('.')[0].split('/')
@@ -51,6 +49,5 @@ def add_library(args, library_db, git_root):
             if len(os.listdir(repo_author_root) ) == 0:
                 os.rmdir(repo_author_root)
             sys.exit(0)
-
         
-        print(git_root)
+        sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}/{repo_name}")
