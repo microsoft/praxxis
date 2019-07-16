@@ -18,17 +18,13 @@ def delete_rule_from_ruleset(args, prediction_db):
 
     display_prediction.display_rule_list(name, rules_list)
 
-    print(rules_list)
-
     deletion = display_edit_ruleset.display_deletion_prompt()
 
     deletion_name = get_rule_by_ordinal(deletion, rules_list)
 
-    print(deletion_name in rules_list)
-    
-    print(deletion_name)
-
     sqlite_prediction.delete_rule(ruleset_db, deletion_name)
+    
+    display_prediction.display_rule_deletion(name, deletion_name)
 
 def get_rule_by_ordinal(name, ruleslist):
     """gets rule by ordinal using a list of tuples"""

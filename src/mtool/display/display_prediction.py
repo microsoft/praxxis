@@ -46,3 +46,7 @@ def display_rule_list(ruleset, rules):
     for rule in rules:
         print(f'\t{i}.\t{rule[0]}')
         i += 1
+
+def display_rule_deletion(ruleset, rule):
+    """the display function for deleting a rule"""
+    print(f"Rule {rule} successfully deleted from {ruleset}")
