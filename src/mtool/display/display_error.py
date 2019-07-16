@@ -29,6 +29,13 @@ def notebook_not_found_error(name):
     else:
         return(f"{Fore.RED}notebook {name} does not exist")
 
+def rule_not_found_error(name):
+    """the error display for a ruleset not existing"""
+    if name == None:
+        return(f"{Fore.RED}rule does not exist")
+    else:
+        return(f"{Fore.RED}rule {name} does not exist")
+
 def ruleset_not_found_error(name):
     """the error display for a ruleset not existing"""
     if name == None:

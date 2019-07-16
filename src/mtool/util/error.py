@@ -7,10 +7,18 @@ class NotebookNotFoundError(Exception):
         from src.mtool.display import display_error
         return str(display_error.notebook_not_found_error(self.name))
 
-class RulesetNotFoundError(Exception):
+class RuleNotFoundError(Exception):
     def __init__(self, name=None):
         self.name = name
 
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.rule_not_found_error(self.name))
+
+class RulesetNotFoundError(Exception):
+    def __init__(self, name=None):
+        self.name = name
 
     def __str__(self):
         from src.mtool.display import display_error

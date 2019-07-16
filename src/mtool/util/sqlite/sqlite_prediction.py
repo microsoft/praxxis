@@ -22,9 +22,9 @@ def init_ruleset(prediction_db, ruleset_name, ruleset_db):
     cur = conn.cursor()
     
     create_rules_table = f'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
-    create_filenames_table = f'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, FOREIGN KEY(Rule) REFERENCES "Rules"(Name))'
-    create_outputs_table = f'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, FOREIGN KEY(Rule) REFERENCES "Rules"(Name))'
-    create_prediction_table = f'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, FOREIGN KEY(Rule) REFERENCES "Rules"(Name))'
+    create_filenames_table = f'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_outputs_table = f'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_prediction_table = f'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
 
     cur.execute(create_rules_table)
     cur.execute(create_filenames_table)
@@ -200,8 +200,10 @@ def delete_rule(ruleset_db, rulename):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
+    foreign_keys = f'PRAGMA foreign_keys = ON'
     delete_rule = f'DELETE FROM "Rules" WHERE Name = ?'
 
+    cur.execute(foreign_keys)
     cur.execute(delete_rule, (rulename,))
     conn.commit()
     conn.close()

@@ -40,8 +40,9 @@ def display_ruleset_list(rulesets):
 
 def display_rule_list(ruleset, rules):
     """the display function for listing rules in a ruleset"""
-    print(f"Rules in ruleset {ruleset}")
+    print(f"Rules in ruleset {ruleset}:")
 
     i = 1
     for rule in rules:
         print(f'\t{i}.\t{rule[0]}')
+        i += 1

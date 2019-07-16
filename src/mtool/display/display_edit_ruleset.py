@@ -50,4 +50,4 @@ def display_predictions(predictions):
         i += 1
 
 def display_deletion_prompt():
-    return("Enter the name of the rule to delete: ")
+    return input("Enter the name or ordinal of the rule to delete: ")

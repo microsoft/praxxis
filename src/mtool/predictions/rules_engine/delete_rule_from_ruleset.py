@@ -14,12 +14,34 @@ def delete_rule_from_ruleset(args, prediction_db):
 
     ruleset_db = sqlite_prediction.get_ruleset_path(prediction_db, name)
 
-    rules = sqlite_prediction.list_rules_in_ruleset(ruleset_db)
+    rules_list = sqlite_prediction.list_rules_in_ruleset(ruleset_db)
 
-    display_prediction.display_rule_list(name, rules)
+    display_prediction.display_rule_list(name, rules_list)
+
+    print(rules_list)
 
     deletion = display_edit_ruleset.display_deletion_prompt()
 
+    deletion_name = get_rule_by_ordinal(deletion, rules_list)
 
-    for rule in rules:
-        print(rule[0])
+    print(deletion_name in rules_list)
+    
+    print(deletion_name)
+
+    sqlite_prediction.delete_rule(ruleset_db, deletion_name)
+
+def get_rule_by_ordinal(name, ruleslist):
+    """gets rule by ordinal using a list of tuples"""
+    from src.mtool.util.sqlite import sqlite_prediction
+    from src.mtool.util import error
+
+    if f"{name}".isdigit():
+        try:
+            name = ruleslist[int(name)-1][0]
+        except IndexError:
+            raise error.RuleNotFoundError(name)
+    else:
+        ruleslist = [rule[0] for rule in ruleslist] # un-tuple the list to check if name valid
+        if name not in ruleslist:
+            raise error.RuleNotFoundError(name)
+    return(name)
