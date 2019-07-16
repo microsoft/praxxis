@@ -45,6 +45,7 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
         
     display_edit_ruleset.display_rule(rulename, filenames, output, predicted)
 
+    sqlite_prediction.add_rule(ruleset_db, rulename, filenames, output, predicted)
     
         
 

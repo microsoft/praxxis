@@ -83,7 +83,8 @@ def add_rule_to_ruleset(arg,
 def delete_rule_from_ruleset(arg,
                     prediction_db = _prediction_db
                     ):
-    print("d")
+    from src.mtool.predictions.rules_engine import delete_rule_from_ruleset
+    delete_rule_from_ruleset.delete_rule_from_ruleset(arg, prediction_db)
 
 def modify_rule_in_ruleset(arg,
                     prediction_db = _prediction_db

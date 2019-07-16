@@ -37,3 +37,11 @@ def display_ruleset_list(rulesets):
     for ruleset in rulesets:
         print(f'\t{i}.\t{ruleset[0]}\t\t{activation_messages[ruleset[1]]}')
         i += 1
+
+def display_rule_list(ruleset, rules):
+    """the display function for listing rules in a ruleset"""
+    print(f"Rules in ruleset {ruleset}")
+
+    i = 1
+    for rule in rules:
+        print(f'\t{i}.\t{rule[0]}')

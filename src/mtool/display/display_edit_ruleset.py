@@ -48,3 +48,6 @@ def display_predictions(predictions):
     for prediction in predictions:
         print(f"\t{i}.\t{prediction}")
         i += 1
+
+def display_deletion_prompt():
+    return("Enter the name of the rule to delete: ")

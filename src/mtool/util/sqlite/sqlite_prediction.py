@@ -176,4 +176,47 @@ def deactivate_ruleset(prediction_db, name):
     conn.close()
     
 def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
+    """adds a rule to the ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    add_name_to_rules = f'INSERT INTO "Rules" (Name) VALUES (?)'
+    add_to_filenames = f'INSERT INTO "Filenames" (Rule, Filename) VALUES (?,?)'
+    add_to_output = f'INSERT INTO "OutputString" (Rule, Output) VALUES (?,?)'
+    add_to_predictions = f'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook) VALUES (?,?,?)'
+
+    cur.execute(add_name_to_rules, (rulename,))
+    cur.executemany(add_to_filenames, [(rulename, string) for string in filenames])
+    cur.executemany(add_to_output, [(rulename, out) for out in outputs])
+
+    cur.executemany(add_to_predictions, [(rulename, i+1, predictions[i]) for i in range(len(predictions))])
+    conn.commit()
+    conn.close()
+
+def delete_rule(ruleset_db, rulename):
+    """deletes a rule from the ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    delete_rule = f'DELETE FROM "Rules" WHERE Name = ?'
+
+    cur.execute(delete_rule, (rulename,))
+    conn.commit()
+    conn.close()
+
+def list_rules_in_ruleset(ruleset_db):
+    """returns a list of all rule names in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    list_rules = f'SELECT * FROM "Rules" ORDER BY Name'
     
+    cur.execute(list_rules)
+    conn.commit()
+    rules = cur.fetchall()
+    conn.close()
+    
+    return rules
