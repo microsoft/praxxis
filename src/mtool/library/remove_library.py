@@ -12,4 +12,3 @@ def remove_library(args, library_db):
 
     sqlite_library.remove_library(library_db, name)
     display_library.display_remove_success(name)
-
