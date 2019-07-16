@@ -70,11 +70,11 @@ def test_command(setup,
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name, True)
     assert result.__class__ == history.history.__class__
 
-    dummy_input = dummy_object.make_dummy_input("add_notebooks")
+    dummy_input = dummy_object.make_dummy_input("add_notebook")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name, True)
     assert result.__class__ == add_notebook.add_notebook.__class__
 
-    dummy_input = dummy_object.make_dummy_input("remove_notebooks")
+    dummy_input = dummy_object.make_dummy_input("remove_notebook")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name, True)
     assert result.__class__ == remove_notebook.remove_notebook.__class__
 
