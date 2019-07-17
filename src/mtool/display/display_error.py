@@ -78,6 +78,8 @@ def scene_ended_error(name):
     """the error display for trying to switch to an ended scene"""
     return(f"{Fore.RED}can't switch to {name}, because the scene has ended. Resume the scene or make a new one.")
     
+def editor_not_found_error(editor):
+    return(f"{Fore.RED}Could not find editor {editor}")
 
 def papermill_error(error):
         """the error display for papermill errors"""

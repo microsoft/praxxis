@@ -25,6 +25,7 @@ def test_list_notebook(setup, add_test_library, scene_root, history_db, library_
     entry_notebook.list_notebook(notebook, scene_root, history_db, library_root, library_db, start, stop, current_scene_db)
     assert len(list_notebook.list_notebook(library_db,current_scene_db, start, stop)) == 3
 
+
 def test_search_notebook(setup, add_test_library, scene_root, history_db, library_db, start, stop, current_scene_db):
     from src.mtool.notebook import search_notebook
     search = dummy_object.make_dummy_search()
@@ -36,8 +37,11 @@ def test_search_notebook(setup, add_test_library, scene_root, history_db, librar
 
 def test_open_notebook(setup, add_test_library, scene_root, history_db, library_db, ads_location, current_scene_db,):
     notebook = dummy_object.make_dummy_notebook()
+    from src.mtool.util import error
     try:
         entry_notebook.open_notebook(notebook, scene_root, history_db, library_db, ads_location, current_scene_db)
+    except error.EditorNotFoundError:
+        assert 1
     except Exception:
         assert 0
     else:
