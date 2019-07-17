@@ -1,4 +1,6 @@
 from src.mtool.util.entrypoints import entry_library
+import pytest
+import sys
 
 def test_init_library(setup, library_root, library_db):
     from src.mtool.util import rmtree
@@ -29,6 +31,7 @@ def test_list_library(setup, add_test_library, library_db):
     assert len(list_library.list_library(library_db)) == 1
 
 
+@pytest.mark.skipif(sys.platform != "linux", reason="will fail test on windows until git integration is merged")
 def test_add_library(setup, library_db): 
     from src.mtool.util import error
     from tests.src.mtool.util import dummy_object
