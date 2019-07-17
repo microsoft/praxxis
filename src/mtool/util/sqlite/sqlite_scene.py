@@ -16,7 +16,7 @@ def init_scene(scene_db, name):
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Name TEXT)'
     create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, Path TEXT)'
     create_environment_table=f'CREATE TABLE "Environment" (Name TEXT PRIMARY KEY, Value TEXT)'
-    create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT)'
+    create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Name) values("{scene_id}", 0, "{name}")'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_list_table)
@@ -216,14 +216,14 @@ def get_ended_scenes(history_db):
     return rows
 
 
-def add_to_scene_history(current_scene_db, timestamp, name, library):
+def add_to_scene_history(current_scene_db, timestamp, name, library, outputpath):
     """adds a notebook to the scene history"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    add_to_scene_history = f'INSERT INTO "History"(Timestamp, Notebook, Library) VALUES (?,?,?)'
-    cur.execute(add_to_scene_history, (timestamp, name, library))
+    add_to_scene_history = f'INSERT INTO "History"(Timestamp, Notebook, Library, OutputPath) VALUES (?,?,?, ?)'
+    cur.execute(add_to_scene_history, (timestamp, name, library, outputpath))
     conn.commit()
     conn.close()
 
@@ -248,7 +248,7 @@ def get_recent_history(db_file, seq_length):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    get_recent_history = f'SELECT Notebook FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    get_recent_history = f'SELECT Notebook, Path FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
     cur.execute(get_recent_history, (seq_length,))
     conn.commit()
     rows = cur.fetchall()

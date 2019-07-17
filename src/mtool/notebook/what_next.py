@@ -11,7 +11,13 @@ from src.mtool.predictions.rules_engine import rules_checker
 
 def what_next(args, user_info_db, current_scene_db, prediction_db, start, end):
     data = sqlite_scene.get_recent_history(current_scene_db, 5)
-    rules_checker.rules_check(prediction_db, "DIR 001", "output", start, end)
+    if data == []:
+        print("handle empty history here")
+        import sys
+        sys.exit(1)
+    print(data)
+    print("%%%%%")
+    rules_checker.rules_check(prediction_db, "git 001", "collation conflict", start, end)
     #suggestions = score.predict(data)
     #print(suggestions)
 

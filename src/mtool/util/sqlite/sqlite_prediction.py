@@ -237,3 +237,19 @@ def get_filenames(ruleset_db, rule):
     conn.close()
 
     return filenames
+
+    
+def get_outputs(ruleset_db, rule):
+    """returns a list of all outputs for a rule in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    list_outputs = f'SELECT Output FROM "OutputString" WHERE Rule = ?'
+    
+    cur.execute(list_outputs, (rule,))
+    conn.commit()
+    outputs = cur.fetchall()
+    conn.close()
+
+    return outputs
