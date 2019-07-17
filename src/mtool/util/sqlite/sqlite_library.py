@@ -84,25 +84,7 @@ def check_library_exists(library_db, name):
     conn.close()
     if rows == []:
         raise error.LibraryNotFoundError(name)
-    return rows[0]
-
-
-def library_exists(library_db, name):
-    ## this shouldn't exist :((
-    from src.mtool.util.sqlite import connection
-    from src.mtool.util import error
-
-    conn = connection.create_connection(library_db)
-    cur = conn.cursor()
-    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Name = "{name}" LIMIT 0, 1'
-    cur.execute(get_library)
-    conn.commit()
-    rows = cur.fetchall()
-    conn.close()
-    if rows == []:
-        return False
     return True
-
 
 
 def remove_library(library_db, name):

@@ -26,14 +26,16 @@ def sync_library(library_root, library_db):
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util import error
 
-
     readme_location = os.path.join(library_root, "README.md")
     readme_data = "No Readme"
     dirname = library_root.split(os.path.sep)[-1]
 
     counter = 0
-    while sqlite_library.library_exists(library_db, dirname):
-        dirname = f"{dirname}-{counter + 1}"
+    try:
+        while sqlite_library.check_library_exists(library_db, dirname):
+            dirname = f"{dirname}-{counter + 1}"
+    except Exception:
+        pass 
 
     if os.path.isfile(readme_location):
          f = open(readme_location, "r")
