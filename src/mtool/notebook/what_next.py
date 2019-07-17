@@ -15,9 +15,8 @@ def what_next(args, user_info_db, current_scene_db, prediction_db, start, end):
         print("handle empty history here")
         import sys
         sys.exit(1)
-    print(data)
-    print("%%%%%")
-    rules_checker.rules_check(prediction_db, "git 001", "collation conflict", start, end)
+
+    rules_based = rules_checker.rules_check(prediction_db, data[-1][0], data[-1][1], start, end)
     #suggestions = score.predict(data)
     #print(suggestions)
 

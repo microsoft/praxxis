@@ -238,6 +238,20 @@ def get_filenames(ruleset_db, rule):
 
     return filenames
 
+def get_filenames_by_rule(ruleset_db):
+    """returns a list of all filenames for all rules in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    list_filenames = f'SELECT Filename, Rule FROM "Filenames" ORDER BY Rule'
+    
+    cur.execute(list_filenames)
+    conn.commit()
+    filenames = cur.fetchall()
+    conn.close()
+
+    return filenames
     
 def get_outputs(ruleset_db, rule):
     """returns a list of all outputs for a rule in a ruleset"""
@@ -253,3 +267,27 @@ def get_outputs(ruleset_db, rule):
     conn.close()
 
     return outputs
+
+def get_outputs_for_rules(ruleset_db, ruleset):
+    """returns a list of all outputs for all rules in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    list_outputs = f'SELECT Output, Rule FROM "OutputString" WHERE Rule IN (?)'
+    ruleslist = ', '.join('"{0}"'.format(rule) for rule in ruleset)
+    print(ruleslist)
+    cur.execute(list_outputs, (ruleslist,)) #, (ruleslist,))
+    conn.commit()
+    outputs = cur.fetchall()
+    print(outputs)
+    conn.close()
+
+    return outputs
+
+def get_predictions(ruleset_db, rule):
+    """returns the ordered list of predictions for a rule"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()

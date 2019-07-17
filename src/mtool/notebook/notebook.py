@@ -18,9 +18,19 @@ def get_notebook_by_ordinal(current_scene_db, name):
 def get_output_from_filename(filename):
     """gets only cell outputs from filename"""
     import json
+    
+    linelist = []
     with open(filename) as f:
         info = json.load(f)
-        print(info)
+        cells = info["cells"]
+        for cell in cells:
+            if(cell["cell_type"] == "code"):
+                if (len(cell["outputs"]) != 0):
+                    linelist += (cell["outputs"][0]["text"])
+
+        f.close()
+
+    return ''.join(linelist)
 
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""

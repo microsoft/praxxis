@@ -6,29 +6,34 @@ Rules are defined as:
 if either left-hand list is empty, this is interpreted as "all"
 """
 
-def rules_check(prediction_db, filename, output, start, end):
+def rules_check(prediction_db, filename, output_path, start, end):
     from src.mtool.util.sqlite import sqlite_prediction
 
     rulesets = sqlite_prediction.get_active_rulesets(prediction_db, start, end)
 
+    print(filename)
     rulesmatch = []
-    hit = []
+    hit = set()
     for ruleset in rulesets:
-        rules = sqlite_prediction.list_rules_in_ruleset(ruleset[2])
-        for rule in rules:
-            filenames = sqlite_prediction.get_filenames(ruleset[2], rule[0])
-            for fmatch in filenames:
-                if fmatch[0] in filename:
-                    rulesmatch.append(rule[0])
-
+        filenames = sqlite_prediction.get_filenames_by_rule(ruleset[2])
+        for fmatch in filenames:
+            if fmatch[0] in filename:
+                rulesmatch.append(fmatch[1])
+ 
         if rulesmatch != []:
             #get output
-            pass
+            from src.mtool.notebook.notebook import get_output_from_filename
+            output = get_output_from_filename(output_path)
+            print(output)
+
+        print(rulesmatch)
+        outputs = sqlite_prediction.get_outputs_for_rules(ruleset[2], rulesmatch)
+        print(outputs)
+        for omatch in outputs:
+            if omatch[0] in output:
+                hit.add(omatch[1])
+
+    
+    print(hit)
             
-        for rule in rulesmatch:
-            outputs = sqlite_prediction.get_outputs(ruleset[2], rule)
-            for omatch in outputs:
-                if omatch[0] in output:
-                    hit.append(rule)
-            
-        print(hit)
+    
