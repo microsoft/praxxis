@@ -21,8 +21,9 @@ def test_sync_library(setup, library_root, library_db):
 
 
 def test_list_library(setup, add_test_library, library_db):
-    libraries = entry_library.list_library("", library_db)
-    assert len(libraries) == 1
+    from src.mtool.library import list_library
+    entry_library.list_library("", library_db)
+    assert len(list_library.list_library(library_db)) == 1
 
 
 def test_add_library(setup, library_db): 

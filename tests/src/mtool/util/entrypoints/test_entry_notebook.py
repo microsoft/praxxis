@@ -19,10 +19,11 @@ def test_next_notebook():
 
 
 def test_list_notebook(setup, add_test_library, scene_root, history_db, library_root, library_db, start, stop, current_scene_db):
+    from src.mtool.notebook import list_notebook
     notebook = dummy_object.make_dummy_notebook()
 
-    notebook_list = entry_notebook.list_notebook(notebook, scene_root, history_db, library_root, library_db, start, stop, current_scene_db)
-    assert len(notebook_list) == 3
+    entry_notebook.list_notebook(notebook, scene_root, history_db, library_root, library_db, start, stop, current_scene_db)
+    assert len(list_notebook.list_notebook(library_db,current_scene_db, start, stop)) == 3
 
 def test_search_notebook(setup, add_test_library, scene_root, history_db, library_db, start, stop, current_scene_db):
     search = dummy_object.make_dummy_search()

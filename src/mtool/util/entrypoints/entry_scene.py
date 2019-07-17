@@ -24,8 +24,7 @@ def new_scene(arg,
     """calls the function to create a new scene"""
     from src.mtool.scene import new_scene
     from src.mtool.scene import scene
-    new_scene = new_scene.new_scene(arg, scene_root, history_db)
-    return new_scene
+    new_scene.new_scene(arg, scene_root, history_db)
 
 
 def end_scene(arg, 
@@ -39,8 +38,7 @@ def end_scene(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    ended = end_scene.end_scene(arg, scene_root, history_db, current_scene_db)
-    return ended
+    end_scene.end_scene(arg, scene_root, history_db, current_scene_db)
 
 
 def change_scene(arg,
@@ -50,11 +48,10 @@ def change_scene(arg,
     from src.mtool.scene import change_scene
 
     try:
-        scene = change_scene.change_scene(arg, scene_root, history_db)
+        change_scene.change_scene(arg, scene_root, history_db)
     except Exception as e:
         raise e
-    else:
-        return scene
+
      
 
 def resume_scene(arg, 
@@ -64,10 +61,9 @@ def resume_scene(arg,
     from src.mtool.scene import resume_scene
     
     try:
-        resumed = resume_scene.resume_scene(arg, scene_root, history_db)
+        resume_scene.resume_scene(arg, scene_root, history_db)
     except Exception as e:
         raise e
-    return resumed
  
 
 def delete_scene(arg, 
@@ -77,10 +73,9 @@ def delete_scene(arg,
     from src.mtool.scene import delete_scene
     
     try:
-        deleted = delete_scene.delete_scene(arg, scene_root, history_db)
+        delete_scene.delete_scene(arg, scene_root, history_db)
     except Exception as e:
         raise e
-    return deleted
 
 
 def list_scene(arg, 
@@ -89,7 +84,6 @@ def list_scene(arg,
     """calls the function to list scenes"""
     from src.mtool.scene import list_scene
     list_scene.list_scene(scene_root, history_db)
-    return
 
 
 
@@ -105,8 +99,7 @@ def history(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    history_list = history.history(history_db, library_db, current_scene_db)
-    return history_list
+    history.history(history_db, library_db, current_scene_db)
 
 
 def current_scene(arg, 
@@ -115,4 +108,3 @@ def current_scene(arg,
     """calls the default function, which is to display the current scene."""
     from src.mtool.scene import current_scene
     current_scene = current_scene.current_scene(scene_root, history_db)
-    return current_scene
