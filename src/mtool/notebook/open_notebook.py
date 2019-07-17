@@ -30,7 +30,10 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor, test
     elif args.environment == "jupyter":
         open_jupyter(notebook_filename, test)
     elif args.environment == "ads":
-        subprocess.Popen([ads_location, notebook_filename])
+        try:
+            subprocess.Popen([ads_location, notebook_filename])
+        except Exception:
+            raise error.ADSNotFoundError(ads_location)
     else:
         open_editor(notebook_filename, editor)
     return 0
@@ -88,5 +91,5 @@ def open_editor(notebook_filename, editor):
 
     try:
         call([EDITOR, notebook_filename])
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         raise error.EditorNotFoundError(editor)

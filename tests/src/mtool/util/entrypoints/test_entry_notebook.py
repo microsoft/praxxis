@@ -42,6 +42,8 @@ def test_open_notebook(setup, add_test_library, scene_root, history_db, library_
         entry_notebook.open_notebook(notebook, scene_root, history_db, library_db, ads_location, current_scene_db)
     except error.EditorNotFoundError:
         assert 1
+    except error.ADSNotFoundError:
+        assert 1
     except Exception:
         assert 0
     else:
