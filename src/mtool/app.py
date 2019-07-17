@@ -374,7 +374,8 @@ def start(args=None, test = False):
             error.NotDirectoryError,
             error.NotFileError, 
             error.NotNotebookError,
-            error.EditorNotFoundError)as e:
+            error.EditorNotFoundError,
+            error.ADSNotFoundError)as e:
         print(e)
         return 1
     

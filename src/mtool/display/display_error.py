@@ -108,6 +108,11 @@ def scene_ended_error(name):
 def editor_not_found_error(editor):
     return(f"{Fore.RED}Could not find editor {editor}")
 
+
+def ads_not_found_error(ads_path):
+    return(f"{Fore.RED}Could not find installation of ADS at {ads_path}")
+
+
 def papermill_error(error):
         """the error display for papermill errors"""
         print(f"{Fore.RED}PAPERMILL ERROR")
