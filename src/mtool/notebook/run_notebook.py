@@ -106,7 +106,7 @@ def pull_params(current_scene_db, environmentVars):
         value = sqlite_environment.get_env(current_scene_db, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
-            injects[var] = value
+            injects[var[0]] = value
     return injects
 
 

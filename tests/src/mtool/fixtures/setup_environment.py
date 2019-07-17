@@ -52,6 +52,6 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
     current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     assert len(list_scene.list_scene(init_root, history_db)) == 1
     assert len(list_env.list_env(current_scene_db, start, stop)) == 0
-    assert len(list_library.list_library(library_root, library_db)) == 0
-    assert len(list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)) == 0
+    assert len(list_library.list_library(library_db)) == 0
+    assert len(list_notebook.list_notebook(library_db, current_scene_db, start, stop)) == 0
     

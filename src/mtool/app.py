@@ -14,16 +14,21 @@ search_notebooks_command="search_notebooks"
 open_notebook_command="open_notebook"
 history_command="history"
 next_notebook_command="next_notebook"
+remove_notebook_command = "remove_notebook"
+add_notebook_command = "add_notebook"
+
 new_scene_command = "new_scene"
 end_scene_command="end_scene"
 change_scene_command="change_scene"
 resume_scene_command="resume_scene"
 delete_scene_command="delete_scene"
 list_scene_command="list_scene"
+
 add_library_command="add_library"
 list_library_command="list_library"
 remove_library_command="remove_library"
 sync_library_command="sync_library"
+
 set_env_command="set_env"
 delete_env_command="delete_env"
 list_env_command="list_env"
@@ -31,6 +36,7 @@ view_library_env_command="view_library_env"
 pull_notebook_env_command = "pull_notebook_env"
 pull_library_env_command = "pull_library_env"
 search_env_command="search_env"
+
 update_settings_command="update_settings"
 ## notebook help strings
 run_notebook_help="run notebook"
@@ -40,10 +46,15 @@ view_notebook_env_help="displays the environments for the notebook"
 view_notebook_env_notebook_help="the notebook to view environment for"
 open_notebook_help="open notebook in Azure Data Studio"
 open_notebook_notebook_help="notebook to open"
+open_notebook_environment_help="open notebook in jupyter ads or html"
 list_notebooks_help="list notebooks to run, by ordinal."
 search_notebooks_help="search for notebooks matching search term"
 search_notebooks_term_help ="search term for notebooks"
 next_notebook_help="model based prediction of what to do next in the current scene"
+remove_notebook_help = "remove notebook by name"
+remove_notebook_name_help = "name of notebook to remove"
+add_notebook_help = "add a notebook to mtool"
+add_notebook_path_help = "the path of the notebook you want to load"
 ## scene help strings 
 new_scene_help="new scene"
 new_scene_name_help="name of new scene"
@@ -76,7 +87,7 @@ pull_library_env_name_help = "the name of the library to pull the environments f
 add_library_help="install library of notebooks to mtool"
 add_library_path_help="the path to the library you want to add"
 remove_library_help="remove library of notebooks mtool"
-remove_library_path_help="path of the library you want to remove"
+remove_library_name_help="name of the library you want to remove"
 list_libraries_help="list libraries currently installed"
 sync_library_help="load libraries into mtool. Default loads from predefined library path"
 sync_library_path_help="load library from a specific directory into mtool"
@@ -135,7 +146,7 @@ def main(command_line=None):
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
-    open_notebook.add_argument('html', nargs="?", help=run_notebook_environment_help)
+    open_notebook.add_argument('environment', nargs="?", help=open_notebook_environment_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
@@ -150,6 +161,15 @@ def main(command_line=None):
 
     next_notebook = subparsers.add_parser('whatnext', aliases=["n"], help=next_notebook_help)
     next_notebook.set_defaults(which=next_notebook_command)
+
+
+    add_notebook = subparsers.add_parser('addnotebook', aliases=["a"], help=add_notebook_help)
+    add_notebook.add_argument('path', help=add_notebook_path_help)
+    add_notebook.set_defaults(which=add_notebook_command)
+
+    remove_notebook = subparsers.add_parser('removenotebook', aliases=["rm"], help=remove_notebook_help)
+    remove_notebook.add_argument('name', help=remove_notebook_name_help)
+    remove_notebook.set_defaults(which=remove_notebook_command)
 
     new_scene = subparsers.add_parser('newscene', aliases=["ns"], help=new_scene_help)
     new_scene.add_argument('name', help=new_scene_name_help)
@@ -202,13 +222,12 @@ def main(command_line=None):
     pull_library_env.add_argument('name', help = pull_library_env_name_help)
     pull_library_env.set_defaults(which = pull_library_env_command)
 
-
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)
     add_library.set_defaults(which=add_library_command)
 
     remove_library = subparsers.add_parser('removelibrary', aliases=["rl"], help=remove_library_help)
-    remove_library.add_argument('path', help=remove_library_path_help)
+    remove_library.add_argument('name', help=remove_library_name_help)
     remove_library.set_defaults(which=remove_library_command)
 
     list_libraries = subparsers.add_parser('listlibrary', aliases=["ll"], help=list_libraries_help)
@@ -230,7 +249,7 @@ def main(command_line=None):
     return args
 
 
-def start(args=None):
+def start(args=None, test = False):
     """the runner of mtool from the cli. makes a call to the switcher with the output of main"""
     from src.mtool.util import cli
     from src.mtool.util import error
@@ -256,24 +275,30 @@ def start(args=None):
             arg.command = 'r'
             arg.notebook = arg1
             arg.which = run_notebook_command
+            func = 0
             try:
-                cli.command(arg)
+                func = cli.command(arg, test=test)
             except error.NotebookNotFoundError as e:
                 print(e)
                 return 1
-            return 0
+            return func
+        
+    func = 0
     try:
-        cli.command(main())
+        func = cli.command(main(), test=test)
     except (error.EndEndedSceneError, 
             error.EnvNotFoundError, 
             error.LastActiveSceneError, 
             error.LibraryNotFoundError, 
             error.NotebookNotFoundError, 
             error.SceneEndedError, 
-            error.SceneNotFoundError)as e:
+            error.SceneNotFoundError,
+            error.NotDirectoryError,
+            error.NotFileError, 
+            error.NotNotebookError)as e:
         print(e)
         return 1
-    return 0
+    return func
 
 
 if __name__ == "__main__":

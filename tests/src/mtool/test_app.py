@@ -23,7 +23,7 @@ def test_help_formatter():
     data = formatter._format_action(library)
     assert data.split('\n')[0] == "Library: "
 
-def test_0_args():
+def test_0_args(library_db):
     """
     this tests the 0 args command.
     this should have no command, since the 0 args case gets handled manually
@@ -182,7 +182,7 @@ def open_notebook(command):
     assert namespace.command == 'o' or namespace.command == "open"
     assert namespace.notebook == "test"
     if "html" in command:
-        assert namespace.html == "html"
+        assert namespace.environment == "html"
 
 
 def search_notebook(command):
@@ -326,6 +326,8 @@ def add_library(command):
     """
     tests if the add library command is running properly 
     """
+    from src.mtool.library import list_library
+
     namespace = app.main(command)
     assert namespace.command == 'al' or namespace.command == "addlibrary"
     assert namespace.path == "test"
@@ -337,7 +339,7 @@ def remove_library(command):
     """
     namespace = app.main(command)
     assert namespace.command == 'rl' or namespace.command == "removelibrary"
-    assert namespace.path == "test"
+    assert namespace.name == "test"
 
 
 def list_library(command):
@@ -368,23 +370,26 @@ def update_settings(command):
 
 def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
     from src.mtool import app
-    from src.mtool.notebook import list_notebook
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.notebook import run_notebook
+    from src.mtool.util import error
     import sys
-
-    list_notebook.list_notebook(scene_root, library_root, library_db, current_scene_db, start, stop)
     
-    assert app.start(["", "1"]) == 0
+    assert app.start(["", "2"], True).__class__ == run_notebook.run_notebook.__class__ 
 
     sys.argv = ["", "r", "1"]
-    assert app.start() == 0
+    assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 
 
-    assert app.start(["", "99"]) == 1
+    try:
+        app.start(["", "99"])
+    except error.NotebookNotFoundError:
+        assert 1
 
-    sys.argv = ["", "r", "99"]
-    assert app.start() == 1
+    try:
+        sys.argv = ["", "r", "99"]
+    except error.NotebookNotFoundError:
+        assert 1
 
     sys.argv = [""]
-    assert app.start() == 1
+    assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 
     
-    sqlite_scene.clear_history(current_scene_db)

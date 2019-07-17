@@ -32,3 +32,7 @@ def display_libraries(libraries):
     """the display function for listing libraries""" 
     libraries = "\n\t".join(list(sum(libraries, ())))
     print(f"Loaded libraries:\n\t{libraries}")
+
+
+def display_remove_success(name):
+    print(f'{name} was successfully removed. ')

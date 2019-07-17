@@ -14,3 +14,4 @@
 /library/*
 /output/*
 .coverage
+.ipynb_checkpoints*
