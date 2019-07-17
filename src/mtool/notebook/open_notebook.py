@@ -2,7 +2,7 @@
 This file opens a notebook in Azure Data Studio.
 """
 
-def open_notebook(args, current_scene_db, library_db, ads_location, test = False):
+def open_notebook(args, current_scene_db, library_db, ads_location, editor, test = False):
     """Opens a notebook, by getting the filename and then opening from the ads binary location"""
     import subprocess
     from src.mtool.util.sqlite import sqlite_notebook
@@ -32,7 +32,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location, test = False
     elif args.environment == "ads":
         subprocess.Popen([ads_location, notebook_filename])
     else:
-        open_jupyter(notebook_filename, test)
+        open_editor(notebook_filename, editor)
     return 0
 
 
@@ -77,3 +77,11 @@ def open_jupyter(filepath, test):
         return rc
     except KeyboardInterrupt:
         sys.exit(0)
+
+
+def open_editor(notebook_filename, editor):
+    import sys, tempfile, os
+    from subprocess import call
+    EDITOR = os.environ.get('EDITOR', editor)
+
+    call([EDITOR, notebook_filename])

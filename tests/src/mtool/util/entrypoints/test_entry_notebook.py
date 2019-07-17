@@ -19,30 +19,39 @@ def test_next_notebook():
 
 
 def test_list_notebook(setup, add_test_library, scene_root, history_db, library_root, library_db, start, stop, current_scene_db):
+    from src.mtool.notebook import list_notebook
     notebook = dummy_object.make_dummy_notebook()
 
-    notebook_list = entry_notebook.list_notebook(notebook, scene_root, history_db, library_root, library_db, start, stop, current_scene_db)
-    assert len(notebook_list) == 3
+    entry_notebook.list_notebook(notebook, scene_root, history_db, library_root, library_db, start, stop, current_scene_db)
+    assert len(list_notebook.list_notebook(library_db,current_scene_db, start, stop)) == 3
 
 def test_search_notebook(setup, add_test_library, scene_root, history_db, library_db, start, stop, current_scene_db):
+    from src.mtool.notebook import search_notebook
     search = dummy_object.make_dummy_search()
 
-    notebooks = entry_notebook.search_notebook(search, scene_root, history_db, library_db, start, stop, current_scene_db)
+    entry_notebook.search_notebook(search, scene_root, history_db, library_db, start, stop, current_scene_db)
+    notebooks = search_notebook.search_notebook(search, library_db, current_scene_db, start, stop)
     assert len(notebooks) == 2
 
 
 def test_open_notebook(setup, add_test_library, scene_root, history_db, library_db, ads_location, current_scene_db,):
     notebook = dummy_object.make_dummy_notebook()
-
-    assert entry_notebook.open_notebook(notebook, scene_root, history_db, library_db, ads_location, current_scene_db) == 0
+    try:
+        entry_notebook.open_notebook(notebook, scene_root, history_db, library_db, ads_location, current_scene_db)
+    except Exception:
+        assert 0
+    else:
+        assert 1
 
 
 def test_run_notebook(setup, add_test_library, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db):
     import os
     from src.mtool.util.sqlite import sqlite_scene
-    notebook = dummy_object.make_dummy_notebook()
+    from src.mtool.scene import history
 
-    assert entry_notebook.run_notebook(notebook, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db) == 0
+    notebook = dummy_object.make_dummy_notebook()
+    entry_notebook.run_notebook(notebook, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db)
+    assert len(history.history(history_db, library_db, current_scene_db)) == 1
     sqlite_scene.clear_history(current_scene_db)
 
 
