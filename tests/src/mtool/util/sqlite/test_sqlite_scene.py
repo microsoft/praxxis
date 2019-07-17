@@ -88,4 +88,4 @@ def init_scene_db(setup, scene_db=""):
     assert set(scene_metadata_columns) == set(['ID', 'Ended', 'Name']) 
     assert set(notebook_list_columns) == set(['ID', 'Data', 'Path'])
     assert set(environment_columns) == set(['Name', 'Value'])
-    assert set(history_columns) == set(['Timestamp', 'Notebook', 'Library'])
+    assert set(history_columns) == set(['Timestamp', 'Notebook', 'Library', 'OutputPath'])

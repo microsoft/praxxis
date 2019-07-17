@@ -13,10 +13,11 @@ def test_init_outfile(setup, outfile_root):
 
     assert os.path.exists(outfile_root)
 
+"""
 def test_next_notebook():    
     notebook = dummy_object.make_dummy_notebook()
     assert entry_notebook.next_notebook(notebook) == "coming soon"
-
+"""
 
 def test_list_notebook(setup, add_test_library, scene_root, history_db, library_root, library_db, start, stop, current_scene_db):
     from src.mtool.notebook import list_notebook

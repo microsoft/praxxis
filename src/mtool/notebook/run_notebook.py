@@ -68,9 +68,8 @@ def telemetry(user_info_db, local_copy, current_scene_id):
         import subprocess
         import os
         import sys
-        f = os.path.join(os.path.dirname(__file__),  ".." , "telemetry")
-        os.chdir(f)
-        subprocess.Popen([sys.executable, "telemetry.py", user_info_db, local_copy, current_scene_id])
+        
+        subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "telemetry", "telemetry.py"), user_info_db, local_copy, current_scene_id])
 
 
 def execute(current_scene_db, notebook, outfile_root):
