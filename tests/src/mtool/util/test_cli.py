@@ -41,7 +41,6 @@ def test_command(setup,
     from src.mtool.telemetry import update_settings 
 
 
-
     list_notebook.list_notebook(library_db, current_scene_db, start, stop)
 
     dummy_input = dummy_object.make_dummy_input("run_notebook")
@@ -146,9 +145,3 @@ def test_command(setup,
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name, True)
     assert result.__class__ == update_settings.update_settings.__class__
  
-
-
-
-
-
-    

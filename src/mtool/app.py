@@ -373,7 +373,8 @@ def start(args=None, test = False):
             error.SceneNotFoundError,
             error.NotDirectoryError,
             error.NotFileError, 
-            error.NotNotebookError)as e:
+            error.NotNotebookError,
+            error.EditorNotFoundError)as e:
         print(e)
         return 1
     
