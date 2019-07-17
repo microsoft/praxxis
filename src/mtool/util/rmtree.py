@@ -6,7 +6,13 @@ def rmtree(root):
     just calls rmtree with the onerror so windows doesn't have a terrible time
     """
     import shutil
-    shutil.rmtree(root, ignore_errors=False, onerror=onerror)
+    import os
+
+    try:
+        shutil.rmtree(root, ignore_errors=False, onerror=onerror)
+    except Exception as e:
+        raise e
+
 
 def onerror(func, path, exc_info):
     """
