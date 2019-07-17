@@ -1,12 +1,12 @@
 from src.mtool.util.entrypoints import entry_library
 
 def test_init_library(setup, library_root, library_db):
-    import shutil 
+    from src.mtool.util import rmtree
     import os 
     
     assert os.path.exists(library_root)
     assert os.path.exists(library_db)
-    shutil.rmtree(library_root)
+    rmtree.rmtree(library_root)
     assert not os.path.exists(library_root)
     
     entry_library.init_library(library_root, library_db)

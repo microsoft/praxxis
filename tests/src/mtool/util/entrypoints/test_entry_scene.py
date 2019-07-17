@@ -2,12 +2,12 @@ from src.mtool.util.entrypoints import entry_scene
 from tests.src.mtool.util import dummy_object
 
 def test_init_scene(setup, scene_root, history_db, default_scene_name):
-    import shutil 
+    from src.mtool.util import rmtree
     import os 
 
     assert os.path.exists(scene_root)
     assert os.path.exists(history_db)
-    shutil.rmtree(scene_root)
+    rmtree.rmtree(scene_root)
     os.remove(history_db)
     assert not os.path.exists(scene_root)
     

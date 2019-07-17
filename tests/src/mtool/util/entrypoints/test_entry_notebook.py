@@ -2,11 +2,11 @@ from src.mtool.util.entrypoints import entry_notebook
 from tests.src.mtool.util import dummy_object
 
 def test_init_outfile(setup, outfile_root):
-    import shutil 
+    from src.mtool.util import rmtree
     import os 
 
     assert os.path.exists(outfile_root)
-    shutil.rmtree(outfile_root)
+    rmtree.rmtree(outfile_root)
     assert not os.path.exists(outfile_root)
 
     entry_notebook.init_outfile(outfile_root)
