@@ -82,7 +82,6 @@ def execute(current_scene_db, notebook, outfile_root):
 
     if (notebook._hasParameters): 
         injects = pull_params(current_scene_db, notebook._environmentVars)
-        print(injects)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:

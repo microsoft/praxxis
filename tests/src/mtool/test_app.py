@@ -187,7 +187,6 @@ def open_notebook(command):
 
 def search_notebook(command):
     namespace = app.main(command)
-    print(namespace)
     assert namespace.command == 's' or namespace.command == "search"
     assert namespace.term == "test"
 

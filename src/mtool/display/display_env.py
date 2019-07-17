@@ -39,4 +39,4 @@ def display_view_env(envs, set_envs):
             if name in set_envs:
                 print(f"{Fore.BLUE}{set_envs[name]}{Style.RESET_ALL}" )
             else:
-                print(name)
+                print(envs[name])
