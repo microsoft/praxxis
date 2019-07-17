@@ -40,8 +40,11 @@ def list_rulesets(arg,
     list_rulesets.list_rulesets(arg, prediction_db, start, end)
     return
 
-def view_ruleset(arg):
-    print("vr")
+def view_ruleset(arg, 
+                    prediction_db = _prediction_db):
+    """calls the function to view all rules in a ruleset"""
+    from src.mtool.predictions.rules_engine import view_rules
+    view_rules.view_rules(arg, prediction_db)
     return
 
 def edit_ruleset(arg, 

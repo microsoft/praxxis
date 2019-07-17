@@ -107,12 +107,12 @@ def get_all_rulesets(prediction_db, start, end):
     return rows
 
 def get_active_rulesets(prediction_db, start, end):
-    """gets all active rulesets"""
+    """gets all active rulesets and paths"""
     from src.mtool.util.sqlite import connection
     
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
-    get_active_rulesets = f'SELECT Name FROM "RulesEngine" WHERE ACTIVE = 1 ORDER BY ID'
+    get_active_rulesets = f'SELECT * FROM "RulesEngine" WHERE ACTIVE = 1 ORDER BY ID'
     cur.execute(get_active_rulesets)
     conn.commit()
     rows = cur.fetchall()
@@ -222,3 +222,18 @@ def list_rules_in_ruleset(ruleset_db):
     conn.close()
     
     return rules
+
+def get_filenames(ruleset_db, rule):
+    """returns a list of all filenames for a rule in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    list_filenames = f'SELECT Filename FROM "Filenames" WHERE Rule = ?'
+    
+    cur.execute(list_filenames, (rule,))
+    conn.commit()
+    filenames = cur.fetchall()
+    conn.close()
+
+    return filenames

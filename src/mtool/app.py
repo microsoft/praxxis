@@ -114,6 +114,7 @@ remove_ruleset_help="remove a ruleset from your machine"
 remove_ruleset_name_help="the name of the ruleset to remove"
 list_rulesets_help="list all rulesets available for the prediction rules engine"
 view_ruleset_help="view all rules in a ruleset"
+view_ruleset_name_help="the name of the ruleset to view rules in"
 edit_ruleset_help="make changes to a ruleset"
 edit_ruleset_name_help="the name of the ruleset to edit"
 edit_ruleset_action_help="'a' to add a rule, 'd' to delete a rule, 'm' to modify a rule"
@@ -287,6 +288,7 @@ def main(command_line=None):
     import_ruleset.set_defaults(which=import_ruleset_command)
 
     view_ruleset = subparsers.add_parser('viewruleset', aliases=['vr'], help=view_ruleset_help)
+    view_ruleset.add_argument('name', help=view_ruleset_name_help)
     view_ruleset.set_defaults(which=view_ruleset_command)
 
     edit_ruleset = subparsers.add_parser('editruleset', aliases=['er'], help=edit_ruleset_help)

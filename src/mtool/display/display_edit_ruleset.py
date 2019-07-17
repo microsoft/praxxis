@@ -39,8 +39,6 @@ def display_predicted_notebooks_input():
     print("\nPREDICTIONS: Type the ordinals of the notebooks to predict as next steps, in order")
     return input("Enter notebook ordinals as a comma-separated list: ")
 
-def display_rule(name, filenames, outputs, predictions):
-    print(f"{name}: {filenames} {outputs} = {predictions}")
 
 def display_predictions(predictions):
     print("Predicted notebooks for this rule: ")

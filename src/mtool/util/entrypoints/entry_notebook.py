@@ -7,6 +7,7 @@ from src.mtool.util.roots import _history_db
 from src.mtool.util.roots import _azure_data_studio_location
 from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
+from src.mtool.util.roots import _prediction_db
 
 def init_outfile(outfile_root):
     import os
@@ -97,7 +98,10 @@ def next_notebook(arg,
                     user_info_db=_user_info_db,
                     scene_root = _scene_root,
                     history_db = _history_db, 
-                    current_scene_db = None):
+                    current_scene_db = None,
+                    prediction_db = _prediction_db,
+                    start = _query_start,
+                    end = _query_end):
     """calls the function to get the next notebook"""
     from src.mtool.notebook import what_next
 
@@ -105,7 +109,7 @@ def next_notebook(arg,
         from src.mtool.util.roots import get_current_scene_db
         current_scene_db = get_current_scene_db(scene_root, history_db)
 
-    what_next.what_next(arg, user_info_db, current_scene_db)
+    what_next.what_next(arg, user_info_db, current_scene_db, prediction_db, start, end)
 
 
 

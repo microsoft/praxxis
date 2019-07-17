@@ -6,7 +6,6 @@ def display_init_prediction_root(root):
     """the display function for creating new prediction folder"""
     print(f"Created predictions directory at {root}")
 
-
 def display_init_prediction_db(db_root):
     """the display function for initializing the prediction db"""
     print(f"Created predictions database at {db_root}")
@@ -46,6 +45,10 @@ def display_rule_list(ruleset, rules):
     for rule in rules:
         print(f'\t{i}.\t{rule[0]}')
         i += 1
+
+def display_rule(name, filenames, outputs, predictions):
+    print(f"{name}: {filenames} {outputs} = {predictions}")
+
 
 def display_rule_deletion(ruleset, rule):
     """the display function for deleting a rule"""

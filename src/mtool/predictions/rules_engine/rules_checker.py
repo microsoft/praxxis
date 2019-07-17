@@ -6,8 +6,15 @@ Rules are defined as:
 if either left-hand list is empty, this is interpreted as "all"
 """
 
-def rules_check(rules, filename, output):
-    for rule in rules:
-        if filename in rules[0] & output in rules[1]:
-            return rules[2]
-    return -1
+def rules_check(prediction_db, filename, output, start, end):
+    from src.mtool.util.sqlite import sqlite_prediction
+
+    rulesets = sqlite_prediction.get_active_rulesets(prediction_db, start, end)
+    print(rulesets)
+
+    for ruleset in rulesets:
+        rules = sqlite_prediction.list_rules_in_ruleset(ruleset[1])
+        print(rules)
+        for rule in rules:
+            filenames = sqlite_prediction.get_filenames(ruleset[1], rule)
+            print(filenames)
