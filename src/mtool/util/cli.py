@@ -91,7 +91,7 @@ def command(argument,
     
     if(test):
         return func
-        
+
     try:
         output = func(argument)
     except Exception as e:

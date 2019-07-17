@@ -61,6 +61,22 @@ def telemetry_db(init_root):
 
 
 @pytest.fixture(scope="session")
+def prediction_root(init_root):
+    """
+    defines the prediction root 
+    """
+    return os.path.join(init_root, "prediction")
+
+
+@pytest.fixture(scope="session")
+def prediction_db(prediction_root):
+    """
+    defines the prediction db location 
+    """
+    return os.path.join(prediction_root, "prediction.db")
+
+
+@pytest.fixture(scope="session")
 def ads_location(init_root):
     """
     defines the ads location for opening
@@ -95,3 +111,4 @@ def start():
 @pytest.fixture(scope="session")
 def stop():
     return 100
+
