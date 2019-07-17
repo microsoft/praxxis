@@ -274,20 +274,28 @@ def get_outputs_for_rules(ruleset_db, ruleset):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    list_outputs = f'SELECT Output, Rule FROM "OutputString" WHERE Rule IN (?)'
-    ruleslist = ', '.join('"{0}"'.format(rule) for rule in ruleset)
-    print(ruleslist)
-    cur.execute(list_outputs, (ruleslist,)) #, (ruleslist,))
+    ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)    
+    list_outputs = f'SELECT Output, Rule FROM "OutputString" WHERE Rule IN ({ruleslist})'
+    cur.execute(list_outputs)
     conn.commit()
     outputs = cur.fetchall()
-    print(outputs)
     conn.close()
 
     return outputs
 
-def get_predictions(ruleset_db, rule):
-    """returns the ordered list of predictions for a rule"""
+def get_predictions(ruleset_db, ruleset):
+    """returns the ordered list of predictions for a set of rule matches"""
     from src.mtool.util.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
+    ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
+    get_predictions = f'SELECT DISTINCT PredictedNotebook FROM "Predictions" WHERE Rule IN ({ruleslist}) ORDER BY Position ASC'
+
+    cur.execute(get_predictions)
+    conn.commit()
+    predictions = cur.fetchall()
+    conn.close()
+
+    print(predictions)
+    return predictions

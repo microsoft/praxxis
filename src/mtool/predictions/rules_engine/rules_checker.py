@@ -11,7 +11,6 @@ def rules_check(prediction_db, filename, output_path, start, end):
 
     rulesets = sqlite_prediction.get_active_rulesets(prediction_db, start, end)
 
-    print(filename)
     rulesmatch = []
     hit = set()
     for ruleset in rulesets:
@@ -24,16 +23,13 @@ def rules_check(prediction_db, filename, output_path, start, end):
             #get output
             from src.mtool.notebook.notebook import get_output_from_filename
             output = get_output_from_filename(output_path)
-            print(output)
-
-        print(rulesmatch)
+ 
         outputs = sqlite_prediction.get_outputs_for_rules(ruleset[2], rulesmatch)
-        print(outputs)
         for omatch in outputs:
             if omatch[0] in output:
                 hit.add(omatch[1])
-
-    
-    print(hit)
+    sqlite_prediction.get_predictions(ruleset[2], hit)
             
+
+    print(hit)
     
