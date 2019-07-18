@@ -15,7 +15,7 @@ def test_help_formatter():
 
     formatter = helpFormatter(argparse.RawDescriptionHelpFormatter)
     data = formatter._format_action(notebook)
-    assert data.split('\n')[0] == "Notebooks: "
+    assert data.split('\n')[1] == "Notebooks: "
     data = formatter._format_action(scene)
     assert data.split('\n')[0] == "Scene: "
     data = formatter._format_action(environment)
