@@ -45,7 +45,6 @@ def test(loc):
                 sequence.append(filename)
             sequences.append(sequence)
 
-    
     return sequences
 
     """http://nmnode-0-svc:50070/webhdfs/v1/mtool?op=LISTSTATUS"""
