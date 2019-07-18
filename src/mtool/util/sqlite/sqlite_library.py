@@ -19,6 +19,7 @@ def init_library_db(library_db):
     conn.commit()
     conn.close()
 
+
 def clear_loaded_libararies(library_db):
     from src.mtool.util.sqlite import connection
 

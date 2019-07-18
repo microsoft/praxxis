@@ -248,7 +248,7 @@ def get_recent_history(db_file, seq_length):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    get_recent_history = f'SELECT Notebook, Path FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    get_recent_history = f'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
     cur.execute(get_recent_history, (seq_length,))
     conn.commit()
     rows = cur.fetchall()

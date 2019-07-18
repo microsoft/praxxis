@@ -24,7 +24,6 @@ src/deploy-training/mtool-training-app/spec.yaml
 src/deploy-training/mtool-training-app/train.py
 src/deploy-training/mtool-training-app/train_utils.py
 src/deploy-training/mtool-training-app/requirements.txt
-src/deploy-training/mtool-training-app/mtool_model.py
-src/deploy-training/mtool-training-app/mtool_model_utils.py
+.coverage*
 .ipynb_checkpoints*
 .coverage*

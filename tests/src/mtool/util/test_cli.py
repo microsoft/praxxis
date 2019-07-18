@@ -43,7 +43,6 @@ def test_command(setup,
     from src.mtool.telemetry import update_settings 
 
 
-
     list_notebook.list_notebook(library_db, current_scene_db, start, stop)
 
     dummy_input = dummy_object.make_dummy_input("run_notebook")

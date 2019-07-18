@@ -24,7 +24,7 @@ def init_ruleset(prediction_db, ruleset_name, ruleset_db):
     create_rules_table = f'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
     create_filenames_table = f'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
     create_outputs_table = f'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_prediction_table = f'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_prediction_table = f'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, Path TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
 
     cur.execute(create_rules_table)
     cur.execute(create_filenames_table)
@@ -238,6 +238,20 @@ def get_filenames(ruleset_db, rule):
 
     return filenames
 
+def get_filenames_by_rule(ruleset_db):
+    """returns a list of all filenames for all rules in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    list_filenames = f'SELECT Filename, Rule FROM "Filenames" ORDER BY Rule'
+    
+    cur.execute(list_filenames)
+    conn.commit()
+    filenames = cur.fetchall()
+    conn.close()
+
+    return filenames
     
 def get_outputs(ruleset_db, rule):
     """returns a list of all outputs for a rule in a ruleset"""
@@ -253,3 +267,35 @@ def get_outputs(ruleset_db, rule):
     conn.close()
 
     return outputs
+
+def get_outputs_for_rules(ruleset_db, ruleset):
+    """returns a list of all outputs for all rules in a ruleset"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)    
+    list_outputs = f'SELECT Output, Rule FROM "OutputString" WHERE Rule IN ({ruleslist})'
+    cur.execute(list_outputs)
+    conn.commit()
+    outputs = cur.fetchall()
+    conn.close()
+
+    return outputs
+
+def get_predictions(ruleset_db, ruleset):
+    """returns the ordered list of predictions for a set of rule matches"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(ruleset_db)
+    cur = conn.cursor()
+    ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
+    get_predictions = f'SELECT DISTINCT PredictedNotebook FROM "Predictions" WHERE Rule IN ({ruleslist}) ORDER BY Position ASC'
+
+    cur.execute(get_predictions)
+    conn.commit()
+    predictions = cur.fetchall()
+    conn.close()
+
+    print(predictions)
+    return predictions

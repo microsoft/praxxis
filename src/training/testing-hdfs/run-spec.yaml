@@ -1,0 +1,4 @@
+name: testing-hdfs
+version: v1
+inputs:
+  loc: "7"

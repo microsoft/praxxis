@@ -34,9 +34,10 @@ def delete_scene(args, scene_root, history_db):
     directory = os.path.join(scene_root, name)
 
     if os.path.exists(directory):
+        from src.mtool.util import rmtree
         try:
             sqlite_scene.delete_scene(history_db, name)
-            shutil.rmtree(directory)
+            rmtree.rmtree(directory)
             display_scene.display_delete_scene_success(name)
             return name
         except error.LastActiveSceneError as e:
