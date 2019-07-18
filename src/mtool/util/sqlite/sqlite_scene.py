@@ -308,3 +308,18 @@ def clear_history(current_scene_db):
     cur.execute(clear_history)
     conn.commit()
     conn.close()
+
+def get_notebook_path(current_scene_db, notebook_name):
+    """returns the path given a valid notebook name"""
+    from src.mtool.util.sqlite import connection
+
+    conn = connection.create_connection(current_scene_db)
+    cur = conn.cursor()
+    get_path = f'SELECT Path FROM "NotebookList" WHERE Data = ?'
+
+    cur.execute(get_path, (notebook_name,))
+    conn.commit()
+    path = cur.fetchone()
+    conn.close()
+    
+    return path
