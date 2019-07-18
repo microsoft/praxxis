@@ -91,3 +91,21 @@ class NotNotebookError(Exception):
     def __str__(self):
         from src.mtool.display import display_error
         return str(display_error.not_notebook_error(self.name))
+
+
+class EditorNotFoundError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.editor_not_found_error(self.name))
+
+
+class ADSNotFoundError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.ads_not_found_error(self.name))
