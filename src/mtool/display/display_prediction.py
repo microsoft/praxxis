@@ -53,3 +53,11 @@ def display_rule(name, filenames, outputs, predictions):
 def display_rule_deletion(ruleset, rule):
     """the display function for deleting a rule"""
     print(f"Rule {rule} successfully deleted from {ruleset}")
+
+def display_predictions(predictions):
+    """the display function for displaying a list of predictions"""
+    i = 1
+    print("Predicted Notebooks: ")
+    for nb in predictions:
+        print(f'\t{i}.\t{nb[0]}')
+        i += 1

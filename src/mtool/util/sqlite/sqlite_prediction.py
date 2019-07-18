@@ -9,7 +9,7 @@ def init_prediction_db(prediction_db):
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
     create_rules_table = f'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, Active INTEGER)'
-    create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Link TEXT)'
+    create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT)'
     cur.execute(create_rules_table)
     cur.execute(create_models_table)
     conn.commit()
@@ -297,5 +297,4 @@ def get_predictions(ruleset_db, ruleset):
     predictions = cur.fetchall()
     conn.close()
 
-    print(predictions)
     return predictions

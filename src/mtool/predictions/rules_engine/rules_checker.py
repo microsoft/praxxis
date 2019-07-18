@@ -13,6 +13,7 @@ def rules_check(prediction_db, filename, output_path, start, end):
 
     rulesmatch = []
     hit = set()
+    predictions = []
     for ruleset in rulesets:
         filenames = sqlite_prediction.get_filenames_by_rule(ruleset[2])
         for fmatch in filenames:
@@ -28,9 +29,7 @@ def rules_check(prediction_db, filename, output_path, start, end):
         for omatch in outputs:
             if omatch[0] in output:
                 hit.add(omatch[1])
-    sqlite_prediction.get_predictions(ruleset[2], hit)
+        predictions.extend(sqlite_prediction.get_predictions(ruleset[2], hit))
             
-
-    print(">>")
-    print(hit)
+    return predictions
     

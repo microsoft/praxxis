@@ -5,6 +5,7 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
     from src.mtool.display import display_edit_ruleset
     from src.mtool.predictions.rules_engine import rules
     from src.mtool.display.display_error import predictions_ordinal_not_in_list_error
+    from src.mtool.notebook.list_notebook import list_notebook
 
     if hasattr(args, "name"):
         name = args.name
@@ -15,22 +16,23 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
 
     ruleset_db = sqlite_prediction.get_ruleset_path(prediction_db, name)
 
+    # get a name for the rule
     rulename = display_edit_ruleset.display_get_rule_name()
     
-
-    from src.mtool.notebook import list_notebook
-    list_notebook.list_notebook(library_db, current_scene_db, start, stop)
-
+    # get filenames 
+    list_notebook(library_db, current_scene_db, start, stop)
     filenames_raw = display_edit_ruleset.display_filename_input()
     filenames_with_ords = [string.strip().strip('"').strip('\'') for string in filenames_raw.split(",")]
     filenames = get_filenames_from_ordinals(filenames_with_ords, current_scene_db)
     display_edit_ruleset.display_filenames(filenames)
 
+    # get output strings
     output_raw = display_edit_ruleset.display_output_input()
     output = [item.strip().strip('"').strip('\'') for item in output_raw.split(",")]
     display_edit_ruleset.display_outputs(output)
 
-    list_notebook.list_notebook(library_db, current_scene_db, start, stop)
+    # get predicted notebooks
+    list_notebook(library_db, current_scene_db, start, stop)
     predicted_raw = display_edit_ruleset.display_predicted_notebooks_input()
     predicted_with_ords = [prediction.strip() for prediction in predicted_raw.split(",")]
     predicted = get_filenames_from_ordinals(predicted_with_ords, current_scene_db, allow_errors=False)
@@ -42,9 +44,9 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
         predicted = get_filenames_from_ordinals(predicted_with_ords, current_scene_db, allow_errors=False)
 
     display_edit_ruleset.display_predictions(predicted)
-        
-    display_prediction.display_rule(rulename, filenames, output, predicted)
 
+    # display total rule and add it to db        
+    display_prediction.display_rule(rulename, filenames, output, predicted)
     sqlite_prediction.add_rule(ruleset_db, rulename, filenames, output, predicted)
     
         

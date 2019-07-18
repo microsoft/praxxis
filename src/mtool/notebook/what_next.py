@@ -10,6 +10,7 @@ from src.mtool.predictions.rules_engine import rules_checker
 
 
 def what_next(args, user_info_db, current_scene_db, prediction_db, start, end):
+    from src.mtool.display import display_prediction
     data = sqlite_scene.get_recent_history(current_scene_db, 5)
     if data == []:
         print("handle empty history here")
@@ -17,6 +18,7 @@ def what_next(args, user_info_db, current_scene_db, prediction_db, start, end):
         sys.exit(1)
 
     rules_based = rules_checker.rules_check(prediction_db, data[-1][0], data[-1][1], start, end)
+    display_prediction.display_predictions(rules_based)
     #suggestions = score.predict(data)
     #print(suggestions)
 
