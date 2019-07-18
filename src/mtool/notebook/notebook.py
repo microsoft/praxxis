@@ -16,7 +16,7 @@ def get_notebook_by_ordinal(current_scene_db, name):
             return(name[0])   
 
 def get_output_from_filename(filename):
-    """gets only cell outputs from filename"""
+    """gets only cell outputs from filename""" 
     import json
     
     linelist = []

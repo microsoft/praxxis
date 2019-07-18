@@ -31,5 +31,6 @@ def rules_check(prediction_db, filename, output_path, start, end):
     sqlite_prediction.get_predictions(ruleset[2], hit)
             
 
+    print(">>")
     print(hit)
     
