@@ -47,7 +47,7 @@ def init_scene_db(setup, scene_db=""):
     cur = conn.cursor()
     check_scene_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneMetadata';"
     check_notebook_list_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookList';"
-    check_environment_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Environment';"
+    check_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='parameter';"
     check_history_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='History';"
 
     cur.execute(check_scene_metadata_table)
@@ -56,20 +56,20 @@ def init_scene_db(setup, scene_db=""):
     cur.execute(check_notebook_list_table)
     notebook_list = bool(cur.fetchone()[0])
 
-    cur.execute(check_environment_table)
-    environment = bool(cur.fetchone()[0])
+    cur.execute(check_parameter_table)
+    parameter = bool(cur.fetchone()[0])
 
     cur.execute(check_history_table)
     history = bool(cur.fetchone()[0])
 
     assert scene_metadata 
     assert notebook_list
-    assert environment
+    assert parameter
     assert history
 
     check_scene_metadata_columns = f"SELECT * FROM 'SceneMetadata';"
     check_notebook_list_columns = f"SELECT * FROM 'NotebookList';"
-    check_environment_columns = f"SELECT * FROM 'Environment';"
+    check_parameter_columns = f"SELECT * FROM 'parameter';"
     check_history_columns = f"SELECT * FROM 'History';"
 
     cur.execute(check_scene_metadata_columns)
@@ -78,8 +78,8 @@ def init_scene_db(setup, scene_db=""):
     cur.execute(check_notebook_list_columns)
     notebook_list_columns = [description[0] for description in cur.description]
 
-    cur.execute(check_environment_columns)
-    environment_columns = [description[0] for description in cur.description]
+    cur.execute(check_parameter_columns)
+    parameter_columns = [description[0] for description in cur.description]
 
     cur.execute(check_history_columns)
     history_columns = [description[0] for description in cur.description]
@@ -87,5 +87,5 @@ def init_scene_db(setup, scene_db=""):
 
     assert set(scene_metadata_columns) == set(['ID', 'Ended', 'Name']) 
     assert set(notebook_list_columns) == set(['ID', 'Data', 'Path'])
-    assert set(environment_columns) == set(['Name', 'Value'])
+    assert set(parameter_columns) == set(['Name', 'Value'])
     assert set(history_columns) == set(['Timestamp', 'Notebook', 'Library', 'OutputPath'])

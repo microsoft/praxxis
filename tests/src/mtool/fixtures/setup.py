@@ -1,5 +1,5 @@
 """
-This file sets up the environment for the rest of the tests
+This file sets up the parameter for the rest of the tests
 """
 import pytest
 import os
@@ -14,7 +14,7 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
     from src.mtool.util import roots
     from src.mtool.scene import new_scene
     from src.mtool.scene import list_scene
-    from src.mtool.environment import list_env
+    from src.mtool.parameter import list_param
     from src.mtool.library import list_library
     from src.mtool.notebook import list_notebook
     from src.mtool.util.sqlite import sqlite_telemetry
@@ -51,7 +51,7 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
     yield 
     current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     assert len(list_scene.list_scene(init_root, history_db)) == 1
-    assert len(list_env.list_env(current_scene_db, start, stop)) == 0
+    assert len(list_param.list_param(current_scene_db, start, stop)) == 0
     assert len(list_library.list_library(library_db)) == 0
     assert len(list_notebook.list_notebook(library_db, current_scene_db, start, stop)) == 0
     

@@ -361,7 +361,7 @@ def start(args=None, test = False):
     try:
         func = cli.command(main(), test=test)
     except (error.EndEndedSceneError, 
-            error.EnvNotFoundError, 
+            error.ParamNotFoundError, 
             error.LastActiveSceneError, 
             error.LibraryNotFoundError, 
             error.NotebookNotFoundError, 

@@ -17,7 +17,7 @@ class Dummy_Object():
     _path = ""
     which = ""
     path = ""
-    environment=""
+    parameter=""
 
     def getpath(self):
         """returns the path of the notebook"""
@@ -31,7 +31,7 @@ def make_dummy_object(name="", value="", term="", notebook="", html=""):
     return dummy_object
 
 
-def make_dummy_notebook(html="", path="", environment=""):
+def make_dummy_notebook(html="", path="", parameter=""):
     import os
 
     dummy_notebook = Dummy_Object()
@@ -40,7 +40,7 @@ def make_dummy_notebook(html="", path="", environment=""):
     dummy_notebook.name = "test_notebook"
     dummy_notebook._path = os.path.join(path, "test_notebook.ipynb")
     dummy_notebook._hasParameters = False
-    dummy_notebook.environment = environment
+    dummy_notebook.parameter = parameter
     dummy_notebook.html = html
     return dummy_notebook
 
@@ -58,11 +58,11 @@ def make_dummy_notebook_params(html = "", path=""):
     return dummy_notebook
 
 
-def make_dummy_notebook_envs():
-    dummy_notebook_envs = Dummy_Object()
+def make_dummy_notebook_params():
+    dummy_notebook_params = Dummy_Object()
 
-    dummy_notebook_envs.environment = [('text_to_print', '"hello world"'), ('times', '4')]
-    return dummy_notebook_envs
+    dummy_notebook_params.parameter = [('text_to_print', '"hello world"'), ('times', '4')]
+    return dummy_notebook_params
 
 
 
@@ -78,11 +78,11 @@ def make_dummy_search():
     return dummy_search
 
 
-def make_dummy_environment(name, value):
-    dummy_environment = Dummy_Object()
-    dummy_environment.name = name
-    dummy_environment.value = value
-    return dummy_environment
+def make_dummy_parameter(name, value):
+    dummy_parameter = Dummy_Object()
+    dummy_parameter.name = name
+    dummy_parameter.value = value
+    return dummy_parameter
 
 
 def make_dummy_action(dest, choices, help):

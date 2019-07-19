@@ -4,103 +4,103 @@ from src.mtool.util.roots import _query_start
 from src.mtool.util.roots import _query_end
 from src.mtool.util.roots import _library_db
 
-def set_env(arg, 
+def set_param(arg, 
             scene_root = _scene_root,
             history_db = _history_db,
             current_scene_db = None):
-    """calls the function to set an environment"""
-    from src.mtool.environment import set_env
+    """calls the function to set an parameter"""
+    from src.mtool.parameter import set_param
     from src.mtool.util import roots
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    set_env.set_env(arg, scene_root, history_db, current_scene_db)
+    set_param.set_param(arg, scene_root, history_db, current_scene_db)
 
 
-def delete_env(arg, 
+def delete_param(arg, 
                scene_root = _scene_root,
                history_db = _history_db,
                current_scene_db = None):
-    """calls the function to delete an environment"""
-    from src.mtool.environment import delete_env
+    """calls the function to delete an parameter"""
+    from src.mtool.parameter import delete_param
     from src.mtool.util import roots
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    delete_env.delete_env(arg, scene_root, history_db, current_scene_db)
+    delete_param.delete_parameter(arg, scene_root, history_db, current_scene_db)
     
 
-def list_env(arg,
+def list_param(arg,
              scene_root = _scene_root,
              history_db = _history_db,
              query_start = _query_start,
              query_end = _query_end, 
              current_scene_db = None):
-    """calls the function to list environments in current scene"""
-    from src.mtool.environment import list_env   
+    """calls the function to list parameters in current scene"""
+    from src.mtool.parameter import list_param   
     from src.mtool.util import roots
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_env.list_env(current_scene_db, query_start, query_end)
+    list_param.list_param(current_scene_db, query_start, query_end)
 
 
-def view_library_env(arg, 
+def view_library_param(arg, 
                      scene_root = _scene_root,
                      history_db = _history_db,
                      library_db = _library_db,
                      current_scene_db = None):
-    from src.mtool.environment import list_env
+    from src.mtool.parameter import list_param
     from src.mtool.util import roots
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_env.list_library_env(arg, library_db, current_scene_db)
+    list_param.list_library_param(arg, library_db, current_scene_db)
 
 
-def view_notebook_env(arg, 
+def view_notebook_param(arg, 
                       scene_root = _scene_root,
                       library_db = _library_db,
                       history_db = _history_db,
                       current_scene_db = None):
-    from src.mtool.environment import list_env
+    from src.mtool.parameter import list_param
     from src.mtool.util import roots
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_env.list_notebook_env(arg, library_db, current_scene_db)
+    list_param.list_notebook_param(arg, library_db, current_scene_db)
  
 
-def pull_notebook_env(arg,
+def pull_notebook_param(arg,
                       library_db = _library_db,
                       scene_root = _scene_root,
                       history_db = _history_db,
                       current_scene_db = None):
-    from src.mtool.environment import pull_env
+    from src.mtool.parameter import pull_param
     from src.mtool.util import roots
 
 
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    pull_env.pull_notebook_environment(arg, library_db, current_scene_db)
+    pull_param.pull_notebook_parameter(arg, library_db, current_scene_db)
 
 
-def pull_library_env(arg,
+def pull_library_param(arg,
                       library_db = _library_db,
                       scene_root = _scene_root,
                       history_db = _history_db,
                       current_scene_db = None):
-    from src.mtool.environment import pull_env
+    from src.mtool.parameter import pull_param
     from src.mtool.util import roots
 
 
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    pull_env.pull_library_environment(arg, library_db, current_scene_db)
+    pull_param.pull_library_parameter(arg, library_db, current_scene_db)

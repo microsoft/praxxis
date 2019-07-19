@@ -20,7 +20,7 @@ def test_command(setup,
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.notebook import list_notebook
     from src.mtool.notebook import run_notebook
-    from src.mtool.environment import list_env
+    from src.mtool.parameter import list_param
     from src.mtool.notebook import open_notebook
     from src.mtool.notebook import search_notebook
     from src.mtool.scene import history
@@ -35,10 +35,10 @@ def test_command(setup,
     from src.mtool.library import add_library 
     from src.mtool.library import remove_library 
     from src.mtool.library import list_library 
-    from src.mtool.environment import delete_env
-    from src.mtool.environment import set_env
-    from src.mtool.environment import list_env
-    from src.mtool.environment import pull_env
+    from src.mtool.parameter import delete_param
+    from src.mtool.parameter import set_param
+    from src.mtool.parameter import list_param
+    from src.mtool.parameter import pull_param
     from src.mtool.library import sync_library
     from src.mtool.telemetry import update_settings 
 
@@ -50,9 +50,9 @@ def test_command(setup,
     sqlite_scene.clear_history(current_scene_db)
     assert result.__class__ == run_notebook.run_notebook.__class__
 
-    dummy_input = dummy_object.make_dummy_input("view_notebook_env")
+    dummy_input = dummy_object.make_dummy_input("view_notebook_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == list_env.list_notebook_env.__class__
+    assert result.__class__ == list_param.list_notebook_param.__class__
 
     dummy_input = dummy_object.make_dummy_input("open_notebook")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
@@ -114,29 +114,29 @@ def test_command(setup,
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
     assert result.__class__ == list_library.list_library.__class__
 
-    dummy_input = dummy_object.make_dummy_input("set_env")
+    dummy_input = dummy_object.make_dummy_input("set_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == set_env.set_env.__class__
+    assert result.__class__ == set_param.set_param.__class__
 
-    dummy_input = dummy_object.make_dummy_input("delete_env")
+    dummy_input = dummy_object.make_dummy_input("delete_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == delete_env.delete_env.__class__
+    assert result.__class__ == delete_param.delete_parameter.__class__
 
-    dummy_input = dummy_object.make_dummy_input("list_env")
+    dummy_input = dummy_object.make_dummy_input("list_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == list_env.list_env.__class__
+    assert result.__class__ == list_param.list_param.__class__
 
-    dummy_input = dummy_object.make_dummy_input("view_library_env")
+    dummy_input = dummy_object.make_dummy_input("view_library_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == list_env.list_library_env.__class__
+    assert result.__class__ == list_param.list_library_param.__class__
 
-    dummy_input = dummy_object.make_dummy_input("pull_notebook_env")
+    dummy_input = dummy_object.make_dummy_input("pull_notebook_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == pull_env.pull_notebook_environment.__class__
+    assert result.__class__ == pull_param.pull_notebook_parameter.__class__
 
-    dummy_input = dummy_object.make_dummy_input("pull_library_env")
+    dummy_input = dummy_object.make_dummy_input("pull_library_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
-    assert result.__class__ == pull_env.pull_library_environment.__class__
+    assert result.__class__ == pull_param.pull_library_parameter.__class__
 
     dummy_input = dummy_object.make_dummy_input("sync_library")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
