@@ -43,7 +43,7 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
         predicted_with_ords = [prediction.strip() for prediction in predicted_raw.split(",")]
         predicted = get_filenames_from_ordinals(predicted_with_ords, current_scene_db, allow_errors=False)
 
-    display_edit_ruleset.display_rulesengines(predicted)
+    display_edit_ruleset.display_prediction_list(predicted)
 
     # display total rule and add it to db        
     display_rulesengine.display_rule(rulename, filenames, output, predicted)
