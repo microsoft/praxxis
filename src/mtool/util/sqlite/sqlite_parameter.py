@@ -51,7 +51,7 @@ def get_library_parameters(library_db, library_name):
 
 
 def list_param(current_scene_db, start, end):
-    """returns a list of set parameter variables in the scene"""
+    """returns a list of set parameters in the scene"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
@@ -65,7 +65,7 @@ def list_param(current_scene_db, start, end):
 
 
 def get_all_param(current_scene_db):
-    """returns a list of set parameter variables in the scene"""
+    """returns a list of set parameters in the scene"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)

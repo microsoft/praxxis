@@ -72,7 +72,7 @@ def sync_notebooks(library_root, library_db, library_name):
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     #create a notebook object out of the file data
                     for parameter in notebook_data._parameters:
-                        #load the parameter variables out of the notebook object and into the db
+                        #load the parameters out of the notebook object and into the db
                         sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1])
                     display_library.display_loaded_notebook(name)
                     #display that the library has been successfully loaded

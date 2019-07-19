@@ -1,9 +1,9 @@
 """
-This file lists all of the parameter variables
+This file lists all of the parameters
 """
 
 def list_param(current_scene_db, start, end):
-    """lists the parameter variables in scene"""
+    """lists the parameters in scene"""
     import os
     from src.mtool.util.sqlite import sqlite_scene
     from src.mtool.util.sqlite import sqlite_parameter

@@ -5,7 +5,7 @@ def test_view_library_param(setup, add_test_library, scene_root, history_db, lib
     from src.mtool.parameter import list_param
 
     library_params = list_param.list_library_param("test_notebooks", library_db, current_scene_db)
-    params = dummy_object.make_dummy_notebook_params()
+    params = dummy_object.make_dummy_params()
 
     entry_parameter.view_library_param("test_notebooks", scene_root, history_db, library_db, current_scene_db)
     assert params.parameter == library_params
@@ -45,8 +45,8 @@ def test_view_notebook_param(setup, add_test_library, scene_root, library_db, hi
     import os
     from src.mtool.parameter import list_param
 
-    notebook = dummy_object.make_dummy_notebook_params()
-    dummy_params = dummy_object.make_dummy_notebook_params()
+    notebook = dummy_object.make_dummy_notebook_with_params()
+    dummy_params = dummy_object.make_dummy_params()
     entry_parameter.view_notebook_param(notebook, scene_root, library_db, history_db, current_scene_db)
 
     params = list_param.list_notebook_param(notebook, library_db, current_scene_db)

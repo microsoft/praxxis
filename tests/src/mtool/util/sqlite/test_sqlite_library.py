@@ -50,7 +50,7 @@ def test_init_library_db(setup, library_db):
     cur.execute(check_notebook_parameter_columns)
     notebook_parameter_columns = [description[0] for description in cur.description]
 
-    assert library_metadata_columns == ['Root', 'Readme', 'Library']
-    assert notebook_columns == ['Root', 'Notebook', 'LibraryName']
-    assert parameter_columns == ['Parameter', 'Value']
+    assert library_metadata_columns == ['Root', 'Readme', 'Name']
+    assert notebook_columns == ['Root', 'Name', 'LibraryName']
+    assert parameter_columns == ['Name', 'Value']
     assert notebook_parameter_columns == ['ParameterName', 'NotebookName']

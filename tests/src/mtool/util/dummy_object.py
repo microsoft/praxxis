@@ -45,7 +45,7 @@ def make_dummy_notebook(html="", path="", parameter=""):
     return dummy_notebook
 
 
-def make_dummy_notebook_params(html = "", path=""):
+def make_dummy_notebook_with_params(html = "", path=""):
     import os
 
     dummy_notebook = Dummy_Object()
@@ -58,7 +58,7 @@ def make_dummy_notebook_params(html = "", path=""):
     return dummy_notebook
 
 
-def make_dummy_notebook_params():
+def make_dummy_params():
     dummy_notebook_params = Dummy_Object()
 
     dummy_notebook_params.parameter = [('text_to_print', '"hello world"'), ('times', '4')]

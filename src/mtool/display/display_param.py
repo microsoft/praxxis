@@ -9,7 +9,7 @@ def display_delete_param(name):
     
 def display_list_param(params):
     """the display function for listing parameters"""
-    print(f"parameter Variables: ")
+    print(f"parameters: ")
     if params == []:
         print("\tNone Set")
         return

@@ -74,7 +74,7 @@ class Notebook:
 
 
     def extract_paramVars(self, source):
-        """extracts the parameter variables"""
+        """extracts the parameters"""
         if(isinstance(source, list)):
             lines = source
         else:
