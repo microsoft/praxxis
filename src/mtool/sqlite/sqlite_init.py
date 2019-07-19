@@ -5,7 +5,7 @@ def init_library_db(library_db):
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Path TEXT PRIMARY KEY, Readme TEXT, Library TEXT)'
-    create_notebook_table = f'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
+    create_notebook_table = f'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, RawUrl TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
     create_parameter_table = f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
     create_notebook_parameter_table = f'CREATE TABLE "NotebookDefaultParam" (Parameter TEXT, Value TEXT, Notebook TEXT, Library TEXT,  PRIMARY KEY(Parameter, Library, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameters"(Parameter), FOREIGN KEY(Library) REFERENCES "Library"(Library))'
     cur.execute(create_metadata_table)
@@ -70,7 +70,7 @@ def init_scene(scene_db, name):
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Scene TEXT)'
-    create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Path TEXT)'
+    create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Library TEXT, Path TEXT, RawUrl TEXT)'
     create_parameter_table=f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
     create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
     init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Scene) values("{scene_id}", 0, "{name}")'
@@ -95,6 +95,7 @@ def init_history(history_db, scene_name):
     cur.execute(create_scene_history_table)
     conn.commit()
     conn.close()
+
 
 def init_user_info(telemetry_db, send_telemetry=1):
     """From name of database file, creates and initializes user info"""

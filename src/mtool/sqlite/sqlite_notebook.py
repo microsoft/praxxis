@@ -8,7 +8,7 @@ def list_notebooks(library_db, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Notebook, Path FROM "Notebooks" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" LIMIT {start}, {end}'
     cur.execute(list_libraries)
     rows = cur.fetchall()
     conn.close()
@@ -57,7 +57,7 @@ def write_list(current_scene_db, notebook_list, path_list = []):
     cur = conn.cursor()
     clear_list = f'DELETE FROM "NotebookList"'
     reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='NotebookList'"
-    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path) VALUES (?,?)'
+    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?,?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
     if path_list == []:
