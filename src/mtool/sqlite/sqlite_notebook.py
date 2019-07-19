@@ -38,7 +38,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     from src.mtool.util import error
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    query = f'SELECT Data FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
+    query = f'SELECT Notebook FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
     cur.execute(query)
     conn.commit()
     item = cur.fetchone()
@@ -82,7 +82,7 @@ def get_notebook_path(library_db, notebook, library):
     if path == None:
         return None
     return path[0]
-    
+
 
 def check_notebook_exists(library_db, notebook):
     from src.mtool.sqlite import connection
