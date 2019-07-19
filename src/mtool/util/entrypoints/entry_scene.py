@@ -13,7 +13,7 @@ def init_scene(scene_root = _scene_root,
 
     os.mkdir(scene_root)
     display_scene.display_init_scene_folder(scene_root)
-    sqlite_scene.init_current_scene(history_db, default_scene_name)
+    sqlite_scene.init_history(history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     display_scene.display_init_scene_db(history_db)
 

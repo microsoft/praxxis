@@ -41,7 +41,7 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
         assert os.path.exists(scene_root)
     
     if not os.path.exists(history_db):
-        sqlite_scene.init_current_scene(history_db, default_scene_name)
+        sqlite_scene.init_history(history_db, default_scene_name)
         assert os.path.exists(history_db)
 
     if not os.path.exists(telemetry_db):
