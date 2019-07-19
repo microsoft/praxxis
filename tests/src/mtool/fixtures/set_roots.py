@@ -61,20 +61,33 @@ def telemetry_db(init_root):
 
 
 @pytest.fixture(scope="session")
-def prediction_root(init_root):
+def rulesengine_root(init_root):
     """
-    defines the prediction root 
+    defines the rules engine root 
     """
-    return os.path.join(init_root, "prediction")
+    return os.path.join(init_root, "rulesengine")
 
 
 @pytest.fixture(scope="session")
-def prediction_db(prediction_root):
+def rulesengine_db(rulesengine_root):
     """
-    defines the prediction db location 
+    defines the rules engine db location 
     """
-    return os.path.join(prediction_root, "prediction.db")
+    return os.path.join(rulesengine_root, "rulesengine.db")
 
+@pytest.fixture(scope="session")
+def model_root(init_root):
+    """
+    defines the model root
+    """
+    return os.path.join(init_root, "model")
+
+@pytest.fixture(scope="session")
+def model_db(model_root):
+    """
+    defines the model db location
+    """
+    return os.path.join(model_root, "model.db")
 
 @pytest.fixture(scope="session")
 def ads_location(init_root):

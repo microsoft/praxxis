@@ -10,8 +10,10 @@ from src.mtool.util.roots import _outfile_root
 from src.mtool.util.roots import _root
 from src.mtool.util.roots import _scene_root
 from src.mtool.util.roots import _telemetry_db
-from src.mtool.util.roots import _prediction_root
-from src.mtool.util.roots import _prediction_db
+from src.mtool.util.roots import _rulesengine_root
+from src.mtool.util.roots import _rulesengine_db
+from src.mtool.util.roots import _model_root
+from src.mtool.util.roots import _model_db
 
 def command(argument,
             root = _root,
@@ -21,8 +23,10 @@ def command(argument,
             scene_root = _scene_root,
             history_db = _history_db,
             telemetry_db = _telemetry_db,
-            prediction_root = _prediction_root,
-            prediction_db = _prediction_db,
+            rulesengine_root = _rulesengine_root,
+            rulesengine_db = _rulesengine_db,
+            model_root = _model_root,
+            model_db = _model_db,
             default_scene_name = _default_scene_name,
             test = False):
     """uses a dictionary as a switch statement to determine which funciton to run."""
@@ -32,6 +36,7 @@ def command(argument,
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
     from src.mtool.util.entrypoints import entry_rulesengine
+    from src.mtool.util.entrypoints import entry_model
     from src.mtool.util import roots
 
     roots.init(root, 
@@ -41,8 +46,10 @@ def command(argument,
          scene_root,
          history_db,
          telemetry_db,
-         prediction_root,
-         prediction_db,
+         rulesengine_root,
+         rulesengine_db,
+         model_root,
+         model_db,
          default_scene_name,
          )
     
@@ -81,8 +88,8 @@ def command(argument,
         "import_ruleset": entry_rulesengine.import_ruleset,
         "activate_ruleset": entry_rulesengine.activate_ruleset,
         "deactivate_ruleset": entry_rulesengine.deactivate_ruleset,
-        "import_model": entry_rulesengine.import_model,
-        "update_model": entry_rulesengine.update_model
+        "import_model": entry_model.import_model,
+        "update_model": entry_model.update_model
     }
 
     if hasattr(argument, "which"):

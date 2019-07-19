@@ -1,14 +1,14 @@
 """
-This file contains all of the display functions for predictions
+This file contains all of the display functions for the rules engine
 """
 
-def display_init_prediction_root(root):
-    """the display function for creating new prediction folder"""
-    print(f"Created predictions directory at {root}")
+def display_init_rulesengine_root(root):
+    """the display function for creating new rules engine folder"""
+    print(f"Created rules engine directory at {root}")
 
-def display_init_prediction_db(db_root):
-    """the display function for initializing the prediction db"""
-    print(f"Created predictions database at {db_root}")
+def display_init_rulesengine_db(db_root):
+    """the display function for initializing the rules engine db"""
+    print(f"Created rules engine database at {db_root}")
 
 def display_new_ruleset(name):
     """the display function for creating a new ruleset"""

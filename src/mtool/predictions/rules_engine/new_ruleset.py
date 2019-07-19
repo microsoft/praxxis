@@ -1,7 +1,7 @@
 
-def new_ruleset(args, prediction_root, prediction_db):
+def new_ruleset(args, rulesengine_root, rulesengine_db):
     import os
-    from src.mtool.util.sqlite import sqlite_prediction
+    from src.mtool.util.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
 
     if hasattr(args, "name"):
@@ -14,7 +14,7 @@ def new_ruleset(args, prediction_root, prediction_db):
     if hasattr(args, "root"):
         root = args.root
     else:
-        root = prediction_root
+        root = rulesengine_root
         
     path = os.path.join(root, f"{name}.db")
 
@@ -25,8 +25,8 @@ def new_ruleset(args, prediction_root, prediction_db):
         path = os.path.join(root, f"{name}-{i}.db")
         name = f"{name}-{i}"
     
-    sqlite_prediction.init_ruleset(prediction_db, name, path)
-    sqlite_prediction.add_ruleset_to_list(prediction_db, name, path)
+    sqlite_rulesengine.init_ruleset(rulesengine_db, name, path)
+    sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, name, path)
 
     display_rulesengine.display_new_ruleset(name)
     return 

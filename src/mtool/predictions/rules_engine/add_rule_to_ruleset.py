@@ -1,6 +1,6 @@
 
 def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start, stop):
-    from src.mtool.util.sqlite import sqlite_prediction
+    from src.mtool.util.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     from src.mtool.display import display_edit_ruleset
     from src.mtool.predictions.rules_engine import rules
@@ -14,7 +14,7 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
 
     name = rules.get_ruleset_by_ordinal(name, prediction_db)
 
-    ruleset_db = sqlite_prediction.get_ruleset_path(prediction_db, name)
+    ruleset_db = sqlite_rulesengine.get_ruleset_path(prediction_db, name)
 
     # get a name for the rule
     rulename = display_edit_ruleset.display_get_rule_name()
@@ -47,7 +47,7 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
 
     # display total rule and add it to db        
     display_rulesengine.display_rule(rulename, filenames, output, predicted)
-    sqlite_prediction.add_rule(ruleset_db, rulename, filenames, output, predicted)
+    sqlite_rulesengine.add_rule(ruleset_db, rulename, filenames, output, predicted)
     
         
 
