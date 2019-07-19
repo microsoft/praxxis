@@ -18,7 +18,7 @@ def new_ruleset(arg,
                     rulesengine_db = _rulesengine_db
                     ):
     """calls the function to make a new ruleset"""
-    from src.mtool.predictions.rules_engine import new_ruleset
+    from src.mtool.rulesengine import new_ruleset
     new_ruleset.new_ruleset(arg, rulesengine_root, rulesengine_db)
     return
 
@@ -26,7 +26,7 @@ def remove_ruleset(arg,
                     rulesengine_db = _rulesengine_db
                     ):
     """calls the function to remove (delete) a ruleset"""
-    from src.mtool.predictions.rules_engine import remove_ruleset
+    from src.mtool.rulesengine import remove_ruleset
     remove_ruleset.remove_ruleset(arg, rulesengine_db)
     return
 
@@ -35,14 +35,14 @@ def list_rulesets(arg,
                     start = _query_start,
                     end = _query_end):
     """calls the function to list all rulesets"""
-    from src.mtool.predictions.rules_engine import list_rulesets
+    from src.mtool.rulesengine import list_rulesets
     list_rulesets.list_rulesets(arg, rulesengine_db, start, end)
     return
 
 def view_ruleset(arg, 
                     rulesengine_db = _rulesengine_db):
     """calls the function to view all rules in a ruleset"""
-    from src.mtool.predictions.rules_engine import view_rules
+    from src.mtool.rulesengine import view_rules
     view_rules.view_rules(arg, rulesengine_db)
     return
 
@@ -79,13 +79,13 @@ def add_rule_to_ruleset(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    from src.mtool.predictions.rules_engine import add_rule_to_ruleset
+    from src.mtool.rulesengine import add_rule_to_ruleset
     add_rule_to_ruleset.add_rule_to_ruleset(arg, rulesengine_db, library_db, current_scene_db, start, end)
 
 def delete_rule_from_ruleset(arg,
                     rulesengine_db = _rulesengine_db
                     ):
-    from src.mtool.predictions.rules_engine import delete_rule_from_ruleset
+    from src.mtool.rulesengine import delete_rule_from_ruleset
     delete_rule_from_ruleset.delete_rule_from_ruleset(arg, rulesengine_db)
 
 def modify_rule_in_ruleset(arg,
@@ -95,21 +95,21 @@ def modify_rule_in_ruleset(arg,
 
 def import_ruleset(arg,
                     rulesengine_db = _rulesengine_db):
-    from src.mtool.predictions.rules_engine import import_ruleset
+    from src.mtool.rulesengine import import_ruleset
     import_ruleset.import_ruleset(arg, rulesengine_db)
     return
 
 def activate_ruleset(arg,
                     rulesengine_db = _rulesengine_db
                     ):
-    from src.mtool.predictions.rules_engine import activate_ruleset
+    from src.mtool.rulesengine import activate_ruleset
     activate_ruleset.activate_ruleset(arg, rulesengine_db)
     return
 
 def deactivate_ruleset(arg,
                     rulesengine_db = _rulesengine_db
                     ):
-    from src.mtool.predictions.rules_engine import deactivate_ruleset
+    from src.mtool.rulesengine import deactivate_ruleset
     deactivate_ruleset.deactivate_ruleset(arg, rulesengine_db)
     return
 

@@ -22,7 +22,7 @@ def init_model(model_root, model_db):
 
 def import_model(arg, 
                     model_db = _model_db):
-    from src.mtool.predictions.model import import_model
+    from src.mtool.model import import_model
     import_model.import_model(arg, model_db)
     return
 

@@ -5,8 +5,8 @@ import time
 from requests.auth import HTTPBasicAuth
 
 from src.mtool.util.sqlite import sqlite_scene
-from src.mtool.predictions.rules_engine import rules_checker
-#from src.mtool.predictions.model import score
+from src.mtool.rulesengine import rules_checker
+#from src.mtool.model import score
 
 
 def what_next(args, user_info_db, current_scene_db, prediction_db, start, end):
