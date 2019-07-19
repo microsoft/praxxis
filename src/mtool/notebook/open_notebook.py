@@ -25,11 +25,11 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor, test
         raise e
     
     notebook_filename = notebook_data[0]
-    if args.environment == "html":
+    if args.parameter == "html":
         display_as_html(notebook_filename)
-    elif args.environment == "jupyter":
+    elif args.parameter == "jupyter":
         open_jupyter(notebook_filename, test)
-    elif args.environment == "ads":
+    elif args.parameter == "ads":
         try:
             subprocess.Popen([ads_location, notebook_filename])
         except Exception:
@@ -87,7 +87,7 @@ def open_editor(notebook_filename, editor):
     from subprocess import call
     from src.mtool.display import display_error
     from src.mtool.util import error
-    EDITOR = os.environ.get('EDITOR', editor)
+    EDITOR = os.paramiron.get('EDITOR', editor)
 
     try:
         call([EDITOR, notebook_filename])

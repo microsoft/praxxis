@@ -109,8 +109,8 @@ def search_notebooks(library_db, search_term, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_env = f'SELECT Name, Root FROM "Notebooks" WHERE Name LIKE "%{search_term}%" ORDER BY Name LIMIT {start}, {end}'
-    cur.execute(list_env)
+    list_param = f'SELECT Name, Root FROM "Notebooks" WHERE Name LIKE "%{search_term}%" ORDER BY Name LIMIT {start}, {end}'
+    cur.execute(list_param)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
