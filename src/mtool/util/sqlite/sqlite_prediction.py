@@ -9,7 +9,7 @@ def init_prediction_db(prediction_db):
     conn = connection.create_connection(prediction_db)
     cur = conn.cursor()
     create_rules_table = f'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, Active INTEGER)'
-    create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT)'
+    create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT, ConverterPath TEXT)'
     cur.execute(create_rules_table)
     cur.execute(create_models_table)
     conn.commit()
@@ -298,3 +298,17 @@ def get_predictions(ruleset_db, ruleset):
     conn.close()
 
     return predictions
+
+def add_model(prediction_db, model_path, converter_path):
+    """adds a model to the list of models"""
+    from src.mtool.util.sqlite import connection 
+
+    conn = connection.create_connection(prediction_db)
+    cur = conn.cursor()
+
+    add_model = 'INSERT INTO "Models" (Name, Path, ConverterPath) VALUES (?,?,?)'
+
+    cur.execute(add_model, ("primary", model_path, converter_path))
+    conn.commit()
+    conn.close()
+

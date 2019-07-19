@@ -81,6 +81,7 @@ def command(argument,
         "import_ruleset": entry_prediction.import_ruleset,
         "activate_ruleset": entry_prediction.activate_ruleset,
         "deactivate_ruleset": entry_prediction.deactivate_ruleset,
+        "import_model": entry_prediction.import_model,
         "update_model": entry_prediction.update_model
     }
 

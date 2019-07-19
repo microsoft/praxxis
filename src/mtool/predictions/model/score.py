@@ -6,9 +6,9 @@ import joblib
 from keras.models import load_model
 from tensorflow import logging 
 
-# code from mtool_model_score.py
 from numpy import array
 from keras.preprocessing.sequence import pad_sequences
+
 
 def encode(sequence, converter):
     newSeq = []
@@ -32,17 +32,12 @@ def prep_input(sequence, converter, length):
     shaped = array(padded).reshape(1, length, 1)
     return shaped
 
-def predict(sequence):
+def predict(sequence, model_path, converter_path):
     logging.set_verbosity(logging.ERROR)
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
 
     # load in model and converter
-    converter_file = 'convert.pkl'
-    converter_path = os.path.join(os.path.dirname(__file__), converter_file)
     converter = joblib.load(converter_path)
-
-    model_file = 'lstm_model.h5'
-    model_path = os.path.join(os.path.dirname(__file__),  model_file) 
     model = load_model(model_path)
 
     # encode sequence, pad, reshape
@@ -55,5 +50,7 @@ def predict(sequence):
     # convert results into meaningful thing
     print(pd.Series(data[0], converter).sort_values(ascending=False))
 
+def get_files(prediction_db):
+    pass
     
  

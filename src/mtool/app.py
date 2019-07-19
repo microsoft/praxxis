@@ -48,6 +48,7 @@ edit_ruleset_command="edit_ruleset"
 import_ruleset_command="import_ruleset"
 activate_ruleset_command="activate_ruleset"
 deactivate_ruleset_command="deactivate_ruleset"
+import_model_command="import_model"
 update_model_command="update_model"
 
 ## notebook help strings
@@ -107,22 +108,26 @@ sync_library_path_help="load library from a specific directory into mtool"
 history_help="history of what you've done in the current scene"
 update_settings_help="update telemetry and security settings"
 #prediction help strings
-new_ruleset_help="create a ruleset for the prediction rules engine"
+new_ruleset_help="create a ruleset for the rules engine"
 new_ruleset_name_help="the name of the new ruleset to create"
 new_ruleset_path_help="(optional) path to location to save ruleset at"
 remove_ruleset_help="remove a ruleset from your machine"
 remove_ruleset_name_help="the name of the ruleset to remove"
-list_rulesets_help="list all rulesets available for the prediction rules engine"
+list_rulesets_help="list all rulesets available for the rules engine"
 view_ruleset_help="view all rules in a ruleset"
 view_ruleset_name_help="the name of the ruleset to view rules in"
 edit_ruleset_help="make changes to a ruleset"
 edit_ruleset_name_help="the name of the ruleset to edit"
 edit_ruleset_action_help="'a' to add a rule, 'd' to delete a rule, 'm' to modify a rule"
 import_ruleset_help="import a ruleset file from outside mtool"
+import_ruleset_path_help="the path to the file to import"
 activate_ruleset_help="activate ruleset(s) to use when making predictions"
 activate_ruleset_name_help="name of the ruleset to activate"
 deactivate_ruleset_name_help="name of the ruleset to deactivate"
 deactivate_ruleset_help="deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
+import_model_help="import a model file and converter from outside mtool"
+import_model_modelpath_help="the path to the model file"
+import_model_converterpath_help="the path to the converter"
 update_model_help="fetch newest version of model from storage pool"
 
 
@@ -285,6 +290,7 @@ def main(command_line=None):
     list_rulesets.set_defaults(which=list_rulesets_command)
 
     import_ruleset = subparsers.add_parser('importruleset', aliases=['ir'], help=import_ruleset_help)
+    import_ruleset.add_argument('path', help=import_ruleset_path_help)
     import_ruleset.set_defaults(which=import_ruleset_command)
 
     view_ruleset = subparsers.add_parser('viewruleset', aliases=['vr'], help=view_ruleset_help)
@@ -303,6 +309,11 @@ def main(command_line=None):
     deactivate_ruleset = subparsers.add_parser('deactivateruleset', aliases=['dr'], help=deactivate_ruleset_help)
     deactivate_ruleset.add_argument('name', help=deactivate_ruleset_name_help)
     deactivate_ruleset.set_defaults(which=deactivate_ruleset_command)
+
+    import_model = subparsers.add_parser('importmodel', aliases=['im'], help=import_model_help)
+    import_model.add_argument('modelpath', help=import_model_modelpath_help)
+    import_model.add_argument('converterpath', help=import_model_converterpath_help)
+    import_model.set_defaults(which=import_model_command)
 
     update_model = subparsers.add_parser('updatemodel', aliases=['um'], help=update_model_help)
     update_model.set_defaults(which=update_model_command)
@@ -375,7 +386,8 @@ def start(args=None, test = False):
             error.NotFileError, 
             error.NotNotebookError,
             error.EditorNotFoundError,
-            error.ADSNotFoundError)as e:
+            error.ADSNotFoundError,
+            error.NotValidRuleset)as e:
         print(e)
         return 1
     

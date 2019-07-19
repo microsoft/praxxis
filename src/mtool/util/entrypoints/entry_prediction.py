@@ -94,8 +94,10 @@ def modify_rule_in_ruleset(arg,
                     ):
     print("M")
 
-def import_ruleset(arg):
-    print("ir")
+def import_ruleset(arg,
+                    prediction_db = _prediction_db):
+    from src.mtool.predictions.rules_engine import import_ruleset
+    import_ruleset.import_ruleset(arg, prediction_db)
     return
 
 def activate_ruleset(arg,
@@ -110,6 +112,12 @@ def deactivate_ruleset(arg,
                     ):
     from src.mtool.predictions.rules_engine import deactivate_ruleset
     deactivate_ruleset.deactivate_ruleset(arg, prediction_db)
+    return
+
+def import_model(arg, 
+                    prediction_db = _prediction_db):
+    from src.mtool.predictions.model import import_model
+    import_model.import_model(arg, prediction_db)
     return
 
 def update_model(arg):

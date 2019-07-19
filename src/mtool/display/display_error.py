@@ -149,3 +149,10 @@ def display_ruleset_num_input_warning(num):
 
 def predictions_ordinal_not_in_list_error():
     print(f"{Fore.RED}The input was invalid. Please re-enter your list of notebook predictions.")
+
+def invalid_ruleset_import(name):
+    if name == None:
+        return(f"{Fore.RED}This does not appear to be the path to a valid .db file")
+    else:
+        return(f"{Fore.RED}{name} is not the path to a valid .db file")
+   

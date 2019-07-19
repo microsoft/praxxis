@@ -61,3 +61,6 @@ def display_predictions(predictions):
     for nb in predictions:
         print(f'\t{i}.\t{nb[0]}')
         i += 1
+
+def display_imported_ruleset(name):
+    print(f"Ruleset {name} imported successfully")
