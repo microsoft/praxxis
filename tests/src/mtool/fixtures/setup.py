@@ -9,7 +9,7 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
     """
     sets up directories in the temp dir
     """
-    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_init
     from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import roots
     from src.mtool.scene import new_scene
@@ -29,7 +29,7 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
         assert os.path.exists(library_root)
 
     if not os.path.exists(library_db):
-        sqlite_library.init_library_db(library_db)
+        sqlite_init.init_library_db(library_db)
         assert os.path.exists(library_db)
     
     if not os.path.exists(outfile_root):
@@ -41,11 +41,11 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
         assert os.path.exists(scene_root)
     
     if not os.path.exists(history_db):
-        sqlite_scene.init_history(history_db, default_scene_name)
+        sqlite_init.init_history(history_db, default_scene_name)
         assert os.path.exists(history_db)
 
     if not os.path.exists(telemetry_db):
-        sqlite_telemetry.init_user_info(telemetry_db, 0)
+        sqlite_init.init_user_info(telemetry_db, 0)
 
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     yield 

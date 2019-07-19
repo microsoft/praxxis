@@ -12,11 +12,11 @@ def init_model(model_root, model_db):
     import os
     
     from src.mtool.display import display_model
-    from src.mtool.sqlite import sqlite_model
+    from src.mtool.sqlite import sqlite_init
 
     os.mkdir(model_root)
     display_model.display_init_model_root(model_root)
-    sqlite_model.init_model_db(model_db)
+    sqlite_init.init_model_db(model_db)
     display_model.display_init_model_db(model_db)
     return
 

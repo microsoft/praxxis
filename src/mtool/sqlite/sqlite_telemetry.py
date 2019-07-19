@@ -15,38 +15,6 @@ def get_scene_id(current_scene_db):
     return id
 
 
-def init_user_info(telemetry_db, send_telemetry=1):
-    """From name of database file, creates and initializes user info"""
-    import uuid
-    import getpass
-
-    from src.mtool.sqlite import connection
-
-    conn = connection.create_connection(telemetry_db)
-    cur = conn.cursor()
-    create_userinfo_table = f'CREATE TABLE "UserInfo" (Key TEXT PRIMARY KEY, Value TEXT)'
-    create_user_id = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("ID",?)'
-    create_telem_permissions = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("TELEMETRY", {send_telemetry})'
-    create_host = f'INSERT INTO "UserInfo" (Key) VALUES ("Host")'
-    create_url = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
-    create_user = f'INSERT INTO "UserInfo" (Key) VALUES ("Username")'
-    create_pswd = f'INSERT INTO "UserInfo" (Key) VALUES ("Password")'
-    create_telemetry_table = f'CREATE TABLE "TelemBacklog" (LocalCopy TEXT PRIMARY KEY, SceneID TEXT, Error TEXT)'
-    id_val = str(uuid.uuid4())
-    
-    cur.execute(create_userinfo_table)
-    cur.execute(create_user_id, (id_val,))
-    cur.execute(create_telem_permissions)
-    url = "https://{0}:30443/gateway/default/webhdfs/v1/mtool"
-    cur.execute(create_host)
-    cur.execute(create_url, (url,))
-    cur.execute(create_user)
-    cur.execute(create_pswd)
-    cur.execute(create_telemetry_table)
-    conn.commit()
-    conn.close()
-
-
 def telem_init(user_info_db):
     """returns boolean of whether telemetry was ever set up
     (checks whether Host has a value) 
@@ -61,6 +29,7 @@ def telem_init(user_info_db):
     response = cur.fetchone()[0]
     return response != None # True if telemetry is initialized
 
+
 def telem_on(user_info_db):
     """returns boolean of whether telemetry is enabled"""
     from src.mtool.sqlite import connection
@@ -72,6 +41,7 @@ def telem_on(user_info_db):
     conn.commit()
     response = cur.fetchone()[0]
     return str(response) == str(1) # True if telemetry is on 
+
 
 def get_telemetry_info(user_info_db):
     """gets the telemetry information:"""
@@ -88,6 +58,7 @@ def get_telemetry_info(user_info_db):
     conn.close()
     return info
 
+
 def get_settings(user_info_db, settings):
     """gets the current value of each setting"""
     from src.mtool.sqlite import connection
@@ -102,6 +73,7 @@ def get_settings(user_info_db, settings):
         values[setting] = cur.fetchone()[0]
     return values
 
+
 def write_setting(user_info_db, setting, value):
     """changes the value of setting"""
     from src.mtool.sqlite import connection
@@ -114,9 +86,11 @@ def write_setting(user_info_db, setting, value):
     conn.close()
     return 
      
+
 def write_settings(user_info_db, settings, values):
     for setting in settings:
         write_setting(user_info_db, setting, values[setting])
+
 
 def add_to_backlog(user_info_db, local_copy, scene_id, error):
     """adds this file to the telemetry backlog"""
@@ -129,6 +103,7 @@ def add_to_backlog(user_info_db, local_copy, scene_id, error):
     conn.commit()
     conn.close()
     return
+
 
 def backlog_size(user_info_db):
     """returns current size of telemetry backlog"""
@@ -143,6 +118,7 @@ def backlog_size(user_info_db):
     conn.close()
     return count
 
+
 def get_backlog(user_info_db):
     """returns the backlog"""
     from src.mtool.sqlite import connection
@@ -155,6 +131,7 @@ def get_backlog(user_info_db):
     toSend = cur.fetchall()
     conn.close()
     return toSend
+
 
 def delete_from_backlog(user_info_db, local_copy):
     """deletes sent telemetry from backlog, if in backlog"""

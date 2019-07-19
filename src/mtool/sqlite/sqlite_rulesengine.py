@@ -2,36 +2,6 @@
 This file contains the sqlite functions for the rules engine
 """
 
-def init_rulesengine_db(rulesengine_db):
-    """initializes the base rules engine database"""
-    from src.mtool.sqlite import connection
-
-    conn = connection.create_connection(rulesengine_db)
-    cur = conn.cursor()
-    create_rules_table = f'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, Active INTEGER)'
-    cur.execute(create_rules_table)
-    conn.commit()
-    conn.close()
-
-def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
-    """creates a new ruleset database"""
-    from src.mtool.sqlite import connection
-    conn = connection.create_connection(ruleset_db)
-    cur = conn.cursor()
-    
-    create_rules_table = f'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
-    create_filenames_table = f'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_outputs_table = f'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_prediction_table = f'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, Path TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-
-    cur.execute(create_rules_table)
-    cur.execute(create_filenames_table)
-    cur.execute(create_outputs_table)
-    cur.execute(create_prediction_table)
-    conn.commit()
-    conn.close()
-
-
 def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
     """adds ruleset to list"""
     from src.mtool.sqlite import connection

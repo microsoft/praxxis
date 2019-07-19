@@ -2,24 +2,6 @@
 This file contains all of the sqlite functions for libraries
 """
 
-def init_library_db(library_db):
-    """initializes the library database"""
-    from src.mtool.sqlite import connection
-
-    conn = connection.create_connection(library_db)
-    cur = conn.cursor()
-    create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Path TEXT PRIMARY KEY, Readme TEXT, Library TEXT)'
-    create_notebook_table = f'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
-    create_parameter_table = f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
-    create_notebook_parameter_table = f'CREATE TABLE "NotebookParameter" (Parameter TEXT, Notebook TEXT, PRIMARY KEY(Parameter, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameter"(Parameter))'
-    cur.execute(create_metadata_table)
-    cur.execute(create_notebook_table)
-    cur.execute(create_parameter_table)
-    cur.execute(create_notebook_parameter_table)
-    conn.commit()
-    conn.close()
-
-
 def clear_loaded_libararies(library_db):
     from src.mtool.sqlite import connection
 

@@ -8,12 +8,12 @@ def init_scene(scene_root = _scene_root,
                default_scene_name = _default_scene_name):
     import os
     from src.mtool.display import display_scene
-    from src.mtool.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_init
     from src.mtool.scene import new_scene
 
     os.mkdir(scene_root)
     display_scene.display_init_scene_folder(scene_root)
-    sqlite_scene.init_history(history_db, default_scene_name)
+    sqlite_init.init_history(history_db, default_scene_name)
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     display_scene.display_init_scene_db(history_db)
 

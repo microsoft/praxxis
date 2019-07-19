@@ -1,6 +1,7 @@
 
 def new_ruleset(args, rulesengine_root, rulesengine_db):
     import os
+    from src.mtool.sqlite import sqlite_init
     from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
 
@@ -25,7 +26,7 @@ def new_ruleset(args, rulesengine_root, rulesengine_db):
         path = os.path.join(root, f"{name}-{i}.db")
         name = f"{name}-{i}"
     
-    sqlite_rulesengine.init_ruleset(rulesengine_db, name, path)
+    sqlite_init.init_ruleset(rulesengine_db, name, path)
     sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, name, path)
 
     display_rulesengine.display_new_ruleset(name)
