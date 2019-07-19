@@ -141,3 +141,11 @@ class ADSNotFoundError(Exception):
     def __str__(self):
         from src.mtool.display import display_error
         return str(display_error.ads_not_found_error(self.name))
+
+class NotValidRuleset(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.invalid_ruleset_import(self.name))

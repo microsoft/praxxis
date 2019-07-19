@@ -18,8 +18,10 @@ _scene_root = os.path.join(_root, "scene")
 _outfile_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "history.db")
 _telemetry_db = os.path.join(_root, "user_id.db")
-_prediction_root = os.path.join(_root, "prediction")
-_prediction_db = os.path.join(_prediction_root, "prediction.db")
+_rulesengine_root = os.path.join(_root, "rulesengine")
+_rulesengine_db = os.path.join(_rulesengine_root, "rulesengine.db")
+_model_root = os.path.join(_root, "model")
+_model_db = os.path.join(_model_root, "model.db")
 _default_scene_name = 'scene'
 _git_root = os.path.join(_library_root, "git_libraries")
 
@@ -45,8 +47,10 @@ def init(
         scene_root, 
         history_db, 
         telemetry_db,
-        prediction_root, 
-        prediction_db,
+        rulesengine_root, 
+        rulesengine_db,
+        model_root,
+        model_db,
         default_scene_name,
         telemetry = True,
         ):
@@ -56,7 +60,8 @@ def init(
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_prediction
+    from src.mtool.util.entrypoints import entry_rulesengine
+    from src.mtool.util.entrypoints import entry_model
 
     if not os.path.exists(root):
         os.mkdir(root)
@@ -77,8 +82,11 @@ def init(
     if not os.path.exists(telemetry_db):
         entry_telemetry.init_telemetry(telemetry_db)
 
-    # predictions init
-    if not os.path.exists(prediction_db):
-        entry_prediction.init_prediction(prediction_root, prediction_db)
+    # rules engine init
+    if not os.path.exists(rulesengine_db):
+        entry_rulesengine.init_rulesengine(rulesengine_root, rulesengine_db)
 
+    # model init
+    if not os.path.exists(model_db):
+        entry_model.init_model(model_root, model_db)
 

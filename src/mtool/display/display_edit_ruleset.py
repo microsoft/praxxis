@@ -40,7 +40,7 @@ def display_predicted_notebooks_input():
     return input("Enter notebook ordinals as a comma-separated list: ")
 
 
-def display_predictions(predictions):
+def display_prediction_list(predictions):
     print("Predicted notebooks for this rule: ")
     i = 1
     for prediction in predictions:
