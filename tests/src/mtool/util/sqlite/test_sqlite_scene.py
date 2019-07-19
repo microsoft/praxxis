@@ -30,11 +30,11 @@ def test_init_history_db(setup, history_db):
     library_metadata_columns = [description[0] for description in cur.description]
 
     cur.execute(check_scene_list_columns)
-    notebook_columns = [description[0] for description in cur.description]
+    scene_list_columns = [description[0] for description in cur.description]
     conn.close()
 
-    assert set(library_metadata_columns) == set(['ID', 'Name', 'Ended'])
-    assert set(notebook_columns) == set(['ID', 'Name'])
+    assert set(library_metadata_columns) == set(['ID', 'Scene', 'Ended'])
+    assert set(scene_list_columns) == set(['ID', 'Scene'])
 
 
 def init_scene_db(setup, scene_db=""):
@@ -85,7 +85,7 @@ def init_scene_db(setup, scene_db=""):
     history_columns = [description[0] for description in cur.description]
     conn.close()
 
-    assert set(scene_metadata_columns) == set(['ID', 'Ended', 'Name']) 
+    assert set(scene_metadata_columns) == set(['ID', 'Ended', 'Scene']) 
     assert set(notebook_list_columns) == set(['ID', 'Data', 'Path'])
-    assert set(parameter_columns) == set(['Name', 'Value'])
+    assert set(parameter_columns) == set(['Scene', 'Value'])
     assert set(history_columns) == set(['Timestamp', 'Notebook', 'Library', 'OutputPath'])

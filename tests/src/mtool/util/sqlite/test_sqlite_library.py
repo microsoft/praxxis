@@ -12,8 +12,8 @@ def test_init_library_db(setup, library_db):
     cur = conn.cursor()
     check_library_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='LibraryMetadata';"
     check_notebooks_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebooks';"
-    check_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='parameter';"
-    check_notebook_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebookparameter';"
+    check_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Parameter';"
+    check_notebook_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookParameter';"
 
 
     cur.execute(check_library_metadata_table)
@@ -35,7 +35,7 @@ def test_init_library_db(setup, library_db):
 
     check_library_metadata_columns = f"SELECT * FROM'LibraryMetadata';"
     check_notebooks_columns = f"SELECT * FROM 'Notebooks';"
-    check_parameter_columns = f"SELECT * FROM 'parameter';"
+    check_parameter_columns = f"SELECT * FROM 'Parameter';"
     check_notebook_parameter_columns = f"SELECT * FROM 'Notebookparameter'"
 
     cur.execute(check_library_metadata_columns)
@@ -50,7 +50,7 @@ def test_init_library_db(setup, library_db):
     cur.execute(check_notebook_parameter_columns)
     notebook_parameter_columns = [description[0] for description in cur.description]
 
-    assert library_metadata_columns == ['Root', 'Readme', 'Name']
-    assert notebook_columns == ['Root', 'Name', 'LibraryName']
-    assert parameter_columns == ['Name', 'Value']
-    assert notebook_parameter_columns == ['parameterName', 'NotebookName']
+    assert library_metadata_columns == ['Root', 'Readme', 'Library']
+    assert notebook_columns == ['Root', 'Notebook', 'LibraryName']
+    assert parameter_columns == ['Parameter', 'Value']
+    assert notebook_parameter_columns == ['ParameterName', 'NotebookName']

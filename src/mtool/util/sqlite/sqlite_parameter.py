@@ -13,6 +13,7 @@ def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter
     update_param = f'UPDATE "Parameter" SET Value = ? WHERE Name = ?'
 
     cur.execute(set_notebook_param, (parameter_name, notebook_name))
+
     cur.execute(set_param, (parameter_name, parameter_value))
     cur.execute(update_param, (parameter_name, parameter_value))
     conn.commit()
@@ -98,7 +99,7 @@ def set_param(current_scene_db, parameter, value):
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     set_param = f'INSERT OR IGNORE INTO "Parameters"(Parameter, Value) VALUES("{parameter}", "{value}")'
-    upate_param = f'UPDATE "Parameter" SET Value = "{value}" WHERE Parameter = "{parameter}"'
+    upate_param = f'UPDATE "Parameters" SET Value = "{value}" WHERE Parameter = "{parameter}"'
     cur.execute(set_param)
     cur.execute(upate_param)
     conn.commit()
@@ -145,7 +146,7 @@ def delete_param(current_scene_db, parameter):
     if exists == []:
         raise error.ParamNotFoundError(parameter)
     else:
-        delete_param = f'DELETE FROM "Parameters" where Name = "{parameter}"'
+        delete_param = f'DELETE FROM "Parameters" where Parameter = "{parameter}"'
         cur.execute(delete_param)
         conn.commit()
         return 1

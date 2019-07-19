@@ -87,7 +87,7 @@ def open_editor(notebook_filename, editor):
     from subprocess import call
     from src.mtool.display import display_error
     from src.mtool.util import error
-    EDITOR = os.paramiron.get('EDITOR', editor)
+    EDITOR = os.environ.get('EDITOR', editor)
 
     try:
         call([EDITOR, notebook_filename])

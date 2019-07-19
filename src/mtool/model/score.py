@@ -34,7 +34,7 @@ def prep_input(sequence, converter, length):
 
 def predict(sequence, model_path, converter_path):
     logging.set_verbosity(logging.ERROR)
-    os.paramiron['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
 
     # load in model and converter
     converter = joblib.load(converter_path)

@@ -43,7 +43,7 @@ class Notebook:
         notebook_path = notebook_data[0]
 
         self._hasParameters = False
-        self._parameterVars = []
+        self._parameters = []
         self._path = os.path.join(notebook_path)
         self.library_name = notebook_data[2]
 
@@ -86,4 +86,4 @@ class Notebook:
                 value = parameter[1].split("#")[0].strip()
                 if value == "\"\"":
                     value = None               
-                self._parameterVars.append([name, value])
+                self._parameters.append([name, value])

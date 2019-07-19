@@ -10,7 +10,6 @@ else:
     _root = os.path.join(os.getenv('APPDATA'), "mtool")
     _azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
 
-
 _user_info_db = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
@@ -25,11 +24,8 @@ _model_db = os.path.join(_model_root, "model.db")
 _default_scene_name = 'scene'
 _git_root = os.path.join(_library_root, "git_libraries")
 
-
-
 _query_start = 0
 _query_end = 100
-
 
 def get_current_scene_db(scene_root, history_db):
     """calls the function to get the location of the history db"""
@@ -37,7 +33,6 @@ def get_current_scene_db(scene_root, history_db):
     from src.mtool.util.sqlite import sqlite_scene
     scene = sqlite_scene.get_current_scene(history_db)
     return os.path.join(scene_root, scene, f"{scene}.db")
-    
 
 def init(
         root, 
