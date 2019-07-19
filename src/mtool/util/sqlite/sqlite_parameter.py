@@ -8,9 +8,9 @@ def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    set_notebook_param = f'INSERT OR IGNORE INTO "NotebookParameter" (ParameterName, NotebookName) VALUES(?, ?)'
-    set_param = f'INSERT OR IGNORE INTO "Parameter" (Name, Value) VALUES(?, ?)'    
-    update_param = f'UPDATE "Parameter" SET Value = ? WHERE Name = ?'
+    set_notebook_param = f'INSERT OR IGNORE INTO "NotebookParameter" (Parameter, Notebook) VALUES(?, ?)'
+    set_param = f'INSERT OR IGNORE INTO "Parameters" (Parameter, Value) VALUES(?, ?)'    
+    update_param = f'UPDATE "Parameters" SET Value = ? WHERE Parameter = ?'
 
     cur.execute(set_notebook_param, (parameter_name, notebook_name))
 
@@ -25,25 +25,25 @@ def clear_notebook_parameters(library_db):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_parameter = f'DELETE FROM "Parameter"'
+    clear_parameter = f'DELETE FROM "Parameters"'
     cur.execute(clear_parameter)
     conn.commit()
     conn.close()
     
 
-def get_library_parameters(library_db, library_name):
+def get_library_parameters(library_db, library):
     from src.mtool.util.sqlite import connection
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util import error
 
     try:
-        sqlite_library.check_library_exists(library_db, library_name)
+        sqlite_library.check_library_exists(library_db, library)
     except error.LibraryNotFoundError as e:
         raise e
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library_params = f'SELECT Name, Value from "Parameter" WHERE Name in (SELECT ParameterName FROM NotebookParameter WHERE NotebookName IN (SELECT Name FROM "Notebooks" WHERE LibraryName = "{library_name}"))'
+    get_library_params = f'SELECT Parameter, Value from "Parameters" WHERE Parameter in (SELECT Parameter FROM NotebookParameter WHERE Notebook IN (SELECT Notebook FROM "Notebooks" WHERE Library = "{library}"))'
     cur.execute(get_library_params)
     parameters = cur.fetchall()
     conn.close()
@@ -153,12 +153,12 @@ def delete_param(current_scene_db, parameter):
     conn.close()
 
 
-def list_notebook_param(library_db, notebook_name):
+def list_notebook_param(library_db, notebook):
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    param = f'SELECT Name, Value from "Parameter" WHERE Name in (SELECT ParameterName from NotebookParameter WHERE NotebookName = "{notebook_name}")'
+    param = f'SELECT Parameter, Value from "Parameters" WHERE Parameter in (SELECT Parameter from NotebookParameter WHERE Notebook = "{notebook}")'
     cur.execute(param)
     rows = cur.fetchall()
     conn.close()

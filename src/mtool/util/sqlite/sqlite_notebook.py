@@ -8,27 +8,27 @@ def list_notebooks(library_db, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Name, Root FROM "Notebooks" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Notebook, Path FROM "Notebooks" LIMIT {start}, {end}'
     cur.execute(list_libraries)
     rows = cur.fetchall()
     conn.close()
     return rows
 
 
-def get_notebook(library_db, name):
+def get_notebook(library_db, notebook):
     """returns a specific notebook"""
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_notebook = f'SELECT * FROM "Notebooks" WHERE Name = "{name}" LIMIT 0, 1'
+    get_notebook = f'SELECT * FROM "Notebooks" WHERE Notebook = "{notebook}" LIMIT 0, 1'
     cur.execute(get_notebook)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        raise error.NotebookNotFoundError(name)
+        raise error.NotebookNotFoundError(notebook)
     return rows[0]
 
 
@@ -57,7 +57,7 @@ def write_list(current_scene_db, notebook_list, path_list = []):
     cur = conn.cursor()
     clear_list = f'DELETE FROM "NotebookList"'
     reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='NotebookList'"
-    insert_line = f'INSERT INTO "NotebookList" (DATA, PATH) VALUES (?,?)'
+    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path) VALUES (?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
     if path_list == []:
@@ -74,7 +74,7 @@ def get_notebook_path(library_db, notebook, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_notebook_path = f"SELECT ROOT FROM 'Notebooks' WHERE NAME=? AND LIBRARYNAME=?"
+    get_notebook_path = f"SELECT Path FROM 'Notebooks' WHERE Notebook=? AND Library=?"
     cur.execute(get_notebook_path, (notebook, library))
     conn.commit()
     path = cur.fetchone()
@@ -84,20 +84,20 @@ def get_notebook_path(library_db, notebook, library):
     return path[0]
     
 
-def check_notebook_exists(library_db, name):
+def check_notebook_exists(library_db, notebook):
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    check_exists = f'Select * FROM Notebooks WHERE Name = "{name}"'
+    check_exists = f'Select * FROM Notebooks WHERE Notebook = "{notebook}"'
     cur.execute(check_exists)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
 
     if rows == []:
-        raise error.NotebookNotFoundError(name)
+        raise error.NotebookNotFoundError(notebook)
     else:
         return 0
 
@@ -109,7 +109,7 @@ def search_notebooks(library_db, search_term, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_param = f'SELECT Name, Root FROM "Notebooks" WHERE Name LIKE "%{search_term}%" ORDER BY Name LIMIT {start}, {end}'
+    list_param = f'SELECT Notebook, Path FROM "Notebooks" WHERE Notebook LIKE "%{search_term}%" ORDER BY Notebook LIMIT {start}, {end}'
     cur.execute(list_param)
     conn.commit()
     rows = cur.fetchall()

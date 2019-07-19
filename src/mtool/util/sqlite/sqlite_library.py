@@ -8,10 +8,10 @@ def init_library_db(library_db):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Root TEXT PRIMARY KEY, Readme TEXT, Name TEXT)'
-    create_notebook_table = f'CREATE TABLE "Notebooks" (Root TEXT PRIMARY KEY, Name TEXT, LibraryName TEXT, FOREIGN KEY(LibraryName) REFERENCES "LibraryMetadata"(Name))'
-    create_parameter_table = f'CREATE TABLE "Parameter" (Name TEXT PRIMARY KEY, Value TEXT)'
-    create_notebook_parameter_table = f'CREATE TABLE "NotebookParameter" (ParameterName TEXT, NotebookName TEXT, PRIMARY KEY(ParameterName, NotebookName), FOREIGN KEY(NotebookName) REFERENCES "Notebooks"(Name), FOREIGN KEY(ParameterName) REFERENCES "Parameter"(Name))'
+    create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Path TEXT PRIMARY KEY, Readme TEXT, Library TEXT)'
+    create_notebook_table = f'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
+    create_parameter_table = f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
+    create_notebook_parameter_table = f'CREATE TABLE "NotebookParameter" (Parameter TEXT, Notebook TEXT, PRIMARY KEY(Parameter, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameter"(Parameter))'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_table)
     cur.execute(create_parameter_table)
@@ -33,27 +33,27 @@ def clear_loaded_libararies(library_db):
     conn.close()
 
 
-def load_library(library_db, root, readme, name):
+def load_library(library_db, path, readme, library):
     """load a library into the library db"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Root, Readme, Name) VALUES("{root}", "{readme}", "{name}")'
-    update_library = f'UPDATE "LibraryMetadata" SET Readme = "{readme}" WHERE Name = "{name}"'
+    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library) VALUES("{path}", "{readme}", "{library}")'
+    update_library = f'UPDATE "LibraryMetadata" SET Readme = "{readme}" WHERE Library = "{library}"'
     cur.execute(load_library)
     cur.execute(update_library)
     conn.commit()
     conn.close()
 
 
-def load_notebook(library_db, file_root, name, library):
+def load_notebook(library_db, file_root, notebook, library):
     """load a notebook into the library db"""
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Root, Name, LibraryName) VALUES("{file_root}", "{name}", "{library}")'
+    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Path, Notebook, Library) VALUES("{file_root}", "{notebook}", "{library}")'
     cur.execute(load_library)
     conn.commit()
     conn.close()
@@ -65,37 +65,37 @@ def list_libraries(library_db, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Name FROM "LibraryMetadata" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Library FROM "LibraryMetadata" LIMIT {start}, {end}'
     cur.execute(list_libraries)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     return rows
 
-def check_library_exists(library_db, name):
+def check_library_exists(library_db, library):
     from src.mtool.util.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Name = "{name}" LIMIT 0, 1'
+    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Library = "{library}" LIMIT 0, 1'
     cur.execute(get_library)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     if rows == []:
-        raise error.LibraryNotFoundError(name)
+        raise error.LibraryNotFoundError(library)
     return True
 
 
-def remove_library(library_db, name):
+def remove_library(library_db, library):
     from src.mtool.util.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_library = f'DELETE FROM "LibraryMetadata" WHERE Name = "{name}"'
-    clear_notebooks = f'DELETE FROM "Notebooks" WHERE LibraryName = "{name}"'
-    clear_parameter = f'DELETE FROM NotebookParameter Where NotebookName IN (SELECT Name FROM Notebooks WHERE LibraryName = "{name}")'
+    clear_library = f'DELETE FROM "LibraryMetadata" WHERE Library = "{library}"'
+    clear_notebooks = f'DELETE FROM "Notebooks" WHERE Library = "{library}"'
+    clear_parameter = f'DELETE FROM NotebookParameter Where Notebook IN (SELECT Notebook FROM Notebooks WHERE Library = "{library}")'
     cur.execute(clear_library)
     cur.execute(clear_notebooks)
     cur.execute(clear_parameter)
@@ -103,13 +103,13 @@ def remove_library(library_db, name):
     conn.close()
 
 
-def remove_notebook(library_db, name):
+def remove_notebook(library_db, notebook):
     from src.mtool.util.sqlite import connection
     
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_parameter = f'DELETE FROM NotebookParameter Where NotebookName IN (SELECT Name FROM "Notebooks" WHERE Name = "{name}")'
-    clear_notebook = f'DELETE FROM Notebooks WHERE Name = "{name}"'
+    clear_parameter = f'DELETE FROM NotebookParameter Where Notebook IN (SELECT Notebook FROM "Notebooks" WHERE Notebook = "{notebook}")'
+    clear_notebook = f'DELETE FROM Notebooks WHERE Notebook = "{notebook}"'
     cur.execute(clear_parameter)
     cur.execute(clear_notebook)
     conn.commit()
