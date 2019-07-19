@@ -152,15 +152,15 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
             action.choices = new_choices
         parts = super()._format_action(action)  
         if action.help == run_notebook_help:
-            parts = f"""\nNotebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
+            parts = f"""Notebooks: \n    [n]                 runs nth notebook in list\n{parts}"""
         elif action.help == new_scene_help:
-            parts = f'\nScene: \n{parts}'
+            parts = f'Scene: \n{parts}'
         elif action.help == set_env_help:
-            parts = f'\nEnvironment: \n{parts}'
+            parts = f'Environment: \n{parts}'
         elif action.help == add_library_help:
-            parts = f'\nLibrary: \n{parts}'
+            parts = f'Library: \n{parts}'
         elif action.help == new_ruleset_help:
-            parts = f'\nPredictions: \n{parts}'
+            parts = f'Predictions: \n{parts}'
 
         return parts
 
