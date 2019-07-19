@@ -94,9 +94,10 @@ def modify_rule_in_ruleset(arg,
     print("M")
 
 def import_ruleset(arg,
+                    rulesengine_root = _rulesengine_root,
                     rulesengine_db = _rulesengine_db):
     from src.mtool.rulesengine import import_ruleset
-    import_ruleset.import_ruleset(arg, rulesengine_db)
+    import_ruleset.import_ruleset(arg, rulesengine_root, rulesengine_db)
     return
 
 def activate_ruleset(arg,

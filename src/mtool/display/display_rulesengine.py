@@ -49,6 +49,9 @@ def display_rule_list(ruleset, rules):
 def display_rule(name, filenames, outputs, predictions):
     print(f"{name}: {filenames} {outputs} = {predictions}")
 
+def display_added_rule(ruleset_name, name, filenames, outputs, predictions):
+    print(f"Added rule {name} to {ruleset_name}:")
+    display_rule(name, filenames, outputs, predictions)
 
 def display_rule_deletion(ruleset, rule):
     """the display function for deleting a rule"""
