@@ -116,31 +116,6 @@ def test_command(setup,
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
     assert result.__class__ == list_library.list_library.__class__
 
-<<<<<<< HEAD
-    dummy_input = dummy_object.make_dummy_input("set_env")
-    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
-    assert result.__class__ == set_env.set_env.__class__
-
-    dummy_input = dummy_object.make_dummy_input("delete_env")
-    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
-    assert result.__class__ == delete_env.delete_env.__class__
-
-    dummy_input = dummy_object.make_dummy_input("list_env")
-    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
-    assert result.__class__ == list_env.list_env.__class__
-
-    dummy_input = dummy_object.make_dummy_input("view_library_env")
-    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
-    assert result.__class__ == list_env.list_library_env.__class__
-
-    dummy_input = dummy_object.make_dummy_input("pull_notebook_env")
-    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
-    assert result.__class__ == pull_env.pull_notebook_environment.__class__
-
-    dummy_input = dummy_object.make_dummy_input("pull_library_env")
-    result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
-    assert result.__class__ == pull_env.pull_library_environment.__class__
-=======
     dummy_input = dummy_object.make_dummy_input("set_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
     assert result.__class__ == set_param.set_param.__class__
@@ -164,7 +139,6 @@ def test_command(setup,
     dummy_input = dummy_object.make_dummy_input("pull_library_param")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, prediction_root, prediction_db, default_scene_name, True)
     assert result.__class__ == pull_param.pull_library_parameter.__class__
->>>>>>> f5e2c7c19d610bdb01566bd3cba45d92e8d3af84
 
     dummy_input = dummy_object.make_dummy_input("sync_library")
     result = cli.command(dummy_input, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
