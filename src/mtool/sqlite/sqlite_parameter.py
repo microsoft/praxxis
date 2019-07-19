@@ -2,20 +2,17 @@
 This file contains all of the sqlite functions for parameters
 """
 
-def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter_value):
+def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter_value, library):
     """set or update an parameter variable"""
     from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    set_notebook_param = f'INSERT OR IGNORE INTO "NotebookParameter" (Parameter, Notebook) VALUES(?, ?)'
-    set_param = f'INSERT OR IGNORE INTO "Parameters" (Parameter, Value) VALUES(?, ?)'    
-    update_param = f'UPDATE "Parameters" SET Value = ? WHERE Parameter = ?'
+    set_notebook_param = f'INSERT OR IGNORE INTO "NotebookDefaultParam" (Parameter, Value, Notebook, Library) VALUES(?, ?, ?, ?)'
+    update_notebook_param = f'UPDATE "NotebookDefaultParam" SET Value = ? WHERE Parameter = ? AND WHERE Notebook = ? AND WHERE Library = ?'
 
-    cur.execute(set_notebook_param, (parameter_name, notebook_name))
-
-    cur.execute(set_param, (parameter_name, parameter_value))
-    cur.execute(update_param, (parameter_name, parameter_value))
+    cur.execute(set_notebook_param, (parameter_name, parameter_value, notebook_name, library))
+    cur.execute(update_notebook_param, (parameter_name, parameter_value, notebook_name, library))
     conn.commit()
     conn.close()
 
@@ -25,7 +22,7 @@ def clear_notebook_parameters(library_db):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_parameter = f'DELETE FROM "Parameters"'
+    clear_parameter = f'DELETE FROM "NotebookDefaultParam"'
     cur.execute(clear_parameter)
     conn.commit()
     conn.close()
@@ -43,8 +40,8 @@ def get_library_parameters(library_db, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library_params = f'SELECT Parameter, Value from "Parameters" WHERE Parameter in (SELECT Parameter FROM NotebookParameter WHERE Notebook IN (SELECT Notebook FROM "Notebooks" WHERE Library = "{library}"))'
-    cur.execute(get_library_params)
+    get_library_params = f'SELECT Parameter, Value from "NotebookDefaultParam" WHERE Library = ?'
+    cur.execute(get_library_params, (library,))
     parameters = cur.fetchall()
     conn.close()
     return parameters
@@ -158,8 +155,8 @@ def list_notebook_param(library_db, notebook):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    param = f'SELECT Parameter, Value from "Parameters" WHERE Parameter in (SELECT Parameter from NotebookParameter WHERE Notebook = "{notebook}")'
-    cur.execute(param)
+    param = f'SELECT Parameter, Value from "NotebookDefaultParam" WHERE Notebook = ?'
+    cur.execute(param, (notebook,))
     rows = cur.fetchall()
     conn.close()
     return rows

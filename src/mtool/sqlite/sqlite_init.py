@@ -7,7 +7,7 @@ def init_library_db(library_db):
     create_metadata_table = f'CREATE TABLE "LibraryMetadata" (Path TEXT PRIMARY KEY, Readme TEXT, Library TEXT)'
     create_notebook_table = f'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
     create_parameter_table = f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
-    create_notebook_parameter_table = f'CREATE TABLE "NotebookParameter" (Parameter TEXT, Notebook TEXT, PRIMARY KEY(Parameter, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameter"(Parameter))'
+    create_notebook_parameter_table = f'CREATE TABLE "NotebookDefaultParam" (Parameter TEXT, Value TEXT, Notebook TEXT, Library TEXT,  PRIMARY KEY(Parameter, Library, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameters"(Parameter), FOREIGN KEY(Library) REFERENCES "Library"(Library))'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_table)
     cur.execute(create_parameter_table)

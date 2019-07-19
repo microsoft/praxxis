@@ -77,7 +77,7 @@ def remove_library(library_db, library):
     cur = conn.cursor()
     clear_library = f'DELETE FROM "LibraryMetadata" WHERE Library = "{library}"'
     clear_notebooks = f'DELETE FROM "Notebooks" WHERE Library = "{library}"'
-    clear_parameter = f'DELETE FROM NotebookParameter Where Notebook IN (SELECT Notebook FROM Notebooks WHERE Library = "{library}")'
+    clear_parameter = f'DELETE FROM NotebookDefaultParam Where Library = "{library}"'
     cur.execute(clear_library)
     cur.execute(clear_notebooks)
     cur.execute(clear_parameter)
@@ -90,7 +90,7 @@ def remove_notebook(library_db, notebook):
     
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_parameter = f'DELETE FROM NotebookParameter Where Notebook IN (SELECT Notebook FROM "Notebooks" WHERE Notebook = "{notebook}")'
+    clear_parameter = f'DELETE FROM NotebookDefaultParam Where Notebook = "{notebook}"'
     clear_notebook = f'DELETE FROM Notebooks WHERE Notebook = "{notebook}"'
     cur.execute(clear_parameter)
     cur.execute(clear_notebook)
