@@ -12,8 +12,8 @@ def test_init_library_db(setup, library_db):
     cur = conn.cursor()
     check_library_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='LibraryMetadata';"
     check_notebooks_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebooks';"
-    check_environment_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Environment';"
-    check_notebook_environment_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookEnvironment';"
+    check_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='parameter';"
+    check_notebook_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebookparameter';"
 
 
     cur.execute(check_library_metadata_table)
@@ -22,21 +22,21 @@ def test_init_library_db(setup, library_db):
     cur.execute(check_notebooks_table)
     notebooks = bool(cur.fetchone()[0])
 
-    cur.execute(check_environment_table)
-    environment = bool(cur.fetchone()[0])
+    cur.execute(check_parameter_table)
+    parameter = bool(cur.fetchone()[0])
 
-    cur.execute(check_notebook_environment_table)
-    notebook_environment = bool(cur.fetchone()[0])
+    cur.execute(check_notebook_parameter_table)
+    notebook_parameter = bool(cur.fetchone()[0])
 
     assert library_metadata
     assert notebooks
-    assert environment
-    assert notebook_environment
+    assert parameter
+    assert notebook_parameter
 
     check_library_metadata_columns = f"SELECT * FROM'LibraryMetadata';"
     check_notebooks_columns = f"SELECT * FROM 'Notebooks';"
-    check_environment_columns = f"SELECT * FROM 'Environment';"
-    check_notebook_environment_columns = f"SELECT * FROM 'NotebookEnvironment'"
+    check_parameter_columns = f"SELECT * FROM 'parameter';"
+    check_notebook_parameter_columns = f"SELECT * FROM 'Notebookparameter'"
 
     cur.execute(check_library_metadata_columns)
     library_metadata_columns = [description[0] for description in cur.description]
@@ -44,13 +44,13 @@ def test_init_library_db(setup, library_db):
     cur.execute(check_notebooks_columns)
     notebook_columns = [description[0] for description in cur.description]
 
-    cur.execute(check_environment_columns)
-    environment_columns = [description[0] for description in cur.description]
+    cur.execute(check_parameter_columns)
+    parameter_columns = [description[0] for description in cur.description]
 
-    cur.execute(check_notebook_environment_columns)
-    notebook_environment_columns = [description[0] for description in cur.description]
+    cur.execute(check_notebook_parameter_columns)
+    notebook_parameter_columns = [description[0] for description in cur.description]
 
     assert library_metadata_columns == ['Root', 'Readme', 'Name']
     assert notebook_columns == ['Root', 'Name', 'LibraryName']
-    assert environment_columns == ['Name', 'Value']
-    assert notebook_environment_columns == ['EnvironmentName', 'NotebookName']
+    assert parameter_columns == ['Name', 'Value']
+    assert notebook_parameter_columns == ['parameterName', 'NotebookName']

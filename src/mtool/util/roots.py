@@ -55,7 +55,7 @@ def init(
         telemetry = True,
         ):
     import os
-    from src.mtool.util.entrypoints import entry_environment
+    from src.mtool.util.entrypoints import entry_parameter
     from src.mtool.util.entrypoints import entry_library
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
