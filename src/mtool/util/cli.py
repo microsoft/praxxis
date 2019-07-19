@@ -30,13 +30,13 @@ def command(argument,
             default_scene_name = _default_scene_name,
             test = False):
     """uses a dictionary as a switch statement to determine which funciton to run."""
-    from src.mtool.util.entrypoints import entry_parameter
-    from src.mtool.util.entrypoints import entry_library
-    from src.mtool.util.entrypoints import entry_notebook
-    from src.mtool.util.entrypoints import entry_scene
-    from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_rulesengine
-    from src.mtool.util.entrypoints import entry_model
+    from src.mtool.entrypoints import entry_parameter
+    from src.mtool.entrypoints import entry_library
+    from src.mtool.entrypoints import entry_notebook
+    from src.mtool.entrypoints import entry_scene
+    from src.mtool.entrypoints import entry_telemetry
+    from src.mtool.entrypoints import entry_rulesengine
+    from src.mtool.entrypoints import entry_model
     from src.mtool.util import roots
 
     roots.init(root, 

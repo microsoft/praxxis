@@ -4,7 +4,7 @@ import warnings
 import time
 from requests.auth import HTTPBasicAuth
 
-from src.mtool.util.sqlite import sqlite_scene
+from src.mtool.sqlite import sqlite_scene
 from src.mtool.rulesengine import rules_checker
 #from src.mtool.model import score
 

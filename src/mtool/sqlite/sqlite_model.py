@@ -4,7 +4,7 @@ This file contains the sqlite functions for the model management
 
 def init_model_db(model_db):
     """initializes the base model database"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(model_db)
     cur = conn.cursor()
@@ -15,7 +15,7 @@ def init_model_db(model_db):
 
 def add_model(model_db, model_name, model_path, converter_path):
     """adds a model to the list of models"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(model_db)
     cur = conn.cursor()

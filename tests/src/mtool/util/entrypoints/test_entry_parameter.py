@@ -1,4 +1,4 @@
-from src.mtool.util.entrypoints import entry_parameter
+from src.mtool.entrypoints import entry_parameter
 from tests.src.mtool.util import dummy_object
 
 def test_view_library_param(setup, add_test_library, scene_root, history_db, library_db, current_scene_db, start, stop):

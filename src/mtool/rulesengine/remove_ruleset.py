@@ -1,7 +1,7 @@
 
 def remove_ruleset(args, rulesengine_db):
     import os
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.rulesengine import rules
 
     if hasattr(args, "name"):

@@ -7,7 +7,7 @@ def test_init_history_db(setup, history_db):
     tests the initializing of the history db for columns and tables
     """
 
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -41,7 +41,7 @@ def init_scene_db(setup, scene_db=""):
     """
     tests the initalizing of the scene db
     """
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(scene_db)
     cur = conn.cursor()

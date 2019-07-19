@@ -5,7 +5,7 @@ This file sets an parameter variable for the current
 
 def set_param(args, scene_root, history_db, current_scene_db):
     """sets the parameter by making a sqlite call"""
-    from src.mtool.util.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_parameter
     from src.mtool.display import display_param
     from src.mtool.util import error
 

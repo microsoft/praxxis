@@ -4,7 +4,7 @@ This file deletes a specified parameter variable
 
 def delete_parameter(args, scene_root, history_db, current_scene_db):
     """deletes the parameter variable specified in args. Can be passed only a name or an ordinal"""
-    from src.mtool.util.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_parameter
     from src.mtool.display import display_param
     from src.mtool.util import error
     from colorama import init, Fore, Style

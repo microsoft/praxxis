@@ -1,4 +1,4 @@
-from src.mtool.util.entrypoints import entry_scene
+from src.mtool.entrypoints import entry_scene
 from tests.src.mtool.util import dummy_object
 
 def test_init_scene(setup, scene_root, history_db, default_scene_name):
@@ -23,7 +23,7 @@ def test_delete_scene(setup, create_one_scene, scene_root, history_db):
 
     
 def test_resume_scene(setup, create_ended_scene, scene_root, history_db):
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import error
 
     entry_scene.resume_scene("generated_ended_scene", scene_root, history_db)
@@ -49,7 +49,7 @@ def test_change_scene(setup, create_one_scene, scene_root, history_db):
 
 def test_end_scene(setup, create_one_scene, scene_root, history_db, current_scene_db):
     from src.mtool.scene import list_scene
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import error
 
     entry_scene.end_scene("generated_one_scene", scene_root, history_db, current_scene_db)

@@ -4,7 +4,7 @@ This file contains all of the sqlite functions for parameters
 
 def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter_value):
     """set or update an parameter variable"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -21,7 +21,7 @@ def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter
 
 def clear_notebook_parameters(library_db):
     """empties the notebook parameter table""" 
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -32,8 +32,8 @@ def clear_notebook_parameters(library_db):
     
 
 def get_library_parameters(library_db, library):
-    from src.mtool.util.sqlite import connection
-    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.sqlite import connection
+    from src.mtool.sqlite import sqlite_library
     from src.mtool.util import error
 
     try:
@@ -52,7 +52,7 @@ def get_library_parameters(library_db, library):
 
 def list_param(current_scene_db, start, end):
     """returns a list of set parameters in the scene"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -66,7 +66,7 @@ def list_param(current_scene_db, start, end):
 
 def get_all_param(current_scene_db):
     """returns a list of set parameters in the scene"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -80,7 +80,7 @@ def get_all_param(current_scene_db):
 
 def get_param(current_scene_db, parameter):
     """get the value of the specified parameter variable""" 
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -94,7 +94,7 @@ def get_param(current_scene_db, parameter):
 
 def set_param(current_scene_db, parameter, value):
     """set or update an parameter variable"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -107,7 +107,7 @@ def set_param(current_scene_db, parameter, value):
 
 
 def set_many_params(current_scene_db, parameter_list):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -118,7 +118,7 @@ def set_many_params(current_scene_db, parameter_list):
 
 def get_param_by_ord(current_scene_db, ordinal):
     """get an parameter variable by ord"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(current_scene_db)
@@ -135,7 +135,7 @@ def get_param_by_ord(current_scene_db, ordinal):
 
 def delete_param(current_scene_db, parameter):
     """Delete an parameter variable"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(current_scene_db)
@@ -154,7 +154,7 @@ def delete_param(current_scene_db, parameter):
 
 
 def list_notebook_param(library_db, notebook):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()

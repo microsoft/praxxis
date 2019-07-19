@@ -1,6 +1,6 @@
 
 def view_rules(args, prediction_db):
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     from src.mtool.rulesengine import rules
 

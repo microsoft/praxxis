@@ -5,7 +5,7 @@ from src.mtool.util.roots import _git_root
 def init_library(library_root = _library_root, 
                  library_db = _library_db):
     import os
-    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_library
     from src.mtool.display import display_library
     
     os.mkdir(library_root)

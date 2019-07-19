@@ -2,7 +2,7 @@
 
 def get_ruleset_by_ordinal(name, prediction_db):
     """gets ruleset by ordinal using the sqlite prediction db"""
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.util import error
 
     if f"{name}".isdigit():

@@ -1,4 +1,4 @@
-from src.mtool.util.entrypoints import entry_library
+from src.mtool.entrypoints import entry_library
 import pytest
 import sys
 

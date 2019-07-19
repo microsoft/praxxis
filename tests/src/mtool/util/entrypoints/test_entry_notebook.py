@@ -1,4 +1,4 @@
-from src.mtool.util.entrypoints import entry_notebook
+from src.mtool.entrypoints import entry_notebook
 from tests.src.mtool.util import dummy_object
 
 def test_init_outfile(setup, outfile_root):
@@ -53,7 +53,7 @@ def test_open_notebook(setup, add_test_library, scene_root, history_db, library_
 
 def test_run_notebook(setup, add_test_library, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db):
     import os
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.scene import history
 
     notebook = dummy_object.make_dummy_notebook()

@@ -1,5 +1,5 @@
 def import_model(args, prediction_db):
-    from src.mtool.util.sqlite import sqlite_model
+    from src.mtool.sqlite import sqlite_model
     from src.mtool.display import display_model
     import os
 

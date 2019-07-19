@@ -6,8 +6,8 @@ TODO: should give warning/error when notebook can't be found in current librarie
 
 def history(history_db, library_db, current_scene_db):
     """displays the notebook history of the sceen"""
-    from src.mtool.util.sqlite import sqlite_scene
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.display import display_scene
 
     curr_scene = sqlite_scene.get_current_scene(history_db)

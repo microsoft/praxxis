@@ -6,7 +6,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import requests
 from requests.auth import HTTPBasicAuth
 
-from src.mtool.util.sqlite import sqlite_telemetry
+from src.mtool.sqlite import sqlite_telemetry
 
 def send(user_info_db, local_copy, scene_identifier):    
     telem_info = sqlite_telemetry.get_telemetry_info(user_info_db)

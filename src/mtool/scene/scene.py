@@ -2,7 +2,7 @@
 
 def get_scene_by_ordinal(args, name, history_db):
     """gets scene by ordinal using the sqlite history db"""
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import error
 
     if f"{name}".isdigit():
@@ -15,7 +15,7 @@ def get_scene_by_ordinal(args, name, history_db):
 
 
 def init_scene(scene_db, history_db, name):
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     sqlite_scene.init_scene(scene_db, name)
     sqlite_scene.update_current_scene(history_db, name)
     return (scene_db, name)

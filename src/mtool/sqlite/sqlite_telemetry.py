@@ -4,7 +4,7 @@ This file contains all of the sqlite functions for scenes
 
 def get_scene_id(current_scene_db):
     """gets the scene ID from the scene db"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -20,7 +20,7 @@ def init_user_info(telemetry_db, send_telemetry=1):
     import uuid
     import getpass
 
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(telemetry_db)
     cur = conn.cursor()
@@ -51,7 +51,7 @@ def telem_init(user_info_db):
     """returns boolean of whether telemetry was ever set up
     (checks whether Host has a value) 
     """
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
@@ -63,7 +63,7 @@ def telem_init(user_info_db):
 
 def telem_on(user_info_db):
     """returns boolean of whether telemetry is enabled"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
@@ -75,7 +75,7 @@ def telem_on(user_info_db):
 
 def get_telemetry_info(user_info_db):
     """gets the telemetry information:"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
     query = f'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY Key="ID", Key="Password", Key="Username", Key="URL", Key="Host"'
@@ -90,7 +90,7 @@ def get_telemetry_info(user_info_db):
 
 def get_settings(user_info_db, settings):
     """gets the current value of each setting"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     values = {}
     conn = connection.create_connection(user_info_db)
@@ -104,7 +104,7 @@ def get_settings(user_info_db, settings):
 
 def write_setting(user_info_db, setting, value):
     """changes the value of setting"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
@@ -120,7 +120,7 @@ def write_settings(user_info_db, settings, values):
 
 def add_to_backlog(user_info_db, local_copy, scene_id, error):
     """adds this file to the telemetry backlog"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
@@ -132,7 +132,7 @@ def add_to_backlog(user_info_db, local_copy, scene_id, error):
 
 def backlog_size(user_info_db):
     """returns current size of telemetry backlog"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
@@ -145,7 +145,7 @@ def backlog_size(user_info_db):
 
 def get_backlog(user_info_db):
     """returns the backlog"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
@@ -158,7 +158,7 @@ def get_backlog(user_info_db):
 
 def delete_from_backlog(user_info_db, local_copy):
     """deletes sent telemetry from backlog, if in backlog"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()

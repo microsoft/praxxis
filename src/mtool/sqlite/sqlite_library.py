@@ -4,7 +4,7 @@ This file contains all of the sqlite functions for libraries
 
 def init_library_db(library_db):
     """initializes the library database"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -21,7 +21,7 @@ def init_library_db(library_db):
 
 
 def clear_loaded_libararies(library_db):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -35,7 +35,7 @@ def clear_loaded_libararies(library_db):
 
 def load_library(library_db, path, readme, library):
     """load a library into the library db"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -49,7 +49,7 @@ def load_library(library_db, path, readme, library):
 
 def load_notebook(library_db, file_root, notebook, library):
     """load a notebook into the library db"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -61,7 +61,7 @@ def load_notebook(library_db, file_root, notebook, library):
 
 def list_libraries(library_db, start, end):
     """returns a list of loaded libraries"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -73,7 +73,7 @@ def list_libraries(library_db, start, end):
     return rows
 
 def check_library_exists(library_db, library):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(library_db)
@@ -89,7 +89,7 @@ def check_library_exists(library_db, library):
 
 
 def remove_library(library_db, library):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -104,7 +104,7 @@ def remove_library(library_db, library):
 
 
 def remove_notebook(library_db, notebook):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     
     conn = connection.create_connection(library_db)
     cur = conn.cursor()

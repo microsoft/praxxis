@@ -1,7 +1,7 @@
 
 def new_ruleset(args, rulesengine_root, rulesengine_db):
     import os
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
 
     if hasattr(args, "name"):

@@ -7,8 +7,8 @@ import os
 def sync_libraries(library_root, library_db):
     """ loads libraries from the library root you supply, into the library db"""
     from src.mtool.display import display_library
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_parameter
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
 
@@ -23,7 +23,7 @@ def sync_libraries(library_root, library_db):
 
 def sync_library(library_root, library_db):
     """ loads the individual library specified by the library root passed in, into the library db""" 
-    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_library
     from src.mtool.util import error
 
     readme_location = os.path.join(library_root, "README.md")
@@ -47,9 +47,9 @@ def sync_library(library_root, library_db):
 
 def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_parameter
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.util import error
 
     from src.mtool.display import display_library

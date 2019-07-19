@@ -7,7 +7,7 @@ def init_scene(scene_db, name):
     """initializes the scene db"""
     #TODO: handle strings
     import uuid
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(scene_db)
     cur = conn.cursor()
@@ -29,7 +29,7 @@ def init_scene(scene_db, name):
 
 def init_history(history_db, scene_name):
     """initializes the current scene database"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -60,7 +60,7 @@ def check_ended(history_db, scene, conn, cur):
 def check_scene_ended(history_db, scene):
     """checks if scene has ended"""
     #TODO: handle strings
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(history_db)
@@ -78,7 +78,7 @@ def check_scene_ended(history_db, scene):
 def update_current_scene(history_db, scene):
     """updates the current scene in the history db"""
     #TODO: handle strings
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur =  conn.cursor()
@@ -90,7 +90,7 @@ def update_current_scene(history_db, scene):
 
 def get_current_scene(history_db):
     """gets the current scene from the history db"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -104,7 +104,7 @@ def get_current_scene(history_db):
 def delete_scene(history_db, scene):
     """Deletes the specified scene"""
     import itertools
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(history_db)
@@ -131,7 +131,7 @@ def delete_scene(history_db, scene):
 
 def end_scene(current_scene_db, scene):
     """marks the specified scene as ended"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -143,7 +143,7 @@ def end_scene(current_scene_db, scene):
 
 def mark_ended_scene(history_db, scene):
     """marks a scene as ended in the history db"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
     import itertools
 
@@ -170,7 +170,7 @@ def mark_ended_scene(history_db, scene):
 
 def mark_resumed_scene(history_db, scene):
     """mark a scene as resumed in the history db"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -182,7 +182,7 @@ def mark_resumed_scene(history_db, scene):
 
 def resume_scene(scene_db, scene):
     """resumes a scene"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(scene_db)
     cur = conn.cursor()
@@ -194,7 +194,7 @@ def resume_scene(scene_db, scene):
 
 def get_active_scenes(history_db):
     """returns a list of all active scenes"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -207,7 +207,7 @@ def get_active_scenes(history_db):
 
 def get_ended_scenes(history_db):
     """returns a list of all ended scenes"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -220,7 +220,7 @@ def get_ended_scenes(history_db):
 
 def add_to_scene_history(current_scene_db, timestamp, notebook, library, outputpath):
     """adds a notebook to the scene history"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -232,7 +232,7 @@ def add_to_scene_history(current_scene_db, timestamp, notebook, library, outputp
 
 def get_notebook_history(current_scene_db):
     """gets the notebook history from a scene"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -246,7 +246,7 @@ def get_notebook_history(current_scene_db):
 
 def get_recent_history(db_file, seq_length):
     """Gets last <seq_length> file names from a scene"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
@@ -259,7 +259,7 @@ def get_recent_history(db_file, seq_length):
 
 def dump_scene_list(history_db):
     """empties the scene list table""" 
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -273,7 +273,7 @@ def dump_scene_list(history_db):
 
 def write_scene_list(history_db, scene_list):
     """writes to scene list table"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
@@ -285,7 +285,7 @@ def write_scene_list(history_db, scene_list):
 
 def get_scene_by_ord(history_db, ordinal):
     """gets scene by ordinal"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(history_db)
@@ -302,7 +302,7 @@ def get_scene_by_ord(history_db, ordinal):
 
 def clear_history(current_scene_db):
     """empties the history table""" 
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -314,7 +314,7 @@ def clear_history(current_scene_db):
 
 def get_notebook_path(current_scene_db, notebook_name):
     """returns the path given a valid notebook name"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()

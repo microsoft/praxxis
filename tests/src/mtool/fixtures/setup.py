@@ -9,15 +9,15 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
     """
     sets up directories in the temp dir
     """
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import roots
     from src.mtool.scene import new_scene
     from src.mtool.scene import list_scene
     from src.mtool.parameter import list_param
     from src.mtool.library import list_library
     from src.mtool.notebook import list_notebook
-    from src.mtool.util.sqlite import sqlite_telemetry
+    from src.mtool.sqlite import sqlite_telemetry
 
 
     if not os.path.exists(init_root):

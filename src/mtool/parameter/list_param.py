@@ -5,8 +5,8 @@ This file lists all of the parameters
 def list_param(current_scene_db, start, end):
     """lists the parameters in scene"""
     import os
-    from src.mtool.util.sqlite import sqlite_scene
-    from src.mtool.util.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_parameter
     from src.mtool.display import display_param
     
     param_list = sqlite_parameter.list_param(current_scene_db, start, end)
@@ -17,7 +17,7 @@ def list_param(current_scene_db, start, end):
 
 def list_notebook_param(args, library_db, current_scene_db):
     """List all parameters in the current notebook"""
-    from src.mtool.util.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_parameter
     from src.mtool.notebook import notebook
     from src.mtool.display import display_param
 
@@ -38,7 +38,7 @@ def list_notebook_param(args, library_db, current_scene_db):
 
 def list_library_param(args, library_db, current_scene_db):
     """Lists all parameters in the """
-    from src.mtool.util.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_parameter
     from src.mtool.display import display_param
     from src.mtool.util import error
 

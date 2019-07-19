@@ -5,7 +5,7 @@ file and checking its parameterization information.
 
 def get_notebook_by_ordinal(current_scene_db, name):
     """gets scene by ordinal using the sqlite history db"""
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.util import error
     if f"{name}".isdigit():
         try:

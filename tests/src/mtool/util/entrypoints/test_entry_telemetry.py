@@ -1,4 +1,4 @@
-from src.mtool.util.entrypoints import entry_telemetry
+from src.mtool.entrypoints import entry_telemetry
 
 def test_init_telemetry(setup, telemetry_db):
     import os 

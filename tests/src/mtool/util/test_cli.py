@@ -19,7 +19,7 @@ def test_command(setup,
          start,
          stop):
     import os
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.notebook import list_notebook
     from src.mtool.notebook import run_notebook
     from src.mtool.parameter import list_param

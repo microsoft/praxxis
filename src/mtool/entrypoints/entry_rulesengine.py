@@ -117,7 +117,7 @@ def init_rulesengine(rulesengine_root, rulesengine_db):
     import os
     
     from src.mtool.display import display_rulesengine
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
 
     os.mkdir(rulesengine_root)
     display_rulesengine.display_init_rulesengine_root(rulesengine_root)

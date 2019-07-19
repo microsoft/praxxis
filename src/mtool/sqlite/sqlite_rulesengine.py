@@ -4,7 +4,7 @@ This file contains the sqlite functions for the rules engine
 
 def init_rulesengine_db(rulesengine_db):
     """initializes the base rules engine database"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
@@ -15,7 +15,7 @@ def init_rulesengine_db(rulesengine_db):
 
 def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     """creates a new ruleset database"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     
@@ -34,7 +34,7 @@ def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
 
 def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
     """adds ruleset to list"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     import os
     ruleset_name = os.path.basename(ruleset_root).split(".db")[0]
@@ -48,7 +48,7 @@ def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
 
 def get_ruleset_path(rulesengine_db, name):
     """returns the path to a ruleset"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(rulesengine_db)
@@ -64,7 +64,7 @@ def get_ruleset_path(rulesengine_db, name):
 
 def remove_ruleset(rulesengine_db, name):
     """removes a ruleset from the list of rulesets"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(rulesengine_db)
@@ -76,7 +76,7 @@ def remove_ruleset(rulesengine_db, name):
 
 def get_ruleset_by_ord(rulesengine_db, ordinal):
     """gets ruleset by ordinal"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(rulesengine_db)
@@ -92,7 +92,7 @@ def get_ruleset_by_ord(rulesengine_db, ordinal):
 
 def get_all_rulesets(rulesengine_db, start, end):
     """gets all rulesets"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
@@ -106,7 +106,7 @@ def get_all_rulesets(rulesengine_db, start, end):
 
 def get_active_rulesets(rulesengine_db, start, end):
     """gets all active rulesets and paths"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
@@ -120,7 +120,7 @@ def get_active_rulesets(rulesengine_db, start, end):
 
 def get_inactive_rulesets(rulesengine_db):
     """gets all inactive rulesets"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
@@ -134,7 +134,7 @@ def get_inactive_rulesets(rulesengine_db):
 
 def activate_ruleset(rulesengine_db, name):
     """activates ruleset <name>"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
@@ -154,7 +154,7 @@ def activate_ruleset(rulesengine_db, name):
 
 def deactivate_ruleset(rulesengine_db, name):
     """deactivates ruleset <name>"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error 
 
     conn = connection.create_connection(rulesengine_db)
@@ -175,7 +175,7 @@ def deactivate_ruleset(rulesengine_db, name):
     
 def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     """adds a rule to the ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -194,7 +194,7 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
 
 def delete_rule(ruleset_db, rulename):
     """deletes a rule from the ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -208,7 +208,7 @@ def delete_rule(ruleset_db, rulename):
 
 def list_rules_in_ruleset(ruleset_db):
     """returns a list of all rule names in a ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -223,7 +223,7 @@ def list_rules_in_ruleset(ruleset_db):
 
 def get_filenames(ruleset_db, rule):
     """returns a list of all filenames for a rule in a ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -238,7 +238,7 @@ def get_filenames(ruleset_db, rule):
 
 def get_filenames_by_rule(ruleset_db):
     """returns a list of all filenames for all rules in a ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -253,7 +253,7 @@ def get_filenames_by_rule(ruleset_db):
     
 def get_outputs(ruleset_db, rule):
     """returns a list of all outputs for a rule in a ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -268,7 +268,7 @@ def get_outputs(ruleset_db, rule):
 
 def get_outputs_for_rules(ruleset_db, ruleset):
     """returns a list of all outputs for all rules in a ruleset"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
@@ -283,7 +283,7 @@ def get_outputs_for_rules(ruleset_db, ruleset):
 
 def get_predictions(ruleset_db, ruleset):
     """returns the ordered list of predictions for a set of rule matches"""
-    from src.mtool.util.sqlite import connection 
+    from src.mtool.sqlite import connection 
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()

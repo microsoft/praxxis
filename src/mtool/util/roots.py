@@ -30,7 +30,7 @@ _query_end = 100
 def get_current_scene_db(scene_root, history_db):
     """calls the function to get the location of the history db"""
     import os
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     scene = sqlite_scene.get_current_scene(history_db)
     return os.path.join(scene_root, scene, f"{scene}.db")
 
@@ -50,13 +50,13 @@ def init(
         telemetry = True,
         ):
     import os
-    from src.mtool.util.entrypoints import entry_parameter
-    from src.mtool.util.entrypoints import entry_library
-    from src.mtool.util.entrypoints import entry_notebook
-    from src.mtool.util.entrypoints import entry_scene
-    from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_rulesengine
-    from src.mtool.util.entrypoints import entry_model
+    from src.mtool.entrypoints import entry_parameter
+    from src.mtool.entrypoints import entry_library
+    from src.mtool.entrypoints import entry_notebook
+    from src.mtool.entrypoints import entry_scene
+    from src.mtool.entrypoints import entry_telemetry
+    from src.mtool.entrypoints import entry_rulesengine
+    from src.mtool.entrypoints import entry_model
 
     if not os.path.exists(root):
         os.mkdir(root)

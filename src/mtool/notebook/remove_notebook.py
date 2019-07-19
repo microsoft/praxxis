@@ -1,6 +1,6 @@
 def remove_notebook(args, library_db, current_scene_db):
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.notebook import notebook
     from src.mtool.util import error
     from src.mtool.notebook import list_notebook

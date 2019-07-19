@@ -4,7 +4,7 @@ This file contains the sqlite functions for notebooks
 
 def list_notebooks(library_db, start, end):
     """lists all loaded notebooks"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -17,7 +17,7 @@ def list_notebooks(library_db, start, end):
 
 def get_notebook(library_db, notebook):
     """returns a specific notebook"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(library_db)
@@ -34,7 +34,7 @@ def get_notebook(library_db, notebook):
 
 def get_notebook_by_ord(current_scene_db, ordinal):
     """Returns list item referenced by input ordinal"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -51,7 +51,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
 
 def write_list(current_scene_db, notebook_list, path_list = []):
     """creates the list of notebooks in list"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
@@ -70,7 +70,7 @@ def write_list(current_scene_db, notebook_list, path_list = []):
 
 def get_notebook_path(library_db, notebook, library):
     """gets notebook path from libraries/notebooks"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
@@ -85,7 +85,7 @@ def get_notebook_path(library_db, notebook, library):
     
 
 def check_notebook_exists(library_db, notebook):
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
     from src.mtool.util import error
 
     conn = connection.create_connection(library_db)
@@ -105,7 +105,7 @@ def check_notebook_exists(library_db, notebook):
 
 def search_notebooks(library_db, search_term, start, end):
     """searches notebooks for search term"""
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()

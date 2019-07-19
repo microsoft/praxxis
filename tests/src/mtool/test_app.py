@@ -369,7 +369,7 @@ def update_settings(command):
 
 def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
     from src.mtool import app
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.notebook import run_notebook
     from src.mtool.util import error
     import sys

@@ -6,7 +6,7 @@ def test_init_library_db(setup, library_db):
     """
     tests the initializing of the library db for columns and tables
     """
-    from src.mtool.util.sqlite import connection
+    from src.mtool.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()

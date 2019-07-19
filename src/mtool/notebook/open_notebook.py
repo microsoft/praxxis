@@ -5,7 +5,7 @@ This file opens a notebook in Azure Data Studio.
 def open_notebook(args, current_scene_db, library_db, ads_location, editor, test = False):
     """Opens a notebook, by getting the filename and then opening from the ads binary location"""
     import subprocess
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.notebook import notebook
     from src.mtool.util import error
 

@@ -4,7 +4,7 @@ This file changes the current scene.
 
 def change_scene(args, scene_root, history_db):
     """changes current scene in sqlite history db"""
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.display import display_scene
     from src.mtool.scene import scene
     from src.mtool.util import error

@@ -1,6 +1,6 @@
 def import_ruleset(args, prediction_db):
     """links a ruleset db to the ruleset table"""
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     import os
     

@@ -1,6 +1,6 @@
 
 def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start, stop):
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     from src.mtool.display import display_edit_ruleset
     from src.mtool.rulesengine import rules
