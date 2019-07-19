@@ -56,7 +56,7 @@ def init(
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_prediction
+    from src.mtool.util.entrypoints import entry_rulesengine
 
     if not os.path.exists(root):
         os.mkdir(root)
@@ -79,6 +79,6 @@ def init(
 
     # predictions init
     if not os.path.exists(prediction_db):
-        entry_prediction.init_prediction(prediction_root, prediction_db)
+        entry_rulesengine.init_prediction(prediction_root, prediction_db)
 
 

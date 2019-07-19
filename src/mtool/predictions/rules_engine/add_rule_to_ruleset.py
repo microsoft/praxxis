@@ -1,7 +1,7 @@
 
 def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start, stop):
     from src.mtool.util.sqlite import sqlite_prediction
-    from src.mtool.display import display_prediction
+    from src.mtool.display import display_rulesengine
     from src.mtool.display import display_edit_ruleset
     from src.mtool.predictions.rules_engine import rules
     from src.mtool.display.display_error import predictions_ordinal_not_in_list_error
@@ -43,10 +43,10 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
         predicted_with_ords = [prediction.strip() for prediction in predicted_raw.split(",")]
         predicted = get_filenames_from_ordinals(predicted_with_ords, current_scene_db, allow_errors=False)
 
-    display_edit_ruleset.display_predictions(predicted)
+    display_edit_ruleset.display_rulesengines(predicted)
 
     # display total rule and add it to db        
-    display_prediction.display_rule(rulename, filenames, output, predicted)
+    display_rulesengine.display_rule(rulename, filenames, output, predicted)
     sqlite_prediction.add_rule(ruleset_db, rulename, filenames, output, predicted)
     
         

@@ -31,7 +31,7 @@ def command(argument,
     from src.mtool.util.entrypoints import entry_notebook
     from src.mtool.util.entrypoints import entry_scene
     from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_prediction
+    from src.mtool.util.entrypoints import entry_rulesengine
     from src.mtool.util import roots
 
     roots.init(root, 
@@ -73,16 +73,16 @@ def command(argument,
         "pull_library_env": entry_environment.pull_library_env,
         "sync_library": entry_library.sync_library,
         "update_settings": entry_telemetry.update_settings,
-        "new_ruleset": entry_prediction.new_ruleset,
-        "remove_ruleset": entry_prediction.remove_ruleset,
-        "list_rulesets": entry_prediction.list_rulesets,
-        "view_ruleset": entry_prediction.view_ruleset,
-        "edit_ruleset": entry_prediction.edit_ruleset,
-        "import_ruleset": entry_prediction.import_ruleset,
-        "activate_ruleset": entry_prediction.activate_ruleset,
-        "deactivate_ruleset": entry_prediction.deactivate_ruleset,
-        "import_model": entry_prediction.import_model,
-        "update_model": entry_prediction.update_model
+        "new_ruleset": entry_rulesengine.new_ruleset,
+        "remove_ruleset": entry_rulesengine.remove_ruleset,
+        "list_rulesets": entry_rulesengine.list_rulesets,
+        "view_ruleset": entry_rulesengine.view_ruleset,
+        "edit_ruleset": entry_rulesengine.edit_ruleset,
+        "import_ruleset": entry_rulesengine.import_ruleset,
+        "activate_ruleset": entry_rulesengine.activate_ruleset,
+        "deactivate_ruleset": entry_rulesengine.deactivate_ruleset,
+        "import_model": entry_rulesengine.import_model,
+        "update_model": entry_rulesengine.update_model
     }
 
     if hasattr(argument, "which"):

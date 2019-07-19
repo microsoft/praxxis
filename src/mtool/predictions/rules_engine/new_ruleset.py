@@ -2,7 +2,7 @@
 def new_ruleset(args, prediction_root, prediction_db):
     import os
     from src.mtool.util.sqlite import sqlite_prediction
-    from src.mtool.display import display_prediction
+    from src.mtool.display import display_rulesengine
 
     if hasattr(args, "name"):
         name = args.name
@@ -28,6 +28,6 @@ def new_ruleset(args, prediction_root, prediction_db):
     sqlite_prediction.init_ruleset(prediction_db, name, path)
     sqlite_prediction.add_ruleset_to_list(prediction_db, name, path)
 
-    display_prediction.display_new_ruleset(name)
+    display_rulesengine.display_new_ruleset(name)
     return 
 

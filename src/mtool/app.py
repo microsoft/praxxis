@@ -160,7 +160,9 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
         elif action.help == add_library_help:
             parts = f'Library: \n{parts}'
         elif action.help == new_ruleset_help:
-            parts = f'Predictions: \n{parts}'
+            parts = f'Rules Engine: \n{parts}'
+        elif action.help == import_model_help:
+            parts = f'Model: \n{parts}'
 
         return parts
 
