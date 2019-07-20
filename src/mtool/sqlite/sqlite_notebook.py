@@ -57,7 +57,7 @@ def write_list(current_scene_db, notebook_list, path_list = []):
     cur = conn.cursor()
     clear_list = f'DELETE FROM "NotebookList"'
     reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='NotebookList'"
-    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?,?,?)'
+    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
     if path_list == []:
