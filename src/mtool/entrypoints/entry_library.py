@@ -1,3 +1,7 @@
+"""
+this handles the library section of the CLI.
+"""
+
 from src.mtool.util.roots import _library_root
 from src.mtool.util.roots import _library_db
 from src.mtool.util.roots import _git_root
@@ -7,6 +11,9 @@ from src.mtool.util.roots import _query_end
 
 def init_library(library_root = _library_root, 
                  library_db = _library_db):
+    """
+    handles the initialization of the library dbs and directories
+    """
     import os
     from src.mtool.sqlite import sqlite_init
     from src.mtool.display import display_library
@@ -32,6 +39,9 @@ def remove_library(arg,
                    library_db = _library_db,
                    query_start = _query_start,
                    query_end = _query_end,):
+    """
+    handles removing a library
+    """
     from src.mtool.library import remove_library
 
     remove_library.remove_library(arg, library_db, query_start, query_end)
