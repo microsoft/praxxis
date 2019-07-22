@@ -7,6 +7,9 @@ class Dummy_Object():
     term = ""
     notebook = ""
     html = ""
+    action = ""
+    modelpath = ""
+    converterpath = ""
     library_name = ""
     _hasParameters = ""
     dest = ""
@@ -122,3 +125,7 @@ def make_dummy_notebook_path():
     dummy_notebook_path.path = os.path.abspath(os.path.join('tests', 'test_notebooks', 'test_notebook.ipynb'))
     return dummy_notebook_path
 
+def make_dummy_ruleset(name):
+    dummy_ruleset = Dummy_Object()
+    dummy_ruleset.name = name
+    return dummy_ruleset

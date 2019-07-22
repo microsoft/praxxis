@@ -5,12 +5,13 @@ import pytest
 import os
 
 @pytest.fixture(scope="session")
-def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene_root, history_db, default_scene_name, start, stop):
+def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene_root, history_db, default_scene_name, start, stop, rulesengine_root, rulesengine_db):
     """
     sets up directories in the temp dir
     """
     from src.mtool.util.sqlite import sqlite_library
     from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.util.sqlite import sqlite_rulesengine
     from src.mtool.util import roots
     from src.mtool.scene import new_scene
     from src.mtool.scene import list_scene
@@ -18,7 +19,7 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
     from src.mtool.library import list_library
     from src.mtool.notebook import list_notebook
     from src.mtool.util.sqlite import sqlite_telemetry
-
+    
 
     if not os.path.exists(init_root):
         os.mkdir(init_root)
@@ -46,6 +47,16 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
 
     if not os.path.exists(telemetry_db):
         sqlite_telemetry.init_user_info(telemetry_db, 0)
+
+    
+    if not os.path.exists(rulesengine_root):
+        os.mkdir(rulesengine_root)
+        assert os.path.exists(rulesengine_root)
+    
+    
+    if not os.path.exists(rulesengine_db):
+        sqlite_rulesengine.init_rulesengine_db(rulesengine_db)
+    
 
     new_scene.new_scene(default_scene_name, scene_root, history_db)
     yield 

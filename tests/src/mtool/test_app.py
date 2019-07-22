@@ -161,6 +161,46 @@ def test_update_settings():
     update_settings(['u'])
 
 
+def test_new_ruleset():
+    new_ruleset(['newruleset', 'test'])
+    new_ruleset(['nr', 'test'])
+
+
+def test_remove_ruleset():
+    remove_ruleset(['removeruleset', 'test'])
+    remove_ruleset(['rr', 'test'])
+
+
+def test_list_rulesets():
+    list_rulesets(['listrulesets'])
+    list_rulesets(['lr'])
+
+
+def test_import_ruleset():
+    import_ruleset(['importruleset', 'test'])
+    import_ruleset(['ir', 'test'])
+
+
+def test_view_ruleset():
+    view_ruleset(['viewruleset', 'test'])
+    view_ruleset(['vr', 'test'])
+
+
+def test_edit_ruleset():
+    edit_ruleset(['editruleset', 'test', 'a'])
+    edit_ruleset(['editruleset', 'test', 'd'])
+
+
+def test_activate_ruleset():
+    activate_ruleset(['activateruleset', 'test'])
+    activate_ruleset(['ar', 'test'])
+
+
+def test_deactivate_ruleset():
+    deactivate_ruleset(['deactivateruleset', 'test'])
+    deactivate_ruleset(['dr', 'test'])
+
+
 def run(command):
 
     namespace = app.main(command)
@@ -366,6 +406,91 @@ def update_settings(command):
     namespace = app.main(command)
     assert namespace.command == 'u' or namespace.command == "updatesettings"
 
+
+def new_ruleset(command):
+    """
+    tests if the new ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'nr' or namespace.command == "newruleset"
+    assert namespace.name == "test"
+
+
+def remove_ruleset(command):
+    """
+    tests if the remove ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'rr' or namespace.command == "removeruleset"
+    assert namespace.name == "test"
+
+
+def list_rulesets(command):
+    """
+    tests if the list rulesets command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'lr' or namespace.command == "listrulesets"
+
+
+def import_ruleset(command):
+    """
+    tests if the import ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'ir' or namespace.command == "importruleset"
+    assert namespace.path == "test"
+
+
+def view_ruleset(command):
+    """
+    tests if the view ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'vr' or namespace.command == "viewruleset"
+    assert namespace.name == "test"
+
+def edit_ruleset(command):
+    """
+    tests if the edit ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'er' or namespace.command == "editruleset"
+    assert namespace.name == "test"
+    assert namespace.action in ['a','d']
+
+def activate_ruleset(command):
+    """
+    tests if the activate ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'ar' or namespace.command == "activateruleset"
+    assert namespace.name == "test"
+
+def deactivate_ruleset(command):
+    """
+    tests if the deactivate ruleset command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'dr' or namespace.command == "deactivateruleset"
+    assert namespace.name == "test"
+
+def import_model(command):
+    """
+    tests if the import model command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'im' or namespace.command == "importmodel"
+    assert namespace.modelpath == "test1"
+    assert namespace.convertpath == "test2"
+
+def update_model(command):
+    """
+    tests if the update model command is running properly
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'um' or namespace.command == "updatemodel"
+    
 
 def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
     from src.mtool import app

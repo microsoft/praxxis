@@ -16,5 +16,5 @@ def remove_ruleset(args, rulesengine_db):
 
     sqlite_rulesengine.remove_ruleset(rulesengine_db, name)
 
-    return
+    return name
 

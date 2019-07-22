@@ -15,6 +15,7 @@ def activate_ruleset(args, prediction_db):
     try:
         sqlite_rulesengine.activate_ruleset(prediction_db, name)
         display_rulesengine.display_activate_ruleset(name)
+        return name
     except error.RulesetNotFoundError as e:
         raise e
     except error.RulesetActiveError as e:
