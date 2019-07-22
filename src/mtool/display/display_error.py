@@ -158,4 +158,7 @@ def invalid_ruleset_import(name):
 
 def invalid_rule_definition(name):
     print(f"{Fore.RED}The rule definition for rule {name} is invalid. This rule will not be imported.")
+
+def empty_history_error():
+    return(f"{Fore.RED}Predictions cannot be run on an empty history.")
    

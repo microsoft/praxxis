@@ -389,7 +389,8 @@ def start(args=None, test = False):
             error.NotNotebookError,
             error.EditorNotFoundError,
             error.ADSNotFoundError,
-            error.NotValidRuleset)as e:
+            error.NotValidRuleset,
+            error.EmptyRulesetError) as e:
         print(e)
         return 1
     
