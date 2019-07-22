@@ -250,7 +250,7 @@ def get_scene_by_ord(history_db, ordinal):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    get_scene = f'SELECT Name FROM "SceneList" ORDER BY ID LIMIT {ordinal-1}, {ordinal}'
+    get_scene = f'SELECT Scene FROM "SceneList" ORDER BY ID LIMIT {ordinal-1}, {ordinal}'
     cur.execute(get_scene)
     conn.commit()
     rows = cur.fetchall()
