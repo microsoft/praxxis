@@ -160,3 +160,10 @@ class NotValidRuleset(Exception):
         from src.mtool.display import display_error
         return str(display_error.invalid_ruleset_import(self.name))
 
+class EmptyRulesetError(Exception):
+    def __init__(self):
+        pass
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.empty_history_error())

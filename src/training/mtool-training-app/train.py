@@ -5,7 +5,7 @@ MTOOL_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/mtool/"
 import json
 import requests
 from datetime import date, timedelta
-import pickle
+
 
 def train():
     sequences = get_sequences()

@@ -13,3 +13,4 @@ def deactivate_ruleset(args, prediction_db):
 
     sqlite_rulesengine.deactivate_ruleset(prediction_db, name)
     display_rulesengine.display_deactivate_ruleset(name)
+    return name
