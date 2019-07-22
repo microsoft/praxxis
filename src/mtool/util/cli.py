@@ -39,7 +39,8 @@ def command(argument,
     from src.mtool.entrypoints import entry_model
     from src.mtool.util import roots
 
-    roots.init(root, 
+    if not test:
+        roots.init(root, 
          library_root, 
          library_db,
          outfile_root,

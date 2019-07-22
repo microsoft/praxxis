@@ -505,12 +505,12 @@ def test_start(setup, add_test_library, scene_root, library_root, library_db, cu
     assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 
 
     try:
-        app.start(["", "99"])
+        app.start(["", "99"], test=True)
     except error.NotebookNotFoundError:
         assert 1
 
     try:
-        sys.argv = ["", "r", "99"]
+        sys.argv = ["", "r", "99"] 
     except error.NotebookNotFoundError:
         assert 1
 
