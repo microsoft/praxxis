@@ -1,3 +1,7 @@
+"""
+handles all of the scene functions for the CLI
+"""
+
 from src.mtool.util.roots import _scene_root
 from src.mtool.util.roots import _history_db
 from src.mtool.util.roots import _default_scene_name
@@ -6,6 +10,7 @@ from src.mtool.util.roots import _library_db
 def init_scene(scene_root = _scene_root, 
                history_db = _history_db, 
                default_scene_name = _default_scene_name):
+    """initializes the scene db and directory"""
     import os
     from src.mtool.display import display_scene
     from src.mtool.sqlite import sqlite_init

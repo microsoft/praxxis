@@ -32,7 +32,7 @@ def test_list_library(setup, add_test_library, library_db):
 
 
 @pytest.mark.skipif(sys.platform != "linux", reason="will fail test on windows until git integration is merged")
-def test_add_library(setup, library_db): 
+def test_add_library(setup, library_db ,start, stop): 
     from src.mtool.util import error
     from tests.src.mtool.util import dummy_object
     from src.mtool.library import remove_library
@@ -42,4 +42,4 @@ def test_add_library(setup, library_db):
     entry_library.add_library(dummy_library, library_db)
     assert len(list_library.list_library(library_db)) == 1
 
-    remove_library.remove_library(dummy_library, library_db)
+    remove_library.remove_library(dummy_library, library_db, start, stop)

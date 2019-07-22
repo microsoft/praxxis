@@ -125,6 +125,16 @@ class NotNotebookError(Exception):
         return str(display_error.not_notebook_error(self.name))
 
 
+class DuplicateNotebookError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.duplicate_notebook_error(self.name))
+
+
 class EditorNotFoundError(Exception):
     def __init__(self, name=None):
         self.name = name

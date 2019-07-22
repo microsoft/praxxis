@@ -1,5 +1,6 @@
 
-from src.mtool.util.sqlite import sqlite_rulesengine
+from src.mtool.sqlite import sqlite_init
+from src.mtool.sqlite import sqlite_rulesengine
 from src.mtool.display import display_rulesengine
 
 def import_ruleset(args, ruleset_root, rulesengine_db):
@@ -31,7 +32,7 @@ def parse_toml(path, ruleset_root, rulesengine_db):
 
     ruleset_name = os.path.basename(path)[:-5]
     ruleset_db = os.path.join(ruleset_root, ruleset_name + ".db")
-    sqlite_rulesengine.init_ruleset(rulesengine_db, ruleset_name, ruleset_db)
+    sqlite_init.init_ruleset(rulesengine_db, ruleset_name, ruleset_db)
 
     for rulename in rulesetInfo:
         try:

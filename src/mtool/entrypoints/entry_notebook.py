@@ -1,3 +1,7 @@
+"""
+handles the notebook functions of the CLI
+"""
+
 from src.mtool.util.roots import _outfile_root
 from src.mtool.util.roots import _user_info_db
 from src.mtool.util.roots import _library_root
@@ -10,6 +14,9 @@ from src.mtool.util.roots import _query_end
 from src.mtool.util.roots import _rulesengine_db
 
 def init_outfile(outfile_root):
+    """
+    initializes the outfile for running notebooks
+    """
     import os
     from src.mtool.display import display_notebook
 
@@ -24,7 +31,9 @@ def run_notebook(arg,
                  library_db = _library_db, 
                  scene_root = _scene_root,
                  history_db = _history_db,
-                 current_scene_db = None):
+                 current_scene_db = None,
+                 query_start = _query_start,
+                 query_end = _query_end):
     """calls the function to run a notebook"""
     from src.mtool.notebook import run_notebook
     from src.mtool.util import roots
@@ -33,7 +42,7 @@ def run_notebook(arg,
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     
     try:
-        run_notebook.run_notebook(arg, user_info_db, outfile_root, current_scene_db, library_root, library_db)
+        run_notebook.run_notebook(arg, user_info_db, outfile_root, current_scene_db, library_root, library_db, query_start, query_end)
     except Exception as e:
         raise e
 
@@ -113,6 +122,9 @@ def next_notebook(arg,
 
 def add_notebook(arg, 
                 library_db = _library_db):
+    """
+    handles adding a notebook from the CLI
+    """
     from src.mtool.notebook import add_notebook
 
     try:
@@ -126,6 +138,9 @@ def remove_notebook(arg,
                     history_db = _history_db,
                     library_db = _library_db, 
                     current_scene_db = None):
+    """
+    handles removing a notebook from the cli
+    """
     from src.mtool.notebook import remove_notebook
     from src.mtool.util import roots
 
