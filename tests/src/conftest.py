@@ -8,4 +8,4 @@ from tests.src.mtool.fixtures.setup_environment import setup
 from tests.src.mtool.fixtures.setup_library import notebooks_list, libraries_list, add_test_library
 from tests.src.mtool.fixtures.set_test_envs import set_many_envs, set_one_env
 from tests.src.mtool.fixtures.setup_scenes import create_many_scenes, create_one_scene, create_ended_scene, generate_short_history
-from tests.src.mtool.fixtures.setup_rulesengine import create_one_ruleset, create_deactivated_ruleset
+from tests.src.mtool.fixtures.setup_rulesengine import create_one_ruleset, create_deactivated_ruleset, mock_input_str

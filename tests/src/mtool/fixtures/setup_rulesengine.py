@@ -1,6 +1,10 @@
 import pytest
 
 @pytest.fixture(scope="function")
+def mock_input_str(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "testing")
+
+@pytest.fixture(scope="function")
 def create_one_ruleset(rulesengine_root, rulesengine_db):
     from src.mtool.rulesengine import new_ruleset
     from src.mtool.rulesengine import remove_ruleset
@@ -31,3 +35,4 @@ def create_deactivated_ruleset(rulesengine_root, rulesengine_db):
         remove_ruleset.remove_ruleset(name1, rulesengine_db)
     except error.RulesetNotFoundError:
         pass
+
