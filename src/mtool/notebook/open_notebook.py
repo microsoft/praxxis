@@ -20,7 +20,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor, test
         name = tmp_name
 
     try:
-        notebook_data = sqlite_notebook.get_notebook(library_db, name)
+        notebook_data = sqlite_notebook.get_notebook(library_db, name)[0]
     except error.NotebookNotFoundError as e:
         raise e
     

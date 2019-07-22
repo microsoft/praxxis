@@ -29,8 +29,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
         notebook_data = sqlite_notebook.get_notebook(library_db, name)
     except error.NotebookNotFoundError as e:
         raise e
-
-
+    
     if not len(notebook_data) == 1:
         from src.mtool.display import display_error
         from src.mtool.library import list_library
@@ -43,7 +42,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
         if selection.isdigit():
             selection = library.get_library_by_ordinal(library_db, selection, start, stop)
         notebook_data = sqlite_notebook.get_notebook(library_db, name, selection)[0]
-    notebook = notebook.Notebook(notebook_data)
+    notebook = notebook.Notebook(notebook_data[0])
 
     display_notebook.display_run_notebook_start(notebook.name)
 

@@ -10,3 +10,4 @@ setuptools
 nbopen
 gitpython
 colorama 
+sqlite
