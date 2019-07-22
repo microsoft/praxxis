@@ -5,7 +5,7 @@ opened as an html output in the web browser, depending on user input.
 
 from src.mtool.sqlite import sqlite_telemetry 
 
-def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db):
+def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db, start, stop):
     """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.display import display_notebook
     from src.mtool.notebook import notebook
@@ -30,6 +30,19 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     except error.NotebookNotFoundError as e:
         raise e
 
+
+    if not len(notebook_data) == 1:
+        from src.mtool.display import display_error
+        from src.mtool.library import list_library
+        from src.mtool.library import library
+
+        display_error.duplicate_notebook_error(name)
+        list_library.list_library(library_db)
+        selection = input("")
+
+        if selection.isdigit():
+            selection = library.get_library_by_ordinal(library_db, selection, start, stop)
+        notebook_data = sqlite_notebook.get_notebook(library_db, name, selection)[0]
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)
@@ -80,7 +93,7 @@ def execute(current_scene_db, notebook, outfile_root):
     local_copy = get_outputname(notebook, outfile_root)
 
     if (notebook._hasParameters): 
-        injects = pull_params(current_scene_db, notebook._parameterVars)
+        injects = pull_params(current_scene_db, notebook._parameters)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
@@ -96,12 +109,12 @@ def execute(current_scene_db, notebook, outfile_root):
     return local_copy
 
 
-def pull_params(current_scene_db, parameterVars):
+def pull_params(current_scene_db, parameters):
     """Returns a dictionary of all overridden parameters for notebook"""
     from src.mtool.sqlite import sqlite_parameter
 
     injects = {}
-    for var in parameterVars:
+    for var in parameters:
         value = sqlite_parameter.get_param(current_scene_db, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple

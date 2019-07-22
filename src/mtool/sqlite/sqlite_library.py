@@ -47,12 +47,13 @@ def list_libraries(library_db, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Library FROM "LibraryMetadata" LIMIT {start}, {end}'
+    list_libraries = f'SELECT Library FROM "LibraryMetadata" ORDER BY Library LIMIT {start}, {end}'
     cur.execute(list_libraries)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     return rows
+
 
 def check_library_exists(library_db, library):
     from src.mtool.sqlite import connection

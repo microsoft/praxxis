@@ -77,6 +77,11 @@ def not_notebook_error(name):
     return(f"{Fore.RED}The file {name} is not a notebook file.")
 
 
+def duplicate_notebook_error(name):
+    from src.mtool.sqlite import sqlite_library
+    print(f"{Fore.RED}The notebook {name} exists in two places. Specify which library to choose from.")
+
+
 def duplicate_notebook_warning(name):
     print(f"{Fore.YELLOW}The notebook {name} has already been loaded. Reimporting.")
 

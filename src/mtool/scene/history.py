@@ -9,6 +9,7 @@ def history(history_db, library_db, current_scene_db):
     from src.mtool.sqlite import sqlite_scene
     from src.mtool.sqlite import sqlite_notebook
     from src.mtool.display import display_scene
+    from src.mtool.util import error
 
     curr_scene = sqlite_scene.get_current_scene(history_db)
     
@@ -19,8 +20,12 @@ def history(history_db, library_db, current_scene_db):
     notebooks = []
     for notebook_info in notebook_history:
         # pass the library_db, notebook name, notebook library
-        path = sqlite_notebook.get_notebook_path(library_db, notebook_info[1], notebook_info[2])
-        notebooks.insert(0, (notebook_info[1], path))
+        try:
+            notebook_data = sqlite_notebook.get_notebook(library_db, notebook_info[1])
+        except error.DuplicateNotebookError:
+            print("aaAAA")
+
+        notebooks.insert(0, (notebook_data))
     sqlite_notebook.write_list(current_scene_db, notebooks)
     return notebooks
         
