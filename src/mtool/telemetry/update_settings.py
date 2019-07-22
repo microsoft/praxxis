@@ -1,5 +1,5 @@
 """opens an interactive update utility in the console"""
-from src.mtool.util.sqlite import sqlite_telemetry
+from src.mtool.sqlite import sqlite_telemetry
 from src.mtool.display import display_settings
 
 _settings = ["TELEMETRY", "URL", "Host", "Username", "Password"]

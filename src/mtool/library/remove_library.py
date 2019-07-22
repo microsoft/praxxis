@@ -1,5 +1,5 @@
 def remove_library(args, library_db):
-    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_library
     from src.mtool.display import display_library
     import os
 

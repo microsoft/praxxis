@@ -30,13 +30,13 @@ def command(argument,
             default_scene_name = _default_scene_name,
             test = False):
     """uses a dictionary as a switch statement to determine which funciton to run."""
-    from src.mtool.util.entrypoints import entry_environment
-    from src.mtool.util.entrypoints import entry_library
-    from src.mtool.util.entrypoints import entry_notebook
-    from src.mtool.util.entrypoints import entry_scene
-    from src.mtool.util.entrypoints import entry_telemetry
-    from src.mtool.util.entrypoints import entry_rulesengine
-    from src.mtool.util.entrypoints import entry_model
+    from src.mtool.entrypoints import entry_parameter
+    from src.mtool.entrypoints import entry_library
+    from src.mtool.entrypoints import entry_notebook
+    from src.mtool.entrypoints import entry_scene
+    from src.mtool.entrypoints import entry_telemetry
+    from src.mtool.entrypoints import entry_rulesengine
+    from src.mtool.entrypoints import entry_model
     from src.mtool.util import roots
 
     roots.init(root, 
@@ -55,7 +55,7 @@ def command(argument,
     
     switcher = {
         "run_notebook": entry_notebook.run_notebook,
-        "view_notebook_env": entry_environment.view_notebook_env,
+        "view_notebook_param": entry_parameter.view_notebook_param,
         "open_notebook": entry_notebook.open_notebook,
         "search_notebooks": entry_notebook.search_notebook,
         "list_notebooks": entry_notebook.list_notebook,
@@ -72,12 +72,12 @@ def command(argument,
         "add_library": entry_library.add_library,
         "remove_library": entry_library.remove_library,
         "list_library": entry_library.list_library,
-        "set_env": entry_environment.set_env,
-        "delete_env": entry_environment.delete_env,
-        "list_env": entry_environment.list_env,
-        "view_library_env": entry_environment.view_library_env,
-        "pull_notebook_env": entry_environment.pull_notebook_env,
-        "pull_library_env": entry_environment.pull_library_env,
+        "set_param": entry_parameter.set_param,
+        "delete_param": entry_parameter.delete_param,
+        "list_param": entry_parameter.list_param,
+        "view_library_param": entry_parameter.view_library_param,
+        "pull_notebook_param": entry_parameter.pull_notebook_param,
+        "pull_library_param": entry_parameter.pull_library_param,
         "sync_library": entry_library.sync_library,
         "update_settings": entry_telemetry.update_settings,
         "new_ruleset": entry_rulesengine.new_ruleset,

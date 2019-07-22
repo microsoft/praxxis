@@ -1,6 +1,6 @@
 
 def delete_rule_from_ruleset(args, prediction_db):
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     from src.mtool.display import display_edit_ruleset
     from src.mtool.rulesengine import rules
@@ -28,7 +28,7 @@ def delete_rule_from_ruleset(args, prediction_db):
 
 def get_rule_by_ordinal(name, ruleslist):
     """gets rule by ordinal using a list of tuples"""
-    from src.mtool.util.sqlite import sqlite_rulesengine
+    from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.util import error
 
     if f"{name}".isdigit():

@@ -10,7 +10,7 @@ def test_help_formatter():
 
     notebook = dummy_object.make_dummy_action("command", "", "run notebook")
     scene = dummy_object.make_dummy_action("command", "", "new scene")
-    environment = dummy_object.make_dummy_action("command", "", "set environment variable for current scene")
+    parameter = dummy_object.make_dummy_action("command", "", "set parameter variable for current scene")
     library = dummy_object.make_dummy_action("command", "", "install library of notebooks to mtool")
 
     formatter = helpFormatter(argparse.RawDescriptionHelpFormatter)
@@ -18,8 +18,8 @@ def test_help_formatter():
     assert data.split('\n')[0] == "Notebooks: "
     data = formatter._format_action(scene)
     assert data.split('\n')[0] == "Scene: "
-    data = formatter._format_action(environment)
-    assert data.split('\n')[0] == "Environment: "
+    data = formatter._format_action(parameter)
+    assert data.split('\n')[0] == "parameter: "
     data = formatter._format_action(library)
     assert data.split('\n')[0] == "Library: "
 
@@ -41,9 +41,9 @@ def test_run():
 
 
 
-def test_view_envs():
-    view_envs(['v', 'test'])
-    view_envs(['viewenvs', 'test'])
+def test_view_params():
+    view_params(['v', 'test'])
+    view_params(['viewparams', 'test'])
 
 
 def test_open_notebook():
@@ -106,33 +106,33 @@ def test_list_scene():
     list_scene(['ls'])
 
 
-def test_set_env():
-    set_env(['setenv', 'test', 'test'])
-    set_env(['se', 'test', 'test'])
+def test_set_param():
+    set_param(['setparam', 'test', 'test'])
+    set_param(['se', 'test', 'test'])
 
 
-def test_search_env():
-    search_env(['searchenv', 'test'])
-    search_env(['sv', 'test'])
+def test_search_param():
+    search_param(['searchparam', 'test'])
+    search_param(['sv', 'test'])
 
 
-def test_delete_env():
-    delete_env(['deleteenv', 'test'])
-    delete_env(['de', 'test'])
+def test_delete_param():
+    delete_param(['deleteparam', 'test'])
+    delete_param(['de', 'test'])
 
-def test_list_env():
-    list_env(['listenv'])
-    list_env(['le'])
-
-
-def test_view_library_env():
-    view_library_env(['viewlibenv', 'test'])
-    view_library_env(['vl', 'test'])
+def test_list_param():
+    list_param(['listparam'])
+    list_param(['le'])
 
 
-def test_pull_notebook_env():
-    pull_notebook_env(['pullenv', 'test'])
-    pull_notebook_env(['p', 'test'])
+def test_view_library_param():
+    view_library_param(['viewlibparam', 'test'])
+    view_library_param(['vl', 'test'])
+
+
+def test_pull_notebook_param():
+    pull_notebook_param(['pullparam', 'test'])
+    pull_notebook_param(['p', 'test'])
 
 def test_add_library():
     add_library(['addlibrary', 'test'])
@@ -210,10 +210,10 @@ def run(command):
         assert namespace.html == "html"
     
 
-def view_envs(command):
+def view_params(command):
     namespace = app.main(command)
     
-    assert namespace.command == 'v' or namespace.command == 'viewenvs'
+    assert namespace.command == 'v' or namespace.command == 'viewparams'
     assert namespace.notebook == 'test'
 
 
@@ -222,7 +222,7 @@ def open_notebook(command):
     assert namespace.command == 'o' or namespace.command == "open"
     assert namespace.notebook == "test"
     if "html" in command:
-        assert namespace.environment == "html"
+        assert namespace.parameter == "html"
 
 
 def search_notebook(command):
@@ -310,54 +310,54 @@ def list_scene(command):
     assert namespace.command == 'ls' or namespace.command == "listscenes"
 
 
-def set_env(command):
+def set_param(command):
     """
-    tests if the set env command is running properly 
+    tests if the set param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'se' or namespace.command == "setenv"
+    assert namespace.command == 'se' or namespace.command == "setparam"
     assert namespace.name == "test"
     assert namespace.value == "test"
 
 
-def search_env(command):
+def search_param(command):
     """
-    tests if the set env command is running properly 
+    tests if the set param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'sv' or namespace.command == "searchenv"
+    assert namespace.command == 'sv' or namespace.command == "searchparam"
     assert namespace.term == "test"
 
 
-def delete_env(command):
+def delete_param(command):
     """
-    tests if the delete env command is running properly 
+    tests if the delete param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'de' or namespace.command == "deleteenv"
+    assert namespace.command == 'de' or namespace.command == "deleteparam"
     assert namespace.name == "test"
 
 
-def list_env(command):
+def list_param(command):
     """
-    tests if the list env command is running properly 
-    """
-    namespace = app.main(command)
-    assert namespace.command == 'le' or namespace.command == "listenv"
-
-
-def view_library_env(command):
-    """
-    tests if the view library env command is running properly 
+    tests if the list param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'vl' or namespace.command == "viewlibenv"
+    assert namespace.command == 'le' or namespace.command == "listparam"
+
+
+def view_library_param(command):
+    """
+    tests if the view library param command is running properly 
+    """
+    namespace = app.main(command)
+    assert namespace.command == 'vl' or namespace.command == "viewlibparam"
     assert namespace.name == "test"
 
 
-def pull_notebook_env(command):
+def pull_notebook_param(command):
     namespace = app.main(command)
-    assert namespace.command == 'p' or namespace.command == "pullenv"
+    assert namespace.command == 'p' or namespace.command == "pullparam"
     assert namespace.notebook == "test"
 
 
@@ -494,7 +494,7 @@ def update_model(command):
 
 def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
     from src.mtool import app
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.notebook import run_notebook
     from src.mtool.util import error
     import sys

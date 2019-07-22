@@ -5,9 +5,9 @@ This file contains all of the error messages
 from colorama import init, Fore, Style
 init(autoreset=True, convert=True)
 
-def env_not_found_error(name):
-    """the error display for environments not being found"""
-    return(f"{Fore.RED}environment {name} not found")
+def param_not_found_error(name):
+    """the error display for parameters not being found"""
+    return(f"{Fore.RED}parameter {name} not found")
 
 
 def notebook_load_error(name):

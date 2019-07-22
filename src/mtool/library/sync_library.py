@@ -7,8 +7,8 @@ import os
 def sync_libraries(library_root, library_db):
     """ loads libraries from the library root you supply, into the library db"""
     from src.mtool.display import display_library
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_environment
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_parameter
 
     directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
 
@@ -23,7 +23,7 @@ def sync_libraries(library_root, library_db):
 
 def sync_library(library_root, library_db):
     """ loads the individual library specified by the library root passed in, into the library db""" 
-    from src.mtool.util.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_library
     from src.mtool.util import error
 
     readme_location = os.path.join(library_root, "README.md")
@@ -47,9 +47,9 @@ def sync_library(library_root, library_db):
 
 def sync_notebooks(library_root, library_db, library_name):
     """ loads the individual notebooks in the library root into the library db""" 
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_environment
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_parameter
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.util import error
 
     from src.mtool.display import display_library
@@ -71,9 +71,9 @@ def sync_notebooks(library_root, library_db, library_name):
                 try:
                     notebook_data = notebook.Notebook([file_root, file_name, library_name])
                     #create a notebook object out of the file data
-                    for environment in notebook_data._environmentVars:
-                        #load the environment variables out of the notebook object and into the db
-                        sqlite_environment.set_notebook_environments(library_db, file_name, environment[0].strip(), environment[1])
+                    for parameter in notebook_data._parameters:
+                        #load the parameters out of the notebook object and into the db
+                        sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1], library_name)
                     display_library.display_loaded_notebook(name)
                     #display that the library has been successfully loaded
                 except:

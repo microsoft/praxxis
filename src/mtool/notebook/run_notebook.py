@@ -3,15 +3,15 @@ This file runs a notebook. Results are either printed to the console or
 opened as an html output in the web browser, depending on user input.
 """
 
-from src.mtool.util.sqlite import sqlite_telemetry 
+from src.mtool.sqlite import sqlite_telemetry 
 
 def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db):
     """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.display import display_notebook
     from src.mtool.notebook import notebook
     from src.mtool.notebook import open_notebook 
-    from src.mtool.util.sqlite import sqlite_notebook
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import error
     from datetime import datetime
 
@@ -80,7 +80,7 @@ def execute(current_scene_db, notebook, outfile_root):
     local_copy = get_outputname(notebook, outfile_root)
 
     if (notebook._hasParameters): 
-        injects = pull_params(current_scene_db, notebook._environmentVars)
+        injects = pull_params(current_scene_db, notebook._parameterVars)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
@@ -96,13 +96,13 @@ def execute(current_scene_db, notebook, outfile_root):
     return local_copy
 
 
-def pull_params(current_scene_db, environmentVars):
+def pull_params(current_scene_db, parameterVars):
     """Returns a dictionary of all overridden parameters for notebook"""
-    from src.mtool.util.sqlite import sqlite_environment
+    from src.mtool.sqlite import sqlite_parameter
 
     injects = {}
-    for var in environmentVars:
-        value = sqlite_environment.get_env(current_scene_db, var[0])
+    for var in parameterVars:
+        value = sqlite_parameter.get_param(current_scene_db, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
             injects[var[0]] = value

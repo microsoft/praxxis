@@ -10,8 +10,8 @@ def add_notebook(args, library_db):
         if os.path.isdir(path):
             raise error.NotFileError(path)
         if file_extension == ".ipynb":
-            from src.mtool.util.sqlite import sqlite_library
-            from src.mtool.util.sqlite import sqlite_notebook
+            from src.mtool.sqlite import sqlite_library
+            from src.mtool.sqlite import sqlite_notebook
             from src.mtool.display import display_error
             from src.mtool.util import error
 
