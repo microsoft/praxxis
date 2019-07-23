@@ -3,11 +3,11 @@ This file contains all of the error messages
 """
 
 from colorama import init, Fore, Style
-init(autoreset=True)
+init(autoreset=True, convert=True)
 
-def env_not_found_error(name):
-    """the error display for environments not being found"""
-    return(f"{Fore.RED}environment {name} not found")
+def param_not_found_error(name):
+    """the error display for parameters not being found"""
+    return(f"{Fore.RED}parameter {name} not found")
 
 
 def notebook_load_error(name):
@@ -29,6 +29,33 @@ def notebook_not_found_error(name):
     else:
         return(f"{Fore.RED}notebook {name} does not exist")
 
+def rule_not_found_error(name):
+    """the error display for a ruleset not existing"""
+    if name == None:
+        return(f"{Fore.RED}rule does not exist")
+    else:
+        return(f"{Fore.RED}rule {name} does not exist")
+
+def ruleset_not_found_error(name):
+    """the error display for a ruleset not existing"""
+    if name == None:
+        return(f"{Fore.RED}ruleset does not exist")
+    else:
+        return(f"{Fore.RED}ruleset {name} does not exist")
+
+def ruleset_active_error(name):
+    """the error display for activating an active ruleset"""
+    if name == None:
+        return(f"{Fore.RED}ruleset is already active")
+    else:
+        return(f"{Fore.RED}ruleset {name} is already active")
+
+def ruleset_not_active_error(name):
+    """the error display for deactivating an inactive ruleset"""
+    if name == None:
+        return(f"{Fore.RED}ruleset is already inactive")
+    else:
+        return(f"{Fore.RED}ruleset {name} is already inactive")
 
 def end_ended_scene_error(name):
     return(f"{Fore.RED}{name} is already ended.")
@@ -48,6 +75,11 @@ def not_file_error(name):
 
 def not_notebook_error(name):
     return(f"{Fore.RED}The file {name} is not a notebook file.")
+
+
+def duplicate_notebook_error(name):
+    from src.mtool.sqlite import sqlite_library
+    print(f"{Fore.RED}The notebook {name} exists in two places. Specify which library to choose from.")
 
 
 def duplicate_notebook_warning(name):
@@ -116,3 +148,28 @@ def display_telem_unsent(backlog):
     print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"m u\".")
     print(f"{Fore.YELLOW}Attempting to send {backlog+1} output files now.")
     
+def display_ruleset_num_input_warning(num):
+    """the warning display for a number being interpreted as a string in a ruleset"""
+    print(f"{Fore.YELLOW}Warning: The number {num} is not in the notebook list range and will be interpreted as the string \"{num}\"")
+
+def predictions_ordinal_not_in_list_error():
+    print(f"{Fore.RED}The input was invalid. Please re-enter your list of notebook predictions.")
+
+def invalid_ruleset_import(name):
+    if name == None:
+        return(f"{Fore.RED}This does not appear to be the path to a valid .db file")
+    else:
+        return(f"{Fore.RED}{name} is not the path to a valid .db file")
+
+def invalid_rule_definition(name):
+    print(f"{Fore.RED}The rule definition for rule {name} is invalid. This rule will not be imported.")
+
+def empty_history_error():
+    return(f"{Fore.RED}Predictions cannot be run on an empty history.")
+   
+def version_too_low_error(major_vers, minor_vers):
+    print(f"{Fore.RED}mtool requires python 3.6. Your version is " + major_vers + "." + minor_vers + ", which is incompatable. Please update python.")
+
+def tensorflow_version_error(major_vers, minor_vers):
+    print(f"{Fore.RED}mtool's model is built with tensorflow, which requires python <=3.6. Your version is " + major_vers + "." + minor_vers + ", which is incompatible." +
+                " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")

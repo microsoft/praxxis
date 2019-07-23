@@ -7,15 +7,47 @@ class NotebookNotFoundError(Exception):
         from src.mtool.display import display_error
         return str(display_error.notebook_not_found_error(self.name))
 
+class RuleNotFoundError(Exception):
+    def __init__(self, name=None):
+        self.name = name
 
-class EnvNotFoundError(Exception):
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.rule_not_found_error(self.name))
+
+class RulesetNotFoundError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.ruleset_not_found_error(self.name))
+
+class RulesetActiveError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.ruleset_active_error(self.name))
+
+class RulesetNotActiveError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.ruleset_not_active_error(self.name))
+
+class ParamNotFoundError(Exception):
     def __init__(self, name=None):
         self.name = name
     
 
     def __str__(self):
         from src.mtool.display import display_error
-        return str(display_error.env_not_found_error(self.name))
+        return str(display_error.param_not_found_error(self.name))
 
 
 class SceneNotFoundError(Exception):
@@ -93,6 +125,16 @@ class NotNotebookError(Exception):
         return str(display_error.not_notebook_error(self.name))
 
 
+class DuplicateNotebookError(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.duplicate_notebook_error(self.name))
+
+
 class EditorNotFoundError(Exception):
     def __init__(self, name=None):
         self.name = name
@@ -109,3 +151,19 @@ class ADSNotFoundError(Exception):
     def __str__(self):
         from src.mtool.display import display_error
         return str(display_error.ads_not_found_error(self.name))
+
+class NotValidRuleset(Exception):
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.invalid_ruleset_import(self.name))
+
+class EmptyRulesetError(Exception):
+    def __init__(self):
+        pass
+    
+    def __str__(self):
+        from src.mtool.display import display_error
+        return str(display_error.empty_history_error())

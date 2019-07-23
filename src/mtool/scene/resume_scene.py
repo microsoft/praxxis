@@ -6,7 +6,7 @@ def resume_scene(args, scene_root, history_db):
     """Resumes a scene"""
     import os
 
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.display import display_scene
     from src.mtool.scene import scene
     from src.mtool.util import error

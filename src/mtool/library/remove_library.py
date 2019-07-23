@@ -1,9 +1,14 @@
-def remove_library(args, library_db):
-    from src.mtool.util.sqlite import sqlite_library
+def remove_library(args, library_db, start, end):
+    from src.mtool.sqlite import sqlite_library
     from src.mtool.display import display_library
     import os
 
     name = args.name
+
+    if name.isdigit():
+        from src.mtool.library import library
+        name = library.get_library_by_ordinal(library_db, name, start, end)
+
     try:
         sqlite_library.check_library_exists(library_db, name)
     except Exception as e:

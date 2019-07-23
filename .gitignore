@@ -13,7 +13,5 @@
 .pydevproject
 /library/*
 /output/*
-.coverage
 .coverage*
 .ipynb_checkpoints*
-.coverage*

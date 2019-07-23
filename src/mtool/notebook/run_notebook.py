@@ -3,22 +3,22 @@ This file runs a notebook. Results are either printed to the console or
 opened as an html output in the web browser, depending on user input.
 """
 
-from src.mtool.util.sqlite import sqlite_telemetry 
+from src.mtool.sqlite import sqlite_telemetry 
 
-def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db):
+def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db, start, stop):
     """runs a single notebook specified in args and sends telemetry"""
     from src.mtool.display import display_notebook
     from src.mtool.notebook import notebook
     from src.mtool.notebook import open_notebook 
-    from src.mtool.util.sqlite import sqlite_notebook
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.util import error
     from datetime import datetime
 
     name = args.notebook
 
     try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
     except error.NotebookNotFoundError as e:
         raise e
 
@@ -29,8 +29,22 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
         notebook_data = sqlite_notebook.get_notebook(library_db, name)
     except error.NotebookNotFoundError as e:
         raise e
+    
+    if not len(notebook_data) == 1:
+        from src.mtool.display import display_error
+        from src.mtool.library import list_library
+        from src.mtool.library import library
 
-    notebook = notebook.Notebook(notebook_data)
+        display_error.duplicate_notebook_error(name)
+        list_library.list_library(library_db)
+        selection = input("")
+
+        if selection.isdigit():
+            selection = library.get_library_by_ordinal(library_db, selection, start, stop)
+        notebook_data = sqlite_notebook.get_notebook(library_db, name, selection)[0]
+        notebook = notebook.Notebook(notebook_data)
+    else:
+        notebook = notebook.Notebook(notebook_data[0])
 
     display_notebook.display_run_notebook_start(notebook.name)
 
@@ -46,7 +60,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
         display_notebook.display_run_notebook(local_copy)
 
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M.%S")
-    sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name)
+    sqlite_scene.add_to_scene_history(current_scene_db, timestamp, notebook.name, notebook.library_name, local_copy)
 
     telemetry(user_info_db, local_copy, sqlite_telemetry.get_scene_id(current_scene_db))
 
@@ -68,9 +82,8 @@ def telemetry(user_info_db, local_copy, current_scene_id):
         import subprocess
         import os
         import sys
-        f = os.path.join(os.path.dirname(__file__),  ".." , "telemetry")
-        os.chdir(f)
-        subprocess.Popen([sys.executable, "telemetry.py", user_info_db, local_copy, current_scene_id])
+        
+        subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "telemetry", "telemetry.py"), user_info_db, local_copy, current_scene_id])
 
 
 def execute(current_scene_db, notebook, outfile_root):
@@ -81,7 +94,7 @@ def execute(current_scene_db, notebook, outfile_root):
     local_copy = get_outputname(notebook, outfile_root)
 
     if (notebook._hasParameters): 
-        injects = pull_params(current_scene_db, notebook._environmentVars)
+        injects = pull_params(current_scene_db, notebook._parameters)
         try:
             papermill.execute_notebook(notebook.getpath(), local_copy, injects)
         except Exception as e:
@@ -97,13 +110,13 @@ def execute(current_scene_db, notebook, outfile_root):
     return local_copy
 
 
-def pull_params(current_scene_db, environmentVars):
+def pull_params(current_scene_db, parameters):
     """Returns a dictionary of all overridden parameters for notebook"""
-    from src.mtool.util.sqlite import sqlite_environment
+    from src.mtool.sqlite import sqlite_parameter
 
     injects = {}
-    for var in environmentVars:
-        value = sqlite_environment.get_env(current_scene_db, var[0])
+    for var in parameters:
+        value = sqlite_parameter.get_param(current_scene_db, var[0])
         if value != None:
             value = value[0] # want just the value, currently a tuple
             injects[var[0]] = value

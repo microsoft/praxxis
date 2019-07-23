@@ -5,3 +5,5 @@ ijson
 ipykernel 
 setuptools
 nbopen
+gitpython
+colorama

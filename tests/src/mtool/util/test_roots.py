@@ -1,6 +1,6 @@
 from src.mtool.util import roots
 
-def test_init(setup, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name):
+def test_init(setup, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name):
     pass
     from src.mtool.util import rmtree
     import os 
@@ -8,7 +8,7 @@ def test_init(setup, init_root, library_root, library_db, outfile_root, scene_ro
     assert os.path.exists(init_root)
     rmtree.rmtree(init_root)
     assert not os.path.exists(init_root)
-    roots.init(init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, default_scene_name, False)
+    roots.init(init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, False)
     
     assert os.path.exists(init_root)
     assert os.path.exists(library_root)

@@ -5,16 +5,34 @@ file and checking its parameterization information.
 
 def get_notebook_by_ordinal(current_scene_db, name):
     """gets scene by ordinal using the sqlite history db"""
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.util import error
     if f"{name}".isdigit():
         try:
             name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
         except error.NotebookNotFoundError as e:
             raise e
-        else:
-            return(name[0])   
+    else:
+        library = sqlite_notebook.get_notebook_library(current_scene_db, name)
+        name = (name, library)
+    return(name)   
 
+def get_output_from_filename(filename):
+    """gets only cell outputs from filename""" 
+    import json
+    
+    linelist = []
+    with open(filename) as f:
+        info = json.load(f)
+        cells = info["cells"]
+        for cell in cells:
+            if(cell["cell_type"] == "code"):
+                if (len(cell["outputs"]) != 0):
+                    linelist += (cell["outputs"][0]["text"])
+
+        f.close()
+
+    return ''.join(linelist)
 
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
@@ -27,7 +45,7 @@ class Notebook:
         notebook_path = notebook_data[0]
 
         self._hasParameters = False
-        self._environmentVars = []
+        self._parameters = []
         self._path = os.path.join(notebook_path)
         self.library_name = notebook_data[2]
 
@@ -53,21 +71,21 @@ class Notebook:
             metadata = cell.get("metadata")
             if metadata and "parameters" in metadata.get("tags"):
                 self._hasParameters = True
-                self.extract_envVars(cell.get("source"))
+                self.extract_from_cell(cell.get("source"))
                 return
 
 
-    def extract_envVars(self, source):
-        """extracts the environment variables"""
+    def extract_from_cell(self, source):
+        """extracts the parameters"""
         if(isinstance(source, list)):
             lines = source
         else:
             lines = source.splitlines()
         for line in lines:
             if "=" in line and not line.startswith("#"):
-                environment = line.split("=")
-                name = environment[0].strip()
-                value = environment[1].split("#")[0].strip()
+                parameter = line.split("=")
+                name = parameter[0].strip()
+                value = parameter[1].split("#")[0].strip()
                 if value == "\"\"":
                     value = None               
-                self._environmentVars.append([name, value])
+                self._parameters.append([name, value])

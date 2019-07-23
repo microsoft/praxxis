@@ -29,10 +29,14 @@ def display_loaded_notebook(name):
 
 
 def display_libraries(libraries):
-    """the display function for listing libraries""" 
-    libraries = "\n\t".join(list(sum(libraries, ())))
-    print(f"Loaded libraries:\n\t{libraries}")
+    """the display function for listing libraries"""
+    print(f"Libraries:")
+    i = 0
+    for library in libraries:
+        i+=1
+        print(f"\t{i}.\t{library[0]}")
 
 
 def display_remove_success(name):
     print(f'{name} was successfully removed. ')
+    

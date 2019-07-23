@@ -4,7 +4,7 @@ adds test library to temp directories and does a few useful operations on them
 import pytest
 
 @pytest.fixture(scope="function")
-def add_test_library(library_root, library_db):
+def add_test_library(library_root, library_db, start, stop):
     """
     copies test notebooks from the tests directory to the temp root, and loads them into the db
     """
@@ -24,7 +24,7 @@ def add_test_library(library_root, library_db):
     yield 
 
     dummy_library = dummy_object.make_dummy_library()
-    remove_library.remove_library(dummy_library, library_db)
+    remove_library.remove_library(dummy_library, library_db, start, stop)
     rmtree.rmtree(library_location)
 
 

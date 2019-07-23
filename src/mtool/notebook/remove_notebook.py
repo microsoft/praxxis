@@ -1,6 +1,6 @@
 def remove_notebook(args, library_db, current_scene_db):
-    from src.mtool.util.sqlite import sqlite_library
-    from src.mtool.util.sqlite import sqlite_notebook
+    from src.mtool.sqlite import sqlite_library
+    from src.mtool.sqlite import sqlite_notebook
     from src.mtool.notebook import notebook
     from src.mtool.util import error
     from src.mtool.notebook import list_notebook
@@ -9,7 +9,7 @@ def remove_notebook(args, library_db, current_scene_db):
     name = args.name
 
     try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
     except error.NotebookNotFoundError as e:
         raise e
     

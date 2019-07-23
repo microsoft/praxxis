@@ -4,7 +4,7 @@ This file lists all scenes
 
 def list_scene(root, history_db):
     """lists scenes by fetching from sqlite db"""
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.display import display_scene
 
     ended_scenes = sqlite_scene.get_ended_scenes(history_db)

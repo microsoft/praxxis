@@ -8,7 +8,7 @@ def delete_scene(args, scene_root, history_db):
     import os
 
     from src.mtool.scene import current_scene
-    from src.mtool.util.sqlite import sqlite_scene
+    from src.mtool.sqlite import sqlite_scene
     from src.mtool.display import display_scene
     from src.mtool.util import error
     from src.mtool.scene import scene
