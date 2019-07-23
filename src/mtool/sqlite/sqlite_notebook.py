@@ -43,7 +43,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     from src.mtool.util import error
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    query = f'SELECT Notebook FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
+    query = f'SELECT Notebook, Library FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
     cur.execute(query)
     conn.commit()
     item = cur.fetchone()
@@ -52,7 +52,6 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     if item == None:
         raise error.NotebookNotFoundError
     return item
-
 
 def write_list(current_scene_db, notebook_list, path_list = []):
     """creates the list of notebooks in list"""
@@ -87,6 +86,21 @@ def get_notebook_path(library_db, notebook, library):
     if path == None:
         return None
     return path[0]
+
+def get_notebook_library(library_db, notebook):
+    """gets all possible libraries for a notebook name"""
+    from src.mtool.sqlite import connection
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    get_notebook_library = f"SELECT Library FROM 'NotebookList' WHERE Notebook=?"
+    cur.execute(get_notebook_library, (notebook,))
+    conn.commit()
+    path = cur.fetchall()
+    conn.close()
+    if path == None:
+        return None
+    return path
 
 
 def check_notebook_exists(library_db, notebook):

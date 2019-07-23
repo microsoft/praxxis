@@ -22,7 +22,7 @@ def list_notebook_param(args, library_db, current_scene_db):
     from src.mtool.display import display_param
 
     name = args.notebook
-    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
     if tmp_name != None:
         name = tmp_name
 

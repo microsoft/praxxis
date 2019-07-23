@@ -12,8 +12,10 @@ def get_notebook_by_ordinal(current_scene_db, name):
             name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
         except error.NotebookNotFoundError as e:
             raise e
-        else:
-            return(name[0])   
+    else:
+        library = sqlite_notebook.get_notebook_library(current_scene_db, name)
+        name = (name, library)
+    return(name)   
 
 def get_output_from_filename(filename):
     """gets only cell outputs from filename""" 

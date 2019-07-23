@@ -106,6 +106,7 @@ def next_notebook(arg,
                     scene_root = _scene_root,
                     history_db = _history_db, 
                     current_scene_db = None,
+                    library_db = _library_db,
                     rulesengine_db = _rulesengine_db,
                     start = _query_start,
                     end = _query_end):
@@ -116,7 +117,7 @@ def next_notebook(arg,
         from src.mtool.util.roots import get_current_scene_db
         current_scene_db = get_current_scene_db(scene_root, history_db)
 
-    what_next.what_next(arg, user_info_db, current_scene_db, rulesengine_db, start, end)
+    what_next.what_next(arg, user_info_db, current_scene_db, library_db, rulesengine_db, start, end)
 
 
 

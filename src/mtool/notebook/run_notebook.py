@@ -18,7 +18,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     name = args.notebook
 
     try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
     except error.NotebookNotFoundError as e:
         raise e
 

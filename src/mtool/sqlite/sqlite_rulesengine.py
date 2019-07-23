@@ -152,13 +152,13 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     add_name_to_rules = f'INSERT INTO "Rules" (Name) VALUES (?)'
     add_to_filenames = f'INSERT INTO "Filenames" (Rule, Filename) VALUES (?,?)'
     add_to_output = f'INSERT INTO "OutputString" (Rule, Output) VALUES (?,?)'
-    add_to_predictions = f'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook) VALUES (?,?,?)'
+    add_to_predictions = f'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,?,?,?)'
 
     cur.execute(add_name_to_rules, (rulename,))
     cur.executemany(add_to_filenames, [(rulename, string) for string in filenames])
     cur.executemany(add_to_output, [(rulename, out) for out in outputs])
 
-    cur.executemany(add_to_predictions, [(rulename, i+1, predictions[i]) for i in range(len(predictions))])
+    cur.executemany(add_to_predictions, predictions)
     conn.commit()
     conn.close()
 
@@ -258,7 +258,7 @@ def get_predictions(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
-    get_predictions = f'SELECT DISTINCT PredictedNotebook FROM "Predictions" WHERE Rule IN ({ruleslist}) ORDER BY Position ASC'
+    get_predictions = f'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN ({ruleslist}) ORDER BY Position ASC'
 
     cur.execute(get_predictions)
     conn.commit()

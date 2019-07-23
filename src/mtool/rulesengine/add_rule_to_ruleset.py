@@ -35,13 +35,13 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
     list_notebook(library_db, current_scene_db, start, stop)
     predicted_raw = display_edit_ruleset.display_predicted_notebooks_input()
     predicted_with_ords = [prediction.strip() for prediction in predicted_raw.split(",")]
-    predicted = get_filenames_from_ordinals(predicted_with_ords, current_scene_db, allow_errors=False)
+    predicted = get_fileinfo_from_ordinals(predicted_with_ords, current_scene_db, rulename)
     while predicted == 1:
         predictions_ordinal_not_in_list_error()
 
         predicted_raw = display_edit_ruleset.display_predicted_notebooks_input()
         predicted_with_ords = [prediction.strip() for prediction in predicted_raw.split(",")]
-        predicted = get_filenames_from_ordinals(predicted_with_ords, current_scene_db, allow_errors=False)
+        predicted = get_fileinfo_from_ordinals(predicted_with_ords, current_scene_db, rulename)
 
     display_edit_ruleset.display_prediction_list(predicted)
 
@@ -59,7 +59,7 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
         try:
             nbname = notebook.get_notebook_by_ordinal(current_scene_db, filename)
             if nbname != None:
-                filename = nbname
+                filename = nbname[0]
             elif not allow_errors:
                 raise NotebookNotFoundError
         except NotebookNotFoundError as e:
@@ -72,3 +72,26 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
         filenames.append(filename)
 
     return filenames
+
+def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename):
+    from src.mtool.notebook import notebook
+    from src.mtool.util.error import NotebookNotFoundError
+    # format:    
+    # (Rule, Position, PredictedNotebook, Library, RawURL)
+
+    predictions = []
+    position = 1
+    for prediction in predictions_with_ords:
+        try:
+            nbname = notebook.get_notebook_by_ordinal(current_scene_db, prediction)
+            print(nbname)
+            if nbname == None:
+                raise NotebookNotFoundError
+        except NotebookNotFoundError as e:
+            print(f'{e}: {prediction}')
+            return 1
+        prediction = (rulename, position, nbname[0], nbname[1], None)
+        predictions.append(prediction)
+        position += 1
+    print(predictions)
+    return predictions

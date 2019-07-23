@@ -341,13 +341,6 @@ def start(args=None, test = False):
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
         return 1
-    """
-    This should be somewhere less annoying
-    # warns if tensorflow is turbo broken
-    elif sys.version_info.major == 3 and sys.version_info.minor > 6:
-        print("mtool's model is built with tensorflow, which requires python <=3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable." +
-        " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")
-    """
 
     if len(args) > 1:
         arg1 = args[1]
