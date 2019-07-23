@@ -1,6 +1,6 @@
 
-"""http://nmnode-0-svc:50070/webhdfs/v1/mtool?op=LISTSTATUS"""    
-MTOOL_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/mtool/"
+"""http://nmnode-0-svc:50070/webhdfs/v1/praxxis?op=LISTSTATUS"""    
+MTOOL_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/praxxis/"
 
 import json
 import requests

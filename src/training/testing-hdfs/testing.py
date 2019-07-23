@@ -2,7 +2,7 @@ import re
 import subprocess
 import json
 
-MTOOL_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/mtool/"
+MTOOL_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/praxxis/"
 
 def test(loc):
     """
@@ -48,7 +48,7 @@ def test(loc):
     
     return sequences
 
-    """http://nmnode-0-svc:50070/webhdfs/v1/mtool?op=LISTSTATUS"""
+    """http://nmnode-0-svc:50070/webhdfs/v1/praxxis?op=LISTSTATUS"""
 
     """
     1. find model file

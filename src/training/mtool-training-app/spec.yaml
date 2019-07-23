@@ -1,4 +1,4 @@
-name: mtool-model-training
+name: praxxis-model-training
 version: v1
 runtime: Python
 src: ./train.py
