@@ -13,7 +13,7 @@ setuptools.setup(
      description="praxxis",
      long_description=long_description,
      entry_points = {
-     'console_scripts': ['m=src.praxxis.app:start'],
+     'console_scripts': ['prax=src.praxxis.app:start'],
      },
    long_description_content_type="text/markdown",
      url="praxxis.github.com",
