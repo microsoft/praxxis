@@ -1,3 +1,7 @@
+"""
+Deactivates a ruleset.
+(i.e., the ruleset remains on disk but will not be used in making predictions)
+"""
 
 def deactivate_ruleset(args, prediction_db):
     from src.mtool.sqlite import sqlite_rulesengine

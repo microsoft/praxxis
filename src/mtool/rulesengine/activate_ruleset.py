@@ -1,3 +1,7 @@
+"""
+Marks a ruleset as activate 
+(i.e., its rules will be evaluated when making predictions)
+"""
 
 def activate_ruleset(args, prediction_db):
     from src.mtool.sqlite import sqlite_rulesengine

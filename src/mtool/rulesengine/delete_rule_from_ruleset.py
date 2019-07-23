@@ -1,3 +1,6 @@
+"""
+Deletes a rule from a ruleset, based on user input in the console.
+"""
 
 def delete_rule_from_ruleset(args, prediction_db):
     from src.mtool.sqlite import sqlite_rulesengine
@@ -10,20 +13,18 @@ def delete_rule_from_ruleset(args, prediction_db):
     else:
         name = args
 
+    # get ruleset info
     name = rules.get_ruleset_by_ordinal(name, prediction_db)
-
     ruleset_db = sqlite_rulesengine.get_ruleset_path(prediction_db, name)
 
+    # give the user a list of rules and ask which one to delete
     rules_list = sqlite_rulesengine.list_rules_in_ruleset(ruleset_db)
-
     display_rulesengine.display_rule_list(name, rules_list)
-
     deletion = display_edit_ruleset.display_deletion_prompt()
 
+    # get deletion info and delete
     deletion_name = get_rule_by_ordinal(deletion, rules_list)
-
     sqlite_rulesengine.delete_rule(ruleset_db, deletion_name)
-    
     display_rulesengine.display_rule_deletion(name, deletion_name)
 
 def get_rule_by_ordinal(name, ruleslist):
