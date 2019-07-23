@@ -21,6 +21,7 @@ class Dummy_Object():
     which = ""
     path = ""
     parameter=""
+    viewer=""
 
     def getpath(self):
         """returns the path of the notebook"""
@@ -34,7 +35,7 @@ def make_dummy_object(name="", value="", term="", notebook="", html=""):
     return dummy_object
 
 
-def make_dummy_notebook(html="", path="", parameter=""):
+def make_dummy_notebook(html="", path="", parameter="", viewer=""):
     import os
 
     dummy_notebook = Dummy_Object()
@@ -45,6 +46,7 @@ def make_dummy_notebook(html="", path="", parameter=""):
     dummy_notebook._hasParameters = False
     dummy_notebook.parameter = parameter
     dummy_notebook.html = html
+    dummy_notebook.viewer = viewer
     return dummy_notebook
 
 

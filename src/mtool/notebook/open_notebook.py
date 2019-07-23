@@ -25,11 +25,11 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor, test
         raise e
     
     notebook_filename = notebook_data[0]
-    if args.parameter == "html":
+    if args.viewer == "html":
         display_as_html(notebook_filename)
-    elif args.parameter == "jupyter":
+    elif args.viewer == "jupyter":
         open_jupyter(notebook_filename, test)
-    elif args.parameter == "ads":
+    elif args.viewer == "ads":
         try:
             subprocess.Popen([ads_location, notebook_filename])
         except Exception:

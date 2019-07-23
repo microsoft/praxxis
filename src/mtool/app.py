@@ -185,7 +185,7 @@ def main(command_line=None):
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
-    open_notebook.add_argument('parameter', nargs="?", help=open_notebook_parameter_help)
+    open_notebook.add_argument('viewer', nargs="?", choices=['html', 'jupyter', 'ads'], help=open_notebook_parameter_help)
     open_notebook.set_defaults(which=open_notebook_command)
     
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)

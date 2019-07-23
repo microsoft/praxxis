@@ -1,3 +1,6 @@
+"""
+Rule-engine and model-based predictions based on user history.
+"""
 import requests
 import json
 import warnings
@@ -9,6 +12,7 @@ from src.mtool.rulesengine import rules_checker
 
 
 def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, start, end):
+    """calls prediction endpoints to get next notebooks"""
     from src.mtool.display import display_rulesengine
     data = sqlite_scene.get_recent_history(current_scene_db, 5)
     if data == []:
@@ -34,6 +38,7 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
 
     
 def write_to_list(notebook_library_list, current_scene_db, library_db):
+    """grabs paths and writes to notebook list so ordinal referencing works"""
     from src.mtool.sqlite import sqlite_notebook
 
     notebooklist = []

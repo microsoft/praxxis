@@ -71,11 +71,11 @@ class Notebook:
             metadata = cell.get("metadata")
             if metadata and "parameters" in metadata.get("tags"):
                 self._hasParameters = True
-                self.extract_paramVars(cell.get("source"))
+                self.extract_from_cell(cell.get("source"))
                 return
 
 
-    def extract_paramVars(self, source):
+    def extract_from_cell(self, source):
         """extracts the parameters"""
         if(isinstance(source, list)):
             lines = source

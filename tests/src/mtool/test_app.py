@@ -222,7 +222,7 @@ def open_notebook(command):
     assert namespace.command == 'o' or namespace.command == "open"
     assert namespace.notebook == "test"
     if "html" in command:
-        assert namespace.parameter == "html"
+        assert namespace.viewer == "html"
 
 
 def search_notebook(command):

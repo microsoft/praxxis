@@ -15,9 +15,13 @@ def remove_ruleset(args, rulesengine_db):
     name = rules.get_ruleset_by_ordinal(name, rulesengine_db)
 
     path = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name)
-    os.remove(path)
 
-    sqlite_rulesengine.remove_ruleset(rulesengine_db, name)
+    if os.path.isfile(path):
+        os.remove(path)
+        sqlite_rulesengine.remove_ruleset(rulesengine_db, name)
+    else:
+        from src.mtool.util import error
+        raise error.RulesetNotFoundError(name)
 
     return name
 
