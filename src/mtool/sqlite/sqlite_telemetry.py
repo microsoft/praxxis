@@ -1,5 +1,5 @@
 """
-This file contains all of the sqlite functions for scenes
+This file contains all of the sqlite functions for telemetry
 """
 
 def get_scene_id(current_scene_db):

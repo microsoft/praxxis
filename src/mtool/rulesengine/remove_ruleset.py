@@ -1,5 +1,8 @@
-
+"""
+This file completely deletes a ruleset.
+"""
 def remove_ruleset(args, rulesengine_db):
+    """Remove a ruleset, deleting the associated db"""
     import os
     from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.rulesengine import rules

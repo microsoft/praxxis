@@ -1,5 +1,9 @@
+"""
+Adds a rule to the ruleset by user inputs in a console dialog
+"""
 
 def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start, stop):
+    """prompts user through adding a rule, given a ruleset"""
     from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     from src.mtool.display import display_edit_ruleset
@@ -52,6 +56,7 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
         
 
 def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_errors = True):
+    """get filenames, given ordinals"""
     from src.mtool.notebook import notebook
     from src.mtool.util.error import NotebookNotFoundError
     filenames = []
@@ -74,6 +79,9 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
     return filenames
 
 def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename):
+    """get all fileinfo and format it correctly for predictions entry
+    TODO: look at renaming/refactoring this
+    """
     from src.mtool.notebook import notebook
     from src.mtool.util.error import NotebookNotFoundError
     # format:    

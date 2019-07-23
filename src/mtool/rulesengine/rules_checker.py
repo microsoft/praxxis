@@ -7,6 +7,7 @@ if either left-hand list is empty, this is interpreted as "all"
 """
 
 def rules_check(prediction_db, filename, output_path, start, end):
+    """check if any rules match"""
     from src.mtool.sqlite import sqlite_rulesengine
 
     rulesets = sqlite_rulesengine.get_active_rulesets(prediction_db, start, end)

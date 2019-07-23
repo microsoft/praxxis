@@ -1,5 +1,9 @@
-
+"""
+View a list of all rules in a ruleset
+TODO: -v option to see rule definitions too
+""" 
 def view_rules(args, prediction_db):
+    """view rules in a given ruleset"""
     from src.mtool.sqlite import sqlite_rulesengine
     from src.mtool.display import display_rulesengine
     from src.mtool.rulesengine import rules
