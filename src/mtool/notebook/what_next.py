@@ -17,15 +17,13 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
 
     rules_based = rules_checker.rules_check(prediction_db, data[-1][0], data[-1][1], start, end)
     if rules_based != []:
-        print(rules_based)
         display_rulesengine.display_predictions(rules_based)
         write_to_list(rules_based, current_scene_db, library_db)
     else:
         import sys
         if sys.version_info.major == 3 and sys.version_info.minor > 6:
-            print(sys.version_info)
-            print("mtool's model is built with tensorflow, which requires python <=3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), ", which is incompatible." +
-                " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")
+            from src.mtool.display import display_error
+            display_error.tensorflow_version_error(str(sys.version_info.major), str(sys.version_info.minor))
             sys.exit(1)
     
         """

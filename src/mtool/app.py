@@ -339,7 +339,8 @@ def start(args=None, test = False):
 
     # prevents mtool from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
-        print("mtool requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
+        from src.mtool.display import display_error
+        display_error.version_too_low_error(str(sys.version_info.major), str(sys.version_info.minor))
         return 1
 
     if len(args) > 1:

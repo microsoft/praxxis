@@ -66,14 +66,13 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
             if nbname != None:
                 filename = nbname[0]
             elif not allow_errors:
-                raise NotebookNotFoundError
+                raise NotebookNotFoundError(nbname)
         except NotebookNotFoundError as e:
             if allow_errors:
                 from src.mtool.display import display_error
                 display_error.display_ruleset_num_input_warning(filename)
             else:
-                print(f'{e}: {filename}')
-                return 1
+                raise e
         filenames.append(filename)
 
     return filenames
@@ -92,14 +91,13 @@ def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename
     for prediction in predictions_with_ords:
         try:
             nbname = notebook.get_notebook_by_ordinal(current_scene_db, prediction)
-            print(nbname)
+            
             if nbname == None:
-                raise NotebookNotFoundError
+                raise NotebookNotFoundError(prediction)
         except NotebookNotFoundError as e:
-            print(f'{e}: {prediction}')
-            return 1
+            raise e
         prediction = (rulename, position, nbname[0], nbname[1], None)
         predictions.append(prediction)
         position += 1
-    print(predictions)
+        
     return predictions

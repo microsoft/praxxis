@@ -167,3 +167,9 @@ def invalid_rule_definition(name):
 def empty_history_error():
     return(f"{Fore.RED}Predictions cannot be run on an empty history.")
    
+def version_too_low_error(major_vers, minor_vers):
+    print(f"{Fore.RED}mtool requires python 3.6. Your version is " + major_vers + "." + minor_vers + ", which is incompatable. Please update python.")
+
+def tensorflow_version_error(major_vers, minor_vers):
+    print(f"{Fore.RED}mtool's model is built with tensorflow, which requires python <=3.6. Your version is " + major_vers + "." + minor_vers + ", which is incompatible." +
+                " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")

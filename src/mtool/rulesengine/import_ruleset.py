@@ -39,7 +39,7 @@ def parse_toml(path, ruleset_root, rulesengine_db):
             filenames = rulesetInfo[rulename]["filenames"]
             outputs = rulesetInfo[rulename]["outputs"]
             predictions = rulesetInfo[rulename]["predictions"]
-            print(predictions)
+           
             sqlite_rulesengine.add_rule(ruleset_db, rulename, filenames, outputs, predictions)
             display_rulesengine.display_added_rule(ruleset_name, rulename, filenames, outputs, predictions)
         except KeyError:
