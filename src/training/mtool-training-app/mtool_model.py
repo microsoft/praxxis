@@ -1,5 +1,5 @@
 """
-build a LSTM model with mtool notebook execution sequences for predicting next
+build a LSTM model with praxxis notebook execution sequences for predicting next
 
 questions:
 SHAPE: what's going on? what should shapes be? how do I shape from generator? do I need to flatten?
@@ -35,8 +35,8 @@ from keras.models import load_model
 from keras.layers import LSTM
 from keras.layers import Dense
 
-from mtool_model_data import sequences
-from mtool_model_utils import *
+from praxxis_model_data import sequences
+from praxxis_model_utils import *
 
 ##
 # hyperparameters to tune
