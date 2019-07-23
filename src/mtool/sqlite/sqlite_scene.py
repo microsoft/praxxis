@@ -3,6 +3,29 @@
 This file contains all of the sqlite functions for scenes
 """
 
+def init_scene(scene_db, name):
+    """initializes the scene db"""
+    #TODO: handle strings
+    import uuid
+    from src.mtool.sqlite import connection
+
+    conn = connection.create_connection(scene_db)
+    cur = conn.cursor()
+    scene_id = str(uuid.uuid4())
+
+    create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Scene TEXT)'
+    create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Library TEXT, Path TEXT, RawUrl TEXT)'
+    create_parameter_table=f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
+    create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
+    init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Scene) values("{scene_id}", 0, "{name}")'
+    cur.execute(create_metadata_table)
+    cur.execute(create_notebook_list_table)
+    cur.execute(create_parameter_table)
+    cur.execute(create_history_table)
+    cur.execute(init_metadata_table)
+    conn.commit()
+    conn.close()
+
 def check_ended(history_db, scene, conn, cur):
     """checks if a scene has ended"""
     from src.mtool.util import error
