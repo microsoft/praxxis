@@ -13,17 +13,5 @@
 .pydevproject
 /library/*
 /output/*
-.coverage
-src/mtool/predictions/model/convert.pkl
-src/mtool/predictions/model/lstm_model.h5
-src/deploy-training/testing-hdfs/spec.yaml
-src/deploy-training/testing-hdfs/run-spec.yaml
-src/deploy-training/mtool-training-app/run-spec.yaml
-src/deploy-training/mtool-training-app/test.yaml
-src/deploy-training/mtool-training-app/spec.yaml
-src/deploy-training/mtool-training-app/train.py
-src/deploy-training/mtool-training-app/train_utils.py
-src/deploy-training/mtool-training-app/requirements.txt
 .coverage*
 .ipynb_checkpoints*
-.coverage*
