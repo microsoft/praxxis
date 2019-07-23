@@ -47,7 +47,7 @@ def display_rule_list(ruleset, rules):
         i += 1
 
 def display_rule(name, filenames, outputs, predictions):
-    print(f"{name}: {filenames} {outputs} = {predictions[2]}")
+    print(f"{name}: {filenames} {outputs} = {[pred[2] for pred in predictions]}")
 
 def display_added_rule(ruleset_name, name, filenames, outputs, predictions):
     print(f"Added rule {name} to {ruleset_name}:")
