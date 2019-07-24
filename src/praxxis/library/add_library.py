@@ -20,7 +20,7 @@ def add_library(args, library_db, git_root):
             else:
                 raise error.NotDirectoryError(path)
         else: 
-            raise error.LibraryNotFoundError
+            raise error.LibraryNotFoundError(path)
     else:
         from git import Repo
         import sys
