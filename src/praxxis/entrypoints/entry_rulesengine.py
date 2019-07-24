@@ -12,7 +12,6 @@ from src.praxxis.util.roots import _query_start
 from src.praxxis.util.roots import _query_end
 
 """
-TODO: testing ;)
 TODO: edit ruleset
 """
 

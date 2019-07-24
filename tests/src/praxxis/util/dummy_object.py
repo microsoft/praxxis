@@ -127,9 +127,10 @@ def make_dummy_notebook_path():
     dummy_notebook_path.path = os.path.abspath(os.path.join('tests', 'test_notebooks', 'test_notebook.ipynb'))
     return dummy_notebook_path
 
-def make_dummy_ruleset(name):
+def make_dummy_ruleset(name, path = ""):
     dummy_ruleset = Dummy_Object()
     dummy_ruleset.name = name
+    dummy_ruleset.path = path
     return dummy_ruleset
     
 def make_dummy_path(path):

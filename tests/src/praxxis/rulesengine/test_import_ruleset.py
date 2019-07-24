@@ -68,3 +68,24 @@ def test_import_ruleset_does_not_exist(setup, rulesengine_root, rulesengine_db):
     except error.NotValidRuleset:
         assert 1
         
+def test_import_database(setup, rulesengine_db, create_one_ruleset):
+    from src.praxxis.rulesengine import import_ruleset
+    from src.praxxis.sqlite import sqlite_rulesengine
+    from tests.src.praxxis.util import dummy_object
+
+    name = "generated_one_ruleset"
+    ruleset_path = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name)
+
+    name1 = dummy_object.make_dummy_ruleset(name, ruleset_path)
+
+    sqlite_rulesengine.clear_ruleset_list(rulesengine_db)
+
+    message = import_ruleset.import_ruleset(name1, name1.name, rulesengine_db)
+
+    assert message == name1.name
+    
+    rulesets = sqlite_rulesengine.get_all_rulesets(rulesengine_db, start=1, end=5)
+
+    assert len(rulesets) == 1
+    assert len(rulesets[0]) == 2
+    assert rulesets[0][0] == name1.name
