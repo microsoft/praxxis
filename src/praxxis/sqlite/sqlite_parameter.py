@@ -153,7 +153,6 @@ def delete_param(current_scene_db, parameter):
 
 def list_notebook_param(library_db, notebook, library):
     from src.praxxis.sqlite import connection
-    
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     param = f'SELECT Parameter, Value from "NotebookDefaultParam" WHERE Notebook = "{notebook}" AND Library = "{library}"'

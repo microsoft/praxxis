@@ -25,11 +25,11 @@ def list_notebook_param(args, library_db, current_scene_db):
 
     name = args.notebook
 
-    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)[0]
 
     sqlite_parameter.get_all_param(current_scene_db)
 
-    parameters = sqlite_parameter.list_notebook_param(library_db, name, notebook_data[1])
+    parameters = sqlite_parameter.list_notebook_param(library_db, notebook_data[1], notebook_data[2])
     
     display_param.display_view_param(parameters, 
                                       sqlite_parameter.get_all_param(current_scene_db))
