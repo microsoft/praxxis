@@ -19,10 +19,14 @@ def add_notebook(args, library_db):
 
             try:
                 sqlite_notebook.check_notebook_exists(library_db, file_name)
+                sqlite_library.check_library_exists(library_db, "none")
             except error.NotebookNotFoundError:
                 pass
+            except error.LibraryNotFoundError:
+                sqlite_library.add_none_library(library_db)
             else:
                 display_error.duplicate_notebook_warning(file_name)
+            
 
             notebook_data = notebook.Notebook([os.path.abspath(path), file_name, "none"])
             for parameter in notebook_data._parameters:

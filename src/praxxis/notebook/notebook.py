@@ -3,10 +3,35 @@ This file contains the Notebook class, with methods for loading in a .ipynb
 file and checking its parameterization information.
 """
 
+def get_notebook(current_scene_db, library_db, name):
+    from src.praxxis.notebook import notebook
+    from src.praxxis.util import error
+    from src.praxxis.sqlite import sqlite_notebook
+
+    try:
+        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
+    except error.NotebookNotFoundError as e:
+        raise e
+
+    if tmp_name != None:
+        name = tmp_name
+    
+    try:
+        notebook_data = sqlite_notebook.get_notebook(library_db, name)
+    except error.NotebookNotFoundError as e:
+        raise e
+
+    if not len(notebook_data) == 1:
+        notebook_data = [notebook.handle_duplicate_notebook(library_db, notebook_data, name)]
+    
+    return notebook_data
+
+
 def get_notebook_by_ordinal(current_scene_db, name):
-    """gets scene by ordinal using the sqlite history db"""
+    """gets notebook by ordinal using the sqlite history db"""
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.util import error
+    
     if f"{name}".isdigit():
         try:
             name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
@@ -16,6 +41,7 @@ def get_notebook_by_ordinal(current_scene_db, name):
         library = sqlite_notebook.get_notebook_library(current_scene_db, name)
         name = (name, library)
     return(name)   
+
 
 def get_output_from_filename(filename):
     """gets only cell outputs from filename""" 
@@ -34,6 +60,26 @@ def get_output_from_filename(filename):
 
     return ''.join(linelist)
 
+
+def handle_duplicate_notebook(library_db, notebook_data, name,):
+        from src.praxxis.display import display_error
+        from src.praxxis.library import list_library
+        from src.praxxis.library import library
+        from src.praxxis.sqlite import sqlite_notebook
+        from src.praxxis.notebook import notebook
+        
+        library_list = []
+        for element in notebook_data:
+            library_list.append(element[2])
+        
+        display_error.duplicate_notebook_error(name, library_list)
+        selection = input("")
+
+        if selection.isdigit():
+            selection = library_list[int(selection)-1]
+        return sqlite_notebook.get_notebook(library_db, name, selection)[0]
+
+
 class Notebook:
     """ this is the notebook class, which is an instance of a notebook"""
     def __init__(self, notebook_data):
@@ -48,7 +94,6 @@ class Notebook:
         self._parameters = []
         self._path = os.path.join(notebook_path)
         self.library_name = notebook_data[2]
-
         try:
             f = open(self._path, encoding='utf-8')
             self.extract_params(f)

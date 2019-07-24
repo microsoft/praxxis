@@ -4,7 +4,7 @@ from tests.src.praxxis.util import dummy_object
 def test_view_library_param(setup, add_test_library, scene_root, history_db, library_db, current_scene_db, start, stop):
     from src.praxxis.parameter import list_param
 
-    library_params = list_param.list_library_param("test_notebooks", library_db, current_scene_db)
+    library_params = list_param.list_library_param("test_notebooks", library_db, current_scene_db, start, stop)
     params = dummy_object.make_dummy_params()
 
     entry_parameter.view_library_param("test_notebooks", scene_root, history_db, library_db, current_scene_db)
@@ -23,7 +23,6 @@ def test_delete_param(setup, set_one_param, scene_root, history_db, current_scen
 
     entry_parameter.delete_param("generated_single_param", scene_root, history_db, current_scene_db)
     assert len(list_param.list_param(current_scene_db, start, stop)) == 0
-    
 
 
 def test_set_param(setup, scene_root, history_db, current_scene_db):
@@ -47,6 +46,9 @@ def test_view_notebook_param(setup, add_test_library, scene_root, library_db, hi
 
     notebook = dummy_object.make_dummy_notebook_with_params()
     dummy_params = dummy_object.make_dummy_params()
+
+    print(notebook)
+
     entry_parameter.view_notebook_param(notebook, scene_root, library_db, history_db, current_scene_db)
 
     params = list_param.list_notebook_param(notebook, library_db, current_scene_db)

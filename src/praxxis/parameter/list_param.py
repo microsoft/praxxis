@@ -18,14 +18,14 @@ def list_param(current_scene_db, start, end):
 def list_notebook_param(args, library_db, current_scene_db):
     """List all parameters in the current notebook"""
     from src.praxxis.sqlite import sqlite_parameter
+    from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
+    from src.praxxis.util import error
     from src.praxxis.display import display_param
 
     name = args.notebook
-    notebook_data = notebook.get_notebook_by_ordinal(current_scene_db, name)
-    tmp_name = notebook_data[0]
-    if tmp_name != None:
-        name = tmp_name
+
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
 
     sqlite_parameter.get_all_param(current_scene_db)
 
