@@ -1,0 +1,8 @@
+name: praxxis-model-scoring
+version: v1
+inputs:
+   seq:
+      - "SOP023"
+      - "SOP023"
+      - "SOP023"
+      

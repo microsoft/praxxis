@@ -1,0 +1,12 @@
+name: testing-hdfs
+version: v1
+runtime: Python
+src: ./testing.py
+entrypoint: test
+replicas: 1
+poolsize: 1
+inputs:
+  loc: str 
+output:
+  data: vector
+

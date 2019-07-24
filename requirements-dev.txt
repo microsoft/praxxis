@@ -9,4 +9,4 @@ mock
 setuptools
 nbopen
 gitpython
-giturlparse
+colorama 
