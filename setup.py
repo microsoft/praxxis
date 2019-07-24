@@ -6,7 +6,19 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
      name='praxxis', 
-     python_requires = '>=3.7.*, >=3.6.*', 
+     python_requires = '>=3.7.*, >=3.6.*',
+     install_requires=[
+        "urllib3",
+        "requests",
+        "papermill",
+        "ijson",
+        "ipykernel", 
+        "setuptools",
+        "nbopen",
+        "gitpython",
+        "giturlparse",
+        "colorama"
+     ],
      version='0.1dev',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
      author_email="example@microsoft.com",
