@@ -131,3 +131,12 @@ def make_dummy_ruleset(name):
     dummy_ruleset = Dummy_Object()
     dummy_ruleset.name = name
     return dummy_ruleset
+
+
+def make_dummy_git_repo():
+    import os
+
+    dummy_git_repo = Dummy_Object()
+    dummy_git_repo.path = "https://github.com/githubtraining/hellogitworld.git"
+    dummy_git_repo.name = "githubtraining_hellogitworld"
+    return dummy_git_repo

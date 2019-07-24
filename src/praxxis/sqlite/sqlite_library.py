@@ -15,13 +15,13 @@ def clear_loaded_libararies(library_db):
     conn.close()
 
 
-def load_library(library_db, path, readme, library):
+def load_library(library_db, path, readme, library, remote=None):
     """load a library into the library db"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library) VALUES("{path}", "{readme}", "{library}")'
+    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library, Remote) VALUES("{path}", "{readme}", "{library}", {remote})'
     update_library = f'UPDATE "LibraryMetadata" SET Readme = "{readme}" WHERE Library = "{library}"'
     cur.execute(load_library)
     cur.execute(update_library)
