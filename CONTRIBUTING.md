@@ -22,7 +22,7 @@ run
 python setup.py develop
 pip -r requirements-dev.txt 
 ``` 
-to install the package in development mode and run m from the command line.
+to install the package in development mode and run prax from the command line.
 
 ## Coding Standards
 All changes made should follow [the PEP 8 style conventions](https://www.python.org/dev/peps/pep-0008/). Any new source files should have a header with descriptive information about what the file does. see the current files for an idea of the expected level of detail.
