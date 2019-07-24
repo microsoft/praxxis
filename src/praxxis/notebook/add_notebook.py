@@ -26,7 +26,6 @@ def add_notebook(args, library_db):
                 sqlite_library.add_none_library(library_db)
             else:
                 display_error.duplicate_notebook_warning(file_name)
-            
 
             notebook_data = notebook.Notebook([os.path.abspath(path), file_name, "none"])
             for parameter in notebook_data._parameters:

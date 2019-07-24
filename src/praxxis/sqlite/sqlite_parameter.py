@@ -10,9 +10,10 @@ def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter
     cur = conn.cursor()
     set_notebook_param = f'INSERT OR IGNORE INTO "NotebookDefaultParam" (Parameter, Value, Notebook, Library) VALUES(?, ?, ?, ?)'
     update_notebook_param = f'UPDATE "NotebookDefaultParam" SET Value = ? WHERE Parameter = ? AND Notebook = ? AND Library = ?'
-
+    print(parameter_name)
+    print(parameter_value)
     cur.execute(set_notebook_param, (parameter_name, parameter_value, notebook_name, library,))
-    cur.execute(update_notebook_param, (parameter_name, parameter_value, notebook_name, library,))
+    cur.execute(update_notebook_param, (parameter_value, parameter_name, notebook_name, library,))
     conn.commit()
     conn.close()
 

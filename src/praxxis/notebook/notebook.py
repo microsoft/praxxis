@@ -94,6 +94,7 @@ class Notebook:
         self._parameters = []
         self._path = os.path.join(notebook_path)
         self.library_name = notebook_data[2]
+
         try:
             f = open(self._path, encoding='utf-8')
             self.extract_params(f)
@@ -109,7 +110,6 @@ class Notebook:
     def extract_params(self, openFile):
         """extracts the parameters from the file"""
         import ijson
-
         objects = ijson.items(openFile, 'cells.item')
         code_cells = (o for o in objects if o['cell_type'] == 'code')
         for cell in code_cells:
