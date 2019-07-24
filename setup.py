@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
      name='praxxis', 
      python_requires = '>=3.7.*, >=3.6.*', 
-     version='0.0.0',
+     version='0.1dev',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
      author_email="example@microsoft.com",
      description="praxxis",
