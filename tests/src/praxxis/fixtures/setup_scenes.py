@@ -21,7 +21,6 @@ def create_many_scenes(scene_root, history_db, current_scene_db):
         pass
 
 
-
 @pytest.fixture(scope="function")
 def create_one_scene(scene_root, history_db, current_scene_db):
     from src.praxxis.scene import new_scene
@@ -54,6 +53,7 @@ def create_ended_scene(scene_root, history_db, current_scene_db):
         delete_scene.delete_scene(name1, scene_root, history_db)
     except error.SceneNotFoundError:
         pass
+
 
 @pytest.fixture(scope="function")
 def generate_short_history(setup, add_test_library, telemetry_db, outfile_root, current_scene_db, library_root, library_db, start, stop):

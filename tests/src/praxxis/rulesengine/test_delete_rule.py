@@ -6,7 +6,7 @@ def test_delete_rule(setup, monkeypatch, mock_input_str, create_one_ruleset_one_
     from tests.src.praxxis.rulesengine import test_add_rule
     from tests.src.praxxis.util import dummy_object
 
-    name1 = dummy_object.make_dummy_ruleset("generated_one_ruleset")
+    name1 = dummy_object.make_dummy_ruleset("generated_ruleset_with_rule")
     ruleset_path = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name1.name)
 
     mock_in = input("")

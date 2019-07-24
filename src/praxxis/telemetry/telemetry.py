@@ -48,7 +48,7 @@ if __name__ == "__main__":
             try:            
                 send(user_info_db, local_copy, scene_identifier)
                 sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
-            except Exception as e:
+            except Exception:
                 pass 
     local_copy = sys.argv[2]
     scene_identifier = sys.argv[3]

@@ -27,7 +27,7 @@ def create_one_ruleset_one_rule(rulesengine_root, rulesengine_db):
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.util import error
 
-    name1 = dummy_object.make_dummy_ruleset("generated_one_ruleset")
+    name1 = dummy_object.make_dummy_ruleset("generated_ruleset_with_rule")
     new_ruleset.new_ruleset(name1, rulesengine_root, rulesengine_db)
     # ADD RULE TO SQLITE
     ruleset_path = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name1.name)

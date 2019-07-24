@@ -9,3 +9,5 @@ def list_rulesets(args, prediction_db, start, end):
 
     result = sqlite_rulesengine.get_all_rulesets(prediction_db, start, end)
     display_rulesengine.display_ruleset_list(result)
+    print(result)
+    return result
