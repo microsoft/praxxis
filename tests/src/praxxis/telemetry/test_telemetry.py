@@ -10,8 +10,16 @@ def test_backlog_creation(setup, telemetry_db, add_test_library):
     telemetry.telem_entrance(telemetry_db, notebook1.path, ID)
 
     backlog = sqlite_telemetry.get_backlog(telemetry_db)
+    backlog_len = sqlite_telemetry.backlog_size(telemetry_db)
 
     assert len(backlog) == 1
+    assert len(backlog) == backlog_len
+
+    # check format of backlog
+    assert len(backlog[0]) == 3
+    assert backlog[0][0] == notebook1.path
+    assert backlog[0][1] == ID
+
 
 def test_backlog_continuation(setup, telemetry_db, add_test_library):
     """tests that backlog continues to be updated"""
