@@ -54,4 +54,3 @@ def create_deactivated_ruleset(rulesengine_root, rulesengine_db):
         remove_ruleset.remove_ruleset(name1, rulesengine_db)
     except error.RulesetNotFoundError:
         pass
-

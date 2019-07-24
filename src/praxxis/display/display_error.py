@@ -157,9 +157,9 @@ def predictions_ordinal_not_in_list_error():
 
 def invalid_ruleset_import(name):
     if name == None:
-        return(f"{Fore.RED}This does not appear to be the path to a valid .db file")
+        return(f"{Fore.RED}This does not appear to be the path to a valid .db or .toml file")
     else:
-        return(f"{Fore.RED}{name} is not the path to a valid .db file")
+        return(f"{Fore.RED}{name} is not the path to a valid .db or .toml file")
 
 def invalid_rule_definition(name):
     print(f"{Fore.RED}The rule definition for rule {name} is invalid. This rule will not be imported.")

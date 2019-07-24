@@ -17,11 +17,13 @@ def import_ruleset(args, ruleset_root, rulesengine_db):
         sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root)
         display_rulesengine.display_imported_ruleset(ruleset_name)    
     elif(path.endswith(".toml")):
-        parse_toml(path, ruleset_root, rulesengine_db)
+        ruleset_name = parse_toml(path, ruleset_root, rulesengine_db)
     else:
         from src.praxxis.util.error import NotValidRuleset
         raise(NotValidRuleset(path))
     
+    return ruleset_name
+
 def parse_toml(path, ruleset_root, rulesengine_db):
     import toml
     import os
@@ -37,6 +39,7 @@ def parse_toml(path, ruleset_root, rulesengine_db):
         ruleset_name = f"{ruleset_name}-{i}"
 
     sqlite_rulesengine.init_ruleset(rulesengine_db, ruleset_name, ruleset_db)
+    sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_db)
 
     for rulename in rulesetInfo:
         try:
@@ -57,6 +60,6 @@ def parse_toml(path, ruleset_root, rulesengine_db):
             from src.praxxis.display import display_error
             display_error.invalid_rule_definition(rulename)
 
-    
+    return ruleset_name
     
     

@@ -131,3 +131,8 @@ def make_dummy_ruleset(name):
     dummy_ruleset = Dummy_Object()
     dummy_ruleset.name = name
     return dummy_ruleset
+    
+def make_dummy_path(path):
+    dummy_path = Dummy_Object()
+    dummy_path.path = path
+    return dummy_path
