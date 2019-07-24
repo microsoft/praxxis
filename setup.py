@@ -13,10 +13,10 @@ setuptools.setup(
      description="praxxis",
      long_description=long_description,
      entry_points = {
-     'console_scripts': ['m=src.praxxis.app:start'],
+     'console_scripts': ['prax=src.praxxis.app:start'],
      },
    long_description_content_type="text/markdown",
-     url="praxxis.github.com",
+     url="github.com/microsoft/praxxis",
      packages=setuptools.find_packages(),
      classifiers=[
         'Programming Language :: Python :: 3.7',
