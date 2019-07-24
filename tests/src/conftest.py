@@ -8,4 +8,4 @@ from tests.src.praxxis.fixtures.setup import setup
 from tests.src.praxxis.fixtures.setup_library import notebooks_list, libraries_list, add_test_library
 from tests.src.praxxis.fixtures.set_test_params import set_many_params, set_one_param
 from tests.src.praxxis.fixtures.setup_scenes import create_many_scenes, create_one_scene, create_ended_scene, generate_short_history
-from tests.src.praxxis.fixtures.setup_rulesengine import create_one_ruleset, create_deactivated_ruleset, mock_input_str
+from tests.src.praxxis.fixtures.setup_rulesengine import create_one_ruleset, create_deactivated_ruleset, mock_input_str, create_one_ruleset_one_rule

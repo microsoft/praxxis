@@ -164,6 +164,7 @@ def deactivate_ruleset(rulesengine_db, name):
 def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     """adds a rule to the ruleset"""
     from src.praxxis.sqlite import connection 
+    print(ruleset_db, rulename, filenames, outputs, predictions)
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()

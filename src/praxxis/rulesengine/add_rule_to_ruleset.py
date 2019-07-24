@@ -52,6 +52,8 @@ def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, star
     # display total rule and add it to db        
     display_rulesengine.display_rule(rulename, filenames, output, predicted)
     sqlite_rulesengine.add_rule(ruleset_db, rulename, filenames, output, predicted)
+
+    return rulename
     
         
 
