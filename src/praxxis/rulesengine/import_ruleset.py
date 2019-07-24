@@ -29,14 +29,28 @@ def parse_toml(path, ruleset_root, rulesengine_db):
 
     ruleset_name = os.path.basename(path)[:-5]
     ruleset_db = os.path.join(ruleset_root, ruleset_name + ".db")
+    i = 0
+    while os.path.exists(ruleset_db):
+        i += 1
+        ruleset_db = os.path.join(ruleset_root, f"{ruleset_name}-{i}.db")
+    if i != 0:
+        ruleset_name = f"{ruleset_name}-{i}"
+
     sqlite_rulesengine.init_ruleset(rulesengine_db, ruleset_name, ruleset_db)
 
     for rulename in rulesetInfo:
         try:
             filenames = rulesetInfo[rulename]["filenames"]
             outputs = rulesetInfo[rulename]["outputs"]
-            predictions = rulesetInfo[rulename]["predictions"]
-           
+            predictions_raw = rulesetInfo[rulename]["predictions"]
+            pos = 1
+            predictions = []
+            for prediction in predictions_raw:
+                if len(prediction) == 2: # no rawURL specified
+                    prediction.append(None)
+                predictions.append((rulename, pos, *prediction))
+                pos += 1
+                
             sqlite_rulesengine.add_rule(ruleset_db, rulename, filenames, outputs, predictions)
             display_rulesengine.display_added_rule(ruleset_name, rulename, filenames, outputs, predictions)
         except KeyError:
