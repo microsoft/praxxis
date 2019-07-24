@@ -16,6 +16,7 @@ def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter
     conn.commit()
     conn.close()
 
+
 def clear_notebook_parameters(library_db):
     """empties the notebook parameter table""" 
     from src.praxxis.sqlite import connection
@@ -131,7 +132,7 @@ def get_param_by_ord(current_scene_db, ordinal):
 
 
 def delete_param(current_scene_db, parameter):
-    """Delete an parameter variable"""
+    """Delete an parameter"""
     from src.praxxis.sqlite import connection
     from src.praxxis.util import error
 
@@ -150,13 +151,13 @@ def delete_param(current_scene_db, parameter):
     conn.close()
 
 
-def list_notebook_param(library_db, notebook):
+def list_notebook_param(library_db, notebook, library):
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    param = f'SELECT Parameter, Value from "NotebookDefaultParam" WHERE Notebook = ?'
-    cur.execute(param, (notebook,))
+    param = f'SELECT Parameter, Value from "NotebookDefaultParam" WHERE Notebook = ? AND Library = ?'
+    cur.execute(param, (notebook,library,))
     rows = cur.fetchall()
     conn.close()
     return rows

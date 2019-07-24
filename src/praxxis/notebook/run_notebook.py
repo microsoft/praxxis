@@ -34,13 +34,16 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
         from src.praxxis.display import display_error
         from src.praxxis.library import list_library
         from src.praxxis.library import library
-
-        display_error.duplicate_notebook_error(name)
-        list_library.list_library(library_db)
+        
+        library_list = []
+        for element in notebook_data:
+            library_list.append(element[2])
+        
+        display_error.duplicate_notebook_error(name, library_list)
         selection = input("")
 
         if selection.isdigit():
-            selection = library.get_library_by_ordinal(library_db, selection, start, stop)
+            selection = library_list[int(selection)-1]
         notebook_data = sqlite_notebook.get_notebook(library_db, name, selection)[0]
         notebook = notebook.Notebook(notebook_data)
     else:

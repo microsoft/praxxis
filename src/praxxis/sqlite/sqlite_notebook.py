@@ -53,6 +53,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
         raise error.NotebookNotFoundError
     return item
 
+
 def write_list(current_scene_db, notebook_list, path_list = []):
     """creates the list of notebooks in list"""
     from src.praxxis.sqlite import connection
@@ -87,6 +88,7 @@ def get_notebook_path(library_db, notebook, library):
         return None
     return path[0]
 
+
 def get_notebook_library(library_db, notebook):
     """gets all possible libraries for a notebook name"""
     from src.praxxis.sqlite import connection
@@ -119,7 +121,6 @@ def check_notebook_exists(library_db, notebook):
         raise error.NotebookNotFoundError(notebook)
     else:
         return 0
-
 
 
 def search_notebooks(library_db, search_term, start, end):

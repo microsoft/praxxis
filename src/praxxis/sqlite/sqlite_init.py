@@ -14,9 +14,11 @@ def init_library_db(library_db):
     create_notebook_table = f'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, RawUrl TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
     create_parameter_table = f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
     create_notebook_parameter_table = f'CREATE TABLE "NotebookDefaultParam" (Parameter TEXT, Value TEXT, Notebook TEXT, Library TEXT,  PRIMARY KEY(Parameter, Library, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameters"(Parameter), FOREIGN KEY(Library) REFERENCES "Library"(Library))'
+    add_none_library = f'INSERT INTO "LibraryMetadata" (Path, Readme, Library, Remote) VALUES ("None", "No Readme", "none", "None")'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_table)
     cur.execute(create_parameter_table)
+    cur.execute(add_none_library)
     cur.execute(create_notebook_parameter_table)
     conn.commit()
     conn.close()

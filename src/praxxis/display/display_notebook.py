@@ -6,7 +6,11 @@ def display_list_notebook(notebooks):
     """the display function for listing notebooks"""
     print(f"Notebooks:")
     i = 0
+    library = ""
     for notebook in notebooks:
+        if not library == notebook[2]:
+            print(f"    {notebook[2]}:\n")
+            library = notebook[2]
         i+=1
         print(f"\t{i}.\t{notebook[0]}")
 

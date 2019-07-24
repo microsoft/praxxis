@@ -77,9 +77,14 @@ def not_notebook_error(name):
     return(f"{Fore.RED}The file {name} is not a notebook file.")
 
 
-def duplicate_notebook_error(name):
+def duplicate_notebook_error(name, library_list):
     from src.praxxis.sqlite import sqlite_library
     print(f"{Fore.RED}The notebook {name} exists in two places. Specify which library to choose from.")
+
+    i = 0
+    for library in library_list:
+        i += 1
+        print(f"\t{i}.\t{library}")
 
 
 def duplicate_notebook_warning(name):

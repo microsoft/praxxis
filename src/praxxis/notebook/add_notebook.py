@@ -13,6 +13,8 @@ def add_notebook(args, library_db):
             from src.praxxis.sqlite import sqlite_library
             from src.praxxis.sqlite import sqlite_notebook
             from src.praxxis.display import display_error
+            from src.praxxis.sqlite import sqlite_parameter
+            from src.praxxis.notebook import notebook
             from src.praxxis.util import error
 
             try:
@@ -21,6 +23,10 @@ def add_notebook(args, library_db):
                 pass
             else:
                 display_error.duplicate_notebook_warning(file_name)
+
+            notebook_data = notebook.Notebook([os.path.abspath(path), file_name, "none"])
+            for parameter in notebook_data._parameters:
+                sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1], "none")
             
             sqlite_library.load_notebook(library_db, os.path.abspath(path), file_name, "none")
         else:

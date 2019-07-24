@@ -64,7 +64,7 @@ def open_jupyter(filepath, test):
     import os
     import sys    
 
-    process = subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "util", "open_jupyter_notebook.py"), filepath], stdout=subprocess.PIPE)
+    process = subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "util", "open_jupyter.py"), filepath], stdout=subprocess.PIPE)
 
     if test:
         return
