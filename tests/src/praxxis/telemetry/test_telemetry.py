@@ -19,6 +19,8 @@ def test_backlog_creation(setup, telemetry_db, add_test_library):
     assert len(backlog[0]) == 3
     assert backlog[0][0] == notebook1.path
     assert backlog[0][1] == ID
+    
+    sqlite_telemetry.clear_backlog(telemetry_db)
 
 
 def test_backlog_continuation(setup, telemetry_db, add_test_library):
@@ -38,3 +40,5 @@ def test_backlog_continuation(setup, telemetry_db, add_test_library):
     backlog = sqlite_telemetry.get_backlog(telemetry_db)
 
     assert len(backlog) == 2
+
+    sqlite_telemetry.clear_backlog(telemetry_db)
