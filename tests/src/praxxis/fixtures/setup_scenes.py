@@ -44,6 +44,7 @@ def create_ended_scene(scene_root, history_db, current_scene_db):
     from src.praxxis.scene import end_scene
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.util import error
+    from src.praxxis.display import display_error
 
     name1 = dummy_object.make_dummy_scene("generated_ended_scene")
     new_scene.new_scene(name1, scene_root, history_db)
