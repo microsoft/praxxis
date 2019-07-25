@@ -4,7 +4,7 @@
 
 import os
 
-def sync_library(library_root, library_db, custom_path = False, remote = None, remote_origin = None):
+def sync_library(library_root, library_db, custom_path = False, library_name = None, remote = None, remote_origin = None):
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.util import error
     from src.praxxis.display import display_error
@@ -22,12 +22,16 @@ def sync_library(library_root, library_db, custom_path = False, remote = None, r
                 relative_path = [library_root.split(os.path.sep)[-1]]
             else:
                 relative_path = root.split(os.path.sep)[len(library_root.split(os.path.sep)):]
-            library_name ="_".join(relative_path)
+            
+            if library_name == None:
+                library_name = "_".join(relative_path)
 
             if relative_path == []:
                 continue
 
             if not library_name == current_library:
+                print(library_name)
+                print(current_library)
                 display_library.display_loaded_library(root, True)
                 display_library.loaded_notebook_message()
                 current_library = library_name
@@ -42,24 +46,19 @@ def sync_library(library_root, library_db, custom_path = False, remote = None, r
             counter = 0
             try:
                 library_list = sqlite_library.get_library_by_name(library_db, library_name)
+                orig_name = library_name
                 if not len(library_list) == 0:
                     library_metadata = sqlite_library.get_library_by_root(library_db, root)
                     if library_metadata == []:
                         while sqlite_library.check_library_exists(library_db, library_name):
-                            digit = library_name.split('-')[-1]
-                            if (digit).isdigit():
-                                counter = int(digit)
-                                library_name = library_name.split('-')[:-1][0]
                             counter += 1
-                            library_name = f"{library_name}-{counter}"
-
+                            library_name = f"{orig_name}-{counter}"
                     if library_metadata[0][0] == root:
                         library_name = library_metadata[0][2]
                     else:
                         raise error.LibraryNotFoundError
             except error.LibraryNotFoundError:
                 pass
-
 
             file_name, file_extension = os.path.splitext(name)
             if(file_extension == ".ipynb"):
