@@ -25,7 +25,7 @@ def list_notebook_param(args, library_db, current_scene_db):
 
     name = args.notebook
 
-    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)[0]
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
 
     sqlite_parameter.get_all_param(current_scene_db)
 

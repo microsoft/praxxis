@@ -46,9 +46,7 @@ def test_view_notebook_param(setup, add_test_library, scene_root, library_db, hi
 
     notebook = dummy_object.make_dummy_notebook_with_params()
     dummy_params = dummy_object.make_dummy_params()
-
-    print(notebook)
-
+    
     entry_parameter.view_notebook_param(notebook, scene_root, library_db, history_db, current_scene_db)
 
     params = list_param.list_notebook_param(notebook, library_db, current_scene_db)

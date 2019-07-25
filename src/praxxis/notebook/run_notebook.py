@@ -16,7 +16,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     from datetime import datetime
 
     name = args.notebook
-    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)[0]
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
     notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)

@@ -112,13 +112,13 @@ def remove_library(library_db, library):
     conn.close()
 
 
-def remove_notebook(library_db, notebook):
+def remove_notebook(library_db, notebook, library):
     from src.praxxis.sqlite import connection
-    
+
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_parameter = f'DELETE FROM NotebookDefaultParam Where Notebook = "{notebook}"'
-    clear_notebook = f'DELETE FROM Notebooks WHERE Notebook = "{notebook}"'
+    clear_parameter = f'DELETE FROM NotebookDefaultParam Where Notebook = "{notebook}" AND Library = "{library}"'
+    clear_notebook = f'DELETE FROM Notebooks WHERE Notebook = "{notebook}" AND Library = "{library}"'
     cur.execute(clear_parameter)
     cur.execute(clear_notebook)
     conn.commit()
