@@ -24,6 +24,10 @@ def loaded_notebook_message():
     print("Loaded notebook:")
 
 
+def display_init_git_library(root):
+    print(f"Created git library at {root}")
+
+
 def display_loaded_notebook(name):
     print(f"\t{name}")
 

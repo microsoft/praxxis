@@ -55,6 +55,8 @@ def view_library_param(arg,
                      scene_root = _scene_root,
                      history_db = _history_db,
                      library_db = _library_db,
+                     start = _query_start,
+                     end = _query_end,
                      current_scene_db = None):
     """
     handles viewing library parameters from the CLI
@@ -65,7 +67,7 @@ def view_library_param(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_param.list_library_param(arg, library_db, current_scene_db)
+    list_param.list_library_param(arg, library_db, current_scene_db, start, end)
 
 
 def view_notebook_param(arg, 

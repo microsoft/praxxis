@@ -11,18 +11,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor, test
 
     name = args.notebook
     
-    try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
-    except error.NotebookNotFoundError as e:
-        raise e
-    
-    if tmp_name != None:
-        name = tmp_name
-
-    try:
-        notebook_data = sqlite_notebook.get_notebook(library_db, name)[0]
-    except error.NotebookNotFoundError as e:
-        raise e
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
     
     notebook_filename = notebook_data[0]
     if args.viewer == "html":

@@ -77,9 +77,14 @@ def not_notebook_error(name):
     return(f"{Fore.RED}The file {name} is not a notebook file.")
 
 
-def duplicate_notebook_error(name):
+def duplicate_notebook_error(name, library_list):
     from src.praxxis.sqlite import sqlite_library
     print(f"{Fore.RED}The notebook {name} exists in two places. Specify which library to choose from.")
+
+    i = 0
+    for library in library_list:
+        i += 1
+        print(f"\t{i}.\t{library}")
 
 
 def duplicate_notebook_warning(name):
@@ -145,7 +150,7 @@ def telem_not_init_warning():
 
 def display_telem_unsent(backlog):
     """the warning display for unsent telemetry"""
-    print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"prax u\".")
+    print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"m u\".")
     print(f"{Fore.YELLOW}Attempting to send {backlog+1} output files now.")
     
 def display_ruleset_num_input_warning(num):
@@ -160,6 +165,11 @@ def invalid_ruleset_import(name):
         return(f"{Fore.RED}This does not appear to be the path to a valid .db or .toml file")
     else:
         return(f"{Fore.RED}{name} is not the path to a valid .db or .toml file")
+
+
+def repo_exists_warning():
+    print(f"{Fore.YELLOW}That repo already exists. Cloning and reimporting.")
+
 
 def invalid_rule_definition(name):
     print(f"{Fore.RED}The rule definition for rule {name} is invalid. This rule will not be imported.")

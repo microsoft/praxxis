@@ -139,3 +139,12 @@ def make_dummy_path(path):
     dummy_path = Dummy_Object()
     dummy_path.path = path
     return dummy_path
+
+
+def make_dummy_git_repo():
+    import os
+
+    dummy_git_repo = Dummy_Object()
+    dummy_git_repo.path = "https://github.com/githubtraining/hellogitworld.git"
+    dummy_git_repo.name = "githubtraining_hellogitworld"
+    return dummy_git_repo

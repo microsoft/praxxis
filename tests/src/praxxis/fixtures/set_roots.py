@@ -114,7 +114,13 @@ def default_scene_name():
 def current_scene_db(init_root, scene_root, history_db):
     from src.praxxis.util import roots
     return roots.get_current_scene_db(scene_root, history_db)
-    
+
+
+@pytest.fixture(scope="session")
+def git_root(library_root):
+    import os
+    return os.path.join(library_root, "test_git_libraries")
+
 
 @pytest.fixture(scope="session")
 def start():

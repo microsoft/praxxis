@@ -20,10 +20,13 @@ Using praxxis, any command can be run, documented, and reproduced using executab
 ## Installation 
 git clone this repo, and run 
 ``` 
-python setup.py install
-pip install -r requirements.txt
+pip install .
 ```
-praxxis requires python 3.6 and above.
+or 
+``` 
+pip install -e .
+```
+for development mode.
 
 ## Features
 #### Scenes

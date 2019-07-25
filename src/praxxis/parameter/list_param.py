@@ -18,17 +18,18 @@ def list_param(current_scene_db, start, end):
 def list_notebook_param(args, library_db, current_scene_db):
     """List all parameters in the current notebook"""
     from src.praxxis.sqlite import sqlite_parameter
+    from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
+    from src.praxxis.util import error
     from src.praxxis.display import display_param
 
     name = args.notebook
-    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
-    if tmp_name != None:
-        name = tmp_name
+
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
 
     sqlite_parameter.get_all_param(current_scene_db)
 
-    parameters = sqlite_parameter.list_notebook_param(library_db, name)
+    parameters = sqlite_parameter.list_notebook_param(library_db, notebook_data[1], notebook_data[2])
     
     display_param.display_view_param(parameters, 
                                       sqlite_parameter.get_all_param(current_scene_db))
@@ -36,16 +37,20 @@ def list_notebook_param(args, library_db, current_scene_db):
     return parameters
 
 
-def list_library_param(args, library_db, current_scene_db):
+def list_library_param(args, library_db, current_scene_db, start, end):
     """Lists all parameters in the """
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.display import display_param
+    from src.praxxis.library import library
     from src.praxxis.util import error
 
     if hasattr(args, "name"):
         name = args.name
     else:
         name = args
+
+    if name.isdigit():
+        name = library.get_library_by_ordinal(library_db, name, start, end)
             
     try:
         parameters = sqlite_parameter.get_library_parameters(library_db, name)
