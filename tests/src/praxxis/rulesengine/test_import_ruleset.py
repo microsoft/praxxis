@@ -46,6 +46,7 @@ def test_import_ruleset_does_not_exist(setup, rulesengine_root, rulesengine_db):
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.util import error
     from tests.src.praxxis.util import dummy_object
+    from src.praxxis.display import display_error
     import os
 
     badpath1 = os.path.join(os.path.dirname(__file__), "..",  "..", "..", "test_importables", "noneexistent_file.toml")
@@ -56,19 +57,21 @@ def test_import_ruleset_does_not_exist(setup, rulesengine_root, rulesengine_db):
 
     name1 = dummy_object.make_dummy_path(badpath1)
     name2 = dummy_object.make_dummy_path(badpath2)
+    
     try:
         import_ruleset.import_ruleset(name1, rulesengine_root, rulesengine_db)
         # if success:
         assert 0
-    except error.NotValidRuleset:
-        assert 1
-
+    except error.NotValidRuleset as e:
+        assert str(e) == display_error.invalid_ruleset_import(name1.path)
+    
     try:
         import_ruleset.import_ruleset(name2, rulesengine_root, rulesengine_db)
         # if success:
         assert 0
-    except error.NotValidRuleset:
-        assert 1
+    except error.NotValidRuleset as e:
+        assert str(e) == display_error.invalid_ruleset_import(name2.path)
+    
         
 def test_import_database(setup, rulesengine_db, create_one_ruleset):
     from src.praxxis.rulesengine import import_ruleset

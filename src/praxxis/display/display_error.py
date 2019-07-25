@@ -166,7 +166,6 @@ def invalid_ruleset_import(name):
     else:
         return(f"{Fore.RED}{name} is not the path to a valid .db or .toml file")
 
-
 def repo_exists_warning():
     print(f"{Fore.YELLOW}That repo already exists. Cloning and reimporting.")
 

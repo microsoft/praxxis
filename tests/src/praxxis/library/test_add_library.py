@@ -39,11 +39,12 @@ def test_add_bad_library(setup, library_db, git_root, start, stop):
     from src.praxxis.library import add_library
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.util import error
+    from src.praxxis.display import display_error
 
     url = dummy_object.make_dummy_object(name="nonexistent_library")
     try:
         add_library.add_library(url, library_db, git_root)
-    except error.LibraryNotFoundError:
-        assert 1
+    except error.LibraryNotFoundError as e:
+        assert str(e) == display_error.library_not_found_error(url.library_name)
     else:
         assert 0

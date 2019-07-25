@@ -503,6 +503,7 @@ def test_start(setup, add_test_library, scene_root, library_root, library_db, cu
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.notebook import run_notebook
     from src.praxxis.util import error
+    from src.praxxis.display import display_error
     import sys
     
     assert app.start(["", "2"], True).__class__ == run_notebook.run_notebook.__class__ 
@@ -513,12 +514,12 @@ def test_start(setup, add_test_library, scene_root, library_root, library_db, cu
     try:
         app.start(["", "99"], test=True)
     except error.NotebookNotFoundError:
-        assert 1
+        assert str(e) == display_error.notebook_not_found_error("99")
 
     try:
         sys.argv = ["", "r", "99"] 
-    except error.NotebookNotFoundError:
-        assert 1
+    except error.NotebookNotFoundError as e:
+        assert str(e) == display_error.notebook_not_found_error("99")
 
     sys.argv = [""]
     assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 

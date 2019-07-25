@@ -34,21 +34,24 @@ def test_delete_rule_nonexistent(setup, monkeypatch, create_one_ruleset_one_rule
     from tests.src.praxxis.rulesengine import test_add_rule
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.util import error
+    from src.praxxis.display import display_error
 
     name1 = dummy_object.make_dummy_ruleset("generated_ruleset_with_rule")
 
     with monkeypatch.context() as m:
-        m.setattr("builtins.input", lambda _: "2")
+        mock_in = "2"
+        m.setattr("builtins.input", lambda _: mock_in)
         try:
             delete_rule_from_ruleset.delete_rule_from_ruleset(name1, rulesengine_db)
             assert 0 # if no error thrown
-        except error.RuleNotFoundError:
-            assert 1
+        except error.RuleNotFoundError as e:
+            assert str(e) == display_error.rule_not_found_error(mock_in)
 
     with monkeypatch.context() as m:
-        m.setattr("builtins.input", lambda _: "bad rulename")
+        mock_in = "bad rulename"
+        m.setattr("builtins.input", lambda _: mock_in)
         try:
             delete_rule_from_ruleset.delete_rule_from_ruleset(name1, rulesengine_db)
             assert 0 # if no error thrown
-        except error.RuleNotFoundError:
-            assert 1
+        except error.RuleNotFoundError as e:
+            assert str(e) == display_error.rule_not_found_error(mock_in)
