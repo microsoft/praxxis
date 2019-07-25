@@ -15,7 +15,7 @@ def test_import_ruleset_toml(setup, rulesengine_root, rulesengine_db):
     
     remove_ruleset.remove_ruleset(message, rulesengine_db)    
 
-def test_import_ruleset__toml_duplicate_name(setup, rulesengine_root, rulesengine_db):
+def test_import_ruleset_toml_duplicate_name(setup, rulesengine_root, rulesengine_db):
     from src.praxxis.rulesengine import import_ruleset
     from src.praxxis.sqlite import sqlite_rulesengine
     from tests.src.praxxis.util import dummy_object
@@ -23,6 +23,7 @@ def test_import_ruleset__toml_duplicate_name(setup, rulesengine_root, rulesengin
 
     path_to_toml = os.path.join(os.path.dirname(__file__), "..",  "..", "..", "test_importables", "test_toml_ruleset.toml")
 
+    sqlite_rulesengine.clear_ruleset_list(rulesengine_db)
     assert sqlite_rulesengine.get_all_rulesets(rulesengine_db, 1, 100) == []
 
     name1 = dummy_object.make_dummy_path(path_to_toml)
@@ -50,6 +51,7 @@ def test_import_ruleset_does_not_exist(setup, rulesengine_root, rulesengine_db):
     badpath1 = os.path.join(os.path.dirname(__file__), "..",  "..", "..", "test_importables", "noneexistent_file.toml")
     badpath2 = os.path.join(os.path.dirname(__file__), "..",  "..", "..", "test_notebooks", "test_notebook.ipynb")
 
+    sqlite_rulesengine.clear_ruleset_list(rulesengine_db)
     assert sqlite_rulesengine.get_all_rulesets(rulesengine_db, 1, 100) == []
 
     name1 = dummy_object.make_dummy_path(badpath1)
@@ -72,6 +74,7 @@ def test_import_database(setup, rulesengine_db, create_one_ruleset):
     from src.praxxis.rulesengine import import_ruleset
     from src.praxxis.sqlite import sqlite_rulesengine
     from tests.src.praxxis.util import dummy_object
+    from src.praxxis.rulesengine import remove_ruleset
 
     name = "generated_one_ruleset"
     ruleset_path = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name)
@@ -89,3 +92,6 @@ def test_import_database(setup, rulesengine_db, create_one_ruleset):
     assert len(rulesets) == 1
     assert len(rulesets[0]) == 2
     assert rulesets[0][0] == name1.name
+
+    
+    remove_ruleset.remove_ruleset(message, rulesengine_db)    
