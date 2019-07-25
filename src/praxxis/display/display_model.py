@@ -11,4 +11,5 @@ def display_init_model_db(db_root):
     print(f"Created model database at {db_root}")
 
 def display_imported_model(name):
+    """the display function for importing a model"""
     print(f"Model {name} imported successfully")

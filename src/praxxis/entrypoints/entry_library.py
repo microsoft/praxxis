@@ -11,9 +11,7 @@ from src.praxxis.util.roots import _query_end
 
 def init_library(library_root = _library_root, 
                  library_db = _library_db):
-    """
-    handles the initialization of the library dbs and directories
-    """
+    """ handles the initialization of the library dbs and directories """
     import os
     from src.praxxis.sqlite import sqlite_init
     from src.praxxis.display import display_library
@@ -29,29 +27,30 @@ def add_library(arg,
                 git_root = _git_root):
     """calls the function to add a library"""
     from src.praxxis.library import add_library
-    try:
-        add_library.add_library(arg, library_db, git_root)
-    except Exception as e:
-        raise e
+
+    
+    add_library.add_library(arg, library_db, git_root)
+
 
 
 def remove_library(arg, 
                    library_db = _library_db,
                    query_start = _query_start,
-                   query_end = _query_end,):
-    """
-    handles removing a library
-    """
+                   query_end = _query_end,): 
+    """ handles removing a library """
     from src.praxxis.library import remove_library
 
     remove_library.remove_library(arg, library_db, query_start, query_end)
 
 
 def list_library(arg, 
-                 library_db = _library_db):
+                 library_db = _library_db,
+                start = _query_start,
+                stop = _query_end):
     """calls the function to list loaded libraries"""
     from src.praxxis.library import list_library
-    list_library.list_library(library_db)
+
+    list_library.list_library(library_db, start, stop)
 
 
 def sync_library(arg, 
@@ -59,4 +58,5 @@ def sync_library(arg,
                  library_db = _library_db):
     """calls the function to load libraries"""
     from src.praxxis.library import sync_library
+
     sync_library.sync_libraries(library_root, library_db)

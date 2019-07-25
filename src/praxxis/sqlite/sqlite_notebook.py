@@ -129,7 +129,7 @@ def search_notebooks(library_db, search_term, start, end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_param = f'SELECT * FROM "Notebooks" WHERE Notebook LIKE "%{search_term}%" ORDER BY Notebook LIMIT {start}, {end}'
+    list_param = f'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" WHERE Notebook LIKE "%{search_term}%" ORDER BY Notebook LIMIT {start}, {end}'
     cur.execute(list_param)
     conn.commit()
     rows = cur.fetchall()

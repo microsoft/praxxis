@@ -5,9 +5,7 @@ from src.praxxis.util.roots import _model_root
 from src.praxxis.util.roots import _model_db
 
 def init_model(model_root, model_db):
-    """
-    initializes the model db, and directories
-    """
+    """initializes the model db and directories"""
     import os
     
     from src.praxxis.display import display_model
@@ -21,16 +19,12 @@ def init_model(model_root, model_db):
 
 def import_model(arg, 
                  model_db = _model_db):
-    """
-    handles importing a new model.
-    """
+    """ handles importing a new model. """
     from src.praxxis.model import import_model
     import_model.import_model(arg, model_db)
     return
 
 def update_model(arg):
-    """
-    handles updating a model. 
-    """
+    """ handles updating a model. """
     print("um:")
     return

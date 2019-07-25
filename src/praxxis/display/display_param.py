@@ -25,7 +25,9 @@ def display_set_param(name, value):
 
 
 def display_view_param(params, set_params):
+    """ the display function for viewing parameters"""
     from colorama import init, Fore, Style
+    
     init()
     if params == []:
         print("No parameters")

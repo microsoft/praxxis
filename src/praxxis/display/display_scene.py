@@ -54,6 +54,7 @@ def display_list_scene(ended, active, current):
         print(f"\tNone")
     print(f"\nCurrent scene: {current}")
 
+
 def display_resume_scene(name):
     """the display function for resuming the scene""" 
     print(f"{name} resumed")

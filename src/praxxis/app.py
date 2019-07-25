@@ -344,7 +344,7 @@ def start(args=None, test = False):
     # prevents praxxis from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         from src.praxxis.display import display_error
-        display_error.version_too_low_error(str(sys.version_info.major), str(sys.version_info.minor))
+        display_error.version_error()
         return 1
 
     if len(args) > 1:
