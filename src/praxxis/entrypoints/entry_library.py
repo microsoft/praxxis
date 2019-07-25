@@ -59,4 +59,4 @@ def sync_library(arg,
     """calls the function to load libraries"""
     from src.praxxis.library import sync_library
 
-    sync_library.sync_libraries(library_root, library_db)
+    sync_library.sync_library(library_root, library_db)

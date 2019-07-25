@@ -13,18 +13,17 @@ def sync_library(library_root, library_db, custom_path = False, remote = None, r
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.util import get_raw_git_url
     import os
+    import re
 
     for root, dirs, files in os.walk(library_root):
         current_library = ""
         for name in files:
             if custom_path:
-                relative_path = library_root
+                relative_path = [library_root.split(os.path.sep)[-1]]
             else:
                 relative_path = root.split(os.path.sep)[len(library_root.split(os.path.sep)):]
             library_name ="_".join(relative_path)
 
-            print(relative_path)
-            
             if relative_path == []:
                 continue
 
@@ -42,11 +41,22 @@ def sync_library(library_root, library_db, custom_path = False, remote = None, r
 
             counter = 0
             try:
-                library_metadata = sqlite_library.get_library_metadata(library_db, library_name)
-                if not len(library_metadata) == 0:
-                    if(root != library_metadata[0][0]):
+                library_list = sqlite_library.get_library_by_name(library_db, library_name)
+                if not len(library_list) == 0:
+                    library_metadata = sqlite_library.get_library_by_root(library_db, root)
+                    if library_metadata == []:
                         while sqlite_library.check_library_exists(library_db, library_name):
-                            library_name = f"{library_name}-{counter + 1}"
+                            digit = library_name.split('-')[-1]
+                            if (digit).isdigit():
+                                counter = int(digit)
+                                library_name = library_name.split('-')[:-1][0]
+                            counter += 1
+                            library_name = f"{library_name}-{counter}"
+
+                    if library_metadata[0][0] == root:
+                        library_name = library_metadata[0][2]
+                    else:
+                        raise error.LibraryNotFoundError
             except error.LibraryNotFoundError:
                 pass
 
