@@ -12,6 +12,8 @@ def test_help_formatter():
     scene = dummy_object.make_dummy_action("command", "", "new scene")
     parameter = dummy_object.make_dummy_action("command", "", "set parameter variable for current scene")
     library = dummy_object.make_dummy_action("command", "", "install library of notebooks to praxxis")
+    rulesengine = dummy_object.make_dummy_action("command", "", "create a ruleset for the rules engine")
+    model = dummy_object.make_dummy_action("command", "", "import a model file and converter from outside praxxis")
 
     formatter = helpFormatter(argparse.RawDescriptionHelpFormatter)
     data = formatter._format_action(notebook)
@@ -19,9 +21,13 @@ def test_help_formatter():
     data = formatter._format_action(scene)
     assert data.split('\n')[0] == "Scene: "
     data = formatter._format_action(parameter)
-    assert data.split('\n')[0] == "parameter: "
+    assert data.split('\n')[0] == "Parameter: "
     data = formatter._format_action(library)
     assert data.split('\n')[0] == "Library: "
+    data = formatter._format_action(rulesengine)
+    assert data.split('\n')[0] == "Rules Engine: "
+    data = formatter._format_action(model)
+    assert data.split('\n')[0] == "Model: "
 
 def test_0_args(library_db):
     """

@@ -107,7 +107,7 @@ sync_library_path_help="load library from a specific directory into praxxis"
 ## misc help strings
 history_help="history of what you've done in the current scene"
 update_settings_help="update telemetry and security settings"
-#prediction help strings
+# rules engine help strings
 new_ruleset_help="create a ruleset for the rules engine"
 new_ruleset_name_help="the name of the new ruleset to create"
 new_ruleset_path_help="(optional) path to location to save ruleset at"
@@ -125,6 +125,7 @@ activate_ruleset_help="activate ruleset(s) to use when making predictions"
 activate_ruleset_name_help="name of the ruleset to activate"
 deactivate_ruleset_name_help="name of the ruleset to deactivate"
 deactivate_ruleset_help="deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
+# model help strings
 import_model_help="import a model file and converter from outside praxxis"
 import_model_modelpath_help="the path to the model file"
 import_model_converterpath_help="the path to the converter"
@@ -160,7 +161,7 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
         elif action.help == new_scene_help:
             parts = f'Scene: \n{parts}'
         elif action.help == set_param_help:
-            parts = f'parameter: \n{parts}'
+            parts = f'Parameter: \n{parts}'
         elif action.help == add_library_help:
             parts = f'Library: \n{parts}'
         elif action.help == new_ruleset_help:
@@ -388,7 +389,7 @@ def start(args=None, test = False):
             error.EditorNotFoundError,
             error.ADSNotFoundError,
             error.NotValidRuleset,
-            error.EmptyRulesetError) as e:
+            error.EmptyHistoryError) as e:
         print(e)
         return 1
     

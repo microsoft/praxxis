@@ -16,8 +16,8 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
     from src.praxxis.display import display_rulesengine
     data = sqlite_scene.get_recent_history(current_scene_db, 5)
     if data == []:
-        from src.praxxis.util.error import EmptyRulesetError
-        raise EmptyRulesetError()
+        from src.praxxis.util.error import EmptyHistoryError
+        raise EmptyHistoryError()
 
     rules_based = rules_checker.rules_check(prediction_db, data[-1][0], data[-1][1], start, end)
     if rules_based != []:
