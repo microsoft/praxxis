@@ -15,4 +15,4 @@ def test_sync_library(setup, add_test_library, library_root, library_db, librari
 
     sync_library.sync_libraries(library_root, library_db)
         
-    assert set(libraries_list) == set(*list_library.list_library(library_db))
+    assert set(libraries_list) == set(item[0] for item in list_library.list_library(library_db))
