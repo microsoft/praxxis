@@ -2,7 +2,7 @@
 This file opens a notebook in Azure Data Studio.
 """
 
-def open_notebook(args, current_scene_db, library_db, ads_location, editor, test = False):
+def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim", test = False):
     """Opens a notebook, by getting the filename and then opening from the ads binary location"""
     import subprocess
     from src.praxxis.sqlite import sqlite_notebook

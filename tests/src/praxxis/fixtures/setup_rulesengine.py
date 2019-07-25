@@ -1,10 +1,6 @@
 import pytest
 
 @pytest.fixture(scope="function")
-def mock_input_str(monkeypatch):
-    monkeypatch.setattr("builtins.input", lambda _: "testing")
-
-@pytest.fixture(scope="function")
 def create_one_ruleset(rulesengine_root, rulesengine_db):
     from src.praxxis.rulesengine import new_ruleset
     from src.praxxis.rulesengine import remove_ruleset

@@ -17,3 +17,15 @@ def test_end_scene_failure(setup, scene_root, history_db, current_scene_db):
         end_scene.end_scene(name1, scene_root, history_db, current_scene_db)
     except error.SceneNotFoundError:
         assert 1
+
+def test_end_scene_ended(setup, scene_root, history_db, current_scene_db, create_ended_scene):
+    from src.praxxis.scene import end_scene
+    from tests.src.praxxis.util import dummy_object
+    from src.praxxis.util import error
+
+    name1 = dummy_object.make_dummy_scene("generated_ended_scene")
+
+    try:
+        end_scene.end_scene(name1, scene_root, history_db, current_scene_db)
+    except error.EndEndedSceneError:
+        assert 1
