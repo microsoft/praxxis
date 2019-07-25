@@ -15,6 +15,20 @@ def clear_loaded_libararies(library_db):
     conn.close()
 
 
+def get_library_metadata(library_db, library):
+    """returns a list of loaded libraries"""
+    from src.praxxis.sqlite import connection
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Library = "{library}"'
+    cur.execute(get_library)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
 def load_library(library_db, path, readme, library, remote=None):
     """load a library into the library db"""
     from src.praxxis.sqlite import connection

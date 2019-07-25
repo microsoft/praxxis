@@ -21,7 +21,7 @@ def add_library(args, library_db, git_root):
         if os.path.exists(path):
             if os.path.isdir(path):
                 #check if the path exists and is a directory
-                sync_library.sync_library(os.path.abspath(path), library_db)
+                sync_library.sync_library(os.path.abspath(path), library_db, custom_path=True)
             else:
                 raise error.NotDirectoryError(path)
         else: 
