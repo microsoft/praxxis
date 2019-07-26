@@ -9,7 +9,7 @@ def display_list_notebook(notebooks):
     library = ""
     for notebook in notebooks:
         if not library == notebook[2]:
-            print(f"    {notebook[2]}:\n")
+            print(f"    {notebook[2]}:")
             library = notebook[2]
         i+=1
         print(f"\t{i}.\t{notebook[0]}")

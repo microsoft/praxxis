@@ -58,4 +58,4 @@ def add_library(args, library_db, git_root):
             sys.exit(0)
 
         remote_https = giturlparse.parse(path).url2https
-        sync_library.sync_library(os.path.abspath(repo_root), library_db, library_name=f"{repo_author}_{repo_name}", remote=path, remote_origin=remote_https)
+        sync_library.sync_library(os.path.abspath(repo_root), library_db, custom_library_name=f"{repo_author}_{repo_name}", custom_path=True, remote=path, remote_origin=remote_https)

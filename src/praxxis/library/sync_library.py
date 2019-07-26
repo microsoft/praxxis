@@ -4,7 +4,7 @@
 
 import os
 
-def sync_library(library_root, library_db, custom_path = False, library_name = None, remote = None, remote_origin = None):
+def sync_library(library_root, library_db, custom_path = False, custom_library_name = None, remote = None, remote_origin = None):
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.util import error
     from src.praxxis.display import display_error
@@ -14,24 +14,26 @@ def sync_library(library_root, library_db, custom_path = False, library_name = N
     from src.praxxis.util import get_raw_git_url
     import os
     import re
-
+    
+    current_library = None
     for root, dirs, files in os.walk(library_root):
-        current_library = ""
         for name in files:
+
             if custom_path:
                 relative_path = [library_root.split(os.path.sep)[-1]]
             else:
                 relative_path = root.split(os.path.sep)[len(library_root.split(os.path.sep)):]
-            
-            if library_name == None:
-                library_name = "_".join(relative_path)
 
-            if relative_path == []:
+            if relative_path == [] or ".git" in relative_path:
                 continue
 
+            if custom_library_name == None:
+                library_name = "_".join(relative_path)
+            else:
+                library_name = custom_library_name
+
+
             if not library_name == current_library:
-                print(library_name)
-                print(current_library)
                 display_library.display_loaded_library(root, True)
                 display_library.loaded_notebook_message()
                 current_library = library_name
@@ -76,3 +78,7 @@ def sync_library(library_root, library_db, custom_path = False, library_name = N
                 library_url = ("/").join(relative_path)
                 raw_url = get_raw_git_url.get_raw_url_for_file(remote_origin, name, f"/{library_url}/")
                 sqlite_library.load_notebook(library_db, file_root, file_name, library_name, raw_url)
+
+
+def load_notebook():
+    print('jdokas')
