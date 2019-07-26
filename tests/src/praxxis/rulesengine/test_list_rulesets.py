@@ -3,6 +3,8 @@ import pytest
 def test_list_rulesets(setup, create_one_ruleset, create_one_ruleset_one_rule, create_deactivated_ruleset, rulesengine_db, start, stop):
     from src.praxxis.rulesengine import list_rulesets
     from tests.src.praxxis.util import dummy_object
+    from src.praxxis.sqlite import sqlite_rulesengine
+
 
     name1 = dummy_object.make_dummy_ruleset("generated_one_ruleset")
     name2 = dummy_object.make_dummy_ruleset("generated_ruleset_with_rule")

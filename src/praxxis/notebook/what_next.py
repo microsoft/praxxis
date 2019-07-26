@@ -23,13 +23,14 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
     if rules_based != []:
         display_rulesengine.display_predictions(rules_based)
         write_to_list(rules_based, current_scene_db, library_db)
+        return rules_based
     else:
         import sys
         if sys.version_info.major == 3 and sys.version_info.minor > 6:
             from src.praxxis.display import display_error
             display_error.tensorflow_version_error(str(sys.version_info.major), str(sys.version_info.minor))
             sys.exit(1)
-    
+        return 
         """
         from src.praxxis.model import score
         suggestions = score.predict(data)

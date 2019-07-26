@@ -27,7 +27,7 @@ def create_one_ruleset_one_rule(rulesengine_root, rulesengine_db):
     new_ruleset.new_ruleset(name1, rulesengine_root, rulesengine_db)
     # ADD RULE TO SQLITE
     ruleset_path = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name1.name)
-    sqlite_rulesengine.add_rule(ruleset_path, "testing", ["test_notebook, f3"], ["out1","out2"],[('testing', 1, 'pred1', 'lib', None),('testing', 2, 'pred2', 'lib', None)])
+    sqlite_rulesengine.add_rule(ruleset_path, "testing", ["test_notebook", "f3"], [""],[('testing', 1, 'pred1', 'lib', None),('testing', 2, 'pred2', 'lib', None)])
     yield
     try:
         remove_ruleset.remove_ruleset(name1, rulesengine_db)
