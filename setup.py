@@ -17,7 +17,8 @@ setuptools.setup(
         "nbopen",
         "gitpython",
         "giturlparse",
-        "colorama"
+        "colorama",
+        "toml"
      ],
      version='0.1dev',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
