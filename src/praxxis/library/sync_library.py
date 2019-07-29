@@ -16,11 +16,15 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
     import re
     
     current_library = None
+    base_root = ""
+    first_traversal = True
     for root, dirs, files in os.walk(library_root):
+        if first_traversal:
+            base_root = root
+            first_traversal = False
         for name in files:
-
             if custom_path:
-                relative_path = [library_root.split(os.path.sep)[-1]]
+                relative_path = root.split(os.path.sep)[len(base_root.split(os.path.sep))-1:]
             else:
                 relative_path = root.split(os.path.sep)[len(library_root.split(os.path.sep)):]
 
@@ -31,7 +35,6 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
                 library_name = "_".join(relative_path)
             else:
                 library_name = custom_library_name
-
 
             if not library_name == current_library:
                 display_library.display_loaded_library(root, True)
@@ -62,23 +65,29 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
             except error.LibraryNotFoundError:
                 pass
 
-            file_name, file_extension = os.path.splitext(name)
-            if(file_extension == ".ipynb"):
-                file_root = os.path.join(root, name)
-                        
-                sqlite_library.sync_library(library_db, root, readme_data, library_name, remote)
+        
+            load_notebook(name, root, library_db, library_name, relative_path, remote_origin, remote, readme_data)
 
-                notebook_data = notebook.Notebook([file_root, file_name, library_name])
-                #create a notebook object out of the file data
-                for parameter in notebook_data._parameters:
-                    #load the parameters out of the notebook object and into the db
-                    sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1], library_name)
-                display_library.display_loaded_notebook(name)
+def load_notebook(notebook_name, root, library_db, library_name, relative_path, remote_origin=None, remote=None, readme_data = None):
+    from src.praxxis.sqlite import sqlite_library
+    from src.praxxis.notebook import notebook
+    from src.praxxis.sqlite import sqlite_parameter
+    from src.praxxis.display import display_library
+    from src.praxxis.util import get_raw_git_url
 
-                library_url = ("/").join(relative_path)
-                raw_url = get_raw_git_url.get_raw_url_for_file(remote_origin, name, f"/{library_url}/")
-                sqlite_library.load_notebook(library_db, file_root, file_name, library_name, raw_url)
+    file_name, file_extension = os.path.splitext(notebook_name)
+    if(file_extension == ".ipynb"):
+        file_root = os.path.join(root, notebook_name)
+        
+        sqlite_library.sync_library(library_db, root, readme_data, library_name, remote)
 
+        notebook_data = notebook.Notebook([file_root, file_name, library_name])
+        #create a notebook object out of the file data
+        for parameter in notebook_data._parameters:
+            #load the parameters out of the notebook object and into the db
+            sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1], library_name)
+        display_library.display_loaded_notebook(notebook_name)
 
-def load_notebook():
-    print('jdokas')
+        library_url = ("/").join(relative_path)
+        raw_url = get_raw_git_url.get_raw_url_for_file(remote_origin, notebook_name, f"/{library_url}/")
+        sqlite_library.load_notebook(library_db, file_root, file_name, library_name, raw_url)
