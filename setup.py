@@ -21,7 +21,7 @@ setuptools.setup(
      ],
      version='0.1dev',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
-     author_email="example@microsoft.com",
+     author_email="skylerjaneclark@gmail.com, abertsch72@gmail.com, swarathmika@hotmail.com",
      description="a notebook task interface built on big data and machine learning.",
      long_description=long_description,
      license = "MIT",
