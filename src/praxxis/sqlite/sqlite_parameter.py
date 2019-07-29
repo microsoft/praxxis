@@ -120,7 +120,7 @@ def get_param_by_ord(current_scene_db, ordinal):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    list_param = f'SELECT * FROM "Parameters" ORDER BY Name DESC LIMIT {ordinal-1}, {ordinal}'
+    list_param = f'SELECT * FROM "Parameters" ORDER BY Parameter DESC LIMIT {ordinal-1}, {ordinal}'
     cur.execute(list_param)
     conn.commit()
     rows = cur.fetchall()
