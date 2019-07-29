@@ -11,7 +11,13 @@ def rmtree(root):
     try:
         shutil.rmtree(root, ignore_errors=False, onerror=onerror)
     except Exception as e:
-        raise e
+        if "WinError" in str(e):
+            import pytest
+            import colorama 
+            from colorama import Fore
+            pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
+        else:
+            raise e
 
 
 def onerror(func, path, exc_info):
@@ -24,7 +30,23 @@ def onerror(func, path, exc_info):
 
     if not os.access(path, os.W_OK):
         # Is the error an access error ?
-        os.chmod(path, stat.S_IWUSR)
+        try:
+            os.chmod(path, stat.S_IWUSR)
+        except PermissionError:
+            pass
         func(path)
     else:
-        raise Exception
+        try:
+            import uuid 
+            newname = str(uuid.uuid4())
+            os.rename(path, newname)
+            func(newname)
+        except Exception as e:
+            if "WinError" in str(e):
+                import pytest
+                import colorama 
+                from colorama import Fore
+                pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
+            else:
+                raise e
+

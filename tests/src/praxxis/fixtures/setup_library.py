@@ -14,10 +14,11 @@ def add_test_library(library_root, library_db, start, stop):
     from src.praxxis.library import remove_library
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.util import rmtree
+    from src.praxxis.util import copytree
 
     library_location = os.path.join(library_root, 'test_notebooks')
     
-    shutil.copytree(os.path.join('tests', 'test_notebooks'), os.path.join(library_root,  'test_notebooks'))
+    copytree.copytree(os.path.join('tests', 'test_notebooks'), os.path.join(library_root,  'test_notebooks'))
     assert os.path.exists(library_location)
 
     sync_library.sync_libraries(library_root, library_db)   
