@@ -35,8 +35,14 @@ def send(user_info_db, local_copy, scene_identifier):
         r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
         r.raise_for_status()
 
-if __name__ == "__main__":
-    user_info_db = sys.argv[1]
+
+def telem_entrance(user_info_db=None, new_local_copy=None, scene_identifier=None):
+    if user_info_db == None:
+        user_info_db = sys.argv[1]
+    if new_local_copy == None:
+        new_local_copy = sys.argv[2]
+    if scene_identifier == None:
+        scene_identifier = sys.argv[3]
 
     backlog_size = sqlite_telemetry.backlog_size(user_info_db)
 
@@ -48,13 +54,12 @@ if __name__ == "__main__":
             try:            
                 send(user_info_db, local_copy, scene_identifier)
                 sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
-            except Exception as e:
+            except Exception:
                 pass 
-    local_copy = sys.argv[2]
-    scene_identifier = sys.argv[3]
     try:            
-        send(user_info_db, local_copy, scene_identifier)
-        sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
+        send(user_info_db, new_local_copy, scene_identifier)
     except Exception as e:
-        sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e))
-            
+        sqlite_telemetry.add_to_backlog(user_info_db, new_local_copy, scene_identifier, str(e))
+    
+if __name__ == "__main__":
+    telem_entrance()

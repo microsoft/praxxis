@@ -7,7 +7,7 @@ def test_init_scene(setup, scene_root, history_db, default_scene_name):
 
     assert os.path.exists(scene_root)
     assert os.path.exists(history_db)
-    rmtree.rmtree(scene_root)
+    rmtree.rmtree(scene_root, test=True)
     os.remove(history_db)
     assert not os.path.exists(scene_root)
     

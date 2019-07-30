@@ -8,7 +8,7 @@ def test_init_library(setup, library_root, library_db):
     
     assert os.path.exists(library_root)
     assert os.path.exists(library_db)
-    rmtree.rmtree(library_root)
+    rmtree.rmtree(library_root, test=True)
     assert not os.path.exists(library_root)
     
     entry_library.init_library(library_root, library_db)

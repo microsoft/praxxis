@@ -12,6 +12,8 @@ def test_help_formatter():
     scene = dummy_object.make_dummy_action("command", "", "new scene")
     parameter = dummy_object.make_dummy_action("command", "", "set parameter variable for current scene")
     library = dummy_object.make_dummy_action("command", "", "install library of notebooks to praxxis")
+    rulesengine = dummy_object.make_dummy_action("command", "", "create a ruleset for the rules engine")
+    model = dummy_object.make_dummy_action("command", "", "import a model file and converter from outside praxxis")
 
     formatter = helpFormatter(argparse.RawDescriptionHelpFormatter)
     data = formatter._format_action(notebook)
@@ -19,9 +21,13 @@ def test_help_formatter():
     data = formatter._format_action(scene)
     assert data.split('\n')[0] == "Scene: "
     data = formatter._format_action(parameter)
-    assert data.split('\n')[0] == "parameter: "
+    assert data.split('\n')[0] == "Parameter: "
     data = formatter._format_action(library)
     assert data.split('\n')[0] == "Library: "
+    data = formatter._format_action(rulesengine)
+    assert data.split('\n')[0] == "Rules Engine: "
+    data = formatter._format_action(model)
+    assert data.split('\n')[0] == "Model: "
 
 def test_0_args(library_db):
     """
@@ -497,6 +503,7 @@ def test_start(setup, add_test_library, scene_root, library_root, library_db, cu
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.notebook import run_notebook
     from src.praxxis.util import error
+    from src.praxxis.display import display_error
     import sys
     
     assert app.start(["", "2"], True).__class__ == run_notebook.run_notebook.__class__ 
@@ -507,12 +514,12 @@ def test_start(setup, add_test_library, scene_root, library_root, library_db, cu
     try:
         app.start(["", "99"], test=True)
     except error.NotebookNotFoundError:
-        assert 1
+        assert str(e) == display_error.notebook_not_found_error("99")
 
     try:
         sys.argv = ["", "r", "99"] 
-    except error.NotebookNotFoundError:
-        assert 1
+    except error.NotebookNotFoundError as e:
+        assert str(e) == display_error.notebook_not_found_error("99")
 
     sys.argv = [""]
     assert app.start(test=True).__class__ == run_notebook.run_notebook.__class__ 

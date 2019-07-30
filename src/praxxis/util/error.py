@@ -160,7 +160,7 @@ class NotValidRuleset(Exception):
         from src.praxxis.display import display_error
         return str(display_error.invalid_ruleset_import(self.name))
 
-class EmptyRulesetError(Exception):
+class EmptyHistoryError(Exception):
     def __init__(self):
         pass
     

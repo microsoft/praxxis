@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
      name='praxxis', 
-     python_requires = '>=3.6.*',
+     python_requires =  '>=3.6.*',
      install_requires=[
         "urllib3",
         "requests",
@@ -16,6 +16,7 @@ setuptools.setup(
         "setuptools",
         "nbopen",
         "gitpython",
+        "toml",
         "giturlparse",
         "colorama",
         "toml"

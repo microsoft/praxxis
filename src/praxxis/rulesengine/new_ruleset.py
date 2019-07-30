@@ -33,5 +33,5 @@ def new_ruleset(args, rulesengine_root, rulesengine_db):
     sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, name, path)
 
     display_rulesengine.display_new_ruleset(name)
-    return 
+    return name
 

@@ -1,7 +1,7 @@
 """
 This file exists because windows needs this for whatever reason
 """
-def rmtree(root):
+def rmtree(root, test = False):
     """
     just calls rmtree with the onerror so windows doesn't have a terrible time
     """
@@ -11,7 +11,13 @@ def rmtree(root):
     try:
         shutil.rmtree(root, ignore_errors=False, onerror=onerror)
     except Exception as e:
-        raise e
+        if test and "WinError" in str(e):
+            import pytest
+            from src.praxxis.display import display_error
+            message = display_error.pytest_windows_permissions_error(str(e))
+            pytest.exit(message)
+        else:
+            raise e
 
 
 def onerror(func, path, exc_info):
@@ -24,7 +30,16 @@ def onerror(func, path, exc_info):
 
     if not os.access(path, os.W_OK):
         # Is the error an access error ?
-        os.chmod(path, stat.S_IWUSR)
+        try:
+            os.chmod(path, stat.S_IWUSR)
+        except PermissionError:
+            pass
         func(path)
     else:
-        raise Exception
+        try:
+            import uuid 
+            newname = str(uuid.uuid4())
+            os.rename(path, newname)
+            func(newname)
+        except Exception as e:
+            raise e
