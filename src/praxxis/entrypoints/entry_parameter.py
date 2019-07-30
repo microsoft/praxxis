@@ -55,17 +55,17 @@ def view_library_param(arg,
                      scene_root = _scene_root,
                      history_db = _history_db,
                      library_db = _library_db,
+                     start = _query_start,
+                     end = _query_end,
                      current_scene_db = None):
-    """
-    handles viewing library parameters from the CLI
-    """
+    """ handles viewing library parameters from the CLI """
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_param.list_library_param(arg, library_db, current_scene_db)
+    list_param.list_library_param(arg, library_db, current_scene_db, start, end)
 
 
 def view_notebook_param(arg, 
@@ -73,9 +73,7 @@ def view_notebook_param(arg,
                       library_db = _library_db,
                       history_db = _history_db,
                       current_scene_db = None):
-    """
-    handles viewing notebook parameters from the CLI
-    """
+    """ handles viewing notebook parameters from the CLI """
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
     
@@ -90,12 +88,9 @@ def pull_notebook_param(arg,
                       scene_root = _scene_root,
                       history_db = _history_db,
                       current_scene_db = None):
-    """
-    handles pulling parameters out of a notebook through the CLI
-    """
+    """ handles pulling parameters out of a notebook through the CLI """
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
-
 
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
@@ -108,12 +103,9 @@ def pull_library_param(arg,
                       scene_root = _scene_root,
                       history_db = _history_db,
                       current_scene_db = None):
-    """
-    handles pulling parameters out of a library through the CLI.
-    """
+    """ handles pulling parameters out of a library through the CLI. """
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
-
 
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)

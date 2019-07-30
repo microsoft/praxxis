@@ -6,4 +6,5 @@ ipykernel
 setuptools
 nbopen
 gitpython
+giturlparse
 colorama

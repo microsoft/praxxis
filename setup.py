@@ -6,17 +6,31 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
      name='praxxis', 
-     python_requires = '>=3.7.*, >=3.6.*', 
-     version='0.0.0',
+     python_requires = '>=3.6.*',
+     install_requires=[
+        "urllib3",
+        "requests",
+        "papermill",
+        "ijson",
+        "ipykernel", 
+        "setuptools",
+        "nbopen",
+        "gitpython",
+        "giturlparse",
+        "colorama",
+        "toml"
+     ],
+     version='0.1dev',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
-     author_email="example@microsoft.com",
-     description="praxxis",
+     author_email="skylerjaneclark@gmail.com, abertsch72@gmail.com, swarathmika@hotmail.com",
+     description="a notebook task interface built on big data and machine learning.",
      long_description=long_description,
+     license = "MIT",
      entry_points = {
      'console_scripts': ['prax=src.praxxis.app:start'],
      },
    long_description_content_type="text/markdown",
-     url="praxxis.github.com",
+     url="github.com/microsoft/praxxis",
      packages=setuptools.find_packages(),
      classifiers=[
         'Programming Language :: Python :: 3.7',

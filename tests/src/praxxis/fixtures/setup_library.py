@@ -20,7 +20,7 @@ def add_test_library(library_root, library_db, start, stop):
     shutil.copytree(os.path.join('tests', 'test_notebooks'), os.path.join(library_root,  'test_notebooks'))
     assert os.path.exists(library_location)
 
-    sync_library.sync_libraries(library_root, library_db)   
+    sync_library.sync_library(library_root, library_db)   
     yield 
 
     dummy_library = dummy_object.make_dummy_library()

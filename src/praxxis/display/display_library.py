@@ -21,10 +21,17 @@ def display_loaded_library(root, first):
 
 
 def loaded_notebook_message():
+    """the display function for loading a notebook"""
     print("Loaded notebook:")
 
 
+def display_init_git_library(root):
+    """ the display function for cloning a git repo"""
+    print(f"Created git library at {root}")
+
+
 def display_loaded_notebook(name):
+    """ the display function for loading a notebook"""
     print(f"\t{name}")
 
 
@@ -38,5 +45,6 @@ def display_libraries(libraries):
 
 
 def display_remove_success(name):
+    """ the display function for removing a library"""
     print(f'{name} was successfully removed. ')
     

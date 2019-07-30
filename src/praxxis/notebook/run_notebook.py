@@ -16,35 +16,8 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     from datetime import datetime
 
     name = args.notebook
-
-    try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
-    except error.NotebookNotFoundError as e:
-        raise e
-
-    if tmp_name != None:
-        name = tmp_name
-
-    try:
-        notebook_data = sqlite_notebook.get_notebook(library_db, name)
-    except error.NotebookNotFoundError as e:
-        raise e
-    
-    if not len(notebook_data) == 1:
-        from src.praxxis.display import display_error
-        from src.praxxis.library import list_library
-        from src.praxxis.library import library
-
-        display_error.duplicate_notebook_error(name)
-        list_library.list_library(library_db)
-        selection = input("")
-
-        if selection.isdigit():
-            selection = library.get_library_by_ordinal(library_db, selection, start, stop)
-        notebook_data = sqlite_notebook.get_notebook(library_db, name, selection)[0]
-        notebook = notebook.Notebook(notebook_data)
-    else:
-        notebook = notebook.Notebook(notebook_data[0])
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
+    notebook = notebook.Notebook(notebook_data)
 
     display_notebook.display_run_notebook_start(notebook.name)
 

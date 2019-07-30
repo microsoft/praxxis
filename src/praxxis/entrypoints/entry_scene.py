@@ -29,6 +29,7 @@ def new_scene(arg,
     """calls the function to create a new scene"""
     from src.praxxis.scene import new_scene
     from src.praxxis.scene import scene
+
     new_scene.new_scene(arg, scene_root, history_db)
 
 
@@ -52,11 +53,7 @@ def change_scene(arg,
     """calls the function to change the current scene"""
     from src.praxxis.scene import change_scene
 
-    try:
-        change_scene.change_scene(arg, scene_root, history_db)
-    except Exception as e:
-        raise e
-
+    change_scene.change_scene(arg, scene_root, history_db)
      
 
 def resume_scene(arg, 
@@ -64,23 +61,17 @@ def resume_scene(arg,
                  history_db = _history_db):
     """calls the function to resume an ended scene"""
     from src.praxxis.scene import resume_scene
-    
-    try:
-        resume_scene.resume_scene(arg, scene_root, history_db)
-    except Exception as e:
-        raise e
- 
 
+    resume_scene.resume_scene(arg, scene_root, history_db)
+
+ 
 def delete_scene(arg, 
                  scene_root = _scene_root,
                  history_db = _history_db):
     """ calls the function to delete a scene"""
     from src.praxxis.scene import delete_scene
     
-    try:
-        delete_scene.delete_scene(arg, scene_root, history_db)
-    except Exception as e:
-        raise e
+    delete_scene.delete_scene(arg, scene_root, history_db)
 
 
 def list_scene(arg, 
@@ -88,8 +79,8 @@ def list_scene(arg,
                history_db = _history_db):
     """calls the function to list scenes"""
     from src.praxxis.scene import list_scene
-    list_scene.list_scene(scene_root, history_db)
 
+    list_scene.list_scene(scene_root, history_db)
 
 
 def history(arg, 
@@ -112,4 +103,5 @@ def current_scene(arg,
             history_db = _history_db):
     """calls the default function, which is to display the current scene."""
     from src.praxxis.scene import current_scene
+    
     current_scene = current_scene.current_scene(scene_root, history_db)

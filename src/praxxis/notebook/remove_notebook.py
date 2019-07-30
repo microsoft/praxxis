@@ -8,18 +8,6 @@ def remove_notebook(args, library_db, current_scene_db):
 
     name = args.name
 
-    try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
-    except error.NotebookNotFoundError as e:
-        raise e
-    
-    if tmp_name != None:
-        name = tmp_name
-    
-    try:
-        sqlite_notebook.check_notebook_exists(library_db, name)
-    except error.NotebookNotFoundError as e:
-        raise e
-
-    sqlite_library.remove_notebook(library_db, name)
+    notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
+    sqlite_library.remove_notebook(library_db, notebook_data[1], notebook_data[2])
     display_notebook.display_remove_success(name)

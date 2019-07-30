@@ -4,91 +4,88 @@
 
 import os
 
-def sync_libraries(library_root, library_db):
-    """ loads libraries from the library root you supply, into the library db"""
-    from src.praxxis.display import display_library
-    from src.praxxis.sqlite import sqlite_library
-    from src.praxxis.sqlite import sqlite_parameter
-
-    directories = [ name for name in os.listdir(library_root) if os.path.isdir(os.path.join(library_root, name)) ]
-
-    first = True
-    for directory in directories:
-        this_library_root = os.path.join(library_root, directory)
-        sync_library(this_library_root, library_db)
-        display_library.display_loaded_library(this_library_root, first)
-        #first = False
-    return 0
-
-
-def sync_library(library_root, library_db):
-    """ loads the individual library specified by the library root passed in, into the library db""" 
+def sync_library(library_root, library_db, custom_path = False, custom_library_name = None, remote = None, remote_origin = None):
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.util import error
-
-    readme_location = os.path.join(library_root, "README.md")
-    readme_data = "No Readme"
-    dirname = library_root.split(os.path.sep)[-1]
-
-    counter = 0
-    try:
-        while sqlite_library.check_library_exists(library_db, dirname):
-            dirname = f"{dirname}-{counter + 1}"
-    except Exception:
-        pass 
-
-    if os.path.isfile(readme_location):
-         f = open(readme_location, "r")
-         readme_data = "  ".join(f.readlines()[:3])
-
-    sqlite_library.load_library(library_db, library_root, readme_data, dirname)
-    sync_notebooks(library_root, library_db, dirname)
-
-
-def sync_notebooks(library_root, library_db, library_name):
-    """ loads the individual notebooks in the library root into the library db""" 
-    from src.praxxis.sqlite import sqlite_library
-    from src.praxxis.sqlite import sqlite_parameter
-    from src.praxxis.sqlite import sqlite_notebook
-    from src.praxxis.util import error
-
-    from src.praxxis.display import display_library
     from src.praxxis.display import display_error
     from src.praxxis.notebook import notebook
-    first = True
-    duplicates = []
-    for library_root, dirs, files in os.walk(library_root, topdown=False):
+    from src.praxxis.display import display_library
+    from src.praxxis.sqlite import sqlite_parameter
+    from src.praxxis.util import get_raw_git_url
+    import os
+    
+    current_library = None
+    base_root = ""
+    first_traversal = True
+    for root, dirs, files in os.walk(library_root):
+        if first_traversal:
+            base_root = root
+            first_traversal = False
         for name in files:
-            # for every notebook in the files found by the os.walk
-            file_name, file_extension = os.path.splitext(name)
-            if(file_extension == ".ipynb"):
-                # if the file is a notebook file
-                file_root = os.path.join(library_root, name)
-                #set the file root for the db 
-                if first:
-                    display_library.loaded_notebook_message()
-                    #if it's the first notebook, display notebook loaded message
-                try:
-                    notebook_data = notebook.Notebook([file_root, file_name, library_name])
-                    #create a notebook object out of the file data
-                    for parameter in notebook_data._parameters:
-                        #load the parameters out of the notebook object and into the db
-                        sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1], library_name)
-                    display_library.display_loaded_notebook(name)
-                    #display that the library has been successfully loaded
-                except:
-                    display_error.notebook_load_error(name)
-                    #if there was a problem loading the notebook, show an error.
+            if custom_path:
+                #checks if the path is not the default library directory
+                relative_path = root.split(os.path.sep)[len(base_root.split(os.path.sep))-1:]
+            else:
+                relative_path = root.split(os.path.sep)[len(library_root.split(os.path.sep)):]
 
-                try:
-                    sqlite_notebook.check_notebook_exists(library_db, file_name)
-                except error.NotebookNotFoundError:
-                    pass
-                else:
-                    duplicates.append(name)
+            if relative_path == [] or ".git" in relative_path:
+                continue
 
-                sqlite_library.load_notebook(library_db, file_root, file_name, library_name)
-                #finally, load the notebook's data into the db
-                first = False
-    if not duplicates == []:
-        display_error.duplicate_sync_warning(duplicates)
+            if custom_library_name == None:
+                library_name = "_".join(relative_path)
+            else:
+                library_name = custom_library_name
+
+            if not library_name == current_library:
+                display_library.display_loaded_library(root, True)
+                display_library.loaded_notebook_message()
+                current_library = library_name
+
+            readme_location = os.path.join(root, "README.md")
+            readme_data = None
+
+            if os.path.isfile(readme_location):
+                f = open(readme_location, "r")
+                readme_data = "  ".join(f.readlines()[:3])
+
+            counter = 0
+            try:
+                library_list = sqlite_library.get_library_by_name(library_db, library_name)
+                orig_name = library_name
+                if not len(library_list) == 0:
+                    library_metadata = sqlite_library.get_library_by_root(library_db, root)
+                    if library_metadata == []:
+                        while sqlite_library.check_library_exists(library_db, library_name):
+                            counter += 1
+                            library_name = f"{orig_name}-{counter}"
+                    if library_metadata[0][0] == root:
+                        library_name = library_metadata[0][2]
+            except error.LibraryNotFoundError:
+                pass
+        
+            load_notebook(name, root, library_db, library_name, relative_path, remote_origin, remote, readme_data)
+
+
+def load_notebook(notebook_name, root, library_db, library_name, relative_path, remote_origin=None, remote=None, readme_data = None):
+    from src.praxxis.sqlite import sqlite_library
+    from src.praxxis.notebook import notebook
+    from src.praxxis.sqlite import sqlite_parameter
+    from src.praxxis.display import display_library
+    from src.praxxis.util import get_raw_git_url
+
+    file_name, file_extension = os.path.splitext(notebook_name)
+    if(file_extension == ".ipynb"):
+        file_root = os.path.join(root, notebook_name)
+        
+        sqlite_library.sync_library(library_db, root, readme_data, library_name, remote)
+
+        notebook_data = notebook.Notebook([file_root, file_name, library_name])
+        #create a notebook object out of the file data
+        for parameter in notebook_data._parameters:
+            #load the parameters out of the notebook object and into the db
+            sqlite_parameter.set_notebook_parameters(library_db, file_name, parameter[0].strip(), parameter[1], library_name)
+        display_library.display_loaded_notebook(notebook_name)
+
+        library_url = ("/").join(relative_path)
+        raw_url = get_raw_git_url.get_raw_url_for_file(remote_origin, notebook_name, f"/{library_url}/")
+        sqlite_library.load_notebook(library_db, file_root, file_name, library_name, raw_url)

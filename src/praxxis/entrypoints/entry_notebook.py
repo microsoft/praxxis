@@ -14,9 +14,7 @@ from src.praxxis.util.roots import _query_end
 from src.praxxis.util.roots import _rulesengine_db
 
 def init_outfile(outfile_root):
-    """
-    initializes the outfile for running notebooks
-    """
+    """ initializes the outfile for running notebooks """
     import os
     from src.praxxis.display import display_notebook
 
@@ -41,10 +39,7 @@ def run_notebook(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     
-    try:
-        run_notebook.run_notebook(arg, user_info_db, outfile_root, current_scene_db, library_root, library_db, query_start, query_end)
-    except Exception as e:
-        raise e
+    run_notebook.run_notebook(arg, user_info_db, outfile_root, current_scene_db, library_root, library_db, query_start, query_end)
 
 
 def open_notebook(arg, 
@@ -58,15 +53,13 @@ def open_notebook(arg,
     from src.praxxis.notebook import open_notebook
     from src.praxxis.util import roots
 
+    #TODO: allow for selecting your own editor on first run
     editor = "vim"
     
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
-
-    try:
-        open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location, editor, True)
-    except Exception as e:
-        raise e
+    
+    open_notebook.open_notebook(arg, current_scene_db, library_db, azure_data_studio_location, editor, True)
 
 
 def search_notebook(arg,
@@ -79,7 +72,11 @@ def search_notebook(arg,
                     ):
     """calls the function to search a notebook"""
     from src.praxxis.notebook import search_notebook
+    from src.praxxis.util import roots
 
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+    
     search_notebook.search_notebook(arg, library_db, current_scene_db, query_start, query_end)
 
 
@@ -112,10 +109,10 @@ def next_notebook(arg,
                     end = _query_end):
     """calls the function to get the next notebook"""
     from src.praxxis.notebook import what_next
+    from src.praxxis.util import roots
 
     if current_scene_db == None:
-        from src.praxxis.util.roots import get_current_scene_db
-        current_scene_db = get_current_scene_db(scene_root, history_db)
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     what_next.what_next(arg, user_info_db, current_scene_db, library_db, rulesengine_db, start, end)
 
@@ -123,15 +120,10 @@ def next_notebook(arg,
 
 def add_notebook(arg, 
                 library_db = _library_db):
-    """
-    handles adding a notebook from the CLI
-    """
+    """ handles adding a notebook from the CLI """
     from src.praxxis.notebook import add_notebook
 
-    try:
-        add_notebook.add_notebook(arg, library_db)
-    except Exception as e:
-        raise e
+    add_notebook.add_notebook(arg, library_db)
 
 
 def remove_notebook(arg, 
@@ -139,9 +131,7 @@ def remove_notebook(arg,
                     history_db = _history_db,
                     library_db = _library_db, 
                     current_scene_db = None):
-    """
-    handles removing a notebook from the cli
-    """
+    """handles removing a notebook from the cli"""
     from src.praxxis.notebook import remove_notebook
     from src.praxxis.util import roots
 
