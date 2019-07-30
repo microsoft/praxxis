@@ -20,7 +20,7 @@ prax
 
 On your first run, praxxis will set up the directories and databases it needs to store data and run.
 
-### Importing Libraries
+## Importing Libraries
 praxxis can import libraries from anywhere on your machine, or through a hosted git service. As of right now, the project supports GitHub, GitLab, and BitBucket for remote repositories.
 
 To get started with test notebooks, run
@@ -48,7 +48,7 @@ You can also import a library of notebooks from a git remote by using the same a
 prax al <your git url>
 ```
 
-### Using Notebooks
+## Using Notebooks
 Now that you have your notebooks loaded into praxxis, you can use them!
 
 First view what notebooks you have loaded by running
@@ -57,7 +57,7 @@ prax l
 ```
 This should display the notebooks, and in what libraries they are located.
 
-#### Running notebooks
+### Running notebooks
 
 In order to run a notebook, run
 ```
@@ -68,7 +68,7 @@ praxxis also supports running a notebook with the html flag, which allows you to
 prax <ordinal or name> html
 ```
 
-#### Opening notebooks
+### Opening notebooks
 
 To open a notebook, praxxis offers a few options.
 ```
@@ -81,11 +81,11 @@ To open the notebook in vim, use the default command
 ```
 prax o <name or ordinal>
 ```
-#### Using Parameters
+## Using Parameters
 Some notebooks have parameters that can be injected, allowing the notebook's functionality to be changed without editing the notebook itself. Praxxis supports parameter injection into any notebook with the first code cell tagged as a parameter cell.
 
 
-##### Notebook Parameters
+### Notebook Parameters
 To view the parameters that can be set in a certain notebook, run
 ```
 prax v <notebook name or ordinal>
@@ -95,7 +95,7 @@ to pull those parameters out of a notebook and into your scene, run
 prax p <notebook name or ordinal>
 ```
 
-##### Library Parameters
+### Library Parameters
 to view the parameters that can be set throughout a library, run
 ```
 prax vl <library name or ordinal>
@@ -104,7 +104,7 @@ to pull those parameters out of the library and into your scene, run
 ```
 prax pl <library name or ordinal>
 ```
-##### Parameter Operations
+### Parameter Operations
 Existing parameters can be set or updated by running
 ```
 prax sp <name or ordinal> <value>
