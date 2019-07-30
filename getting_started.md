@@ -67,7 +67,7 @@ prax o <name or ordinal> html
 prax o <name or ordinal> jupyter
 prax o <name or ordinal> ads
 ```
-opens notebooks in html, jupyter or Azure Data Studio, respectively.
+opens notebooks in HTML, Jupyter or Azure Data Studio, respectively.
 To open the notebook in vim, use the default command
 ```
 prax o <name or ordinal>
@@ -75,7 +75,7 @@ prax o <name or ordinal>
 
 ## Setting Up Telemetry
 
-By default, praxxis stores no information on your notebook habits, but in order to use predictions, you need to link your install to some type of external storage, so that a machine learning model can be trained.
+By default, praxxis stores no information on your notebook habits, but in order to use predictions, you need to link your install to some type of external storage. This allows for a machine learning model to be built on your habits.
 
 In order to access the telemetry setup utility, run
 
@@ -85,9 +85,9 @@ prax u
 and use ordinals to select settings.
 
 #####Telemetry
-to turn telemetry on and off, select telemetry from the list, and set the value to 1 for on, and 0 for off.
+to turn telemetry on and off, select telemetry from the list. Select the value to 1 for on, and 0 for off.
 #####URL
-this is the url of the storage pool. The default url is set to a SQL server instance, but  it can be changed to anything.
+this is the url of the storage pool. The default url is set to a SQL server instance, but it can be changed to anything.
 #####Host
 this is the IP of the host machine that you want to send data to.
 #####Username
