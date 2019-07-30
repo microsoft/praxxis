@@ -24,7 +24,6 @@ def test_delete_param(setup, set_one_param, scene_root, history_db, current_scen
     entry_parameter.delete_param("generated_single_param", scene_root, history_db, current_scene_db)
     assert len(list_param.list_param(current_scene_db, start, stop)) == 0
 
-
 def test_set_param(setup, scene_root, history_db, current_scene_db):
     from src.praxxis.parameter import delete_param
     from src.praxxis.util import error

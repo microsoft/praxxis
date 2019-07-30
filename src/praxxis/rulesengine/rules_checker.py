@@ -17,15 +17,16 @@ def rules_check(prediction_db, filename, output_path, start, end):
     predictions = []
     for ruleset in rulesets:
         filenames = sqlite_rulesengine.get_filenames_by_rule(ruleset[2])
+        
         for fmatch in filenames:
             if fmatch[0] in filename:
                 rulesmatch.append(fmatch[1])
- 
+        
         if rulesmatch != []:
             #get output
             from src.praxxis.notebook.notebook import get_output_from_filename
             output = get_output_from_filename(output_path)
- 
+        
         outputs = sqlite_rulesengine.get_outputs_for_rules(ruleset[2], rulesmatch)
         for omatch in outputs:
             if omatch[0] in output:

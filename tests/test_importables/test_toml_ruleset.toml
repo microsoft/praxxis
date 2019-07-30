@@ -1,0 +1,11 @@
+["rule_example1"]
+filenames = ["some", "example", "file names"]
+outputs = ["output strings","to","compare"]
+predictions = [["notebook","library"],["notebook2","library2"]]
+
+["rule example 2"]
+filenames = ["other", "names", "of files", "2"]
+outputs = [""]
+predictions = [["notebook22","library1", "url"],["notebook22","library1"]]
+
+

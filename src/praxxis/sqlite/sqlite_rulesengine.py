@@ -5,9 +5,10 @@ This file contains the sqlite functions for the rules engine
 def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     """creates a new ruleset database"""
     from src.praxxis.sqlite import connection
+
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    
+
     create_rules_table = f'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
     create_filenames_table = f'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
     create_outputs_table = f'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
@@ -285,4 +286,13 @@ def get_predictions(ruleset_db, ruleset):
 
     return predictions
 
+def clear_ruleset_list(rulesengine_db):
+    """removes all rulesets from list, for testing"""
+    from src.praxxis.sqlite import connection 
 
+    conn = connection.create_connection(rulesengine_db)
+    cur = conn.cursor()
+    cleanup = 'DELETE FROM "RulesEngine"'
+    cur.execute(cleanup)
+    conn.commit()
+    conn.close()

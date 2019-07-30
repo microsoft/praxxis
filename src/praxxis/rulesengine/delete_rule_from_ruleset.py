@@ -27,6 +27,8 @@ def delete_rule_from_ruleset(args, prediction_db):
     sqlite_rulesengine.delete_rule(ruleset_db, deletion_name)
     display_rulesengine.display_rule_deletion(name, deletion_name)
 
+    return deletion_name
+
 def get_rule_by_ordinal(name, ruleslist):
     """gets rule by ordinal using a list of tuples"""
     from src.praxxis.sqlite import sqlite_rulesengine
