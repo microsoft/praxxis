@@ -2,7 +2,7 @@ from src.praxxis.entrypoints import entry_scene
 from tests.src.praxxis.util import dummy_object
 
 def test_init_scene(setup, scene_root, history_db, default_scene_name):
-    from src.praxxis.util import rmtree
+    from tests.src.praxxis.util import rmtree
     import os 
 
     assert os.path.exists(scene_root)

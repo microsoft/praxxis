@@ -28,7 +28,7 @@ def add_library(args, library_db, git_root):
             raise error.LibraryNotFoundError(path)
     else:
         #if the path is a valid git remote
-        from src.praxxis.util import rmtree
+        from tests.src.praxxis.util import rmtree
         from git import Repo
         import sys
         import subprocess

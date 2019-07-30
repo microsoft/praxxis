@@ -3,7 +3,7 @@ import pytest
 import sys
 
 def test_init_library(setup, library_root, library_db):
-    from src.praxxis.util import rmtree
+    from tests.src.praxxis.util import rmtree
     import os 
     
     assert os.path.exists(library_root)

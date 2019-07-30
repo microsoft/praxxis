@@ -15,7 +15,10 @@ def rmtree(root):
             import pytest
             import colorama 
             from colorama import Fore
-            pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
+            if "Windows permissions failure" in str(e):
+                pytest.exit(str(e))
+            else:
+                pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
         else:
             raise e
 
@@ -46,7 +49,10 @@ def onerror(func, path, exc_info):
                 import pytest
                 import colorama 
                 from colorama import Fore
-                pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
+                if "Windows permissions failure" in str(e):
+                    pytest.exit(str(e))
+                else:
+                    pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
             else:
                 raise e
 

@@ -2,7 +2,7 @@ from src.praxxis.entrypoints import entry_rulesengine
 from tests.src.praxxis.util import dummy_object
 
 def test_init_rulesengine(setup, rulesengine_root, rulesengine_db):
-    from src.praxxis.util import rmtree
+    from tests.src.praxxis.util import rmtree
     import os 
 
     assert os.path.exists(rulesengine_root)

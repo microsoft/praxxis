@@ -2,7 +2,7 @@ from src.praxxis.util import roots
 
 def test_init(setup, init_root, library_root, library_db, outfile_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name):
     pass
-    from src.praxxis.util import rmtree
+    from tests.src.praxxis.util import rmtree
     import os 
     
     assert os.path.exists(init_root)
