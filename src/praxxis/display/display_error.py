@@ -14,7 +14,7 @@ def param_not_found_error(name):
 
 def notebook_load_error(name):
     """error display for a notebook failing to load"""
-    print(f"\t{Fore.RED}there is something wrong with {name}. praxxis will still load it, but it might not run.{Style.RESET_ALL}")
+    print(f"\t{Fore.RED}there is something wrong with {name}. praxxis will still load it, but it might not run.")
 
 
 def scene_not_found_error(name):
@@ -207,7 +207,8 @@ def empty_history_error():
     return(f"{Fore.RED}Predictions cannot be run on an empty history.")
 
 
-def tensorflow_version_error(major_vers, minor_vers):
+def tensorflow_version_error():
     """ error for running an old version of tensorflow"""
-    print(f"{Fore.RED}praxxis's model is built with tensorflow, which requires python <=3.6. Your version is " + major_vers + "." + minor_vers + ", which is incompatible." +
+    import sys
+    print(f"{Fore.RED}praxxis's model is built with tensorflow, which requires python <=3.6. Your version is " + str(sys.version_info.major) + "." + str(sys.version_info.minor) + ", which is incompatible." +
                 " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")
