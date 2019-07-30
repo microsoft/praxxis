@@ -13,7 +13,7 @@ pip install .
 ```
 in the command line.
 
-This will install praxxis onto your machine, and allow you  to run commands with
+This will install praxxis onto your machine, and allow you to run commands with
 ```
 prax
 ```
@@ -49,9 +49,9 @@ prax al <your git url>
 ```
 
 ###Using Notebooks
-Now that you have your notebooks loaded into praxxis, now you can use them!
+Now that you have your notebooks loaded into praxxis, you can use them!
 
-to run a notebook, input
+to run a notebook, run
 ```
 prax l
 ```
@@ -61,7 +61,7 @@ prax <ordinal or name>
 ```
 to run based on the name or ordinal in the list.
 
-To open a notebook, praxxis offers a lot of options.
+To open a notebook, praxxis offers a few options.
 ```
 prax o <name or ordinal> html
 prax o <name or ordinal> jupyter
@@ -77,7 +77,7 @@ prax o <name or ordinal>
 
 By default, praxxis stores no information on your notebook habits, but in order to use predictions, you need to link your install to some type of external storage, so that a machine learning model can be trained.
 
-In order to access the telemetry setup utility, input
+In order to access the telemetry setup utility, run
 
 ```
 prax u
