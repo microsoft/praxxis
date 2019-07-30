@@ -1,5 +1,4 @@
 import pytest
-import mock
 
 @pytest.mark.skip(reason="broken and not working")
 def test_add_rule(setup, create_one_ruleset, mock_input_str, rulesengine_db, library_db, history_db, start, stop):
