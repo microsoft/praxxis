@@ -85,7 +85,7 @@ prax u
 and use ordinals to select settings.
 
 #####Telemetry
-to turn telemetry on and off, select telemetry from the list. Select the value to 1 for on, and 0 for off.
+to turn telemetry on and off, select telemetry from the list. Set the value to 1 for on, and 0 for off.
 #####URL
 this is the url of the storage pool. The default url is set to a SQL server instance, but it can be changed to anything.
 #####Host
@@ -95,4 +95,4 @@ this is the username of the login that you want to use to send data.
 #####Password
 this is the password of the login that you want to use to send data.
 
-If you've set up all of these things correctly, then you should be able to use praxxis, and see data on notebook execution appearing in your cluster.
+If you've set up all of these things correctly, then you should be able to use praxxis and see data on notebook execution appearing in your cluster.
