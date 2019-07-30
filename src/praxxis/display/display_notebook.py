@@ -59,3 +59,7 @@ def display_search(search_term, notebooks):
 def display_remove_success(name):
     """the display function for removing a notebook sucessfullly"""
     print(f"Successfully removed notebook {name}")
+
+def display_adding_output(name, output_string):
+    """the display function for adding output manually to a notebook execution"""
+    print(f"For the last notebook executed ({name}), added to the output \"{output_string}\"")

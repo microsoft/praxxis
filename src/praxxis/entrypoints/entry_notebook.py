@@ -126,11 +126,18 @@ def add_notebook(arg,
     add_notebook.add_notebook(arg, library_db)
 
 
-def add_output(arg):
+def add_output(arg,
+                output_root = _output_root,
+                scene_root = _scene_root,
+                history_db = _history_db,
+                current_scene_db = None):
     """handles adding output to a notebook"""
     from src.praxxis.notebook import add_output
+    from src.praxxis.util import roots
 
-    add_output.add_output(arg)
+    if current_scene_db == None:
+        current_scene_db = roots.get_current_scene_db(scene_root, history_db)
+    add_output.add_output(arg, output_root, current_scene_db)
 
 
 def remove_notebook(arg, 

@@ -203,8 +203,8 @@ def invalid_rule_definition(name):
 
 
 def empty_history_error():
-    """error for running predictions on empty history"""
-    return(f"{Fore.RED}Predictions cannot be run on an empty history.")
+    """error for empty history on an operation that requires history"""
+    return(f"{Fore.RED}This operation cannot be run on an empty history.")
 
 
 def tensorflow_version_error():
