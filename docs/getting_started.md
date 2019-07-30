@@ -130,6 +130,30 @@ prax r test_param_inject
 You should be able to see the notebooks you've imported, test_param_inject's parameters, pulled those parameters into your working scene, set them, and seen the output of the notebook with the new injected parameters.
 
 
+## Using Scenes 
+Scenes allow you to create environments to keep your work in one place. Scenes save parameter configurations, history, and an indicator of wether or not the problem has been solved by ending and resuming scenes. 
+
+To make a new scene, run 
+```
+prax ns <name of new scene>
+```
+Listing scenes is done by running the command 
+```
+prax ls 
+```
+Scenes can be marked as ended to signify that the work that they involve is finished, by using the command 
+```
+prax es <name or ordinal>
+```
+They can also be resumed with the command 
+```
+prax rs <name or ordinal>
+```
+Once scenes are completely finished, and the environment that they are composed of isn't worth keeping, they can be deleted by using the command 
+```
+prax ds <name or ordinal>
+```
+
 ## Setting Up Telemetry
 
 By default, praxxis stores no information on your notebook habits, but in order to use predictions, you need to link your install to some type of external storage. This allows for a machine learning model to be built on your habits.
