@@ -292,7 +292,7 @@ def clear_ruleset_list(rulesengine_db):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    cleanup = f'DELETE FROM "RulesEngine"'
+    cleanup = 'DELETE FROM "RulesEngine"'
     cur.execute(cleanup)
     conn.commit()
     conn.close()

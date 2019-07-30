@@ -150,7 +150,7 @@ def clear_backlog(user_info_db):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    cleanup = f'DELETE FROM "TelemBacklog"'
+    cleanup = 'DELETE FROM "TelemBacklog"'
     cur.execute(cleanup)
     conn.commit()
     conn.close()

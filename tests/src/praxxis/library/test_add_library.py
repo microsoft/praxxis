@@ -24,7 +24,6 @@ def test_add_git_library(setup, library_db, git_root, start, stop):
     from src.praxxis.library import list_library
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.util import rmtree
-    #import shutil
 
     url = dummy_object.make_dummy_git_repo()
     add_library.add_library(url, library_db, git_root)

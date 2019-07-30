@@ -43,4 +43,3 @@ def onerror(func, path, exc_info):
             func(newname)
         except Exception as e:
             raise e
-

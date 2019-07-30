@@ -17,7 +17,7 @@ def rules_check(prediction_db, filename, output_path, start, end):
     predictions = []
     for ruleset in rulesets:
         filenames = sqlite_rulesengine.get_filenames_by_rule(ruleset[2])
-        print(filenames)
+        
         for fmatch in filenames:
             if fmatch[0] in filename:
                 rulesmatch.append(fmatch[1])
