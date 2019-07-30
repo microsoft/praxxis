@@ -1,4 +1,4 @@
-#Praxxis
+# Praxxis
 ## getting started
 
 To get started with praxxis, you need
@@ -48,7 +48,7 @@ You can also import a library of notebooks from a git remote by using the same a
 prax al <your git url>
 ```
 
-###Using Notebooks
+### Using Notebooks
 Now that you have your notebooks loaded into praxxis, you can use them!
 
 to run a notebook, run
@@ -84,15 +84,15 @@ prax u
 ```
 and use ordinals to select settings.
 
-#####Telemetry
+##### Telemetry
 to turn telemetry on and off, select telemetry from the list. Set the value to 1 for on, and 0 for off.
-#####URL
+##### URL
 this is the url of the storage pool. The default url is set to a SQL server instance, but it can be changed to anything.
-#####Host
+##### Host
 this is the IP of the host machine that you want to send data to.
-#####Username
+##### Username
 this is the username of the login that you want to use to send data.
-#####Password
+##### Password
 this is the password of the login that you want to use to send data.
 
 If you've set up all of these things correctly, then you should be able to use praxxis and see data on notebook execution appearing in your cluster.
