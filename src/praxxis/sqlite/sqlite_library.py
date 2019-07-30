@@ -114,17 +114,6 @@ def check_library_exists(library_db, library):
     return True
 
 
-def add_none_library(library_db):
-    from src.praxxis.sqlite import connection
-
-    conn = connection.create_connection(library_db)
-    cur = conn.cursor()
-    add_none_library = f'INSERT INTO "LibraryMetadata" (Path, Readme, Library, Remote) VALUES ("None", "No Readme", "none", "None")'
-    cur.execute(add_none_library)
-    conn.commit()
-    conn.close()
-
-
 def remove_library(library_db, library):
     from src.praxxis.sqlite import connection
 

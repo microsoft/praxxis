@@ -19,8 +19,8 @@ def add_library(args, library_db, git_root):
         #if it is not a valid github remote
 
         if os.path.exists(path):
+            #check if the path exists and is a directory
             if os.path.isdir(path):
-                #check if the path exists and is a directory
                 sync_library.sync_library(os.path.abspath(path), library_db, custom_path=True)
             else:
                 raise error.NotDirectoryError(path)
@@ -58,4 +58,5 @@ def add_library(args, library_db, git_root):
             sys.exit(0)
 
         remote_https = giturlparse.parse(path).url2https
-        sync_library.sync_library(os.path.abspath(repo_root), library_db, custom_library_name=f"{repo_author}_{repo_name}", custom_path=True, remote=path, remote_origin=remote_https)
+        repo_root_abspath = os.path.abspath(repo_root)
+        sync_library.sync_library(repo_root_abspath, library_db, custom_library_name=f"{repo_author}_{repo_name}", custom_path=True, remote=path, remote_origin=remote_https)

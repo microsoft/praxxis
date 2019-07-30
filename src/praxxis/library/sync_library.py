@@ -13,7 +13,6 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.util import get_raw_git_url
     import os
-    import re
     
     current_library = None
     base_root = ""
@@ -24,6 +23,7 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
             first_traversal = False
         for name in files:
             if custom_path:
+                #checks if the path is not the default library directory
                 relative_path = root.split(os.path.sep)[len(base_root.split(os.path.sep))-1:]
             else:
                 relative_path = root.split(os.path.sep)[len(library_root.split(os.path.sep)):]
@@ -60,13 +60,11 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
                             library_name = f"{orig_name}-{counter}"
                     if library_metadata[0][0] == root:
                         library_name = library_metadata[0][2]
-                    else:
-                        raise error.LibraryNotFoundError
             except error.LibraryNotFoundError:
                 pass
-
         
             load_notebook(name, root, library_db, library_name, relative_path, remote_origin, remote, readme_data)
+
 
 def load_notebook(notebook_name, root, library_db, library_name, relative_path, remote_origin=None, remote=None, readme_data = None):
     from src.praxxis.sqlite import sqlite_library
