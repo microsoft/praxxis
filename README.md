@@ -1,17 +1,4 @@
-```
-                                                  /██          
-                                                 |__/          
-  /██████   /██████  /██████  /██   /██ /██   /██ /██  /███████
- /██__  ██ /██__  ██|____  ██|  ██ /██/|  ██ /██/| ██ /██_____/
-| ██  \ ██| ██  \__/ /███████ \  ████/  \  ████/ | ██|  ██████ 
-| ██  | ██| ██      /██__  ██  >██  ██   >██  ██ | ██ \____  ██
-| ███████/| ██     |  ███████ /██/\  ██ /██/\  ██| ██ /███████/
-| ██____/ |__/      \_______/|__/  \__/|__/  \__/|__/|_______/ 
-| ██                                                           
-| ██                                                           
-|__/
-```
-
+![praxxis logo](docs/images/praxxis.png)
 ## Introduction
 praxxis is a task interface built on big data and machine learning. Using your own storage pool to collect data on your habits when running notebooks, praxxis will learn about the problems you are solving, correlate that with the problems everyone else is solving, and predict the next notebook you should run without interrupting your workflow. It is a tool based on a collaborative paradigm of problem solving, allowing every person to leverage everyone's knowledge to come to a solution more quickly.
 
