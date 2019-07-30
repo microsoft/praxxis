@@ -238,7 +238,7 @@ def main(command_line=None):
     list_scene = subparsers.add_parser('listscenes', aliases=["ls"], help=list_scene_help)
     list_scene.set_defaults(which=list_scene_command)
 
-    set_param = subparsers.add_parser('setparam', aliases=["se"], help=set_param_help)
+    set_param = subparsers.add_parser('setparam', aliases=["sp"], help=set_param_help)
     set_param.add_argument('name', help=set_param_name_help)
     set_param.add_argument('value', help=set_param_value_help)
     set_param.set_defaults(which=set_param_command)
@@ -247,11 +247,11 @@ def main(command_line=None):
     search_param.add_argument('term', help=search_param_term_help)
     search_param.set_defaults(which=search_param_command)
 
-    delete_param = subparsers.add_parser('deleteparam', aliases=["de"], help=delete_param_help)
+    delete_param = subparsers.add_parser('deleteparam', aliases=["dp"], help=delete_param_help)
     delete_param.add_argument('name', help=delete_param_name_help)
     delete_param.set_defaults(which=delete_param_command)
 
-    list_param = subparsers.add_parser('listparam', aliases=["le"], help=list_param_help)
+    list_param = subparsers.add_parser('listparam', aliases=["lp"], help=list_param_help)
     list_param.set_defaults(which=list_param_command)
 
     view_library_param = subparsers.add_parser('viewlibparam', aliases=["vl"], help=view_library_param_help)
@@ -345,7 +345,7 @@ def start(args=None, test = False):
     # prevents praxxis from running on an out of date version of python
     if sys.version_info.major < 3 and sys.version_info.minor < 6:
         from src.praxxis.display import display_error
-        display_error.version_too_low_error(str(sys.version_info.major), str(sys.version_info.minor))
+        display_error.version_error()
         return 1
 
     if len(args) > 1:

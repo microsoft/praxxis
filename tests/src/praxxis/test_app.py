@@ -114,7 +114,7 @@ def test_list_scene():
 
 def test_set_param():
     set_param(['setparam', 'test', 'test'])
-    set_param(['se', 'test', 'test'])
+    set_param(['sp', 'test', 'test'])
 
 
 def test_search_param():
@@ -124,11 +124,11 @@ def test_search_param():
 
 def test_delete_param():
     delete_param(['deleteparam', 'test'])
-    delete_param(['de', 'test'])
+    delete_param(['dp', 'test'])
 
 def test_list_param():
     list_param(['listparam'])
-    list_param(['le'])
+    list_param(['lp'])
 
 
 def test_view_library_param():
@@ -321,7 +321,7 @@ def set_param(command):
     tests if the set param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'se' or namespace.command == "setparam"
+    assert namespace.command == 'sp' or namespace.command == "setparam"
     assert namespace.name == "test"
     assert namespace.value == "test"
 
@@ -340,7 +340,7 @@ def delete_param(command):
     tests if the delete param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'de' or namespace.command == "deleteparam"
+    assert namespace.command == 'dp' or namespace.command == "deleteparam"
     assert namespace.name == "test"
 
 
@@ -349,7 +349,7 @@ def list_param(command):
     tests if the list param command is running properly 
     """
     namespace = app.main(command)
-    assert namespace.command == 'le' or namespace.command == "listparam"
+    assert namespace.command == 'lp' or namespace.command == "listparam"
 
 
 def view_library_param(command):

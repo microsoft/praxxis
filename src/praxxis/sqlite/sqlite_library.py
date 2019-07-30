@@ -15,6 +15,34 @@ def clear_loaded_libararies(library_db):
     conn.close()
 
 
+def get_library_by_name(library_db, library):
+    """returns a list of loaded libraries"""
+    from src.praxxis.sqlite import connection
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Library = "{library}"'
+    cur.execute(get_library)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def get_library_by_root(library_db, path):
+    """returns a list of loaded libraries"""
+    from src.praxxis.sqlite import connection
+
+    conn = connection.create_connection(library_db)
+    cur = conn.cursor()
+    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Path = "{path}"'
+    cur.execute(get_library)
+    conn.commit()
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
 def load_library(library_db, path, readme, library, remote=None):
     """load a library into the library db"""
     from src.praxxis.sqlite import connection
@@ -84,17 +112,6 @@ def check_library_exists(library_db, library):
     if rows == []:
         raise error.LibraryNotFoundError(library)
     return True
-
-
-def add_none_library(library_db):
-    from src.praxxis.sqlite import connection
-
-    conn = connection.create_connection(library_db)
-    cur = conn.cursor()
-    add_none_library = f'INSERT INTO "LibraryMetadata" (Path, Readme, Library, Remote) VALUES ("None", "No Readme", "none", "None")'
-    cur.execute(add_none_library)
-    conn.commit()
-    conn.close()
 
 
 def remove_library(library_db, library):

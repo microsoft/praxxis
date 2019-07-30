@@ -1,5 +1,5 @@
 """
-This file opens a notebook in Azure Data Studio.
+This file opens a notebook in ADS, HTML, jupyter or vim
 """
 
 def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim", test = False):

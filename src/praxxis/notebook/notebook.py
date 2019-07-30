@@ -8,18 +8,12 @@ def get_notebook(current_scene_db, library_db, name):
     from src.praxxis.util import error
     from src.praxxis.sqlite import sqlite_notebook
 
-    try:
-        tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
-    except error.NotebookNotFoundError as e:
-        raise e
+    tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
 
     if tmp_name != None:
         name = tmp_name
-    
-    try:
-        notebook_data = sqlite_notebook.get_notebook(library_db, name)
-    except error.NotebookNotFoundError as e:
-        raise e
+
+    notebook_data = sqlite_notebook.get_notebook(library_db, name)
 
     if not len(notebook_data) == 1:
         notebook_data = [notebook.handle_duplicate_notebook(library_db, notebook_data, name)]
@@ -68,6 +62,7 @@ def handle_duplicate_notebook(library_db, notebook_data, name,):
         from src.praxxis.sqlite import sqlite_notebook
         from src.praxxis.sqlite import sqlite_library
         from src.praxxis.notebook import notebook
+        from src.praxxis.display import display_notebook
         from src.praxxis.util import error
         
         library_list = []
@@ -75,7 +70,7 @@ def handle_duplicate_notebook(library_db, notebook_data, name,):
             library_list.append(element[2])
         
         display_error.duplicate_notebook_error(name, library_list)
-        selection = input("")
+        selection = display_notebook.get_notebook_selection()
 
         if selection.isdigit():
             if int(selection) <= len(library_list):

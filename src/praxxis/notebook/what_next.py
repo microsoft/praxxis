@@ -28,7 +28,7 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
         import sys
         if sys.version_info.major == 3 and sys.version_info.minor > 6:
             from src.praxxis.display import display_error
-            display_error.tensorflow_version_error(str(sys.version_info.major), str(sys.version_info.minor))
+            display_error.tensorflow_version_error()
             sys.exit(1)
         return 
         """

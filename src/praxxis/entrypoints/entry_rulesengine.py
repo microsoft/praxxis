@@ -11,9 +11,6 @@ from src.praxxis.util.roots import _history_db
 from src.praxxis.util.roots import _query_start
 from src.praxxis.util.roots import _query_end
 
-"""
-TODO: edit ruleset
-"""
 
 def new_ruleset(arg, 
                     rulesengine_root = _rulesengine_root,
@@ -60,9 +57,7 @@ def edit_ruleset(arg,
                     history_db = _history_db,
                     start = _query_start,
                     end = _query_end):
-    """
-    calls the function to the edit the ruleset
-    """
+    """calls the function to the edit the ruleset"""
     from src.praxxis.util import roots
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
@@ -84,9 +79,7 @@ def add_rule_to_ruleset(arg,
                     history_db = _history_db,
                     start = _query_start,
                     end = _query_end):
-    """
-    calls the function to add a rule to a ruleset
-    """
+    """calls the function to add a rule to a ruleset"""
     from src.praxxis.util import roots
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
@@ -97,9 +90,7 @@ def add_rule_to_ruleset(arg,
 
 def delete_rule_from_ruleset(arg,
                              rulesengine_db = _rulesengine_db):
-    """
-    calls the function to delete a rule from a ruleset
-    """
+    """calls the function to delete a rule from a ruleset"""
     from src.praxxis.rulesengine import delete_rule_from_ruleset
 
     delete_rule_from_ruleset.delete_rule_from_ruleset(arg, rulesengine_db)
@@ -107,18 +98,14 @@ def delete_rule_from_ruleset(arg,
 
 def modify_rule_in_ruleset(arg,
                            rulesengine_db = _rulesengine_db):
-    """
-    modifies a rule defined in a ruleset
-    """
+    """modifies a rule defined in a ruleset"""
     print("M")
 
 
 def import_ruleset(arg,
                     rulesengine_root = _rulesengine_root,
                     rulesengine_db = _rulesengine_db):
-    """
-    calls the function to import a ruleset
-    """
+    """calls the function to import a ruleset"""
     from src.praxxis.rulesengine import import_ruleset
     
     import_ruleset.import_ruleset(arg, rulesengine_root, rulesengine_db)
@@ -127,9 +114,7 @@ def import_ruleset(arg,
 
 def activate_ruleset(arg,
                     rulesengine_db = _rulesengine_db):
-    """
-    calls the function to activate a ruleset
-    """
+    """calls the function to activate a ruleset"""
     from src.praxxis.rulesengine import activate_ruleset
 
     activate_ruleset.activate_ruleset(arg, rulesengine_db)
@@ -138,9 +123,7 @@ def activate_ruleset(arg,
 
 def deactivate_ruleset(arg,
                     rulesengine_db = _rulesengine_db):
-    """
-    calls the function to deactivate a ruleset
-    """
+    """calls the function to deactivate a ruleset"""
     from src.praxxis.rulesengine import deactivate_ruleset
 
     deactivate_ruleset.deactivate_ruleset(arg, rulesengine_db)
@@ -148,9 +131,7 @@ def deactivate_ruleset(arg,
 
 
 def init_rulesengine(rulesengine_root, rulesengine_db):
-    """
-    initializes the ruleset db and directory
-    """
+    """initializes the ruleset db and directory"""
     import os
     
     from src.praxxis.display import display_rulesengine
