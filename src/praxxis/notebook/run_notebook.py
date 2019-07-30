@@ -14,8 +14,14 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.util import error
     from datetime import datetime
+    import os
 
     name = args.notebook
+
+    if os.path.isfile(name):
+        pass
+        ## TODO: handle running notebooks from path
+
     notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
     notebook = notebook.Notebook(notebook_data)
 
