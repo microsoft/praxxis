@@ -15,6 +15,9 @@ def display_list_notebook(notebooks):
         print(f"\t{i}.\t{notebook[0]}")
 
 
+def get_notebook_selection():
+    return input("")
+
 def display_run_notebook_start(notebook_name):
     """the beginning display function for running a notebook"""
     print(f"\nRunning {notebook_name}...\n")
