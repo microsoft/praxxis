@@ -2,12 +2,14 @@ import os
 import sys
 
 #checks what platform you're on to see where to put praxxis root
-if(sys.platform == "linux" or sys.platform == "darwin"):
+if(sys.platform == "linux" or sys.platform == "Darwin"):
     _root = os.path.join (os.path.expanduser('~/praxxis'))
     _azure_data_studio_location = os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
-else:
+elif(sys.platform == "Windows"):
     _root = os.path.join(os.getenv('APPDATA'), "praxxis")
     _azure_data_studio_location = os.path.join(os.getenv('LOCALAPPDATA'), 'Programs', 'Azure Data Studio', 'azuredatastudio')
+else:
+    raise OSError
 
 _user_info_db = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
