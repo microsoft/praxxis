@@ -1,17 +1,17 @@
 from src.praxxis.entrypoints import entry_notebook
 from tests.src.praxxis.util import dummy_object
 
-def test_init_outfile(setup, outfile_root):
+def test_init_output(setup, output_root):
     from src.praxxis.util import rmtree
     import os 
 
-    assert os.path.exists(outfile_root)
-    rmtree.rmtree(outfile_root)
-    assert not os.path.exists(outfile_root)
+    assert os.path.exists(output_root)
+    rmtree.rmtree(output_root)
+    assert not os.path.exists(output_root)
 
-    entry_notebook.init_outfile(outfile_root)
+    entry_notebook.init_output(output_root)
 
-    assert os.path.exists(outfile_root)
+    assert os.path.exists(output_root)
 
 """
 def test_next_notebook():    
@@ -51,13 +51,13 @@ def test_open_notebook(setup, add_test_library, scene_root, history_db, library_
         assert 1
 
 
-def test_run_notebook(setup, add_test_library, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db):
+def test_run_notebook(setup, add_test_library, telemetry_db, output_root, library_root, library_db, scene_root, history_db, current_scene_db):
     import os
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.scene import history
 
     notebook = dummy_object.make_dummy_notebook()
-    entry_notebook.run_notebook(notebook, telemetry_db, outfile_root, library_root, library_db, scene_root, history_db, current_scene_db)
+    entry_notebook.run_notebook(notebook, telemetry_db, output_root, library_root, library_db, scene_root, history_db, current_scene_db)
     assert len(history.history(history_db, library_db, current_scene_db)) == 1
     sqlite_scene.clear_history(current_scene_db)
 

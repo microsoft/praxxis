@@ -23,13 +23,13 @@ def display_run_notebook_start(notebook_name):
     print(f"\nRunning {notebook_name}...\n")
 
 
-def display_run_notebook_html(output_root, html_outfile):
+def display_run_notebook_html(output_root, html_output):
     """the display function for running a notebook with html"""
     print("\nCOMPLETE\n")
     print("View HTML output from notebook runs here")
     print(f"\t{output_root}")
     print("Launching result file in web browser")
-    print(f"\t{html_outfile}")
+    print(f"\t{html_output}")
 
 
 def display_run_notebook(filename):
@@ -41,9 +41,9 @@ def display_run_notebook(filename):
     print(output)
 
 
-def display_init_run_notebook(outfile_root):
+def display_init_run_notebook(output_root):
     """the display function for initializing the notebooks directory"""
-    print(f"Created outfile directory at {outfile_root}")
+    print(f"Created output directory at {output_root}")
 
 
 def display_search(search_term, notebooks):

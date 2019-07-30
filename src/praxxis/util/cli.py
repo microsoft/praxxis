@@ -6,7 +6,7 @@ from src.praxxis.util.roots import _default_scene_name
 from src.praxxis.util.roots import _history_db
 from src.praxxis.util.roots import _library_db
 from src.praxxis.util.roots import _library_root
-from src.praxxis.util.roots import _outfile_root
+from src.praxxis.util.roots import _output_root
 from src.praxxis.util.roots import _root
 from src.praxxis.util.roots import _scene_root
 from src.praxxis.util.roots import _telemetry_db
@@ -19,7 +19,7 @@ def command(argument,
             root = _root,
             library_root = _library_root, 
             library_db = _library_db,
-            outfile_root = _outfile_root,
+            output_root = _output_root,
             scene_root = _scene_root,
             history_db = _history_db,
             telemetry_db = _telemetry_db,
@@ -43,7 +43,7 @@ def command(argument,
         roots.init(root, 
          library_root, 
          library_db,
-         outfile_root,
+         output_root,
          scene_root,
          history_db,
          telemetry_db,
@@ -63,6 +63,7 @@ def command(argument,
         "history": entry_scene.history,
         "next_notebook": entry_notebook.next_notebook,
         "add_notebook": entry_notebook.add_notebook,
+        "add_output": entry_notebook.add_output,
         "remove_notebook": entry_notebook.remove_notebook,
         "new_scene": entry_scene.new_scene,
         "end_scene": entry_scene.end_scene,
