@@ -3,12 +3,12 @@ import pytest
 import sys
 
 def test_init_library(setup, library_root, library_db):
-    from tests.src.praxxis.util import rmtree
+    from src.praxxis.util import rmtree
     import os 
     
     assert os.path.exists(library_root)
     assert os.path.exists(library_db)
-    rmtree.rmtree(library_root)
+    rmtree.rmtree(library_root, test=True)
     assert not os.path.exists(library_root)
     
     entry_library.init_library(library_root, library_db)

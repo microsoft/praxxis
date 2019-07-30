@@ -1,7 +1,7 @@
 """
 This file exists because windows needs this for whatever reason
 """
-def rmtree(root):
+def rmtree(root, test = False):
     """
     just calls rmtree with the onerror so windows doesn't have a terrible time
     """
@@ -11,14 +11,11 @@ def rmtree(root):
     try:
         shutil.rmtree(root, ignore_errors=False, onerror=onerror)
     except Exception as e:
-        if "WinError" in str(e):
+        if test and "WinError" in str(e):
             import pytest
-            import colorama 
-            from colorama import Fore
-            if "Windows permissions failure" in str(e):
-                pytest.exit(str(e))
-            else:
-                pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
+            from src.praxxis.display import display_error
+            message = display_error.pytest_windows_permissions_error(str(e))
+            pytest.exit(message)
         else:
             raise e
 
@@ -45,14 +42,5 @@ def onerror(func, path, exc_info):
             os.rename(path, newname)
             func(newname)
         except Exception as e:
-            if "WinError" in str(e):
-                import pytest
-                import colorama 
-                from colorama import Fore
-                if "Windows permissions failure" in str(e):
-                    pytest.exit(str(e))
-                else:
-                    pytest.exit(f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error " + str(e) + ")")
-            else:
-                raise e
+            raise e
 

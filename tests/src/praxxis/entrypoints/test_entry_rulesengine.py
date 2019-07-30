@@ -2,13 +2,13 @@ from src.praxxis.entrypoints import entry_rulesengine
 from tests.src.praxxis.util import dummy_object
 
 def test_init_rulesengine(setup, rulesengine_root, rulesengine_db):
-    from tests.src.praxxis.util import rmtree
+    from src.praxxis.util import rmtree
     import os 
 
     assert os.path.exists(rulesengine_root)
     assert os.path.exists(rulesengine_db)
     os.remove(rulesengine_db)
-    rmtree.rmtree(rulesengine_root)
+    rmtree.rmtree(rulesengine_root, test=True)
     assert not os.path.exists(rulesengine_root)
     assert not os.path.exists(rulesengine_db)
 

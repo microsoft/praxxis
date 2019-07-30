@@ -34,7 +34,7 @@ def delete_scene(args, scene_root, history_db):
     directory = os.path.join(scene_root, name)
 
     if os.path.exists(directory):
-        from tests.src.praxxis.util import rmtree
+        from src.praxxis.util import rmtree
         try:
             sqlite_scene.delete_scene(history_db, name)
             rmtree.rmtree(directory)

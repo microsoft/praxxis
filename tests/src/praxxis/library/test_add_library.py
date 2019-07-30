@@ -23,7 +23,7 @@ def test_add_git_library(setup, library_db, git_root, start, stop):
     from src.praxxis.library import remove_library
     from src.praxxis.library import list_library
     from tests.src.praxxis.util import dummy_object
-    from tests.src.praxxis.util import rmtree
+    from src.praxxis.util import rmtree
     #import shutil
 
     url = dummy_object.make_dummy_git_repo()
@@ -35,7 +35,7 @@ def test_add_git_library(setup, library_db, git_root, start, stop):
     libraries = list_library.list_library(library_db, start, stop)
 
     assert len(libraries) == 0
-    rmtree.rmtree(git_root)
+    rmtree.rmtree(git_root, test=True)
 
 
 def test_add_bad_library(setup, library_db, git_root, start, stop):

@@ -13,12 +13,12 @@ def add_test_library(library_root, library_db, start, stop):
     from src.praxxis.library import sync_library
     from src.praxxis.library import remove_library
     from tests.src.praxxis.util import dummy_object
-    from tests.src.praxxis.util import rmtree
-    from tests.src.praxxis.util import copytree
+    from src.praxxis.util import rmtree
+    from src.praxxis.util import copytree
 
     library_location = os.path.join(library_root, 'test_notebooks')
     
-    copytree.copytree(os.path.join('tests', 'test_notebooks'), os.path.join(library_root,  'test_notebooks'))
+    copytree.copytree(os.path.join('tests', 'test_notebooks'), os.path.join(library_root,  'test_notebooks'), test=True)
     assert os.path.exists(library_location)
 
     sync_library.sync_library(library_root, library_db)   
@@ -26,7 +26,7 @@ def add_test_library(library_root, library_db, start, stop):
 
     dummy_library = dummy_object.make_dummy_library()
     remove_library.remove_library(dummy_library, library_db, start, stop)
-    rmtree.rmtree(library_location)
+    rmtree.rmtree(library_location, test=True)
 
 
 @pytest.fixture

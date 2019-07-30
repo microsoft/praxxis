@@ -2,11 +2,11 @@ from src.praxxis.entrypoints import entry_notebook
 from tests.src.praxxis.util import dummy_object
 
 def test_init_outfile(setup, outfile_root):
-    from tests.src.praxxis.util import rmtree
+    from src.praxxis.util import rmtree
     import os 
 
     assert os.path.exists(outfile_root)
-    rmtree.rmtree(outfile_root)
+    rmtree.rmtree(outfile_root, test=True)
     assert not os.path.exists(outfile_root)
 
     entry_notebook.init_outfile(outfile_root)
