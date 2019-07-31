@@ -218,4 +218,4 @@ def pytest_windows_permissions_error(error):
     if "Windows permissions failure" in error:
         return error
     else:
-        return f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error {error})"=======
+        return f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error {error})"
