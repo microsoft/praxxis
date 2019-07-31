@@ -147,4 +147,3 @@ def test_command(setup,
     dummy_input = dummy_object.make_dummy_input("update_settings")
     result = cli.command(dummy_input, init_root, library_root, library_db, output_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)
     assert result.__class__ == update_settings.update_settings.__class__
- 

@@ -44,4 +44,3 @@ def test_telemetry_off(setup, telemetry_db, add_test_library):
     backlog_len = sqlite_telemetry.backlog_size(telemetry_db)
 
     assert backlog_len == 0
-    

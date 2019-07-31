@@ -154,4 +154,3 @@ def make_dummy_output_to_add(string):
     dummy_output = Dummy_Object()
     dummy_output.string = string
     return dummy_output
-    

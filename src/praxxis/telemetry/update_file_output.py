@@ -65,5 +65,3 @@ if __name__ == "__main__":
     scene_identifier = sys.argv[3]
     
     update_file_output_entrance(user_info_db, local_copy, scene_identifier)
-    
-            

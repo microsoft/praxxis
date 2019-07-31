@@ -67,4 +67,3 @@ def generate_short_history(setup, add_test_library, telemetry_db, output_root, c
     run_notebook.run_notebook(notebook1, telemetry_db, output_root, current_scene_db, library_root, library_db, start, stop)
     yield 
     sqlite_scene.clear_history(current_scene_db)
-    

@@ -47,4 +47,4 @@ def test_add_output_empty_history(setup, output_root, current_scene_db, telemetr
         assert 0
     except EmptyHistoryError as e:
         assert str(e) == display_error.empty_history_error()
-        
+    
