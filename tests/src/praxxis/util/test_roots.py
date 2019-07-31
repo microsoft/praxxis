@@ -6,7 +6,7 @@ def test_init(setup, init_root, library_root, library_db, output_root, scene_roo
     import os 
     
     assert os.path.exists(init_root)
-    rmtree.rmtree(init_root)
+    rmtree.rmtree(init_root, test=True)
     assert not os.path.exists(init_root)
     roots.init(init_root, library_root, library_db, output_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, False)
     

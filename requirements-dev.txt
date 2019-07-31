@@ -5,8 +5,8 @@ ijson
 ipykernel 
 pytest
 pytest-runner
-mock
 setuptools
 nbopen
 gitpython
 colorama 
+toml

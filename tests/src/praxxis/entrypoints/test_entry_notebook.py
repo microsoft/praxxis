@@ -6,7 +6,7 @@ def test_init_output(setup, output_root):
     import os 
 
     assert os.path.exists(output_root)
-    rmtree.rmtree(output_root)
+    rmtree.rmtree(output_root, test=True)
     assert not os.path.exists(output_root)
 
     entry_notebook.init_output(output_root)

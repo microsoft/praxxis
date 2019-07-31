@@ -212,3 +212,10 @@ def tensorflow_version_error():
     import sys
     print(f"{Fore.RED}praxxis's model is built with tensorflow, which requires python <=3.6. Your version is " + str(sys.version_info.major) + "." + str(sys.version_info.minor) + ", which is incompatible." +
                 " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")
+
+def pytest_windows_permissions_error(error):
+    """error for pytest hitting a windows permissions error)"""
+    if "Windows permissions failure" in error:
+        return error
+    else:
+        return f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error {error})"=======

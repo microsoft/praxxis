@@ -2,7 +2,7 @@
 Adds a rule to the ruleset by user inputs in a console dialog
 """
 
-def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start, stop):
+def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, start, stop):
     """prompts user through adding a rule, given a ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
@@ -16,9 +16,9 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
     else:
         name = args
 
-    name = rules.get_ruleset_by_ordinal(name, prediction_db)
+    name = rules.get_ruleset_by_ordinal(name, rulesengine_db)
 
-    ruleset_db = sqlite_rulesengine.get_ruleset_path(prediction_db, name)
+    ruleset_db = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name)
 
     # get a name for the rule
     rulename = display_edit_ruleset.display_get_rule_name()
@@ -52,6 +52,8 @@ def add_rule_to_ruleset(args, prediction_db, library_db, current_scene_db, start
     # display total rule and add it to db        
     display_rulesengine.display_rule(rulename, filenames, output, predicted)
     sqlite_rulesengine.add_rule(ruleset_db, rulename, filenames, output, predicted)
+
+    return rulename
     
         
 
@@ -97,6 +99,8 @@ def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename
         except NotebookNotFoundError as e:
             raise e
         prediction = (rulename, position, nbname[0], nbname[1], None)
+        if prediction[3] == []:
+            prediction = (rulename, position, nbname[0], None, None)
         predictions.append(prediction)
         position += 1
         

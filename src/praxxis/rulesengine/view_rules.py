@@ -20,4 +20,5 @@ def view_rules(args, prediction_db):
 
     rules_list = sqlite_rulesengine.list_rules_in_ruleset(ruleset_db)
     display_rulesengine.display_rule_list(name, rules_list)
+
     return rules_list

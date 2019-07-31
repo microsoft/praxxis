@@ -142,6 +142,15 @@ def delete_from_backlog(user_info_db, local_copy):
     cleanup = f'DELETE FROM "TelemBacklog" WHERE LocalCopy = ?'
     cur.execute(cleanup, (local_copy,))
     conn.commit()
-    toSend = cur.fetchall()
     conn.close()
-    return toSend
+
+def clear_backlog(user_info_db):
+    """clears backlog completely (for testing purposes)"""
+    from src.praxxis.sqlite import connection
+
+    conn = connection.create_connection(user_info_db)
+    cur = conn.cursor()
+    cleanup = 'DELETE FROM "TelemBacklog"'
+    cur.execute(cleanup)
+    conn.commit()
+    conn.close()
