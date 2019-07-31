@@ -51,7 +51,7 @@ Using praxxis, any command can be run, documented, and reproduced using executab
 praxxis scenes are situation-specific configurations that can be saved, closed, reopened and shared. Scenes store your execution history and parameter settings, allowing you to easily fix old problems and get help with new ones. When you share your scenes, your peers are able to see the same outputs, predictions, history, and parameter values you see, effectively containerizing a working environment.
 
 #### Predictions 
-With or without a big data cluster, praxxis's predictions are usable through trained machine learning models distributed by Microsoft. If you have your own big data cluster, you can top up or train a new model with your own data. With some configuration, the training code can be run locally as well.
+With or without a big data cluster, praxxis's predictions are usable through trained machine learning models. If you have your own big data cluster, you can top up or train a new model with your own data. With some configuration, the training code can be run locally as well.
 
 #### History
 With praxxis, a history of commands is preserved, allowing you to backtrack through problems and move forward quickly through complex problems. Since situation specific configurations are saved as parameters in scenes, you'll always be able to track exactly what commands were run, what was changed, and where you need to go next.
