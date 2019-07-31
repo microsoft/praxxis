@@ -127,7 +127,7 @@ prax al tests/test_notebooks
 prax l
 prax v test_param_inject
 prax p test_param_inject
-prax se 1 "hello test!"
+prax sp text_to_print 'hello test!'
 prax r test_param_inject
 ```
 This sequence:
