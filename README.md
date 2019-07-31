@@ -7,7 +7,9 @@
 <br />
 <p align="center">
   <a href="https://github.com/microsoft/praxxis">
-  <pre style="line-height: 1.2;">
+  <div class="container" style="text-align:center">
+    <pre style="line-height: 1.2; display:inline-block; text-align:left">
+        <font color="black">
                                                   /▒▒
                                                  |__/
   /▒▒▒▒▒▒   /▒▒▒▒▒▒  /▒▒▒▒▒▒  /▒▒   /▒▒ /▒▒   /▒▒ /▒▒  /▒▒▒▒▒▒▒
@@ -19,7 +21,9 @@
 | ▒▒
 | ▒▒
 |__/
-</pre>
+        </font>
+    </pre>
+</div>
 
 
   <p align="center">
