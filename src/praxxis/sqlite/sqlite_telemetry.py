@@ -125,7 +125,7 @@ def get_backlog(user_info_db):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    getbacklog = f'SELECT * FROM "TelemBacklog"'
+    getbacklog = f'SELECT LocalCopy, SceneID, Operation FROM "TelemBacklog"'
     cur.execute(getbacklog)
     conn.commit()
     toSend = cur.fetchall()

@@ -51,8 +51,14 @@ def telem_entrance(user_info_db=None, new_local_copy=None, scene_identifier=None
         for telem in backlog:
             local_copy = telem[0]
             scene_identifier = telem[1]
+            operation = telem[2]
             try:            
-                send(user_info_db, local_copy, scene_identifier)
+                if operation == 1:
+                    from src.praxxis.telemetry import update_file_output
+                    update_file_output.update_file(user_info_db, local_copy, scene_identifier)
+                else:
+                    send(user_info_db, local_copy, scene_identifier)
+                
                 sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
             except Exception:
                 pass 

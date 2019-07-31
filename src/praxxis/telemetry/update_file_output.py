@@ -36,45 +36,30 @@ def update_file(user_info_db, local_copy, scene_identifier):
         r = requests.delete(route, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
         r.raise_for_status()
     except Exception as e:
+        # add file that needs to be deleted to backlog
         sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e), operation = 1)    
     
-    payload = {'op': 'CREATE'}
-    with open(local_copy, 'rb' ) as f:
-        r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
-        r.raise_for_status()
-
+    try:
+        payload = {'op': 'CREATE'}
+        with open(local_copy, 'rb' ) as f:
+            r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
+            r.raise_for_status()
+    except Exception as e:
+        # add file that simply needs to be pushed to hdfs to backlog
+        sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e))
 
 if __name__ == "__main__":
-    # TODO: don't do if telem is off 
     user_info_db = sys.argv[1]
     local_copy = sys.argv[2]    
     scene_identifier = sys.argv[3]
     
+    telem_enabled = sqlite_telemetry.telem_on(user_info_db)
+
     backlog = sqlite_telemetry.get_backlog(user_info_db)
-    if local_copy not in backlog:
+    if telem_enabled and local_copy not in backlog:
         try:
             update_file(user_info_db, local_copy, scene_identifier)
         except Exception as e:
+            # should never be hit but if sqlite error occurs, don't want to interrupt console
             pass
-
-    #user_info_db, local_copy, scene_identifier
-
-    """
-    if(backlog_size != 0):
-        
-        for telem in backlog:
-            local_copy = telem[0]
-            scene_identifier = telem[1]
-            try:            
-                send(user_info_db, local_copy, scene_identifier)
-                sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
-            except Exception as e:
-                pass 
-    
-    try:            
-        send(user_info_db, local_copy, scene_identifier)
-        sqlite_telemetry.delete_from_backlog(user_info_db, local_copy)
-    except Exception as e:
-        sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e))
-    """
             
