@@ -1,0 +1,316 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: C:\Users\Skyler Clark\Documents\src
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 132
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 118
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  framedelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 75
+    content: "~ »\e[0K\e[41G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "usage: Notebooks: r, o, s, l, h, v, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, parameter:se , sv, de, le\e[0K\e[?25l\r\n\e[0K\r\n                                                  /▒▒\e[0K\r\n                                                 |__/\e[0K\r\n  /▒▒▒▒▒▒   /▒▒▒▒▒▒  /▒▒▒▒▒▒  /▒▒   /▒▒ /▒▒   /▒▒ /▒▒  /▒▒▒▒▒▒▒\e[0K\r\n /▒▒__  ▒▒ /▒▒__  ▒▒|____  ▒▒|  ▒▒ /▒▒/|  ▒▒ /▒▒/| ▒▒ /▒▒_____/\e[0K\r\n| ▒▒  \\ ▒▒| ▒▒  \\__/ /▒▒▒▒▒▒▒ \\  ▒▒▒▒/  \\  ▒▒▒▒/ | ▒▒|  ▒▒▒▒▒▒\e[0K\r\n| ▒▒  | ▒▒| ▒▒      /▒▒__  ▒▒  >▒▒  ▒▒   >▒▒  ▒▒ | ▒▒ \\____  ▒▒\e[0K\r\n| ▒▒▒▒▒▒▒/| ▒▒     |  ▒▒▒▒▒▒▒ /▒▒/\\  ▒▒ /▒▒/\\  ▒▒| ▒▒ /▒▒▒▒▒▒▒/\e[0K\r\n| ▒▒____/ |__/      \\_______/|__/  \\__/|__/  \\__/|__/|_______/\e[0K\r\n| ▒▒\e[0K\r\n| ▒▒\e[0K\r\n|__/\e[0K\r\n\e[0K\r\npositional arguments:\e[0K\r\n  {r,v,o,s,l,h,n,a,rm,ns,es,cs,rs,ds,ls,sp,sv,dp,lp,vl,p,pl,al,rl,ll,sl,u,nr,rr,lr,ir,vr,er,ar,dr,im,um}\e[0K\r\nNotebooks:\e[0K\r\n    [n]                 runs nth notebook in list\e[0K\r\n    run (r)             run notebook\e[0K\r\n    viewparams (v)      displays the parameters for the notebook\e[0K\r\n    open (o)            open notebook in Azure Data Studio\e[0K\r\n    search (s)          search for notebooks matching search term\e[0K\r\n    list (l)            list notebooks to run, by ordinal.\e[0K\r\n    history (h)         history of what you've done in the current scene\e[0K\r\n    whatnext (n)        model based prediction of what to do next in the\e[0K\r\n                        current scene\e[0K\r\n    addnotebook (a)     add a notebook to praxxis\e[0K\r\n    removenotebook (rm)\e[0K\r\n                        remove notebook by name\e[0K\r\nScene:\e[0K\r\n    newscene (ns)       new scene\e[0K\r\n    endscene (es)       end scene\e[0K\r\n    changescene (cs)    change scene\e[0K\r\n    resumescene (rs)    resume scene\e[0K\r\n    deletescene (ds)    delete scene\e[0K\r\n    listscenes (ls)     list scenes\e[0K\r\nParameter:\e[0K\r\n    setparam (sp)       set parameter variable for current scene\e[0K\r\n    searchparam (sv)    search for parameter variable names\e[0K\r\n    deleteparam (dp)    delete parameter variable for current scene\e[0K\r\n    listparam (lp)      list parameters\e[0K\r\n    viewlibparam (vl)   list all parameters in a library of notebooks\e[0K\r\n    pullparam (p)       pull parameters out of a notebook into your current\e[0K\r\n                        scene\e[0K\r\n    pullparamlib (pl)   pull parameters out of a library into your current\e[0K\r\n                        scene\e[0K\r\nLibrary:\e[0K\r\n    addlibrary (al)     install library of notebooks to praxxis\e[0K\r\n    removelibrary (rl)  remove library of notebooks praxxis\e[0K\r\n    listlibrary (ll)    list libraries currently installed\e[0K\r\n    synclibrary (sl)    load libraries into praxxis. Default loads from\e[0K\r\n                        predefined library path\e[0K\r\n    updatesettings (u)  update telemetry and security settings\e[0K\r\nRules Engine:\e[0K\r\n    newruleset (nr)     create a ruleset for the rules engine\e[0K\r\n    removeruleset (rr)  remove a ruleset from your machine\e[0K\r\n    listrulesets (lr)   list all rulesets available for the rules engine\e[0K\r\n    importruleset (ir)  import a ruleset file from outside praxxis\e[0K\r\n    viewruleset (vr)    view all rules in a ruleset\e[0K\r\n    editruleset (er)    make changes to a ruleset\e[0K\r\n    activateruleset (ar)\e[0K\r\n                        activate ruleset(s) to use when making predictions\e[0K\r\n    deactivateruleset (dr)\e[0K\r\n                        deactivate ruleset(s) to keep them on your machine,\e[0K\r\n                        but not use them in predictions\e[0K\r\nModel:\e[0K\r\n    importmodel (im)    import a model file and converter from outside praxxis\e[0K\r\n    updatemodel (um)    fetch newest version of model from storage pool\e[0K\r\n\e[0K\r\noptional arguments:\e[0K\r\n  -h, --help            show this help message and exit\e[0K\r\n\e[0K\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "Current scene: scene\e[0K\e[?25l\r\n~ »\e[0K\e[41G\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m l\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "Notebooks:\e[0K\e[?25l\r\n    test_notebooks:\e[0K\r\n        1.      broken_notebook\e[0K\r\n        2.      test_notebook\e[0K\r\n        3.      test_param_inject\e[0K\r\n~ »\e[0K\e[41G\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m v\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[48G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m v \e[0;1m3\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "        1.      text_to_print = \"hello world\"\e[0K\e[?25l\r\n        2.      times = 4\e[0K\r\n\e[0K\e[?25h"
+  - delay: 75
+    content: "~ »\e[0K\e[41G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m r\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[48G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m r \e[0;1m3\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\nRunning test_param_inject...\e[0K\r\n\e[0K\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "  0%|                                                                                                        | 0/2 [00:00<?, ?it/s]\e[0K"
+  - delay: 600
+    content: "\e[?25l\r 50%|████████████████████████████████████████████████                                                | 1/2 [00:01<00:01,  1.42s/it]\e[0K\e[?25h"
+  - delay: 600
+    content: "\e[?25l\r100%|████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.16s/it]\e[0K\r\n\e[0K\r\nNotebook output:\e[0K\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "\e[?25l\r\n\e[0K\r\n```python\e[0K\r\ntext_to_print = \"hello world\"\e[0K\r\ntimes = 4\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\nfor i in range(int(times)):\e[0K\r\n    print(text_to_print)\e[0K\r\n```\e[0K\r\n\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n\e[0K\r\n\e[0K\r\n\e[0;33mWarning: telemetry is not set up. Use the settings utility (m u) to enable it.\e[0m\e[0K\r\n\e[0K\e[?25h"
+  - delay: 75
+    content: "~ »\e[0K\e[41G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m p\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[48G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m p \e[0;1m3\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "        1.      text_to_print = \"hello world\"\e[0K\e[?25l\r\n        2.      times = 4\e[0K\r\n\e[0K\e[?25h"
+  - delay: 75
+    content: "~ »\e[0K\e[41G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m l\e[0K\e[?25h"
+  - delay: 75
+    content: "p\e[0K"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "parameters:\e[0K\e[?25l\r\n        1.      times = 4\e[0K\r\n        2.      text_to_print = \"hello world\"\e[0K\r\n~ »\e[0K\e[41G\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m s\e[0K\e[?25h"
+  - delay: 75
+    content: "p\e[0K"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m sp \e[0;1m2\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[51G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m sp \e[0;1m2\e[0m h\e[0K\e[?25h"
+  - delay: 75
+    content: "e\e[0K"
+  - delay: 75
+    content: "l\e[0K"
+  - delay: 75
+    content: "l\e[0K"
+  - delay: 75
+    content: "o\e[0K"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "Set parameter for scene:\e[0K\e[?25l\r\n        text_to_print = hello\e[0K\r\n\e[0K\e[?25h"
+  - delay: 75
+    content: "~ »\e[0K\e[41G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m l\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "Notebooks:\e[0K\e[?25l\r\n    test_notebooks:\e[0K\r\n        1.      broken_notebook\e[0K\r\n        2.      test_notebook\e[0K\r\n        3.      test_param_inject\e[0K\r\n~ »\e[0K\e[41G\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mp\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[0;33;93mr\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93ma\e[0m\e[0K"
+  - delay: 75
+    content: "\e[0;33;93mx\e[0m\e[0K"
+  - delay: 75
+    content: "\e[46G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m r\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[48G"
+  - delay: 75
+    content: "\e[?25l\r~ » \e[0;33;93mprax\e[0m r \e[0;1m3\e[0m\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\n\e[0K\e[?25h"
+  - delay: 75
+    content: "\e[?25l\r\nRunning test_param_inject...\e[0K\r\n\e[0K\r\n\e[0K\e[?25h"
+  - delay: 600
+    content: "  0%|                                                                                                        | 0/3 [00:00<?, ?it/s]\e[0K"
+  - delay: 600
+    content: "\e[?25l\r 33%|████████████████████████████████                                                                | 1/3 [00:01<00:02,  1.42s/it]\e[0K\e[?25h"
+  - delay: 600
+    content: "\e[?25l\r100%|████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:02<00:00,  1.27it/s]\e[0K\r\n\e[0K\r\nNotebook output:\e[0K\r\n\e[0K\e[?25h"
+  - delay: 
+    content: "\e[?25l\r\n\e[0K\r\n```python\e[0K\r\ntext_to_print = \"hello world\"\e[0K\r\ntimes = 4\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\n# Parameters\e[0K\r\ntext_to_print = \"hello\"\e[0K\r\ntimes = \"4\"\e[0K\r\n\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\nfor i in range(int(times)):\e[0K\r\n    print(text_to_print)\e[0K\r\n```\e[0K\r\n\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n\e[0K\r\n\e[0K\r\n\e[0;33mWarning: telemetry is not set up. Use the settings utility (m u) to enable it.\e[0m\e[0K\r\n\e[0K\e[?25h"
+  
