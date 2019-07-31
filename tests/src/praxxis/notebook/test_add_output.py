@@ -30,3 +30,21 @@ def test_add_one_output(setup, generate_short_history, output_root, current_scen
                 found_cell = True
 
     assert found_cell
+
+def test_add_output_empty_history(setup, output_root, current_scene_db, telemetry_db):
+    from src.praxxis.notebook import add_output
+    from tests.src.praxxis.util import dummy_object
+    from src.praxxis.util.error import EmptyHistoryError
+    from src.praxxis.display import display_error
+
+    test_str = "TESTING\n123"
+
+    test_args = dummy_object.make_dummy_output_to_add(test_str)
+
+    try:
+        add_output.add_output(test_args, output_root, current_scene_db, telemetry_db)
+        # if success
+        assert 0
+    except EmptyHistoryError as e:
+        assert str(e) == display_error.empty_history_error()
+        

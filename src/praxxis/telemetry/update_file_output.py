@@ -47,19 +47,23 @@ def update_file(user_info_db, local_copy, scene_identifier):
         # add file that needs to be deleted to backlog
         sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e), operation = 1)    
     
-    
-if __name__ == "__main__":
-    user_info_db = sys.argv[1]
-    local_copy = sys.argv[2]    
-    scene_identifier = sys.argv[3]
-    
+
+def update_file_output_entrance(user_info_db, local_copy, scene_identifier):
     telem_enabled = sqlite_telemetry.telem_on(user_info_db)
 
     backlog = sqlite_telemetry.get_backlog(user_info_db)
     if telem_enabled and local_copy not in backlog:
         try:
             update_file(user_info_db, local_copy, scene_identifier)
-        except Exception as e:
+        except Exception:
             # should never be hit but if sqlite error occurs, don't want to interrupt console
             pass
+
+if __name__ == "__main__":
+    user_info_db = sys.argv[1]
+    local_copy = sys.argv[2]    
+    scene_identifier = sys.argv[3]
+    
+    update_file_output_entrance(user_info_db, local_copy, scene_identifier)
+    
             
