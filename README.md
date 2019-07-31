@@ -150,20 +150,20 @@ Project Link: [https://github.com/github_username/repo](https://github.com/githu
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/microsoft/praxxis.svg?style=flat-square
 [contributors-url]: https://github.com/microsoft/praxxis/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/microsoft/praxxis.svg?style=flat-square
 [forks-url]: https://github.com/microsoft/praxxis/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/microsoft/praxxis.svg?style=flat-square
 [stars-url]: https://github.com/microsoft/praxxis/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/microsoft/praxxis.svg?style=flat-square
 [issues-url]: https://github.com/microsoft/praxxis/issues
-[good-first-issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
+[good-first-issues-shield]: https://img.shields.io/github/issues/microsoft/praxxis.svg?style=flat-square
 [issues-url]: https://github.com/microsoft/praxxis/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
+[license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
 [license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
 
-<!-- readme template from https://github.com/othneildrew/Best-README-Template-->
+<!-- readme template from https://github.com/microsoft/praxxis-->
