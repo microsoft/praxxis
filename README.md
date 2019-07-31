@@ -9,7 +9,6 @@
 <img alt="praxxis logo" src="docs/images/praxxis.png">
 </div>
 
-
   <p align="center">
     A Command Line Notebook Task Interface
     <br />
