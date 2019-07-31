@@ -1,5 +1,5 @@
 
-def add_output(args, output_root, current_scene_db):
+def add_output(args, output_root, current_scene_db, user_info_db):
     import json
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.display import display_notebook
@@ -22,4 +22,25 @@ def add_output(args, output_root, current_scene_db):
         f1.close()
         
     display_notebook.display_adding_output(last_notebook[0][0], args.string)
+
+    #update_telemetry(user_info_db, last_notebook[0][1], current_scene_db)
     
+
+def update_telemetry(user_info_db, local_copy, current_scene_db):
+    from src.praxxis.sqlite import sqlite_telemetry
+
+    current_scene_id = sqlite_telemetry.get_scene_id(current_scene_db)
+
+    if not sqlite_telemetry.telem_init(user_info_db):
+        from src.praxxis.display import display_error
+        display_error.telem_not_init_warning() 
+    elif not sqlite_telemetry.telem_on(user_info_db):
+        from src.praxxis.display import display_error
+        display_error.telem_off_warning()    
+
+    else: # telemetry initalized and on     
+        import subprocess
+        import os
+        import sys
+        
+        subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "telemetry", "update_file_output.py"), user_info_db, local_copy, current_scene_id])
