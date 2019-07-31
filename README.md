@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-<img alt="praxxis logo" src="docs/images/praxxis.png">
+<img alt="praxxis logo" src="docs/images/praxxis_logo_black.png">
 </div>
 
   <p align="center">
