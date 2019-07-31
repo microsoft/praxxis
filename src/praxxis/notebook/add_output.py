@@ -23,7 +23,7 @@ def add_output(args, output_root, current_scene_db, user_info_db):
         
     display_notebook.display_adding_output(last_notebook[0][0], args.string)
 
-    #update_telemetry(user_info_db, last_notebook[0][1], current_scene_db)
+    update_telemetry(user_info_db, last_notebook[0][1], current_scene_db)
     
 
 def update_telemetry(user_info_db, local_copy, current_scene_db):

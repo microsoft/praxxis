@@ -32,13 +32,15 @@ def update_file(user_info_db, local_copy, scene_identifier):
     route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(web_hdfs_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
 
     payload = {'op': 'DELETE'}
-    r = requests.put(route, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
+    r = requests.delete(route, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
     r.raise_for_status()
         
+    
     payload = {'op': 'CREATE'}
     with open(local_copy, 'rb' ) as f:
         r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
         r.raise_for_status()
+
 
 if __name__ == "__main__":
 
@@ -53,14 +55,10 @@ if __name__ == "__main__":
     scene_identifier = sys.argv[3]
     
     backlog = sqlite_telemetry.get_backlog(user_info_db)
-    if local_copy in backlog:
-        print("DON'T SEND")
-        pass
-    else:
+    if local_copy not in backlog:
         try:
             update_file(user_info_db, local_copy, scene_identifier)
         except Exception as e:
-            print(str(e))
             pass
 
     #user_info_db, local_copy, scene_identifier
