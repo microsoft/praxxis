@@ -5,7 +5,7 @@ import pytest
 import os
 
 @pytest.fixture(scope="session")
-def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene_root, history_db, default_scene_name, start, stop, rulesengine_root, rulesengine_db):
+def setup(init_root, library_root, telemetry_db, library_db, output_root, scene_root, history_db, default_scene_name, start, stop, rulesengine_root, rulesengine_db):
     """
     sets up directories in the temp dir
     """
@@ -34,9 +34,9 @@ def setup(init_root, library_root, telemetry_db, library_db, outfile_root, scene
         sqlite_init.init_library_db(library_db)
         assert os.path.exists(library_db)
     
-    if not os.path.exists(outfile_root):
-        os.mkdir(outfile_root)
-        assert os.path.exists(outfile_root)
+    if not os.path.exists(output_root):
+        os.mkdir(output_root)
+        assert os.path.exists(output_root)
 
     if not os.path.exists(scene_root):
         os.mkdir(scene_root)

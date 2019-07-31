@@ -5,7 +5,7 @@ opened as an html output in the web browser, depending on user input.
 
 from src.praxxis.sqlite import sqlite_telemetry 
 
-def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_root, library_db, start, stop):
+def run_notebook(args, user_info_db, output_root, current_scene_db, library_root, library_db, start, stop):
     """runs a single notebook specified in args and sends telemetry"""
     from src.praxxis.display import display_notebook
     from src.praxxis.notebook import notebook
@@ -22,7 +22,7 @@ def run_notebook(args, user_info_db, outfile_root, current_scene_db, library_roo
     display_notebook.display_run_notebook_start(notebook.name)
 
     try:
-        local_copy = execute(current_scene_db, notebook, outfile_root)
+        local_copy = execute(current_scene_db, notebook, output_root)
     except Exception as e:
         raise e
     
@@ -59,12 +59,12 @@ def telemetry(user_info_db, local_copy, current_scene_id):
         subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "telemetry", "telemetry.py"), user_info_db, local_copy, current_scene_id])
 
 
-def execute(current_scene_db, notebook, outfile_root):
+def execute(current_scene_db, notebook, output_root):
     """Handles papermill execution for notebook"""
     import papermill
     from src.praxxis.display import display_error
 
-    local_copy = get_outputname(notebook, outfile_root)
+    local_copy = get_outputname(notebook, output_root)
 
     if (notebook._hasParameters): 
         injects = pull_params(current_scene_db, notebook._parameters)
@@ -96,7 +96,7 @@ def pull_params(current_scene_db, parameters):
     return injects
 
 
-def get_outputname(notebook, outfile_root):
+def get_outputname(notebook, output_root):
     """Returns name of output file for notebook"""
     import os
     from datetime import datetime
@@ -104,5 +104,5 @@ def get_outputname(notebook, outfile_root):
     timestamp = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     filename = f"{timestamp}-{notebook.library_name}-{notebook.name}.ipynb"
     
-    outputname = os.path.join(outfile_root, filename)
+    outputname = os.path.join(output_root, filename)
     return outputname
