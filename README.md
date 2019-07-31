@@ -132,7 +132,7 @@ Please see our [contributing.md](https://github.com/microsoft/praxxis/blob/maste
 Distributed under the MIT License. See `LICENSE` for more information.
 
 
-Project Link: [https://github.com/github_username/repo](https://github.com/github_username/repo)
+Project Link: [https://github.com/github_username/repo](https://github.com/microsoft/praxxis)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
