@@ -35,19 +35,19 @@ def update_file(user_info_db, local_copy, scene_identifier):
         payload = {'op': 'DELETE'}
         r = requests.delete(route, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
         r.raise_for_status()
+        try:
+            payload = {'op': 'CREATE'}
+            with open(local_copy, 'rb' ) as f:
+                r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
+                r.raise_for_status()
+        except Exception as e:
+            # add file that simply needs to be pushed to hdfs to backlog
+            sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e))
     except Exception as e:
         # add file that needs to be deleted to backlog
         sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e), operation = 1)    
     
-    try:
-        payload = {'op': 'CREATE'}
-        with open(local_copy, 'rb' ) as f:
-            r = requests.put(route, data=f, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
-            r.raise_for_status()
-    except Exception as e:
-        # add file that simply needs to be pushed to hdfs to backlog
-        sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e))
-
+    
 if __name__ == "__main__":
     user_info_db = sys.argv[1]
     local_copy = sys.argv[2]    

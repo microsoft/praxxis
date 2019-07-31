@@ -10,9 +10,9 @@ def add_output(args, output_root, current_scene_db, user_info_db):
 
     last_notebook = sqlite_scene.get_recent_history(current_scene_db, 1)
     if last_notebook == []:
-        from src.praxxis.util.error import EmptyRulesetError
-        raise EmptyRulesetError()
-       
+        from src.praxxis.util import error
+        raise error.EmptyHistoryError()
+        
     with open(last_notebook[0][1]) as f:
         notebook_data = json.load(f)
         notebook_data["cells"].append(CELL_FORMAT)
@@ -24,6 +24,8 @@ def add_output(args, output_root, current_scene_db, user_info_db):
     display_notebook.display_adding_output(last_notebook[0][0], args.string)
 
     update_telemetry(user_info_db, last_notebook[0][1], current_scene_db)
+
+    return args.string
     
 
 def update_telemetry(user_info_db, local_copy, current_scene_db):

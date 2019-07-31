@@ -22,6 +22,7 @@ class Dummy_Object():
     path = ""
     parameter = ""
     viewer = ""
+    string = ""
 
     def getpath(self):
         """returns the path of the notebook"""
@@ -148,3 +149,8 @@ def make_dummy_git_repo():
     dummy_git_repo.path = "https://github.com/githubtraining/hellogitworld.git"
     dummy_git_repo.name = "githubtraining_hellogitworld"
     return dummy_git_repo
+
+def make_dummy_output_to_add(string):
+    dummy_output = Dummy_Object()
+    dummy_output.string = string
+    return dummy_output

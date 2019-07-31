@@ -98,7 +98,7 @@ def add_to_backlog(user_info_db, local_copy, scene_id, error, operation = 0):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    add = f'INSERT INTO "TelemBacklog" (LocalCopy, SceneID, Error, Operation) VALUES (?,?,?,?)'
+    add = f'INSERT OR REPLACE INTO "TelemBacklog" (LocalCopy, SceneID, Error, Operation) VALUES (?,?,?,?)'
     cur.execute(add, (local_copy, scene_id, error, operation))
     conn.commit()
     conn.close()
