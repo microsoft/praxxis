@@ -144,6 +144,7 @@ def delete_from_backlog(user_info_db, local_copy):
     conn.commit()
     conn.close()
 
+
 def clear_backlog(user_info_db):
     """clears backlog completely (for testing purposes)"""
     from src.praxxis.sqlite import connection

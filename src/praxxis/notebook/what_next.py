@@ -30,12 +30,11 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
             from src.praxxis.display import display_error
             display_error.tensorflow_version_error()
             sys.exit(1)
-        return 
-        """
+        
         from src.praxxis.model import score
         suggestions = score.predict(history)
         print(suggestions)
-        """
+        
 
     
 def write_to_list(notebook_library_list, current_scene_db, library_db):

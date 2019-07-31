@@ -1,7 +1,6 @@
 import os 
 import warnings
 import pandas as pd
-#from sklearn.externals 
 import joblib
 from keras.models import load_model
 from tensorflow import logging 
@@ -50,7 +49,9 @@ def predict(sequence, model_path, converter_path):
     # convert results into meaningful thing
     print(pd.Series(data[0], converter).sort_values(ascending=False))
 
-def get_files(prediction_db):
-    pass
+def get_files(model_db):
+    from src.praxxis.sqlite import sqlite_model
+
+    sqlite_model.get_model_paths(model_db, model_name)
     
  
