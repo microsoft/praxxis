@@ -37,7 +37,7 @@ def library_db(library_root):
 
 
 @pytest.fixture(scope="session")
-def outfile_root(init_root):
+def output_root(init_root):
     """
     defines the test output folder location
     """

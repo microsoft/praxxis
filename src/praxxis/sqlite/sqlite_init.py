@@ -76,7 +76,7 @@ def init_user_info(telemetry_db, send_telemetry=1):
     create_url = f'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
     create_user = f'INSERT INTO "UserInfo" (Key) VALUES ("Username")'
     create_pswd = f'INSERT INTO "UserInfo" (Key) VALUES ("Password")'
-    create_telemetry_table = f'CREATE TABLE "TelemBacklog" (LocalCopy TEXT PRIMARY KEY, SceneID TEXT, Error TEXT)'
+    create_telemetry_table = f'CREATE TABLE "TelemBacklog" (LocalCopy TEXT PRIMARY KEY, SceneID TEXT, Error TEXT, Operation INTEGER)'
     id_val = str(uuid.uuid4())
     
     cur.execute(create_userinfo_table)

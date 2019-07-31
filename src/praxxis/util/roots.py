@@ -13,7 +13,7 @@ _user_info_db = os.path.join(_root, "user_id.db")
 _library_root = os.path.join(_root, "library")
 _library_db = os.path.join(_library_root, "libraries.db")
 _scene_root = os.path.join(_root, "scene")
-_outfile_root = os.path.join(_root, "output")
+_output_root = os.path.join(_root, "output")
 _history_db = os.path.join(_scene_root, "history.db")
 _telemetry_db = os.path.join(_root, "user_id.db")
 _rulesengine_root = os.path.join(_root, "rulesengine")
@@ -37,7 +37,7 @@ def init(
         root, 
         library_root, 
         library_db, 
-        outfile_root, 
+        output_root, 
         scene_root, 
         history_db, 
         telemetry_db,
@@ -64,9 +64,9 @@ def init(
     if not os.path.exists(library_root):
         entry_library.init_library(library_root, library_db)
     
-    #outfile init
-    if not os.path.exists(outfile_root):
-        entry_notebook.init_outfile(outfile_root)
+    #output init
+    if not os.path.exists(output_root):
+        entry_notebook.init_output(output_root)
 
     #scene init
     if not os.path.exists(scene_root):

@@ -18,6 +18,7 @@ history_command="history"
 next_notebook_command="next_notebook"
 remove_notebook_command = "remove_notebook"
 add_notebook_command = "add_notebook"
+add_output_command = "add_output"
 
 new_scene_command = "new_scene"
 end_scene_command="end_scene"
@@ -68,6 +69,9 @@ remove_notebook_help = "remove notebook by name"
 remove_notebook_name_help = "name of notebook to remove"
 add_notebook_help = "add a notebook to praxxis"
 add_notebook_path_help = "the path of the notebook you want to load"
+add_output_help = "add output from an external program to the last notebook executed"
+add_output_string_help = "the external output to add"
+
 ## scene help strings 
 new_scene_help="new scene"
 new_scene_name_help="name of new scene"
@@ -81,6 +85,7 @@ resume_scene_name_help="name of scene to resume"
 delete_scene_help="delete scene"
 delete_scene_name_help="name of scene to delete"
 list_scene_help="list scenes"
+
 ## parameter help strings
 set_param_help="set parameter variable for current scene"
 set_param_name_help="name of the parameter variable to set"
@@ -96,6 +101,7 @@ pull_notebook_param_help = "pull parameters out of a notebook into your current 
 pull_notebook_param_name_help = "the name of the notebook to pull parameters from"
 pull_library_param_help = "pull parameters out of a library into your current scene"
 pull_library_param_name_help = "the name of the library to pull the parameters from"
+
 ## library help strings
 add_library_help="install library of notebooks to praxxis"
 add_library_path_help="the path to the library you want to add"
@@ -104,9 +110,11 @@ remove_library_name_help="name of the library you want to remove"
 list_libraries_help="list libraries currently installed"
 sync_library_help="load libraries into praxxis. Default loads from predefined library path"
 sync_library_path_help="load library from a specific directory into praxxis"
+
 ## misc help strings
 history_help="history of what you've done in the current scene"
 update_settings_help="update telemetry and security settings"
+
 # rules engine help strings
 new_ruleset_help="create a ruleset for the rules engine"
 new_ruleset_name_help="the name of the new ruleset to create"
@@ -125,6 +133,7 @@ activate_ruleset_help="activate ruleset(s) to use when making predictions"
 activate_ruleset_name_help="name of the ruleset to activate"
 deactivate_ruleset_name_help="name of the ruleset to deactivate"
 deactivate_ruleset_help="deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
+
 # model help strings
 import_model_help="import a model file and converter from outside praxxis"
 import_model_modelpath_help="the path to the model file"
@@ -206,10 +215,13 @@ def main(command_line=None):
     next_notebook = subparsers.add_parser('whatnext', aliases=["n"], help=next_notebook_help)
     next_notebook.set_defaults(which=next_notebook_command)
 
-
     add_notebook = subparsers.add_parser('addnotebook', aliases=["a"], help=add_notebook_help)
     add_notebook.add_argument('path', help=add_notebook_path_help)
     add_notebook.set_defaults(which=add_notebook_command)
+
+    add_output = subparsers.add_parser('addoutput', aliases=["ao"], help=add_output_help)
+    add_output.add_argument('string', help=add_output_string_help)
+    add_output.set_defaults(which=add_output_command)
 
     remove_notebook = subparsers.add_parser('removenotebook', aliases=["rm"], help=remove_notebook_help)
     remove_notebook.add_argument('name', help=remove_notebook_name_help)
