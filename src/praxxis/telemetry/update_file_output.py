@@ -30,11 +30,13 @@ def update_file(user_info_db, local_copy, scene_identifier):
 
     # Create a file in hdfs
     route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(web_hdfs_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
-
-    payload = {'op': 'DELETE'}
-    r = requests.delete(route, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
-    r.raise_for_status()
-        
+    
+    try:
+        payload = {'op': 'DELETE'}
+        r = requests.delete(route, params=payload, headers={"Content-Type": "text/plain"}, verify=False, auth=HTTPBasicAuth(username, pswd))
+        r.raise_for_status()
+    except Exception as e:
+        sqlite_telemetry.add_to_backlog(user_info_db, local_copy, scene_identifier, str(e), operation = 1)    
     
     payload = {'op': 'CREATE'}
     with open(local_copy, 'rb' ) as f:
@@ -43,13 +45,7 @@ def update_file(user_info_db, local_copy, scene_identifier):
 
 
 if __name__ == "__main__":
-
-    
-    # TODO:
-    # - check if telem off, if off do nothing
-    # - warn if not updated in cluster ?
-    # - delete cluster version
-    # - send new one
+    # TODO: don't do if telem is off 
     user_info_db = sys.argv[1]
     local_copy = sys.argv[2]    
     scene_identifier = sys.argv[3]

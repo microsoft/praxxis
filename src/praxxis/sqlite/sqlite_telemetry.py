@@ -92,14 +92,14 @@ def write_settings(user_info_db, settings, values):
         write_setting(user_info_db, setting, values[setting])
 
 
-def add_to_backlog(user_info_db, local_copy, scene_id, error):
+def add_to_backlog(user_info_db, local_copy, scene_id, error, operation = 0):
     """adds this file to the telemetry backlog"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    add = f'INSERT INTO "TelemBacklog" (LocalCopy, SceneID, Error) VALUES (?,?,?)'
-    cur.execute(add, (local_copy, scene_id, error))
+    add = f'INSERT INTO "TelemBacklog" (LocalCopy, SceneID, Error, Operation) VALUES (?,?,?,?)'
+    cur.execute(add, (local_copy, scene_id, error, operation))
     conn.commit()
     conn.close()
     return
