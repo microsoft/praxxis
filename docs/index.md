@@ -41,4 +41,3 @@
 [issues-url]: https://github.com/microsoft/praxxis/issues
 [license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
 [license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
-[product-screenshot]: images/screenshot.png
