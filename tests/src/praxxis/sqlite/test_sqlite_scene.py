@@ -11,8 +11,8 @@ def test_init_history_db(setup, history_db):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    check_scene_history_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneHistory';"
-    check_scene_list_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneList';"
+    check_scene_history_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneHistory';"
+    check_scene_list_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneList';"
 
     cur.execute(check_scene_history_table)
     history = bool(cur.fetchone()[0])
@@ -23,8 +23,8 @@ def test_init_history_db(setup, history_db):
     assert history
     assert scene_list
 
-    check_scene_history_columns = f"SELECT * FROM 'SceneHistory';"
-    check_scene_list_columns = f"SELECT * FROM 'SceneList';"
+    check_scene_history_columns = "SELECT * FROM 'SceneHistory';"
+    check_scene_list_columns = "SELECT * FROM 'SceneList';"
 
     cur.execute(check_scene_history_columns)
     library_metadata_columns = [description[0] for description in cur.description]
@@ -45,10 +45,10 @@ def init_scene_db(setup, scene_db=""):
 
     conn = connection.create_connection(scene_db)
     cur = conn.cursor()
-    check_scene_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneMetadata';"
-    check_notebook_list_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookList';"
-    check_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='parameter';"
-    check_history_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='History';"
+    check_scene_metadata_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='SceneMetadata';"
+    check_notebook_list_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookList';"
+    check_parameter_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='parameter';"
+    check_history_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='History';"
 
     cur.execute(check_scene_metadata_table)
     scene_metadata = bool(cur.fetchone()[0])
@@ -67,10 +67,10 @@ def init_scene_db(setup, scene_db=""):
     assert parameter
     assert history
 
-    check_scene_metadata_columns = f"SELECT * FROM 'SceneMetadata';"
-    check_notebook_list_columns = f"SELECT * FROM 'NotebookList';"
-    check_parameter_columns = f"SELECT * FROM 'parameter';"
-    check_history_columns = f"SELECT * FROM 'History';"
+    check_scene_metadata_columns = "SELECT * FROM 'SceneMetadata';"
+    check_notebook_list_columns = "SELECT * FROM 'NotebookList';"
+    check_parameter_columns = "SELECT * FROM 'parameter';"
+    check_history_columns = "SELECT * FROM 'History';"
 
     cur.execute(check_scene_metadata_columns)
     scene_metadata_columns = [description[0] for description in cur.description]

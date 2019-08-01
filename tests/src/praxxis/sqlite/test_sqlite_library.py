@@ -10,10 +10,10 @@ def test_init_library_db(setup, library_db):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    check_library_metadata_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='LibraryMetadata';"
-    check_notebooks_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebooks';"
-    check_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Parameters';"
-    check_notebook_parameter_table = f"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookDefaultParam';"
+    check_library_metadata_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='LibraryMetadata';"
+    check_notebooks_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Notebooks';"
+    check_parameter_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Parameters';"
+    check_notebook_parameter_table = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='NotebookDefaultParam';"
 
 
     cur.execute(check_library_metadata_table)
@@ -33,10 +33,10 @@ def test_init_library_db(setup, library_db):
     assert parameter
     assert notebook_parameter
 
-    check_library_metadata_columns = f"SELECT * FROM'LibraryMetadata';"
-    check_notebooks_columns = f"SELECT * FROM 'Notebooks';"
-    check_parameter_columns = f"SELECT * FROM 'Parameters';"
-    check_notebook_parameter_columns = f"SELECT * FROM 'NotebookDefaultParam'"
+    check_library_metadata_columns = "SELECT * FROM'LibraryMetadata';"
+    check_notebooks_columns = "SELECT * FROM 'Notebooks';"
+    check_parameter_columns = "SELECT * FROM 'Parameters';"
+    check_notebook_parameter_columns = "SELECT * FROM 'NotebookDefaultParam'"
 
     cur.execute(check_library_metadata_columns)
     library_metadata_columns = [description[0] for description in cur.description]
