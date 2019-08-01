@@ -3,7 +3,7 @@ import warnings
 import pandas as pd
 import joblib
 from keras.models import load_model
-from tensorflow import logging 
+from tensorflow.compat.v1 import logging 
 
 from numpy import array
 from keras.preprocessing.sequence import pad_sequences
@@ -53,7 +53,10 @@ def get_files(model_db):
     from src.praxxis.sqlite import sqlite_model
 
     paths = sqlite_model.get_current_model_paths(model_db)
-    #print(paths)
+    
+    return paths
     
 def get_predictions(sequence, model_db):
-    get_files(model_db)
+    model_path, converter_path = get_files(model_db)
+
+    predict(sequence, model_path, converter_path)

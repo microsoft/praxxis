@@ -30,9 +30,11 @@ def what_next(args, user_info_db, current_scene_db, library_db, rulesengine_db, 
             from src.praxxis.display import display_error
             display_error.tensorflow_version_error()
             sys.exit(1)
-        
-        from src.praxxis.model import score
-        score.get_predictions(history, model_db)
+ 
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', FutureWarning)
+            from src.praxxis.model import score
+            score.get_predictions(history, model_db)
         suggestions = "done" #score.predict(history)
         print(suggestions)
         
