@@ -161,17 +161,17 @@ def settings_invalid_ordinal(userIn):
 
 def telem_off_warning():
     """the warning display for telemetry being off"""
-    print(f"{Fore.YELLOW}Warning: telemetry is disabled. Turn it on in the settings utility (m u)")
+    print(f"{Fore.YELLOW}Warning: telemetry is disabled. Turn it on in the settings utility (prax u)")
 
 
 def telem_not_init_warning():
     """the warning display for uninitialized telemetry"""
-    print(f"{Fore.YELLOW}Warning: telemetry is not set up. Use the settings utility (m u) to enable it.")
+    print(f"{Fore.YELLOW}Warning: telemetry is not set up. Use the settings utility (prax u) to enable it.")
 
 
 def display_telem_unsent(backlog):
     """the warning display for unsent telemetry"""
-    print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"m u\".")
+    print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"prax u\".")
     print(f"{Fore.YELLOW}Attempting to send {backlog+1} output files now.")
     
 

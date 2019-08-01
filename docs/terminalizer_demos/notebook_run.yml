@@ -192,7 +192,7 @@ records:
   - delay: 600
     content: "\e[?25l\r100%|████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.16s/it]\e[0K\r\n\e[0K\r\nNotebook output:\e[0K\r\n\e[0K\e[?25h"
   - delay: 600
-    content: "\e[?25l\r\n\e[0K\r\n```python\e[0K\r\ntext_to_print = \"hello world\"\e[0K\r\ntimes = 4\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\nfor i in range(int(times)):\e[0K\r\n    print(text_to_print)\e[0K\r\n```\e[0K\r\n\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n\e[0K\r\n\e[0K\r\n\e[0;33mWarning: telemetry is not set up. Use the settings utility (m u) to enable it.\e[0m\e[0K\r\n\e[0K\e[?25h"
+    content: "\e[?25l\r\n\e[0K\r\n```python\e[0K\r\ntext_to_print = \"hello world\"\e[0K\r\ntimes = 4\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\nfor i in range(int(times)):\e[0K\r\n    print(text_to_print)\e[0K\r\n```\e[0K\r\n\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n    hello world\e[0K\r\n\e[0K\r\n\e[0K\r\n\e[0;33mWarning: telemetry is not set up. Use the settings utility (prax u) to enable it.\e[0m\e[0K\r\n\e[0K\e[?25h"
   - delay: 75
     content: "~ »\e[0K\e[41G"
   - delay: 75
@@ -312,5 +312,5 @@ records:
   - delay: 600
     content: "\e[?25l\r100%|████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:02<00:00,  1.27it/s]\e[0K\r\n\e[0K\r\nNotebook output:\e[0K\r\n\e[0K\e[?25h"
   - delay: 
-    content: "\e[?25l\r\n\e[0K\r\n```python\e[0K\r\ntext_to_print = \"hello world\"\e[0K\r\ntimes = 4\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\n# Parameters\e[0K\r\ntext_to_print = \"hello\"\e[0K\r\ntimes = \"4\"\e[0K\r\n\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\nfor i in range(int(times)):\e[0K\r\n    print(text_to_print)\e[0K\r\n```\e[0K\r\n\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n\e[0K\r\n\e[0K\r\n\e[0;33mWarning: telemetry is not set up. Use the settings utility (m u) to enable it.\e[0m\e[0K\r\n\e[0K\e[?25h"
+    content: "\e[?25l\r\n\e[0K\r\n```python\e[0K\r\ntext_to_print = \"hello world\"\e[0K\r\ntimes = 4\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\n# Parameters\e[0K\r\ntext_to_print = \"hello\"\e[0K\r\ntimes = \"4\"\e[0K\r\n\e[0K\r\n```\e[0K\r\n\e[0K\r\n\e[0K\r\n```python\e[0K\r\nfor i in range(int(times)):\e[0K\r\n    print(text_to_print)\e[0K\r\n```\e[0K\r\n\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n    hello\e[0K\r\n\e[0K\r\n\e[0K\r\n\e[0;33mWarning: telemetry is not set up. Use the settings utility (prax u) to enable it.\e[0m\e[0K\r\n\e[0K\e[?25h"
   
