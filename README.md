@@ -74,16 +74,14 @@ to get started developing or using praxxis, follow these steps.
 - python 3.6 or above
 
 ### Installation
- 
-git clone this repo, and run
+to install, simply run
 ```
-pip install .
+pip install praxxis
 ```
-or
+or, for development mode clone the repo and run
 ```
 pip install -e .
 ```
-for development mode.
 
 
 
