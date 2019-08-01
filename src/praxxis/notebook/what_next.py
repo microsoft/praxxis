@@ -11,7 +11,7 @@ from src.praxxis.sqlite import sqlite_scene
 from src.praxxis.rulesengine import rules_checker
 
 
-def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, start, end):
+def what_next(args, user_info_db, current_scene_db, library_db, rulesengine_db, model_db, start, end):
     """calls prediction endpoints to get next notebooks"""
     from src.praxxis.display import display_rulesengine
     history = sqlite_scene.get_recent_history(current_scene_db, 5)
@@ -19,7 +19,7 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
         from src.praxxis.util.error import EmptyHistoryError
         raise EmptyHistoryError()
 
-    rules_based = rules_checker.rules_check(prediction_db, history[-1][0], history[-1][1], start, end)
+    rules_based = rules_checker.rules_check(rulesengine_db, history[-1][0], history[-1][1], start, end)
     if rules_based != []:
         display_rulesengine.display_predictions(rules_based)
         write_to_list(rules_based, current_scene_db, library_db)
@@ -32,10 +32,10 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, s
             sys.exit(1)
         
         from src.praxxis.model import score
-        suggestions = score.predict(history)
+        score.get_predictions(history, model_db)
+        suggestions = "done" #score.predict(history)
         print(suggestions)
         
-
     
 def write_to_list(notebook_library_list, current_scene_db, library_db):
     """grabs paths and writes to notebook list so ordinal referencing works"""

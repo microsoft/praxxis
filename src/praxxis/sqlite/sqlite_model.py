@@ -9,7 +9,7 @@ def add_model(model_db, model_name, model_path, converter_path):
     conn = connection.create_connection(model_db)
     cur = conn.cursor()
 
-    add_model = 'INSERT INTO "Models" (Name, Path, ConverterPath) VALUES (?,?,?)'
+    add_model = 'INSERT INTO "Models" (Name, Path, ConverterPath, Active) VALUES (?,?,?,1)'
 
     cur.execute(add_model, (model_name, model_path, converter_path))
     conn.commit()
@@ -31,3 +31,18 @@ def get_model_paths(model_db, model_name):
 
     return paths
     
+def get_current_model_paths(model_db):
+    """fetches the model and converter paths for first active model"""
+    from src.praxxis.sqlite import connection 
+
+    conn = connection.create_connection(model_db)
+    cur = conn.cursor()
+
+    get_model_paths = 'SELECT Path, ConverterPath FROM "Models" WHERE Active = 1'
+
+    cur.execute(get_model_paths)
+    conn.commit()
+    paths = cur.fetchone()
+    conn.close()
+
+    return paths

@@ -52,6 +52,8 @@ def predict(sequence, model_path, converter_path):
 def get_files(model_db):
     from src.praxxis.sqlite import sqlite_model
 
-    sqlite_model.get_model_paths(model_db, model_name)
+    paths = sqlite_model.get_current_model_paths(model_db)
+    #print(paths)
     
- 
+def get_predictions(sequence, model_db):
+    get_files(model_db)

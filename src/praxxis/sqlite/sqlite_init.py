@@ -28,7 +28,7 @@ def init_model_db(model_db):
 
     conn = connection.create_connection(model_db)
     cur = conn.cursor()
-    create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT, ConverterPath TEXT)'
+    create_models_table = f'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT, ConverterPath TEXT, Active INTEGER)'
     cur.execute(create_models_table)
     conn.commit()
     conn.close()
