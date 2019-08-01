@@ -1,5 +1,4 @@
-# Praxxis
-## Getting Started
+# Getting Started
 
 To get started with praxxis, you need
  - python 3.6 installed

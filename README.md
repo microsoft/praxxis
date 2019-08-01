@@ -1,7 +1,9 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![Good First Issues][good-first-issue-shield]][good-first-issue-url]
 [![MIT License][license-shield]][license-url]
+[![Chatting][chat-shield]][chat-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -12,7 +14,7 @@
   <p align="center">
     A Command Line Notebook Task Interface
     <br />
-    <a href="https://github.com/microsoft/praxxis/tree/master/docs"><strong>Explore the docs </strong></a>
+    <a href="https://microsoft.github.io/praxxis/"><strong>Explore the docs </strong></a>
     <br />
     <br />
     <a href="https://github.com/microsoft/praxxis/issues">Report Bug</a>
@@ -42,25 +44,25 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-praxxis is a task interface built on big data and machine learning. Using your own storage pool to collect data on your notebook-running habits, praxxis will learn about the problems you are solving, correlate that with the problems everyone else is solving, and predict the next notebook you should run without interrupting your workflow. It is a tool based on a collaborative paradigm of problem solving, allowing every person to leverage the knowledge of their larger organization to come to a solution more quickly.
+praxxis is a task interface built on big data and machine learning. Using your own storage pool to collect data on your habits when running notebooks, praxxis will learn about the problems you are solving, correlate that with the problems everyone else is solving, and predict the next notebook you should run without interrupting your workflow. It is a tool based on a collaborative paradigm of problem solving, allowing every person to leverage everyone's knowledge to come to a solution more quickly.
 
-Using praxxis, any command can be run, documented, and reproduced using executable code cells in jupyter notebooks. By using notebooks to execute, praxxis enforces that your workflows are well documented and replicable, allowing even the least technical user to jump in right where you left off. In exchange, even the most frustrating sequence of commands can be processed by simply typing "prax 1".
+Using praxxis, any command can be run, documented, and reproduced using executable code cells in jupyter notebooks, allowing even the least technical user to jump in right where you left off.
 
 ### Features
 #### Scenes
-praxxis scenes are situation-specific configurations that can be saved, closed, reopened and shared. Scenes store your execution history and parameter settings, allowing you to easily fix old problems and get help with new ones. When you share your scenes, your peers are able to see the same outputs, predictions, history, and parameter values you see, effectively containerizing a working environment.
+praxxis scenes are situation-specific configurations that can be saved, closed, reopened and shared. Scenes store your habits, history, and parameter settings, allowing you to easily fix old problems and get help with new ones. When you share your scenes, your peers are able to see the same outputs, history, and parameter values you see, allowing for easier problem solving in groups.
 
 #### Predictions 
-With or without a big data cluster, praxxis's predictions are usable through trained machine learning models. If you have your own big data cluster, you can top up or train a new model with your own data. With some configuration, the training code can be run locally as well.
+With or without a storage pool, praxxis's predictions are usable through trained machine learning models. If you have your own storage pool, you can top up or train a new model with your own data.
 
 #### History
-With praxxis, a history of commands is preserved, allowing you to backtrack through problems and move forward quickly through complex problems. Since situation specific configurations are saved as parameters in scenes, you'll always be able to track exactly what commands were run, what was changed, and where you need to go next.
+Using praxxis, a history of commands is preserved, allowing you to backtrack through problems. Since situation specific configurations are saved as parameters in scenes, you'll always be able to know exactly what commands were run, what was changed, and where you need to go next.
 
 #### Notebook Libraries
-praxxis runs on libraries of notebooks, allowing every command on your system to be documented and explained in a beautiful markdown format. praxxis combines the idea of functional documentation with every part of a system, allowing every person on a team to operate with the same understanding as even the most senior engineer, through docs that remain up to date because they're packaged with executable solutions.
+Praxxis runs on libraries of jupyter notebooks, allowing every command on your system to be documented and explained in a useful markdown format. By directly running the code embedded in the documentation, you know that no information is being lost, and no documentaion is getting out of date.
 
 #### Parameters
-praxxis uses parameterized jupyter notebooks to inject parameters into code cells. By saving parameters through praxxis, parameters are saved through sessions and restarts, and are documented in an easily accessible format, allowing you to run every notebook with absolute certainty. 
+Praxxis uses parameter tags to inject parameters into code cells. By saving parameters through praxxis, your environments are saved through sessions and restarts, and are documented in an easily accessible format.
 
 
 
@@ -95,7 +97,7 @@ prax
 ```
 to see the help page. 
 
-_For more examples, please refer to the [Documentation](https://github.com/microsoft/praxxis/blob/master/docs)_
+_For more examples, please refer to the [Documentation](https://microsoft.github.io/praxxis/)_
 
 
 
@@ -136,15 +138,23 @@ Project Link: [https://github.com/microsoft/praxxis](https://github.com/microsof
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/microsoft/praxxis.svg?style=flat-square
 [contributors-url]: https://github.com/microsoft/praxxis/graphs/contributors
+
 [forks-shield]: https://img.shields.io/github/forks/microsoft/praxxis.svg?style=flat-square
 [forks-url]: https://github.com/microsoft/praxxis/network/members
+
 [stars-shield]: https://img.shields.io/github/stars/microsoft/praxxis.svg?style=flat-square
 [stars-url]: https://github.com/microsoft/praxxis/stargazers
+
 [issues-shield]: https://img.shields.io/github/issues/microsoft/praxxis.svg?style=flat-square
 [issues-url]: https://github.com/microsoft/praxxis/issues
-[good-first-issues-shield]: https://img.shields.io/github/issues/microsoft/praxxis.svg?style=flat-square
-[issues-url]: https://github.com/microsoft/praxxis/issues
+
+[good-first-issue-shield]: https://img.shields.io/github/issues/microsoft/praxxis/good%20first%20issue?style=flat-square
+[good-first-issue-url]: https://github.com/microsoft/praxxis/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+
 [license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
 [license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
+
+[chat-shield]: https://img.shields.io/matrix/praxxis:matrix.org?style=flat-square
+[chat-url]: https://riot.im/app/#/room/#praxxis:matrix.org
 
 <!-- readme template from https://github.com/microsoft/praxxis-->
