@@ -1,8 +1,10 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![Good First Issues][good-first-issue-shield]][good-first-issue-url]
 [![MIT License][license-shield]][license-url]
 [![Chatting][chat-shield]][chat-url]
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -146,8 +148,8 @@ Project Link: [https://github.com/microsoft/praxxis](https://github.com/microsof
 [issues-shield]: https://img.shields.io/github/issues/microsoft/praxxis.svg?style=flat-square
 [issues-url]: https://github.com/microsoft/praxxis/issues
 
-[good-first-issues-shield]: https://img.shields.io/github/issues/microsoft/praxxis.svg?style=flat-square
-[issues-url]: https://github.com/microsoft/praxxis/issues
+[good-first-issue-shield]: https://img.shields.io/github/issues/microsoft/praxxis/good%20first%20issue?style=flat-square
+[good-first-issue-url]: https://github.com/microsoft/praxxis/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 
 [license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
 [license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
