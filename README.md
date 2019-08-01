@@ -6,17 +6,17 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-<img alt="praxxis logo" src="docs/images/praxxis_logo_black.png">
+<img alt="praxxis logo" src="https://raw.githubusercontent.com/microsoft/praxxis/master/docs/images/praxxis_logo_black.png">
 </div>
 
   <p align="center">
     A Command Line Notebook Task Interface
     <br />
-    <a href="https://github.com/microsoft/praxxis/tree/master/docs"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/microsoft/praxxis/tree/master/docs"><strong>Explore the docs </strong></a>
     <br />
     <br />
     <a href="https://github.com/microsoft/praxxis/issues">Report Bug</a>
-    ·
+    .
     <a href="https://github.com/microsoft/praxxis/issues">Request Feature</a>
   </p>
 </p>
@@ -104,7 +104,7 @@ _For more examples, please refer to the [Documentation](https://github.com/micro
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/github_username/repo/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/microsoft/praxxis/issues) for a list of proposed features (and known issues).
 
 
 
