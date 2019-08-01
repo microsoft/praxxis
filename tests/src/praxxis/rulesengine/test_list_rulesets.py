@@ -1,6 +1,6 @@
 import pytest
 
-def test_list_rulesets(setup, create_one_ruleset, create_one_ruleset_one_rule, create_deactivated_ruleset, rulesengine_db, query_start, stop):
+def test_list_rulesets(setup, create_one_ruleset, create_one_ruleset_one_rule, create_deactivated_ruleset, rulesengine_db, query_start, query_end):
     from src.praxxis.rulesengine import list_rulesets
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.sqlite import sqlite_rulesengine
@@ -10,7 +10,7 @@ def test_list_rulesets(setup, create_one_ruleset, create_one_ruleset_one_rule, c
     name2 = dummy_object.make_dummy_ruleset("generated_ruleset_with_rule")
     name3 = dummy_object.make_dummy_ruleset("generated_deactivated_ruleset")
     
-    result = list_rulesets.list_rulesets(name1, rulesengine_db, query_start, stop)
+    result = list_rulesets.list_rulesets(name1, rulesengine_db, query_start, query_end)
 
     assert len(result) == 3
     for info in result:

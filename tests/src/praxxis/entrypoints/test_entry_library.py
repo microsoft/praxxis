@@ -17,22 +17,22 @@ def test_init_library(setup, library_root, library_db):
     assert os.path.exists(library_db)
 
 
-def test_sync_library(setup, library_root, library_db, query_start, stop):
+def test_sync_library(setup, library_root, library_db, query_start, query_end):
     from src.praxxis.library import list_library
 
     entry_library.sync_library("", library_root, library_db)
-    libraries = list_library.list_library(library_db, query_start, stop)
+    libraries = list_library.list_library(library_db, query_start, query_end)
     assert len(libraries) == 0
 
 
-def test_list_library(setup, add_test_library, library_db, query_start, stop):
+def test_list_library(setup, add_test_library, library_db, query_start, query_end):
     from src.praxxis.library import list_library
     entry_library.list_library("", library_db)
-    assert len(list_library.list_library(library_db, query_start, stop)) == 1
+    assert len(list_library.list_library(library_db, query_start, query_end)) == 1
 
 
 @pytest.mark.skipif(sys.platform != "linux", reason="will fail test on windows until git integration is merged")
-def test_add_library(setup, library_db, query_start, stop): 
+def test_add_library(setup, library_db, query_start, query_end): 
     from src.praxxis.util import error
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.library import remove_library
@@ -40,6 +40,6 @@ def test_add_library(setup, library_db, query_start, stop):
 
     dummy_library = dummy_object.make_dummy_library_path()
     entry_library.add_library(dummy_library, library_db)
-    assert len(list_library.list_library(library_db, query_start, stop)) == 1
+    assert len(list_library.list_library(library_db, query_start, query_end)) == 1
 
-    remove_library.remove_library(dummy_library, library_db, query_start, stop)
+    remove_library.remove_library(dummy_library, library_db, query_start, query_end)

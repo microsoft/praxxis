@@ -4,7 +4,7 @@ this tests the sync library functionality of praxxis
 
 import pytest 
 
-def test_sync_library(setup, add_test_library, library_root, library_db, libraries_list, query_start, stop):
+def test_sync_library(setup, add_test_library, library_root, library_db, libraries_list, query_start, query_end):
     """
     tests sync_library functionality. Requires that setup is run and the test notebooks are added.
     """
@@ -15,4 +15,4 @@ def test_sync_library(setup, add_test_library, library_root, library_db, librari
 
     sync_library.sync_library(library_root, library_db)
         
-    assert set(libraries_list) == set(*list_library.list_library(library_db, query_start, stop))
+    assert set(libraries_list) == set(*list_library.list_library(library_db, query_start, query_end))

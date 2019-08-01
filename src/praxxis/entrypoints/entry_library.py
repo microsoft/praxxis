@@ -46,11 +46,11 @@ def remove_library(arg,
 def list_library(arg, 
                  library_db = _library_db,
                query_start = _query_start,
-                stop = _query_end):
+                query_end = _query_end):
     """calls the function to list loaded libraries"""
     from src.praxxis.library import list_library
 
-    list_library.list_library(library_db,query_start, stop)
+    list_library.list_library(library_db,query_start, query_end)
 
 
 def sync_library(arg, 

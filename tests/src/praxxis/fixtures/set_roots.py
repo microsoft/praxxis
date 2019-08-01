@@ -128,6 +128,6 @@ def query_start():
 
 
 @pytest.fixture(scope="session")
-def stop():
+def query_end():
     return 100
 

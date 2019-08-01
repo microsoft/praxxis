@@ -1,6 +1,6 @@
 import pytest
 
-def test_add_rule(setup, monkeypatch, create_one_ruleset, rulesengine_db, library_db, create_one_scene,current_scene_db, query_start, stop):
+def test_add_rule(setup, monkeypatch, create_one_ruleset, rulesengine_db, library_db, create_one_scene,current_scene_db, query_start, query_end):
     from src.praxxis.rulesengine import add_rule_to_ruleset
     from tests.src.praxxis.util import dummy_object
 
@@ -9,7 +9,7 @@ def test_add_rule(setup, monkeypatch, create_one_ruleset, rulesengine_db, librar
     
     with monkeypatch.context() as m:
         m.setattr("builtins.input", lambda _: mock_in)
-        rulename = add_rule_to_ruleset.add_rule_to_ruleset(name1, rulesengine_db, library_db, current_scene_db, query_start, stop)
+        rulename = add_rule_to_ruleset.add_rule_to_ruleset(name1, rulesengine_db, library_db, current_scene_db, query_start, query_end)
 
     from src.praxxis.sqlite import sqlite_rulesengine
     

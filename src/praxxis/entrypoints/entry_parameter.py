@@ -104,7 +104,7 @@ def pull_library_param(arg,
                       history_db = _history_db,
                       current_scene_db = None,
                      query_start = _query_start,
-                      stop = _query_end):
+                      query_end = _query_end):
     """ handles pulling parameters out of a library through the CLI. """
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
@@ -112,4 +112,4 @@ def pull_library_param(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    pull_param.pull_library_parameter(arg, library_db, current_scene_db,query_start, stop)
+    pull_param.pull_library_parameter(arg, library_db, current_scene_db,query_start, query_end)
