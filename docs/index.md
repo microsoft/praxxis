@@ -2,6 +2,8 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![Chatting][chat-shield]][chat-url]
+
 
 # Table Of Contents 
 
@@ -19,3 +21,5 @@
 [issues-url]: https://github.com/microsoft/praxxis/issues
 [license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
 [license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
+[chat-shield]: https://img.shields.io/matrix/praxxis:matrix.org?style=flat-square
+[chat-url]: https://riot.im/app/#/room/#praxxis:matrix.org
