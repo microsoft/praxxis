@@ -1,27 +1,7 @@
-# Praxxis 
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-<img alt="praxxis logo" src="https://raw.githubusercontent.com/microsoft/praxxis/master/docs/images/praxxis_logo_black.png">
-</div>
-
-  <p align="center">
-    A Command Line Notebook Task Interface
-    <br />
-    <a href="https://github.com/microsoft/praxxis/tree/master/docs"><strong>Explore the docs </strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/microsoft/praxxis/issues">Report Bug</a>
-    .
-    <a href="https://github.com/microsoft/praxxis/issues">Request Feature</a>
-  </p>
-</p>
 
 # Table Of Contents 
 
