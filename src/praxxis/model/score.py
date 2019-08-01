@@ -47,7 +47,9 @@ def predict(sequence, model_path, converter_path):
     data = model.predict(prepped_in)
    
     # convert results into meaningful thing
-    print(pd.Series(data[0], converter).sort_values(ascending=False))
+    predictions = pd.Series(data[0], converter).sort_values(ascending=False)
+    predictions= [predictions.index[i] for i in range(5)]
+    return predictions
 
 def get_files(model_db):
     from src.praxxis.sqlite import sqlite_model
@@ -59,4 +61,4 @@ def get_files(model_db):
 def get_predictions(sequence, model_db):
     model_path, converter_path = get_files(model_db)
 
-    predict(sequence, model_path, converter_path)
+    return predict(sequence, model_path, converter_path)
