@@ -39,6 +39,6 @@ def display_view_param(params, set_params):
             counter += 1
             print("\t%s.\t%s = " %(counter, name),  end="" ) 
             if name in set_params:
-                print("%s%s%s"  %(Fore.BLUE, set_params[name], Style.RESET_ALL))
+                print("%s%s"  %(Fore.BLUE, set_params[name]))
             else:
                 print(params[name])

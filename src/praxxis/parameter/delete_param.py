@@ -15,7 +15,7 @@ def delete_parameter(args, scene_root, history_db, current_scene_db):
     else:
         name = args
         
-    if f"{name}".isdigit():
+    if str(name).isdigit():
         #checking if the user passed an ordinal instead of a string
         try:
             name = sqlite_parameter.get_param_by_ord(current_scene_db, int(name))

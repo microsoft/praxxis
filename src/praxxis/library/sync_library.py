@@ -57,7 +57,7 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
                     if library_metadata == []:
                         while sqlite_library.check_library_exists(library_db, library_name):
                             counter += 1
-                            library_name = f"{orig_name}-{counter}"
+                            library_name = "%s-%s" %(orig_name, counter)
                     if library_metadata[0][0] == root:
                         library_name = library_metadata[0][2]
             except error.LibraryNotFoundError:
@@ -87,5 +87,5 @@ def load_notebook(notebook_name, root, library_db, library_name, relative_path, 
         display_library.display_loaded_notebook(notebook_name)
 
         library_url = ("/").join(relative_path)
-        raw_url = get_raw_git_url.get_raw_url_for_file(remote_origin, notebook_name, f"/{library_url}/")
+        raw_url = get_raw_git_url.get_raw_url_for_file(remote_origin, notebook_name, "/%s/" %(library_url))
         sqlite_library.load_notebook(library_db, file_root, file_name, library_name, raw_url)

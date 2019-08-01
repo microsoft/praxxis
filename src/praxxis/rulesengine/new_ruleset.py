@@ -20,14 +20,14 @@ def new_ruleset(args, rulesengine_root, rulesengine_db):
     else:
         root = rulesengine_root
         
-    path = os.path.join(root, f"{name}.db")
+    path = os.path.join(root, "%s.db" %(name))
 
     if os.path.exists(path):
         i=1
-        while os.path.exists(os.path.join(root, f"{name}-{i}.db")):
+        while os.path.exists(os.path.join(root, "%s-%s.db") %(name, i)):
             i+= 1
-        path = os.path.join(root, f"{name}-{i}.db")
-        name = f"{name}-{i}"
+        path = os.path.join(root, "%s-%s.db" %(name, i))
+        name = "%s-%s" %(name, i)
     
     sqlite_rulesengine.init_ruleset(rulesengine_db, name, path)
     sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, name, path)

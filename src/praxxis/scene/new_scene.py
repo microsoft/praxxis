@@ -17,12 +17,12 @@ def new_scene(args, scene_root, history_db):
     directory = os.path.join(scene_root, name)
     if os.path.exists(directory):
         i=1
-        while os.path.exists(f"{directory}-{i}"):
+        while os.path.exists("%s-%s" %(directory, i)):
             i+= 1
-        directory = f"{directory}-{i}"
-        name = f"{name}-{i}"
+        directory = "%s-%s" %(directory, i)
+        name = "%s-%s" %(name, i)
     os.mkdir(directory)
-    scene_db = os.path.join(directory, f"{name}.db")
+    scene_db = os.path.join(directory, "%s.db" %(name))
         
     display_scene.display_new_scene(name)
     scene.init_scene(scene_db, history_db, name)
