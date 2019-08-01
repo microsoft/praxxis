@@ -23,7 +23,7 @@ def telem_init(user_info_db):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key = "Host"'
+    query = 'SELECT Value FROM "UserInfo" WHERE Key = "Host"'
     cur.execute(query)
     conn.commit()
     response = cur.fetchone()[0]
@@ -36,7 +36,7 @@ def telem_on(user_info_db):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key = "TELEMETRY"'
+    query = 'SELECT Value FROM "UserInfo" WHERE Key = "TELEMETRY"'
     cur.execute(query)
     conn.commit()
     response = cur.fetchone()[0]
@@ -48,7 +48,7 @@ def get_telemetry_info(user_info_db):
     from src.praxxis.sqlite import connection
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY Key="ID", Key="Password", Key="Username", Key="URL", Key="Host"'
+    query = 'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY Key="ID", Key="Password", Key="Username", Key="URL", Key="Host"'
     cur.execute(query)
     conn.commit()
     info = cur.fetchall()
@@ -66,7 +66,7 @@ def get_settings(user_info_db, settings):
     values = {}
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    query = f'SELECT Value FROM "UserInfo" WHERE Key=?'
+    query = 'SELECT Value FROM "UserInfo" WHERE Key=?'
     for setting in settings:
         cur.execute(query, (setting,))
         conn.commit()
@@ -80,7 +80,7 @@ def write_setting(user_info_db, setting, value):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    update = f'UPDATE "UserInfo" SET Value = ? WHERE Key = ?'
+    update = 'UPDATE "UserInfo" SET Value = ? WHERE Key = ?'
     cur.execute(update, (value, setting))
     conn.commit()
     conn.close()
@@ -98,7 +98,7 @@ def add_to_backlog(user_info_db, local_copy, scene_id, error, operation = 0):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    add = f'INSERT OR REPLACE INTO "TelemBacklog" (LocalCopy, SceneID, Error, Operation) VALUES (?,?,?,?)'
+    add = 'INSERT OR REPLACE INTO "TelemBacklog" (LocalCopy, SceneID, Error, Operation) VALUES (?,?,?,?)'
     cur.execute(add, (local_copy, scene_id, error, operation))
     conn.commit()
     conn.close()
@@ -111,7 +111,7 @@ def backlog_size(user_info_db):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    getcount = f'SELECT COUNT(*) FROM "TelemBacklog"'
+    getcount = 'SELECT COUNT(*) FROM "TelemBacklog"'
     cur.execute(getcount)
     conn.commit()
     count = cur.fetchone()[0]
@@ -125,7 +125,7 @@ def get_backlog(user_info_db):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    getbacklog = f'SELECT LocalCopy, SceneID, Operation FROM "TelemBacklog"'
+    getbacklog = 'SELECT LocalCopy, SceneID, Operation FROM "TelemBacklog"'
     cur.execute(getbacklog)
     conn.commit()
     toSend = cur.fetchall()
@@ -139,7 +139,7 @@ def delete_from_backlog(user_info_db, local_copy):
 
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    cleanup = f'DELETE FROM "TelemBacklog" WHERE LocalCopy = ?'
+    cleanup = 'DELETE FROM "TelemBacklog" WHERE LocalCopy = ?'
     cur.execute(cleanup, (local_copy,))
     conn.commit()
     conn.close()

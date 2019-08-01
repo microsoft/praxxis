@@ -42,7 +42,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     from src.praxxis.util import error
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    query = f'SELECT Notebook, Library FROM NotebookList WHERE ID = ? LIMIT 0, 1'
+    query = 'SELECT Notebook, Library FROM NotebookList WHERE ID = ? LIMIT 0, 1'
     cur.execute(query, (ordinal))
     conn.commit()
     item = cur.fetchone()
@@ -59,9 +59,9 @@ def write_list(current_scene_db, notebook_list, path_list = []):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    clear_list = f'DELETE FROM "NotebookList"'
+    clear_list = 'DELETE FROM "NotebookList"'
     reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='NotebookList'"
-    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?,?,?)'
+    insert_line = 'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?,?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
     if path_list == []:

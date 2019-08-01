@@ -13,16 +13,16 @@ def init_scene(scene_db, name):
     cur = conn.cursor()
     scene_id = str(uuid.uuid4())
 
-    create_metadata_table = f'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Scene TEXT)'
-    create_notebook_list_table=f'CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Library TEXT, Path TEXT, RawUrl TEXT)'
-    create_parameter_table=f'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
-    create_history_table=f'CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
-    init_metadata_table = f'insert into "SceneMetadata"(ID, Ended, Scene) values("{scene_id}", 0, "{name}")'
+    create_metadata_table = 'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Scene TEXT)'
+    create_notebook_list_table='CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Library TEXT, Path TEXT, RawUrl TEXT)'
+    create_parameter_table='CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
+    create_history_table='CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
+    init_metadata_table = 'insert into "SceneMetadata"(ID, Ended, Scene) values(?, 0, ?)'
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_list_table)
     cur.execute(create_parameter_table)
     cur.execute(create_history_table)
-    cur.execute(init_metadata_table)
+    cur.execute(init_metadata_table, (scene_id, name))
     conn.commit()
     conn.close()
 
@@ -30,8 +30,8 @@ def check_ended(history_db, scene, conn, cur):
     """checks if a scene has ended"""
     from src.praxxis.util import error
      
-    ended = f'SELECT Ended from "SceneHistory" WHERE Scene = "{scene}"'
-    cur.execute(ended)
+    ended = 'SELECT Ended from "SceneHistory" WHERE Scene = ?'
+    cur.execute(ended, (scene,))
     ended = cur.fetchone()
     if ended == None:
         raise error.SceneNotFoundError(scene)
@@ -48,8 +48,8 @@ def check_scene_ended(history_db, scene):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    check_scene_exists = f'SELECT Ended from "SceneHistory" WHERE Scene = "{scene}"'
-    cur.execute(check_scene_exists)
+    check_scene_exists = 'SELECT Ended from "SceneHistory" WHERE Scene = ?'
+    cur.execute(check_scene_exists, (scene,))
     rows = cur.fetchall()
     conn.close()
     if rows == []:
@@ -65,8 +65,8 @@ def update_current_scene(history_db, scene):
 
     conn = connection.create_connection(history_db)
     cur =  conn.cursor()
-    add_current_scene = f'INSERT INTO "SceneHistory"(Scene, Ended) VALUES("{scene}", 0)'
-    cur.execute(add_current_scene)
+    add_current_scene = 'INSERT INTO "SceneHistory"(Scene, Ended) VALUES(?, 0)'
+    cur.execute(add_current_scene, (scene,))
     conn.commit()
     conn.close()
 
@@ -105,8 +105,8 @@ def delete_scene(history_db, scene):
     if len(active_scenes) <= 1 and scene in list(itertools.chain(*active_scenes)):
         raise error.LastActiveSceneError(scene)
     else:
-        delete_scene = f'DELETE FROM "SceneHistory" WHERE Scene = "{scene}"'
-        cur.execute(delete_scene)
+        delete_scene = 'DELETE FROM "SceneHistory" WHERE Scene = ?'
+        cur.execute(delete_scene, (scene,))
         conn.commit()
         conn.close()
         return 0
@@ -118,8 +118,8 @@ def end_scene(current_scene_db, scene):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    end_scene = f'UPDATE "SceneMetadata" SET Ended = 1 WHERE Scene = "{scene}"'
-    cur.execute(end_scene)
+    end_scene = 'UPDATE "SceneMetadata" SET Ended = 1 WHERE Scene = ?'
+    cur.execute(end_scene, (scene,))
     conn.commit()
     conn.close()
 
@@ -144,8 +144,8 @@ def mark_ended_scene(history_db, scene):
     if len(active_scenes) <= 1 and scene in list(itertools.chain(*active_scenes)) :
         raise error.LastActiveSceneError(scene)
     else:
-        end_scene = f'UPDATE "SceneHistory" SET Ended = 1 WHERE Scene = "{scene}"'
-        cur.execute(end_scene)
+        end_scene = 'UPDATE "SceneHistory" SET Ended = 1 WHERE Scene = ?'
+        cur.execute(end_scene, (scene,))
         conn.commit()
         conn.close()
         return 0
@@ -157,8 +157,8 @@ def mark_resumed_scene(history_db, scene):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    end_scene = f'UPDATE "SceneHistory" SET Ended = 0 WHERE Scene = "{scene}"'
-    cur.execute(end_scene)
+    end_scene = 'UPDATE "SceneHistory" SET Ended = 0 WHERE Scene = ?'
+    cur.execute(end_scene, (scene,))
     conn.commit()
     conn.close()
 
@@ -169,8 +169,8 @@ def resume_scene(scene_db, scene):
 
     conn = connection.create_connection(scene_db)
     cur = conn.cursor()
-    end_scene = f'UPDATE "SceneMetadata" SET Ended = 0 WHERE Scene = "{scene}"'
-    cur.execute(end_scene)
+    end_scene = 'UPDATE "SceneMetadata" SET Ended = 0 WHERE Scene = ?'
+    cur.execute(end_scene, (scene,))
     conn.commit()
     conn.close()
 
@@ -181,7 +181,7 @@ def get_active_scenes(history_db):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    get_active_scenes = f'SELECT DISTINCT Scene from "SceneHistory" WHERE Ended = 0'
+    get_active_scenes = 'SELECT DISTINCT Scene from "SceneHistory" WHERE Ended = 0'
     cur.execute(get_active_scenes)
     rows = cur.fetchall()
     conn.close()
@@ -194,7 +194,7 @@ def get_ended_scenes(history_db):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    get_ended_scenes = f'SELECT DISTINCT Scene from "SceneHistory" WHERE Ended = 1'
+    get_ended_scenes = 'SELECT DISTINCT Scene from "SceneHistory" WHERE Ended = 1'
     cur.execute(get_ended_scenes)
     rows = cur.fetchall()
     conn.close()
@@ -207,7 +207,7 @@ def add_to_scene_history(current_scene_db, timestamp, notebook, library, outputp
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    add_to_scene_history = f'INSERT INTO "History"(Timestamp, Notebook, Library, OutputPath) VALUES (?,?,?, ?)'
+    add_to_scene_history = 'INSERT INTO "History"(Timestamp, Notebook, Library, OutputPath) VALUES (?,?,?, ?)'
     cur.execute(add_to_scene_history, (timestamp, notebook, library, outputpath))
     conn.commit()
     conn.close()
@@ -219,7 +219,7 @@ def get_notebook_history(current_scene_db):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    get_notebook_history = f'SELECT * FROM "History" ORDER BY Timestamp'
+    get_notebook_history = 'SELECT * FROM "History" ORDER BY Timestamp'
     cur.execute(get_notebook_history)
     conn.commit()
     rows = cur.fetchall()
@@ -233,7 +233,7 @@ def get_recent_history(db_file, seq_length):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    get_recent_history = f'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    get_recent_history = 'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
     cur.execute(get_recent_history, (seq_length,))
     conn.commit()
     rows = cur.fetchall()
@@ -246,7 +246,7 @@ def dump_scene_list(history_db):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    clear_list = f'DELETE FROM "SceneList"'
+    clear_list = 'DELETE FROM "SceneList"'
     reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='SceneList'"
     cur.execute(clear_list)
     cur.execute(reset_counter)
@@ -260,7 +260,7 @@ def write_scene_list(history_db, scene_list):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    insert_line = f'INSERT INTO "SceneList" (Scene) VALUES (?)'
+    insert_line = 'INSERT INTO "SceneList" (Scene) VALUES (?)'
     cur.executemany(insert_line, scene_list)
     conn.commit()
     conn.close()
@@ -273,8 +273,8 @@ def get_scene_by_ord(history_db, ordinal):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    get_scene = f'SELECT Scene FROM "SceneList" ORDER BY ID LIMIT {ordinal-1}, {ordinal}'
-    cur.execute(get_scene)
+    get_scene = 'SELECT Scene FROM "SceneList" ORDER BY ID LIMIT ?, ?'
+    cur.execute(get_scene, (ordinal-1, ordinal))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -289,7 +289,7 @@ def clear_history(current_scene_db):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    clear_history = f'DELETE FROM "History"'
+    clear_history = 'DELETE FROM "History"'
     cur.execute(clear_history)
     conn.commit()
     conn.close()
@@ -301,7 +301,7 @@ def get_notebook_path(current_scene_db, notebook_name):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    get_path = f'SELECT Path FROM "NotebookList" WHERE Data = ?'
+    get_path = 'SELECT Path FROM "NotebookList" WHERE Data = ?'
 
     cur.execute(get_path, (notebook_name,))
     conn.commit()
