@@ -34,10 +34,10 @@ def remove_ruleset(arg,
 def list_rulesets(arg,
                     rulesengine_db = _rulesengine_db,
                     query_start = _query_start,
-                    end = _query_end):
+                    query_end = _query_end):
     """calls the function to list all rulesets"""
     from src.praxxis.rulesengine import list_rulesets
-    list_rulesets.list_rulesets(arg, rulesengine_db, query_start, end)
+    list_rulesets.list_rulesets(arg, rulesengine_db, query_start, query_end)
     return
 
 
@@ -56,7 +56,7 @@ def edit_ruleset(arg,
                     scene_root = _scene_root,
                     history_db = _history_db,
                     query_start = _query_start,
-                    end = _query_end):
+                    query_end = _query_end):
     """calls the function to the edit the ruleset"""
     from src.praxxis.util import roots
     if current_scene_db == None:
@@ -78,14 +78,14 @@ def add_rule_to_ruleset(arg,
                     scene_root = _scene_root,
                     history_db = _history_db,
                     query_start = _query_start,
-                    end = _query_end):
+                    query_end = _query_end):
     """calls the function to add a rule to a ruleset"""
     from src.praxxis.util import roots
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     from src.praxxis.rulesengine import add_rule_to_ruleset
-    add_rule_to_ruleset.add_rule_to_ruleset(arg, rulesengine_db, library_db, current_scene_db, query_start, end)
+    add_rule_to_ruleset.add_rule_to_ruleset(arg, rulesengine_db, library_db, current_scene_db, query_start, query_end)
 
 
 def delete_rule_from_ruleset(arg,

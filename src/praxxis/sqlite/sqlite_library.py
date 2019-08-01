@@ -84,13 +84,13 @@ def sync_library(library_db, path, readme, library, remote=None):
 
     
 
-def list_libraries(library_db, query_start, end):
+def list_libraries(library_db, query_start, query_end):
     """returns a list of loaded libraries"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Library FROM "LibraryMetadata" ORDER BY Library LIMIT {query_start}, {end}'
+    list_libraries = f'SELECT Library FROM "LibraryMetadata" ORDER BY Library LIMIT {query_start}, {query_end}'
     cur.execute(list_libraries)
     conn.commit()
     rows = cur.fetchall()
