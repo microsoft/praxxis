@@ -97,7 +97,7 @@ prax
 ```
 to see the help page. 
 
-_For more examples, please refer to the [Documentation](https://github.com/microsoft/praxxis/blob/master/docs)_
+_For more examples, please refer to the [Documentation](https://microsoft.github.io/praxxis/)_
 
 
 
