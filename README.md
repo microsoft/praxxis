@@ -146,8 +146,5 @@ Project Link: [https://github.com/microsoft/praxxis](https://github.com/microsof
 [issues-url]: https://github.com/microsoft/praxxis/issues
 [license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
 [license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
 
 <!-- readme template from https://github.com/microsoft/praxxis-->
