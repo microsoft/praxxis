@@ -56,13 +56,13 @@ praxxis scenes are situation-specific configurations that can be saved, closed, 
 With or without a storage pool, praxxis's predictions are usable through trained machine learning models. If you have your own storage pool, you can top up or train a new model with your own data.
 
 #### History
-With praxxis, a history of commands is preserved, allowing you to backtrack through problems. Since situation specific configurations are saved as parameters in scenes, you'll always be able to know exactly what commands were run, what was changed, and where you need to go next.
+Using praxxis, a history of commands is preserved, allowing you to backtrack through problems. Since situation specific configurations are saved as parameters in scenes, you'll always be able to know exactly what commands were run, what was changed, and where you need to go next.
 
 #### Notebook Libraries
-praxxis runs on libraries of jupyter notebooks, allowing every command on your system to be documented and explained in a useful markdown format. By directly running the code embedded in the documentation, you know that no information is being lost, and no documentaion is getting out of date.
+Praxxis runs on libraries of jupyter notebooks, allowing every command on your system to be documented and explained in a useful markdown format. By directly running the code embedded in the documentation, you know that no information is being lost, and no documentaion is getting out of date.
 
 #### Parameters
-praxxis uses parameter tags to inject parameters into code cells. By saving parameters through praxxis, your environments are saved through sessions and restarts, and are documented in an easily accessible format.
+Praxxis uses parameter tags to inject parameters into code cells. By saving parameters through praxxis, your environments are saved through sessions and restarts, and are documented in an easily accessible format.
 
 
 
