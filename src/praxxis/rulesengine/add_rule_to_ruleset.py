@@ -2,7 +2,7 @@
 Adds a rule to the ruleset by user inputs in a console dialog
 """
 
-def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, start, stop):
+def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, query_start, stop):
     """prompts user through adding a rule, given a ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
@@ -24,7 +24,7 @@ def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, star
     rulename = display_edit_ruleset.display_get_rule_name()
     
     # get filenames 
-    list_notebook(library_db, current_scene_db, start, stop)
+    list_notebook(library_db, current_scene_db, query_start, stop)
     filenames_raw = display_edit_ruleset.display_filename_input()
     filenames_with_ords = [string.strip().strip('"').strip('\'') for string in filenames_raw.split(",")]
     filenames = get_filenames_from_ordinals(filenames_with_ords, current_scene_db)
@@ -36,7 +36,7 @@ def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, star
     display_edit_ruleset.display_outputs(output)
 
     # get predicted notebooks
-    list_notebook(library_db, current_scene_db, start, stop)
+    list_notebook(library_db, current_scene_db, query_start, stop)
     predicted_raw = display_edit_ruleset.display_predicted_notebooks_input()
     predicted_with_ords = [prediction.strip() for prediction in predicted_raw.split(",")]
     predicted = get_fileinfo_from_ordinals(predicted_with_ords, current_scene_db, rulename)

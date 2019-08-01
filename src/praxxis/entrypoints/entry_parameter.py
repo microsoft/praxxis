@@ -55,7 +55,7 @@ def view_library_param(arg,
                      scene_root = _scene_root,
                      history_db = _history_db,
                      library_db = _library_db,
-                     start = _query_start,
+                    query_start = _query_start,
                      end = _query_end,
                      current_scene_db = None):
     """ handles viewing library parameters from the CLI """
@@ -65,7 +65,7 @@ def view_library_param(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    list_param.list_library_param(arg, library_db, current_scene_db, start, end)
+    list_param.list_library_param(arg, library_db, current_scene_db,query_start, end)
 
 
 def view_notebook_param(arg, 
@@ -103,7 +103,7 @@ def pull_library_param(arg,
                       scene_root = _scene_root,
                       history_db = _history_db,
                       current_scene_db = None,
-                      start = _query_start,
+                     query_start = _query_start,
                       stop = _query_end):
     """ handles pulling parameters out of a library through the CLI. """
     from src.praxxis.parameter import pull_param
@@ -112,4 +112,4 @@ def pull_library_param(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    pull_param.pull_library_parameter(arg, library_db, current_scene_db, start, stop)
+    pull_param.pull_library_parameter(arg, library_db, current_scene_db,query_start, stop)

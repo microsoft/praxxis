@@ -1,6 +1,6 @@
 import pytest
 
-def test_delete_rule(setup, monkeypatch, create_one_ruleset_one_rule, rulesengine_db, library_db, create_one_scene,current_scene_db, start, stop):
+def test_delete_rule(setup, monkeypatch, create_one_ruleset_one_rule, rulesengine_db, library_db, create_one_scene,current_scene_db, query_start, stop):
     from src.praxxis.rulesengine import delete_rule_from_ruleset
     from src.praxxis.sqlite import sqlite_rulesengine
     from tests.src.praxxis.rulesengine import test_add_rule
@@ -28,7 +28,7 @@ def test_delete_rule(setup, monkeypatch, create_one_ruleset_one_rule, rulesengin
     assert predictions == [] 
     
 
-def test_delete_rule_nonexistent(setup, monkeypatch, create_one_ruleset_one_rule, rulesengine_db, library_db, create_one_scene,current_scene_db, start, stop):
+def test_delete_rule_nonexistent(setup, monkeypatch, create_one_ruleset_one_rule, rulesengine_db, library_db, create_one_scene,current_scene_db, query_start, stop):
     from src.praxxis.rulesengine import delete_rule_from_ruleset
     from src.praxxis.sqlite import sqlite_rulesengine
     from tests.src.praxxis.rulesengine import test_add_rule

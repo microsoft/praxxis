@@ -5,7 +5,7 @@ import pytest
 import os
 
 @pytest.fixture(scope="session")
-def setup(init_root, library_root, telemetry_db, library_db, output_root, scene_root, history_db, default_scene_name, start, stop, rulesengine_root, rulesengine_db):
+def setup(init_root, library_root, telemetry_db, library_db, output_root, scene_root, history_db, default_scene_name, query_start, stop, rulesengine_root, rulesengine_db):
     """
     sets up directories in the temp dir
     """
@@ -63,7 +63,7 @@ def setup(init_root, library_root, telemetry_db, library_db, output_root, scene_
     yield 
     current_scene_db = roots.get_current_scene_db(scene_root, history_db)
     assert len(list_scene.list_scene(init_root, history_db)) == 1
-    assert len(list_param.list_param(current_scene_db, start, stop)) == 0
-    assert len(list_library.list_library(library_db, start, stop)) == 0
-    assert len(list_notebook.list_notebook(library_db, current_scene_db, start, stop)) == 0
+    assert len(list_param.list_param(current_scene_db, query_start, stop)) == 0
+    assert len(list_library.list_library(library_db, query_start, stop)) == 0
+    assert len(list_notebook.list_notebook(library_db, current_scene_db, query_start, stop)) == 0
     

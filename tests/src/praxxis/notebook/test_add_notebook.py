@@ -1,4 +1,4 @@
-def test_add_notebook(setup, library_db, current_scene_db, start, stop):
+def test_add_notebook(setup, library_db, current_scene_db, query_start, stop):
     from src.praxxis.notebook import add_notebook
     from src.praxxis.notebook import remove_notebook
     from tests.src.praxxis.util import dummy_object
@@ -8,7 +8,7 @@ def test_add_notebook(setup, library_db, current_scene_db, start, stop):
     dummy_notebook = dummy_object.make_dummy_notebook()
 
     add_notebook.add_notebook(dummy_notebook_path, library_db)
-    assert len(list_notebook.list_notebook(library_db, current_scene_db, start, stop)) == 1
+    assert len(list_notebook.list_notebook(library_db, current_scene_db, query_start, stop)) == 1
 
     remove_notebook.remove_notebook(dummy_notebook, library_db, current_scene_db)
-    assert len(list_notebook.list_notebook(library_db, current_scene_db, start, stop)) == 0
+    assert len(list_notebook.list_notebook(library_db, current_scene_db, query_start, stop)) == 0

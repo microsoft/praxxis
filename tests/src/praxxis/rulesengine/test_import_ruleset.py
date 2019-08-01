@@ -90,7 +90,7 @@ def test_import_database(setup, rulesengine_db, create_one_ruleset):
 
     assert message == name1.name
     
-    rulesets = sqlite_rulesengine.get_all_rulesets(rulesengine_db, start=1, end=5)
+    rulesets = sqlite_rulesengine.get_all_rulesets(rulesengine_db, query_start=1, end=5)
 
     assert len(rulesets) == 1
     assert len(rulesets[0]) == 2

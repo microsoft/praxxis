@@ -57,13 +57,13 @@ def create_ended_scene(scene_root, history_db, current_scene_db):
 
 
 @pytest.fixture(scope="function")
-def generate_short_history(setup, add_test_library, telemetry_db, output_root, current_scene_db, library_root, library_db, start, stop):
+def generate_short_history(setup, add_test_library, telemetry_db, output_root, current_scene_db, library_root, library_db, query_start, stop):
     from src.praxxis.notebook import run_notebook
     from tests.src.praxxis.util import dummy_object
     from src.praxxis.sqlite import sqlite_scene
     import os
 
     notebook1 = dummy_object.make_dummy_notebook()
-    run_notebook.run_notebook(notebook1, telemetry_db, output_root, current_scene_db, library_root, library_db, start, stop)
+    run_notebook.run_notebook(notebook1, telemetry_db, output_root, current_scene_db, library_root, library_db, query_start, stop)
     yield 
     sqlite_scene.clear_history(current_scene_db)

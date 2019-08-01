@@ -6,11 +6,11 @@ Rules are defined as:
 if either left-hand list is empty, this is interpreted as "all"
 """
 
-def rules_check(prediction_db, filename, output_path, start, end):
+def rules_check(prediction_db, filename, output_path, query_start, end):
     """check if any rules match"""
     from src.praxxis.sqlite import sqlite_rulesengine
 
-    rulesets = sqlite_rulesengine.get_active_rulesets(prediction_db, start, end)
+    rulesets = sqlite_rulesengine.get_active_rulesets(prediction_db, query_start, end)
 
     rulesmatch = []
     hit = set()

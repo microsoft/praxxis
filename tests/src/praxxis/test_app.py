@@ -498,7 +498,7 @@ def update_model(command):
     assert namespace.command == 'um' or namespace.command == "updatemodel"
     
 
-def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, start, stop):
+def test_start(setup, add_test_library, scene_root, library_root, library_db, current_scene_db, query_start, stop):
     from src.praxxis import app
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.notebook import run_notebook

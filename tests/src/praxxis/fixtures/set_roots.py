@@ -123,7 +123,7 @@ def git_root(library_root):
 
 
 @pytest.fixture(scope="session")
-def start():
+def query_start():
     return 0
 
 

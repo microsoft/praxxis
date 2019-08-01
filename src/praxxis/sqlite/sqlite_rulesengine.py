@@ -79,7 +79,7 @@ def get_ruleset_by_ord(rulesengine_db, ordinal):
         raise error.RulesetNotFoundError(ordinal)
     return rows[0][0]
 
-def get_all_rulesets(rulesengine_db, start, end):
+def get_all_rulesets(rulesengine_db, query_start, end):
     """gets all rulesets"""
     from src.praxxis.sqlite import connection
     
@@ -93,7 +93,7 @@ def get_all_rulesets(rulesengine_db, start, end):
 
     return rows
 
-def get_active_rulesets(rulesengine_db, start, end):
+def get_active_rulesets(rulesengine_db, query_start, end):
     """gets all active rulesets and paths"""
     from src.praxxis.sqlite import connection
     
