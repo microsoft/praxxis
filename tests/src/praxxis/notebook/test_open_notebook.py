@@ -1,3 +1,7 @@
+import pytest
+import sys
+
+@pytest.mark.skipif(sys.platform == "darwin", reason="ADS can be installed in a bunch of places on macos")
 def test_open_notebook_ads(setup, add_test_library, current_scene_db, library_db, ads_location):
     from src.praxxis.notebook import open_notebook
     from tests.src.praxxis.util import dummy_object
@@ -10,6 +14,8 @@ def test_open_notebook_ads(setup, add_test_library, current_scene_db, library_db
     except error.ADSNotFoundError as e:
         assert str(e) == display_error.ads_not_found_error(ads_location)
 
+
+@pytest.mark.skipif(sys.platform == "darwin", reason="ADS can be installed in a bunch of places on macos")
 def test_open_notebook_ads_not_found(setup, add_test_library, current_scene_db, library_db):
     from src.praxxis.notebook import open_notebook
     from tests.src.praxxis.util import dummy_object
@@ -23,6 +29,7 @@ def test_open_notebook_ads_not_found(setup, add_test_library, current_scene_db, 
         assert 0 # previous command should fail
     except error.ADSNotFoundError as e:
         assert str(e) == display_error.ads_not_found_error(ads_location)
+
 
 def test_open_notebook_html(setup, add_test_library, current_scene_db, library_db, ads_location):
     from src.praxxis.notebook import open_notebook
