@@ -21,7 +21,7 @@ setuptools.setup(
         "colorama",
         "toml"
      ],
-     version='0.1dev',
+     version='0.1.0',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
      author_email="skylerjaneclark@gmail.com, abertsch72@gmail.com, swarathmika@hotmail.com",
      description="a notebook task interface built on big data and machine learning.",
@@ -31,7 +31,7 @@ setuptools.setup(
      'console_scripts': ['prax=src.praxxis.app:start'],
      },
    long_description_content_type="text/markdown",
-     url="github.com/microsoft/praxxis",
+     url="https://github.com/microsoft/praxxis",
      packages=setuptools.find_packages(),
      classifiers=[
         'Programming Language :: Python :: 3.7',
