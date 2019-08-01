@@ -7,8 +7,6 @@
 
 - [getting started](https://microsoft.github.io/praxxis/getting_started) 
 
-
-
 [contributors-shield]: https://img.shields.io/github/contributors/microsoft/praxxis.svg?style=flat-square
 [contributors-url]: https://github.com/microsoft/praxxis/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/microsoft/praxxis.svg?style=flat-square
