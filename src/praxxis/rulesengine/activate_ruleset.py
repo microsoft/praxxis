@@ -3,7 +3,7 @@ Marks a ruleset as activate
 (i.e., its rules will be evaluated when making predictions)
 """
 
-def activate_ruleset(args, prediction_db):
+def activate_ruleset(args, rulesengine_db):
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
     from src.praxxis.rulesengine import rules
@@ -14,10 +14,10 @@ def activate_ruleset(args, prediction_db):
     else:
         name = args
 
-    name = rules.get_ruleset_by_ordinal(name, prediction_db)
+    name = rules.get_ruleset_by_ordinal(name, rulesengine_db)
 
     try:
-        sqlite_rulesengine.activate_ruleset(prediction_db, name)
+        sqlite_rulesengine.activate_ruleset(rulesengine_db, name)
         display_rulesengine.display_activate_ruleset(name)
         return name
     except error.RulesetNotFoundError as e:

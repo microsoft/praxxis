@@ -11,7 +11,7 @@ from src.praxxis.sqlite import sqlite_scene
 from src.praxxis.rulesengine import rules_checker
 
 
-def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, query_start, end):
+def what_next(args, user_info_db, current_scene_db, library_db, rulesengine_db, query_start, end):
     """calls prediction endpoints to get next notebooks"""
     from src.praxxis.display import display_rulesengine
     history = sqlite_scene.get_recent_history(current_scene_db, 5)
@@ -19,7 +19,7 @@ def what_next(args, user_info_db, current_scene_db, library_db, prediction_db, q
         from src.praxxis.util.error import EmptyHistoryError
         raise EmptyHistoryError()
 
-    rules_based = rules_checker.rules_check(prediction_db, history[-1][0], history[-1][1], query_start, end)
+    rules_based = rules_checker.rules_check(rulesengine_db, history[-1][0], history[-1][1], query_start, end)
     if rules_based != []:
         display_rulesengine.display_predictions(rules_based)
         write_to_list(rules_based, current_scene_db, library_db)

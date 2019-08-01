@@ -50,7 +50,7 @@ def predict(sequence, model_path, converter_path):
     # convert results into meaningful thing
     print(pd.Series(data[0], converter).sort_values(ascending=False))
 
-def get_files(prediction_db):
+def get_files(model_db):
     pass
     
  
