@@ -14,7 +14,7 @@
   <p align="center">
     A Command Line Notebook Task Interface
     <br />
-    <a href="https://github.com/microsoft/praxxis/tree/master/docs"><strong>Explore the docs </strong></a>
+    <a href="https://microsoft.github.io/praxxis/"><strong>Explore the docs </strong></a>
     <br />
     <br />
     <a href="https://github.com/microsoft/praxxis/issues">Report Bug</a>
