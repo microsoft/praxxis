@@ -152,7 +152,7 @@ Project Link: [https://github.com/microsoft/praxxis](https://github.com/microsof
 [good-first-issue-url]: https://github.com/microsoft/praxxis/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 
 [license-shield]: https://img.shields.io/github/license/microsoft/praxxis.svg?style=flat-square
-[license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.txt
+[license-url]: https://github.com/microsoft/praxxis/blob/master/LICENSE.md
 
 [chat-shield]: https://img.shields.io/matrix/praxxis:matrix.org?style=flat-square
 [chat-url]: https://riot.im/app/#/room/#praxxis:matrix.org
