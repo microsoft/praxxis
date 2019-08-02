@@ -262,8 +262,8 @@ def get_outputs_for_rules(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)    
-    list_outputs = 'SELECT Output, Rule FROM "OutputString" WHERE Rule IN (?)'
-    cur.execute(list_outputs, (ruleslist,))
+    list_outputs = 'SELECT Output, Rule FROM "OutputString" WHERE Rule IN (%s)' %(ruleslist)
+    cur.execute(list_outputs)
     conn.commit()
     outputs = cur.fetchall()
     conn.close()
@@ -277,9 +277,9 @@ def get_predictions(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
-    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (?) ORDER BY Position ASC'
+    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (%s) ORDER BY Position ASC' %(ruleslist)
 
-    cur.execute(get_predictions, (ruleslist,))
+    cur.execute(get_predictions)
     conn.commit()
     predictions = cur.fetchall()
     conn.close()
