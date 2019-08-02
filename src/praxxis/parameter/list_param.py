@@ -2,14 +2,14 @@
 This file lists all of the parameters
 """
 
-def list_param(current_scene_db, start, end):
+def list_param(current_scene_db, query_start, query_end):
     """lists the parameters in scene"""
     import os
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.display import display_param
     
-    param_list = sqlite_parameter.list_param(current_scene_db, start, end)
+    param_list = sqlite_parameter.list_param(current_scene_db, query_start, query_end)
 
     display_param.display_list_param(param_list)
     return param_list
@@ -37,7 +37,7 @@ def list_notebook_param(args, library_db, current_scene_db):
     return parameters
 
 
-def list_library_param(args, library_db, current_scene_db, start, end):
+def list_library_param(args, library_db, current_scene_db, query_start, query_end):
     """Lists all parameters in the """
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.display import display_param
@@ -50,7 +50,7 @@ def list_library_param(args, library_db, current_scene_db, start, end):
         name = args
 
     if name.isdigit():
-        name = library.get_library_by_ordinal(library_db, name, start, end)
+        name = library.get_library_by_ordinal(library_db, name, query_start, query_end)
             
     try:
         parameters = sqlite_parameter.get_library_parameters(library_db, name)

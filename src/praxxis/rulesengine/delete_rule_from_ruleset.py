@@ -2,7 +2,7 @@
 Deletes a rule from a ruleset, based on user input in the console.
 """
 
-def delete_rule_from_ruleset(args, prediction_db):
+def delete_rule_from_ruleset(args, rulesengine_db):
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
     from src.praxxis.display import display_edit_ruleset
@@ -14,8 +14,8 @@ def delete_rule_from_ruleset(args, prediction_db):
         name = args
 
     # get ruleset info
-    name = rules.get_ruleset_by_ordinal(name, prediction_db)
-    ruleset_db = sqlite_rulesengine.get_ruleset_path(prediction_db, name)
+    name = rules.get_ruleset_by_ordinal(name, rulesengine_db)
+    ruleset_db = sqlite_rulesengine.get_ruleset_path(rulesengine_db, name)
 
     # give the user a list of rules and ask which one to delete
     rules_list = sqlite_rulesengine.list_rules_in_ruleset(ruleset_db)

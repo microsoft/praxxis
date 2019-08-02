@@ -211,7 +211,7 @@ def tensorflow_version_error():
     """ error for running an old version of tensorflow"""
     import sys
     print("%spraxxis's model is built with tensorflow, which requires python <=3.6. Your version is %s.%s , which is incompatible." %(Fore.RED, sys.version_info.major, sys.version_info.minor) +
-                " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")
+                " Consider changing your python version or running in a virtual environment to get model-based predictions for next actions.")
 
 def pytest_windows_permissions_error(error):
     """error for pytest hitting a windows permissions error)"""

@@ -2,14 +2,14 @@
 This file contains the sqlite functions for notebooks
 """
 
-def list_notebooks(library_db, start, end):
+def list_notebooks(library_db, query_start, query_end):
     """lists all loaded notebooks"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     list_libraries = 'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" LIMIT ?, ?'
-    cur.execute(list_libraries, (start, end))
+    cur.execute(list_libraries, (query_start, query_end))
     rows = cur.fetchall()
     conn.close()
     return rows
@@ -122,14 +122,14 @@ def check_notebook_exists(library_db, notebook):
         return 0
 
 
-def search_notebooks(library_db, search_term, start, end):
+def search_notebooks(library_db, search_term, query_start, query_end):
     """searches notebooks for search term"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     list_param = 'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" WHERE Notebook LIKE "%{}%" ORDER BY Notebook LIMIT ?, ?'.format(search_term)
-    cur.execute(list_param, (start, end))
+    cur.execute(list_param, (query_start, query_end))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
