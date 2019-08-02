@@ -24,6 +24,20 @@ There comes a time when the time it takes to find and run a notebook becomes mor
 ## Introducing Praxxis
 
 
-With this in mind, we set out to be that change, and hopefully create a better tool to help the world move in the direction of executable documentation. 
+With these issues in mind, we set out to be that change, and hopefully create tool to help the world move in the direction of executable documentation. 
+Praxxis is a command line utility built with simplicity at its core.  With features like scenes, parameters, libraries, and predictions, we take the power of jupyter notebooks and make them accessible for everyone. 
 
+### Praxxis Scenes
+Scenes allow issue-specific workflows to be labeled, stored and shared. By saving parameters injected into the notebooks you run, notebooks can be run against entirely different environments, with different sets of parameters simply by using the command 
+```
+prax cs 
+```
+By keeping working environments labeled and independent, solutions can be returned to, ended, restarted and deleted with a few keyboard commands. 
+Gone are the days of tedious parameter searching and re-writing of notebooks.
 
+### Praxxis Parameters
+Praxxis leverages the papermill API to inject parameters into notebooks at runtime. This allows users to set parameters for every notebook in a scene with the command 
+```
+prax sp
+```
+and run them without ever having to edit a single line of code. By doing this, notebooks can be shared without ever having to worry about leaking secrets or confusing people with your situation specific injects. 
