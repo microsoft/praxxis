@@ -23,10 +23,11 @@ def get_notebook(library_db, notebook, library = None):
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     if not library == None:
-        get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = "%s" AND Library = "%s"' %(notebook, library)
+        get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = ? AND Library = ?'
+        cur.execute(get_notebook, (notebook, library))
     else:
-        get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = "%s"' %(notebook)
-    cur.execute(get_notebook)
+        get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = ?'
+        cur.execute(get_notebook, (notebook,))
 
     conn.commit()
     rows = cur.fetchall()
@@ -111,7 +112,7 @@ def check_notebook_exists(library_db, notebook):
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
     check_exists = 'Select * FROM Notebooks WHERE Notebook = ?'
-    cur.execute(check_exists, (notebook))
+    cur.execute(check_exists, (notebook,))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
