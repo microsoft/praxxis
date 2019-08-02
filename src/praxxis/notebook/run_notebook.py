@@ -5,7 +5,7 @@ opened as an html output in the web browser, depending on user input.
 
 from src.praxxis.sqlite import sqlite_telemetry 
 
-def run_notebook(args, user_info_db, output_root, current_scene_db, library_root, library_db, start, stop):
+def run_notebook(args, user_info_db, output_root, current_scene_db, library_root, library_db, query_start, query_end):
     """runs a single notebook specified in args and sends telemetry"""
     from src.praxxis.display import display_notebook
     from src.praxxis.notebook import notebook

@@ -47,13 +47,13 @@ def get_library_parameters(library_db, library):
     return parameters
 
 
-def list_param(current_scene_db, start, end):
+def list_param(current_scene_db, query_start, query_end):
     """returns a list of set parameters in the scene"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    list_param = f'SELECT * FROM "Parameters" ORDER BY Parameter DESC LIMIT {start}, {end}'
+    list_param = f'SELECT * FROM "Parameters" ORDER BY Parameter DESC LIMIT {query_start}, {query_end}'
     cur.execute(list_param)
     conn.commit()
     rows = cur.fetchall()

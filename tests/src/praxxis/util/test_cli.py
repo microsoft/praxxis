@@ -16,8 +16,8 @@ def test_command(setup,
          model_db,
          default_scene_name,
          current_scene_db,
-         start,
-         stop):
+         query_start,
+         query_end):
     import os
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.notebook import list_notebook
@@ -45,7 +45,7 @@ def test_command(setup,
     from src.praxxis.telemetry import update_settings 
 
 
-    list_notebook.list_notebook(library_db, current_scene_db, start, stop)
+    list_notebook.list_notebook(library_db, current_scene_db, query_start, query_end)
 
     dummy_input = dummy_object.make_dummy_input("run_notebook")
     result = cli.command(dummy_input, init_root, library_root, library_db, output_root, scene_root, history_db, telemetry_db, rulesengine_root, rulesengine_db, model_root, model_db, default_scene_name, True)

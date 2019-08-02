@@ -105,8 +105,8 @@ def next_notebook(arg,
                     current_scene_db = None,
                     library_db = _library_db,
                     rulesengine_db = _rulesengine_db,
-                    start = _query_start,
-                    end = _query_end):
+                    query_start = _query_start,
+                    query_end = _query_end):
     """calls the function to get the next notebook"""
     from src.praxxis.notebook import what_next
     from src.praxxis.util import roots
@@ -114,7 +114,7 @@ def next_notebook(arg,
     if current_scene_db == None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
-    what_next.what_next(arg, user_info_db, current_scene_db, library_db, rulesengine_db, start, end)
+    what_next.what_next(arg, user_info_db, current_scene_db, library_db, rulesengine_db, query_start, query_end)
 
 
 
