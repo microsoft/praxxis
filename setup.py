@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     
 setuptools.setup(
      name='praxxis', 
-     python_requires =  '>=3.6.*',
+     python_requires =  '>=3.4.*',
      install_requires=[
         "urllib3",
         "requests",
@@ -34,6 +34,6 @@ setuptools.setup(
      url="https://github.com/microsoft/praxxis",
      packages=setuptools.find_packages(),
      classifiers=[
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.4+',
       ],
  )
