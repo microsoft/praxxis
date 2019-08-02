@@ -43,7 +43,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
     query = 'SELECT Notebook, Library FROM NotebookList WHERE ID = ? LIMIT 0, 1'
-    cur.execute(query, (ordinal))
+    cur.execute(query, (ordinal,))
     conn.commit()
     item = cur.fetchone()
     conn.close()
