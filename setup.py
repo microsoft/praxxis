@@ -34,6 +34,6 @@ setuptools.setup(
      url="https://github.com/microsoft/praxxis",
      packages=setuptools.find_packages(),
      classifiers=[
-        'Programming Language :: Python :: 3.4+',
+        'Programming Language :: Python :: 3',
       ],
  )
