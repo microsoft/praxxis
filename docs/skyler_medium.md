@@ -41,3 +41,21 @@ Praxxis leverages the papermill API to inject parameters into notebooks at runti
 prax sp
 ```
 and run them without ever having to edit a single line of code. By doing this, notebooks can be shared without ever having to worry about leaking secrets or confusing people with your situation specific injects. 
+
+
+### Praxxis Libraries 
+Libraries of notebooks are organized by folder name, and can be pulled from a remote github repository or imported from any path on your machine.
+By keeping organized with your notebooks, you know that you'll be able to quickly come back to something you've written.
+
+
+### Praxxis Predictions 
+Though the most powerful element of praxxis (and the reason for the name) is the ability to get predictions based on history from your entire organization. Using a storage pool, praxxis sends data on sequences of run notebooks, allowing a machine learning model to train on the habits of everyone providing data. 
+Models can be updated, imported and deleted, allowing you to have full control on what kind of predictions you see for each situation.
+If you don't have a model (or have an unhelpful one), sequences of notebooks can be defined using a rules engine, allowing people and your model to learn what steps they should take to come to a solution. 
+
+## This is incredible! How do I get it!
+Praxxis is currently installable with pip
+```
+pip install praxxis
+```
+The source is also available under the MIT license on github.com/microsoft/praxxis. The tool is currently in beta, but we're going to be gearing up for a full release as soon as we can!
