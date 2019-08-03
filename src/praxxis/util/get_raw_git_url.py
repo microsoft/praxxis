@@ -14,12 +14,12 @@ def get_raw_url_for_file(url, name, subdirectory):
         return 1
 
 def get_raw_url_github(url_data, name, subdirectory, token=""):
-    return(f"raw.githubusercontent.com{url_data.path.split('.')[0]}/master{subdirectory}{name}{token}") 
+    return("raw.githubusercontent.com%s/master%s%s%s" %(url_data.path.split('.')[0], subdirectory, name, token)) 
 
 
 def get_raw_url_gitlab(url_data, name, subdirectory):
-    return(f"{url_data.netloc}{url_data.path.split('.')[0]}/raw/master{subdirectory}{name}")
+    return("%s%s/raw/master%s%s" %(url_data.netloc, url_data.path.split('.')[0], subdirectory, name))
 
 
 def get_raw_url_bitbucket(url_data, name, subdirectory):
-    return(f"{url_data.netloc}{url_data.path.split('.')[0]}/raw/master/{subdirectory}{name}")
+    return("%s%s/raw/master/%s%s" %(url_data.netloc, url_data.path.split('.')[0], subdirectory, name))

@@ -26,7 +26,7 @@ def get_notebook_by_ordinal(current_scene_db, name):
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.util import error
     
-    if f"{name}".isdigit():
+    if str(name).isdigit():
         try:
             name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
         except error.NotebookNotFoundError as e:

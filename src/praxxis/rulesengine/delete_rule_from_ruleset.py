@@ -34,7 +34,7 @@ def get_rule_by_ordinal(name, ruleslist):
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.util import error
 
-    if f"{name}".isdigit():
+    if str(name).isdigit():
         try:
             name = ruleslist[int(name)-1][0]
         except IndexError:

@@ -26,7 +26,7 @@ def resume_scene(args, scene_root, history_db):
     except error.SceneEndedError:
         pass
 
-    scene = os.path.join(scene_root, name, f"{name}.db" )
+    scene = os.path.join(scene_root, name, "%s.db" %(name) )
 
     sqlite_scene.resume_scene(scene, name)
     sqlite_scene.mark_resumed_scene(history_db, name)

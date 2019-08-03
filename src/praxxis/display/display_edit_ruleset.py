@@ -22,7 +22,7 @@ def display_filenames(filenames):
         print("Strings this rule will check for in filenames: ")
         i = 1
         for filename in filenames:
-            print(f"\t{i}.\t{filename}")
+            print("\t{i}.\t%s" %(filename))
             i += 1
 
 
@@ -41,7 +41,7 @@ def display_outputs(outputs):
         print("Strings this rule will check for in file output: ")
         i = 1
         for output in outputs:
-            print(f"\t{i}.\t{output}")
+            print("\t%s.\t%s" %(i, output))
             i += 1
 
 def display_predicted_notebooks_input():
@@ -55,7 +55,7 @@ def display_prediction_list(predictions):
     print("Predicted notebooks for this rule: ")
     i = 1
     for prediction in predictions:
-        print(f"\t{i}.\t{prediction}")
+        print("\t%s.\t%s" %(i, prediction))
         i += 1
 
 def display_deletion_prompt():

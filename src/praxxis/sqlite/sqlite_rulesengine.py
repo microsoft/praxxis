@@ -9,10 +9,10 @@ def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
 
-    create_rules_table = f'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
-    create_filenames_table = f'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_outputs_table = f'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_prediction_table = f'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, Library TEXT, RawURL TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_rules_table = 'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
+    create_filenames_table = 'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_outputs_table = 'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_prediction_table = 'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, Library TEXT, RawURL TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
 
     cur.execute(create_rules_table)
     cur.execute(create_filenames_table)
@@ -30,7 +30,7 @@ def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    add_rule = f'INSERT INTO "RulesEngine"(Name, Path, Active) VALUES (?, ?, ?)'
+    add_rule = 'INSERT INTO "RulesEngine"(Name, Path, Active) VALUES (?, ?, ?)'
     cur.execute(add_rule, (ruleset_name, ruleset_root, active))
     conn.commit()
     conn.close()
@@ -42,7 +42,7 @@ def get_ruleset_path(rulesengine_db, name):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    get_ruleset_path = f'SELECT Path FROM "RulesEngine" WHERE Name = ?'
+    get_ruleset_path = 'SELECT Path FROM "RulesEngine" WHERE Name = ?'
     cur.execute(get_ruleset_path, (name,))
     conn.commit()
     rows = cur.fetchone()
@@ -58,7 +58,7 @@ def remove_ruleset(rulesengine_db, name):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    remove_ruleset = f'DELETE FROM "RulesEngine" WHERE Name = ?'
+    remove_ruleset = 'DELETE FROM "RulesEngine" WHERE Name = ?'
     cur.execute(remove_ruleset, (name,))
     conn.commit()
     conn.close()
@@ -70,8 +70,8 @@ def get_ruleset_by_ord(rulesengine_db, ordinal):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    get_ruleset_by_ord = f'SELECT Name FROM "RulesEngine" ORDER BY Active DESC, ID LIMIT {ordinal-1}, {ordinal}'
-    cur.execute(get_ruleset_by_ord)
+    get_ruleset_by_ord = 'SELECT Name FROM "RulesEngine" ORDER BY Active DESC, ID LIMIT ?,?'
+    cur.execute(get_ruleset_by_ord, (ordinal-1, ordinal))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -85,7 +85,7 @@ def get_all_rulesets(rulesengine_db, query_start, query_end):
     
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    get_active_rulesets = f'SELECT Name, Active FROM "RulesEngine" ORDER BY ACTIVE DESC, ID ASC'
+    get_active_rulesets = 'SELECT Name, Active FROM "RulesEngine" ORDER BY ACTIVE DESC, ID ASC'
     cur.execute(get_active_rulesets)
     conn.commit()
     rows = cur.fetchall()
@@ -99,7 +99,7 @@ def get_active_rulesets(rulesengine_db, query_start, query_end):
     
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    get_active_rulesets = f'SELECT * FROM "RulesEngine" WHERE ACTIVE = 1 ORDER BY ID'
+    get_active_rulesets = 'SELECT * FROM "RulesEngine" WHERE ACTIVE = 1 ORDER BY ID'
     cur.execute(get_active_rulesets)
     conn.commit()
     rows = cur.fetchall()
@@ -113,7 +113,7 @@ def get_inactive_rulesets(rulesengine_db):
     
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    get_inactive_rulesets = f'SELECT Name FROM "RulesEngine" WHERE ACTIVE = 0 ORDER BY ID'
+    get_inactive_rulesets = 'SELECT Name FROM "RulesEngine" WHERE ACTIVE = 0 ORDER BY ID'
     cur.execute(get_inactive_rulesets)
     conn.commit()
     rows = cur.fetchall()
@@ -127,7 +127,7 @@ def activate_ruleset(rulesengine_db, name):
     from src.praxxis.util import error
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    check_if_active = f'SELECT Active FROM "RulesEngine" WHERE Name = ?'
+    check_if_active = 'SELECT Active FROM "RulesEngine" WHERE Name = ?'
     cur.execute(check_if_active, (name,))
     result = cur.fetchone()
 
@@ -136,7 +136,7 @@ def activate_ruleset(rulesengine_db, name):
     elif result[0] == 1:
         raise error.RulesetActiveError(name)
     else:
-        activate_ruleset = f'UPDATE RulesEngine SET Active = 1 WHERE Name = ?'
+        activate_ruleset = 'UPDATE RulesEngine SET Active = 1 WHERE Name = ?'
         cur.execute(activate_ruleset, (name,))
         conn.commit()
     conn.close()
@@ -148,7 +148,7 @@ def deactivate_ruleset(rulesengine_db, name):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    check_if_inactive = f'SELECT Active FROM "RulesEngine" WHERE Name = ?'
+    check_if_inactive = 'SELECT Active FROM "RulesEngine" WHERE Name = ?'
     cur.execute(check_if_inactive, (name,))
     result = cur.fetchone()
 
@@ -157,7 +157,7 @@ def deactivate_ruleset(rulesengine_db, name):
     elif result[0] == 0:
         raise error.RulesetNotActiveError(name)
     else:
-        deactivate_ruleset = f'UPDATE RulesEngine SET Active = 0 WHERE Name = ?'
+        deactivate_ruleset = 'UPDATE RulesEngine SET Active = 0 WHERE Name = ?'
         cur.execute(deactivate_ruleset, (name,))
         conn.commit()
     conn.close()
@@ -168,10 +168,10 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    add_name_to_rules = f'INSERT INTO "Rules" (Name) VALUES (?)'
-    add_to_filenames = f'INSERT INTO "Filenames" (Rule, Filename) VALUES (?,?)'
-    add_to_output = f'INSERT INTO "OutputString" (Rule, Output) VALUES (?,?)'
-    add_to_predictions = f'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,?,?,?)'
+    add_name_to_rules = 'INSERT INTO "Rules" (Name) VALUES (?)'
+    add_to_filenames = 'INSERT INTO "Filenames" (Rule, Filename) VALUES (?,?)'
+    add_to_output = 'INSERT INTO "OutputString" (Rule, Output) VALUES (?,?)'
+    add_to_predictions = 'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,?,?,?)'
 
     cur.execute(add_name_to_rules, (rulename,))
     cur.executemany(add_to_filenames, [(rulename, string) for string in filenames])
@@ -187,8 +187,8 @@ def delete_rule(ruleset_db, rulename):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    foreign_keys = f'PRAGMA foreign_keys = ON'
-    delete_rule = f'DELETE FROM "Rules" WHERE Name = ?'
+    foreign_keys = 'PRAGMA foreign_keys = ON'
+    delete_rule = 'DELETE FROM "Rules" WHERE Name = ?'
 
     cur.execute(foreign_keys)
     cur.execute(delete_rule, (rulename,))
@@ -201,7 +201,7 @@ def list_rules_in_ruleset(ruleset_db):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    list_rules = f'SELECT * FROM "Rules" ORDER BY Name'
+    list_rules = 'SELECT * FROM "Rules" ORDER BY Name'
     
     cur.execute(list_rules)
     conn.commit()
@@ -216,7 +216,7 @@ def get_filenames(ruleset_db, rule):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    list_filenames = f'SELECT Filename FROM "Filenames" WHERE Rule = ?'
+    list_filenames = 'SELECT Filename FROM "Filenames" WHERE Rule = ?'
     
     cur.execute(list_filenames, (rule,))
     conn.commit()
@@ -231,7 +231,7 @@ def get_filenames_by_rule(ruleset_db):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    list_filenames = f'SELECT Filename, Rule FROM "Filenames" ORDER BY Rule'
+    list_filenames = 'SELECT Filename, Rule FROM "Filenames" ORDER BY Rule'
     
     cur.execute(list_filenames)
     conn.commit()
@@ -246,7 +246,7 @@ def get_outputs(ruleset_db, rule):
 
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
-    list_outputs = f'SELECT Output FROM "OutputString" WHERE Rule = ?'
+    list_outputs = 'SELECT Output FROM "OutputString" WHERE Rule = ?'
     
     cur.execute(list_outputs, (rule,))
     conn.commit()
@@ -262,7 +262,7 @@ def get_outputs_for_rules(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)    
-    list_outputs = f'SELECT Output, Rule FROM "OutputString" WHERE Rule IN ({ruleslist})'
+    list_outputs = 'SELECT Output, Rule FROM "OutputString" WHERE Rule IN (%s)' %(ruleslist)
     cur.execute(list_outputs)
     conn.commit()
     outputs = cur.fetchall()
@@ -277,7 +277,7 @@ def get_predictions(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
-    get_predictions = f'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN ({ruleslist}) ORDER BY Position ASC'
+    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (%s) ORDER BY Position ASC' %(ruleslist)
 
     cur.execute(get_predictions)
     conn.commit()

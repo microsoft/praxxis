@@ -34,9 +34,9 @@ def parse_toml(path, ruleset_root, rulesengine_db):
     i = 0
     while os.path.exists(ruleset_db):
         i += 1
-        ruleset_db = os.path.join(ruleset_root, f"{ruleset_name}-{i}.db")
+        ruleset_db = os.path.join(ruleset_root, "%s-%s.db" %(ruleset_name, i))
     if i != 0:
-        ruleset_name = f"{ruleset_name}-{i}"
+        ruleset_name = "%s-%s" %(ruleset_name, i)
 
     sqlite_rulesengine.init_ruleset(rulesengine_db, ruleset_name, ruleset_db)
     sqlite_rulesengine.add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_db)

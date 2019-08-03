@@ -8,8 +8,8 @@ def list_notebooks(library_db, query_start, query_end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" LIMIT {query_start}, {query_end}'
-    cur.execute(list_libraries)
+    list_libraries = 'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" LIMIT ?, ?'
+    cur.execute(list_libraries, (query_start, query_end))
     rows = cur.fetchall()
     conn.close()
     return rows
@@ -22,13 +22,13 @@ def get_notebook(library_db, notebook, library = None):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-
     if not library == None:
-        get_notebook = f'SELECT * FROM "Notebooks" WHERE Notebook = "{notebook}" AND Library = "{library}"'
+        get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = ? AND Library = ?'
+        cur.execute(get_notebook, (notebook, library))
     else:
-        get_notebook = f'SELECT * FROM "Notebooks" WHERE Notebook = "{notebook}"'
+        get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = ?'
+        cur.execute(get_notebook, (notebook,))
 
-    cur.execute(get_notebook)
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -43,8 +43,8 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     from src.praxxis.util import error
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    query = f'SELECT Notebook, Library FROM NotebookList WHERE ID = "{ordinal}" LIMIT 0, 1'
-    cur.execute(query)
+    query = 'SELECT Notebook, Library FROM NotebookList WHERE ID = ? LIMIT 0, 1'
+    cur.execute(query, (ordinal,))
     conn.commit()
     item = cur.fetchone()
     conn.close()
@@ -60,9 +60,9 @@ def write_list(current_scene_db, notebook_list, path_list = []):
 
     conn = connection.create_connection(current_scene_db)
     cur = conn.cursor()
-    clear_list = f'DELETE FROM "NotebookList"'
+    clear_list = 'DELETE FROM "NotebookList"'
     reset_counter = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='NotebookList'"
-    insert_line = f'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?,?,?)'
+    insert_line = 'INSERT INTO "NotebookList" (Notebook, Path, Library, RawUrl) VALUES (?,?,?,?)'
     cur.execute(clear_list)
     cur.execute(reset_counter)
     if path_list == []:
@@ -79,7 +79,7 @@ def get_notebook_path(library_db, notebook, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_notebook_path = f"SELECT Path FROM 'Notebooks' WHERE Notebook=? AND Library=?"
+    get_notebook_path = "SELECT Path FROM 'Notebooks' WHERE Notebook=? AND Library=?"
     cur.execute(get_notebook_path, (notebook, library))
     conn.commit()
     path = cur.fetchone()
@@ -95,7 +95,7 @@ def get_notebook_library(library_db, notebook):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_notebook_library = f"SELECT Library FROM 'NotebookList' WHERE Notebook=?"
+    get_notebook_library = "SELECT Library FROM 'NotebookList' WHERE Notebook=?"
     cur.execute(get_notebook_library, (notebook,))
     conn.commit()
     path = cur.fetchall()
@@ -111,8 +111,8 @@ def check_notebook_exists(library_db, notebook):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    check_exists = f'Select * FROM Notebooks WHERE Notebook = "{notebook}"'
-    cur.execute(check_exists)
+    check_exists = 'Select * FROM Notebooks WHERE Notebook = ?'
+    cur.execute(check_exists, (notebook,))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -129,8 +129,8 @@ def search_notebooks(library_db, search_term, query_start, query_end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_param = f'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" WHERE Notebook LIKE "%{search_term}%" ORDER BY Notebook LIMIT {query_start}, {query_end}'
-    cur.execute(list_param)
+    list_param = 'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" WHERE Notebook LIKE "%{}%" ORDER BY Notebook LIMIT ?, ?'.format(search_term)
+    cur.execute(list_param, (query_start, query_end))
     conn.commit()
     rows = cur.fetchall()
     conn.close()

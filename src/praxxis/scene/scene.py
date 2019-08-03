@@ -5,7 +5,7 @@ def get_scene_by_ordinal(args, name, history_db):
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.util import error
 
-    if f"{name}".isdigit():
+    if str(name).isdigit():
         try:
             name = sqlite_scene.get_scene_by_ord(history_db, int(name))
         except error.SceneNotFoundError as e:

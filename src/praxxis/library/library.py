@@ -7,7 +7,7 @@ def get_library_by_ordinal(library_db, ordinal, query_start, query_end):
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.util import error
 
-    if f"{ordinal}".isdigit():
+    if str(ordinal).isdigit():
         try:
             library = sqlite_library.list_libraries(library_db, query_start, query_end)
         except error.LibraryNotFoundError as e:

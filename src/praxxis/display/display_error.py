@@ -9,213 +9,213 @@ init(autoreset=True, convert=True)
 
 def param_not_found_error(name):
     """the error display for parameters not being found"""
-    return(f"{Fore.RED}parameter {name} not found")
+    return("%sparameter %s not found" %(Fore.RED, name)) 
 
 
 def notebook_load_error(name):
     """error display for a notebook failing to load"""
-    print(f"\t{Fore.RED}there is something wrong with {name}. praxxis will still load it, but it might not run.")
+    print("\t%sthere is something wrong with %s. praxxis will still load it, but it might not run." %(Fore.RED, name)) 
 
 
 def scene_not_found_error(name):
     """the error display for scenes not existing"""
     if name == None:
-        return(f"{Fore.RED}scene does not exist")
+        return("%sscene does not exist" %(Fore.RED))  
     else:
-        return(f"{Fore.RED}scene {name} does not exist")
+        return("%sscene %s does not exist"  %(Fore.RED, name))
 
 
 def notebook_not_found_error(name):
     """the error display for notebooks not existing"""
     if name == None:
-        return(f"{Fore.RED}notebook does not exist")
+        return("%snotebook does not exist" %(name))
     else:
-        return(f"{Fore.RED}notebook {name} does not exist")
+        return("%snotebook %s does not exist" %(Fore.RED, name))
 
 
 def rule_not_found_error(name):
     """the error display for a ruleset not existing"""
     if name == None:
-        return(f"{Fore.RED}rule does not exist")
+        return("%srule does not exist" %(name))
     else:
-        return(f"{Fore.RED}rule {name} does not exist")
+        return("%srule %s does not exist" %(Fore.RED, name))
 
 
 def ruleset_not_found_error(name):
     """the error display for a ruleset not existing"""
     if name == None:
-        return(f"{Fore.RED}ruleset does not exist")
+        return("%sruleset does not exist" %(name)) 
     else:
-        return(f"{Fore.RED}ruleset {name} does not exist")
+        return("%sruleset %s does not exist" %(Fore.RED, name)) 
 
 
 def ruleset_active_error(name):
     """the error display for activating an active ruleset"""
     if name == None:
-        return(f"{Fore.RED}ruleset is already active")
+        return("%sruleset is already active" %(name))
     else:
-        return(f"{Fore.RED}ruleset {name} is already active")
+        return("%sruleset %s is already active" %(Fore.RED, name)) 
 
 
 def ruleset_not_active_error(name):
     """the error display for deactivating an inactive ruleset"""
     if name == None:
-        return(f"{Fore.RED}ruleset is already inactive")
+        return("%sruleset is already inactive" %(name))
     else:
-        return(f"{Fore.RED}ruleset {name} is already inactive")
+        return("%sruleset %s is already inactive" %(Fore.RED, name))
 
 
 def end_ended_scene_error(name):
     """error display for trying to end an ended scene"""
-    return(f"{Fore.RED}{name} is already ended.")
+    return("%s%s is already ended." %(Fore.RED, name))
 
 
 def library_not_found_error(name):
     """error display for nonexistent library"""
-    return(f"{Fore.RED}Library {name} does not exist or is not loaded.")
+    return("%sLibrary %s does not exist or is not loaded." %(Fore.RED, name)) 
 
 
 def not_directory_error(name):
     """ error display for using al to add a single file"""
-    return(f"{Fore.RED}{name} is not a directory. Are you trying to add a notebook?")
+    return("%s%s is not a directory. Are you trying to add a notebook?" %(Fore.RED, name)) 
 
 
 def not_file_error(name):
     """ errror  display for using a to add a library"""
-    return(f"{Fore.RED}{name} is a directory. Are you trying to add a library?")
+    return("%s%s is a directory. Are you trying to add a library?" %(Fore.RED, name)) 
 
 
 def not_notebook_error(name):
     """ error display for trying to add something that isn't a notebook"""
-    return(f"{Fore.RED}The file {name} is not a notebook file.")
+    return("%sThe file %s is not a notebook file." %(Fore.RED, name)) 
 
 
 def duplicate_notebook_error(name, library_list):
     """ error display for doing operations on a notebook that exists in two places""" 
     from src.praxxis.sqlite import sqlite_library
-    print(f"{Fore.RED}The notebook {name} exists in two places. Specify which library to choose from.")
+    print("%sThe notebook %s exists in two places. Specify which library to choose from." %(Fore.RED, name)) 
 
     i = 0
     for library in library_list:
         i += 1
-        print(f"\t{i}.\t{library}")
+        print("\t%s.\t%s" %(i, library))
 
 
 def duplicate_notebook_warning(name):
     """ warning display for loading a notebook twice."""
-    print(f"{Fore.YELLOW}The notebook {name} has already been loaded. Reimporting.")
+    print("%sThe notebook %s has already been loaded. Reimporting." %(Fore.YELLOW, name))
 
 
 def duplicate_sync_warning(duplicates):
     """ warning for syncing libraries with notebooks that have already been loaded"""
     if len(duplicates) == 1:
-        print(f"{Fore.YELLOW}The notebook {duplicates[0]} was already loaded. Reimporting.")
+        print("%sThe notebook %s was already loaded. Reimporting." %(Fore.YELLOW, duplicates[0]))
     else:
-        print(f"{Fore.YELLOW}The notebooks")
+        print("%sThe notebooks") %(Fore.YELLOW)
         for duplicate in duplicates:
-            print(f"{Fore.YELLOW}\t{duplicate}")
-        print(f"{Fore.YELLOW}were already loaded. Reimporting. ")
+            print("%s\t%s") %(Fore.YELLOW, duplicate)
+        print("%swere already loaded. Reimporting. " %(Fore.YELLOW)) 
 
 
 def version_error():
     """ error for using the wrong python version"""
     import sys
-    return("praxxis requires python 3.6. Your version is " + str(sys.version_info.major)+ "." + str(sys.version_info.minor), "which is incompatable. Please update python.")
+    return("praxxis requires python 3.6. Your version is %s.%s which is incompatable. Please update python."  %(sys.version_info.major, sys.version_info.minor))
 
 
 def last_active_scene_error(name):
     """the error display for trying to end the last active scene"""
-    return(f"{Fore.RED}{name} is your last active scene. Make a new scene, or resume an old one.")
+    return("%s%s is your last active scene. Make a new scene, or resume an old one." %(Fore.RED, name)) 
 
 
 def scene_ended_error(name):
     """the error display for trying to switch to an ended scene"""
-    return(f"{Fore.RED}can't switch to {name}, because the scene has ended. Resume the scene or make a new one.")
+    return("%scan't switch to %s, because the scene has ended. Resume the scene or make a new one." %(Fore.RED, name)) 
 
  
 def editor_not_found_error(editor):
     """ the error display for not having a text editor"""
-    return(f"{Fore.RED}Could not find editor {editor}")
+    return("%sCould not find editor %s" %(Fore.RED, editor)) 
 
 
 def ads_not_found_error(ads_path):
     """ the error display for not being able to find an ADS installation"""
-    return(f"{Fore.RED}Could not find installation of ADS at {ads_path}")
+    return("%sCould not find installation of ADS at %s" %(Fore.RED, ads_path)) 
 
 
 def papermill_error(error):
     """the error display for papermill errors"""
-    print(f"{Fore.RED}PAPERMILL ERROR")
+    print("%sPAPERMILL ERROR" %(Fore.RED))
     print(error)
 
 
 def no_tagged_cell_warning():
     """the warning display for having no tagged cell"""
-    print(f"{Fore.YELLOW}Warning: no tagged cell located. No parameters will be injected for this notebook.")
+    print("%sWarning: no tagged cell located. No parameters will be injected for this notebook." %(Fore.YELLOW))
 
 
-def settings_invalid_ordinal(userIn):
+def settings_invalid_ordinal(user_input):
     """the error display for bad ordinal input"""
-    print(f"{Fore.RED}Bad input: {userIn} is not an ordinal in the list. Please try again.")
+    print("%sBad input: %s is not an ordinal in the list. Please try again."  %(Fore.RED, user_input))
 
 
 def telem_off_warning():
-    """the warning display for telemetry being off"""
-    print(f"{Fore.YELLOW}Warning: telemetry is disabled. Turn it on in the settings utility (prax u)")
+    """the warning display for telemetry being of"""
+    print("%sWarning: telemetry is disabled. Turn it on in the settings utility (prax u)" %(Fore.YELLOW))
 
 
 def telem_not_init_warning():
     """the warning display for uninitialized telemetry"""
-    print(f"{Fore.YELLOW}Warning: telemetry is not set up. Use the settings utility (prax u) to enable it.")
+    print("%s Warning: telemetry is not set up. Use the settings utility (prax u) to enable it." %(Fore.YELLOW)) 
 
 
 def display_telem_unsent(backlog):
     """the warning display for unsent telemetry"""
-    print(f"{Fore.YELLOW}Warning: The last {backlog} output files have not sent. Consider checking server settings with \"prax u\".")
-    print(f"{Fore.YELLOW}Attempting to send {backlog+1} output files now.")
+    print("%sWarning: The last %s output files have not sent. Consider checking server settings with \"prax u\"."  %(Fore.YELLOW, backlog))
+    print("%sAttempting to send %s output files now." %(Fore.YELLOW, backlog+1)) 
     
 
 def display_ruleset_num_input_warning(num):
     """the warning display for a number being interpreted as a string in a ruleset"""
-    print(f"{Fore.YELLOW}Warning: The number {num} is not in the notebook list range and will be interpreted as the string \"{num}\"")
+    print("%sWarning: The number %s is not in the notebook list range and will be interpreted as the string \"%s\"" %(Fore.YELLOW, num, num))
 
 
 def predictions_ordinal_not_in_list_error():
     """the error message for invalid input when making a rule"""
-    print(f"{Fore.RED}The input was invalid. Please re-enter your list of notebook predictions.")
+    print("%sThe input was invalid. Please re-enter your list of notebook predictions." %(Fore.RED)) 
 
 def invalid_ruleset_import(name):
     """error fir importing an invalid ruleset""" 
     if name == None:
-        return(f"{Fore.RED}This does not appear to be the path to a valid .db file")
+        return("%sThis does not appear to be the path to a valid .db file" %(Fore.RED) )
     else:
-        return(f"{Fore.RED}{name} is not the path to a valid .db file")
+        return("%s%s is not the path to a valid .db file"  %(Fore.RED, name)) 
 
 
 def repo_exists_warning():
     """warning that a repo has already been imported"""
-    print(f"{Fore.YELLOW}That repo already exists. Cloning and reimporting.")
+    print("%sThat repo already exists. Cloning and reimporting." %(Fore.YELLOW)) 
 
 
 def invalid_rule_definition(name):
     """error for trying to import an invalid rule"""
-    print(f"{Fore.RED}The rule definition for rule {name} is invalid. This rule will not be imported.")
+    print("%sThe rule definition for rule %s is invalid. This rule will not be imported." %(Fore.RED, name)) 
 
 
 def empty_history_error():
     """error for empty history on an operation that requires history"""
-    return(f"{Fore.RED}This operation cannot be run on an empty history.")
+    return("%sThis operation cannot be run on an empty history." %(Fore.RED))
 
 
 def tensorflow_version_error():
     """ error for running an old version of tensorflow"""
     import sys
-    print(f"{Fore.RED}praxxis's model is built with tensorflow, which requires python <=3.6. Your version is " + str(sys.version_info.major) + "." + str(sys.version_info.minor) + ", which is incompatible." +
-                " Consider changing your python version or running in a virtual parameter to get model-based predictions for next actions.")
+    print("%spraxxis's model is built with tensorflow, which requires python <=3.6. Your version is %s.%s , which is incompatible." %(Fore.RED, sys.version_info.major, sys.version_info.minor) +
+                " Consider changing your python version or running in a virtual environment to get model-based predictions for next actions.")
 
 def pytest_windows_permissions_error(error):
     """error for pytest hitting a windows permissions error)"""
     if "Windows permissions failure" in error:
         return error
     else:
-        return f"{Fore.RED}Windows permissions failure -- try re-running to resolve (Error {error})"
+        return "%sWindows permissions failure -- try re-running to resolve (Error %s)" %(Fore.RED, error)

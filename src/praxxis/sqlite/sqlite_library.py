@@ -7,8 +7,8 @@ def clear_loaded_libararies(library_db):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_metadata = f'DELETE FROM "LibraryMetadata"'
-    clear_notebooks = f'DELETE FROM "Notebooks"'
+    clear_metadata = 'DELETE FROM "LibraryMetadata"'
+    clear_notebooks = 'DELETE FROM "Notebooks"'
     cur.execute(clear_metadata)
     cur.execute(clear_notebooks)
     conn.commit()
@@ -21,8 +21,8 @@ def get_library_by_name(library_db, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Library = "{library}"'
-    cur.execute(get_library)
+    get_library = 'SELECT * FROM "LibraryMetadata" WHERE Library = ?'
+    cur.execute(get_library, (library,))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -35,8 +35,8 @@ def get_library_by_root(library_db, path):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Path = "{path}"'
-    cur.execute(get_library)
+    get_library = 'SELECT * FROM "LibraryMetadata" WHERE Path = ?'
+    cur.execute(get_library, (path,))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -49,10 +49,10 @@ def load_library(library_db, path, readme, library, remote=None):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library, Remote) VALUES("{path}", "{readme}", "{library}", {remote})'
-    update_library = f'UPDATE "LibraryMetadata" SET Readme = "{readme}" WHERE Library = "{library}"'
-    cur.execute(load_library)
-    cur.execute(update_library)
+    load_library = 'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library, Remote) VALUES(?,?,?,?)'
+    update_library = 'UPDATE "LibraryMetadata" SET Readme = ? WHERE Library = ?'
+    cur.execute(load_library, (path, readme, library, remote))
+    cur.execute(update_library, (readme, library))
     conn.commit()
     conn.close()
 
@@ -63,8 +63,8 @@ def load_notebook(library_db, path, notebook, library, raw_url=None):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "Notebooks"(Path, Notebook, Library, RawUrl) VALUES("{path}", "{notebook}", "{library}", "{raw_url}")'
-    cur.execute(load_library)
+    load_library = 'INSERT OR IGNORE INTO "Notebooks"(Path, Notebook, Library, RawUrl) VALUES(?, ?, ?, ?)'
+    cur.execute(load_library, (path, notebook, library, raw_url))
     conn.commit()
     conn.close()
 
@@ -75,10 +75,10 @@ def sync_library(library_db, path, readme, library, remote=None):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    load_library = f'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library, Remote) VALUES("{path}", "{readme}", "{library}", "{remote}")'
-    update_library = f'UPDATE "LibraryMetadata" SET Readme = "{readme}" WHERE Library = "{library}"'
-    cur.execute(load_library)
-    cur.execute(update_library)
+    load_library = 'INSERT OR IGNORE INTO "LibraryMetadata"(Path, Readme, Library, Remote) VALUES(?, ?, ?, ?)'
+    update_library = 'UPDATE "LibraryMetadata" SET Readme = ? WHERE Library = ?'
+    cur.execute(load_library, (path, readme, library, remote))
+    cur.execute(update_library, (readme, library))
     conn.commit()
     conn.close()
 
@@ -90,8 +90,8 @@ def list_libraries(library_db, query_start, query_end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_libraries = f'SELECT Library FROM "LibraryMetadata" ORDER BY Library LIMIT {query_start}, {query_end}'
-    cur.execute(list_libraries)
+    list_libraries = 'SELECT Library FROM "LibraryMetadata" ORDER BY Library LIMIT ?, ?'
+    cur.execute(list_libraries, (query_start, query_end))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -104,8 +104,8 @@ def check_library_exists(library_db, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    get_library = f'SELECT * FROM "LibraryMetadata" WHERE Library = "{library}" LIMIT 0, 1'
-    cur.execute(get_library)
+    get_library = 'SELECT * FROM "LibraryMetadata" WHERE Library = ? LIMIT 0, 1'
+    cur.execute(get_library, (library,))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
@@ -119,12 +119,12 @@ def remove_library(library_db, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_library = f'DELETE FROM "LibraryMetadata" WHERE Library = "{library}"'
-    clear_notebooks = f'DELETE FROM "Notebooks" WHERE Library = "{library}"'
-    clear_parameter = f'DELETE FROM NotebookDefaultParam Where Library = "{library}"'
-    cur.execute(clear_library)
-    cur.execute(clear_notebooks)
-    cur.execute(clear_parameter)
+    clear_library = 'DELETE FROM "LibraryMetadata" WHERE Library = ?'
+    clear_notebooks = 'DELETE FROM "Notebooks" WHERE Library = ?'
+    clear_parameter = 'DELETE FROM NotebookDefaultParam Where Library = ?'
+    cur.execute(clear_library, (library,))
+    cur.execute(clear_notebooks, (library,))
+    cur.execute(clear_parameter, (library,))
     conn.commit()
     conn.close()
 
@@ -134,9 +134,9 @@ def remove_notebook(library_db, notebook, library):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    clear_parameter = f'DELETE FROM NotebookDefaultParam Where Notebook = "{notebook}" AND Library = "{library}"'
-    clear_notebook = f'DELETE FROM Notebooks WHERE Notebook = "{notebook}" AND Library = "{library}"'
-    cur.execute(clear_parameter)
-    cur.execute(clear_notebook)
+    clear_parameter = 'DELETE FROM NotebookDefaultParam Where Notebook = ? AND Library = ?'
+    clear_notebook = 'DELETE FROM Notebooks WHERE Notebook = ? AND Library = ?'
+    cur.execute(clear_parameter, (notebook, library))
+    cur.execute(clear_notebook, (notebook, library))
     conn.commit()
     conn.close()

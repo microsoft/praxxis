@@ -31,7 +31,7 @@ def get_current_scene_db(scene_root, history_db):
     import os
     from src.praxxis.sqlite import sqlite_scene
     scene = sqlite_scene.get_current_scene(history_db)
-    return os.path.join(scene_root, scene, f"{scene}.db")
+    return os.path.join(scene_root, scene, "%s.db" %(scene))
 
 def init(
         root, 

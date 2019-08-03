@@ -33,7 +33,7 @@ def run_notebook(args, user_info_db, output_root, current_scene_db, library_root
         raise e
     
     if args.html == "html":
-        html_outputfile = f"{local_copy.split('.')[0]}.html"
+        html_outputfile = "%s.html" %(local_copy.split('.')[0])
         open_notebook.display_as_html(local_copy, html_outputfile)
     else:
         display_notebook.display_run_notebook(local_copy)
@@ -108,7 +108,7 @@ def get_outputname(notebook, output_root):
     from datetime import datetime
 
     timestamp = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
-    filename = f"{timestamp}-{notebook.library_name}-{notebook.name}.ipynb"
+    filename = "%s-%s-%s.ipynb" %(timestamp, notebook.library_name, notebook.name)
     
     outputname = os.path.join(output_root, filename)
     return outputname
