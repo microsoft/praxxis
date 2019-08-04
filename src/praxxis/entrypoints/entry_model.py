@@ -1,5 +1,5 @@
 """
-handles accessing of model related things from the CLI
+This file handles the model functions of the CLI
 """
 from src.praxxis.util.roots import _model_root
 from src.praxxis.util.roots import _model_db

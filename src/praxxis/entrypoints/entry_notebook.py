@@ -1,5 +1,5 @@
 """
-handles the notebook functions of the CLI
+This file handles the notebook functions of the CLI
 """
 
 from src.praxxis.util.roots import _output_root
@@ -14,7 +14,7 @@ from src.praxxis.util.roots import _query_end
 from src.praxxis.util.roots import _rulesengine_db
 
 def init_output(output_root):
-    """ initializes the output for running notebooks """
+    """handles initializing the output for running notebooks"""
     import os
     from src.praxxis.display import display_notebook
 
@@ -32,7 +32,7 @@ def run_notebook(arg,
                  current_scene_db = None,
                  query_start = _query_start,
                  query_end = _query_end):
-    """calls the function to run a notebook"""
+    """handles running a notebook"""
     from src.praxxis.notebook import run_notebook
     from src.praxxis.util import roots
     
@@ -49,7 +49,7 @@ def open_notebook(arg,
                   azure_data_studio_location = _azure_data_studio_location,
                   current_scene_db = None,
                   test = False):
-    """calls the function to open a notebook"""
+    """handles opening a notebook"""
     from src.praxxis.notebook import open_notebook
     from src.praxxis.util import roots
 
@@ -70,7 +70,7 @@ def search_notebook(arg,
                     query_end = _query_end,
                     current_scene_db = None
                     ):
-    """calls the function to search a notebook"""
+    """handles searching for a notebook"""
     from src.praxxis.notebook import search_notebook
     from src.praxxis.util import roots
 
@@ -107,7 +107,7 @@ def next_notebook(arg,
                     rulesengine_db = _rulesengine_db,
                     query_start = _query_start,
                     query_end = _query_end):
-    """calls the function to get the next notebook"""
+    """handles getting the predicted next notebook"""
     from src.praxxis.notebook import what_next
     from src.praxxis.util import roots
 
@@ -117,10 +117,9 @@ def next_notebook(arg,
     what_next.what_next(arg, user_info_db, current_scene_db, library_db, rulesengine_db, query_start, query_end)
 
 
-
 def add_notebook(arg, 
                 library_db = _library_db):
-    """ handles adding a notebook from the CLI """
+    """handles adding a notebook from the CLI"""
     from src.praxxis.notebook import add_notebook
 
     add_notebook.add_notebook(arg, library_db)
@@ -146,7 +145,7 @@ def remove_notebook(arg,
                     history_db = _history_db,
                     library_db = _library_db, 
                     current_scene_db = None):
-    """handles removing a notebook from the cli"""
+    """handles removing a notebook from the CLI"""
     from src.praxxis.notebook import remove_notebook
     from src.praxxis.util import roots
 

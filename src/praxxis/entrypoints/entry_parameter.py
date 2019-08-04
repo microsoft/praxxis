@@ -1,5 +1,5 @@
 """
-handles the parameter functions for the CLI
+This file handles the parameter functions for the CLI
 """
 from src.praxxis.util.roots import _scene_root
 from src.praxxis.util.roots import _history_db
@@ -11,7 +11,7 @@ def set_param(arg,
             scene_root = _scene_root,
             history_db = _history_db,
             current_scene_db = None):
-    """calls the function to set an parameter"""
+    """handles setting a parameter"""
     from src.praxxis.parameter import set_param
     from src.praxxis.util import roots
     
@@ -25,7 +25,7 @@ def delete_param(arg,
                scene_root = _scene_root,
                history_db = _history_db,
                current_scene_db = None):
-    """calls the function to delete an parameter"""
+    """handles deleting a parameter"""
     from src.praxxis.parameter import delete_param
     from src.praxxis.util import roots
     
@@ -41,7 +41,7 @@ def list_param(arg,
              query_start = _query_start,
              query_end = _query_end, 
              current_scene_db = None):
-    """calls the function to list parameters in current scene"""
+    """handles listing parameters in current scene"""
     from src.praxxis.parameter import list_param   
     from src.praxxis.util import roots
     
@@ -58,7 +58,7 @@ def view_library_param(arg,
                      query_start = _query_start,
                      query_end = _query_end,
                      current_scene_db = None):
-    """ handles viewing library parameters from the CLI """
+    """handles viewing library parameters"""
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
     
@@ -73,7 +73,7 @@ def view_notebook_param(arg,
                       library_db = _library_db,
                       history_db = _history_db,
                       current_scene_db = None):
-    """ handles viewing notebook parameters from the CLI """
+    """handles viewing notebook parameters"""
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
     
@@ -88,7 +88,7 @@ def pull_notebook_param(arg,
                       scene_root = _scene_root,
                       history_db = _history_db,
                       current_scene_db = None):
-    """ handles pulling parameters out of a notebook through the CLI """
+    """handles pulling parameters out of a notebook"""
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
 
@@ -105,7 +105,7 @@ def pull_library_param(arg,
                       current_scene_db = None,
                      query_start = _query_start,
                       query_end = _query_end):
-    """ handles pulling parameters out of a library through the CLI. """
+    """handles pulling parameters out of a library"""
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
 

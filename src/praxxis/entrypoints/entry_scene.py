@@ -1,5 +1,5 @@
 """
-handles all of the scene functions for the CLI
+This file handles all of the scene functions for the CLI
 """
 
 from src.praxxis.util.roots import _scene_root
@@ -10,7 +10,7 @@ from src.praxxis.util.roots import _library_db
 def init_scene(scene_root = _scene_root, 
                history_db = _history_db, 
                default_scene_name = _default_scene_name):
-    """initializes the scene db and directory"""
+    """handles initializing the scene db and directory"""
     import os
     from src.praxxis.display import display_scene
     from src.praxxis.sqlite import sqlite_init
@@ -26,7 +26,7 @@ def init_scene(scene_root = _scene_root,
 def new_scene(arg,
               scene_root = _scene_root,
               history_db = _history_db):
-    """calls the function to create a new scene"""
+    """handles creating a new scene"""
     from src.praxxis.scene import new_scene
     from src.praxxis.scene import scene
 
@@ -37,7 +37,7 @@ def end_scene(arg,
               scene_root = _scene_root,
               history_db = _history_db,
               current_scene_db = None):
-    """calls the function to end a scene"""
+    """handles ending a scene"""
     from src.praxxis.scene import end_scene
     from src.praxxis.util import roots
     
@@ -50,7 +50,7 @@ def end_scene(arg,
 def change_scene(arg,
                  scene_root = _scene_root,
                  history_db = _history_db):
-    """calls the function to change the current scene"""
+    """handles changing the current scene"""
     from src.praxxis.scene import change_scene
 
     change_scene.change_scene(arg, scene_root, history_db)
@@ -59,7 +59,7 @@ def change_scene(arg,
 def resume_scene(arg, 
                  scene_root = _scene_root,
                  history_db = _history_db):
-    """calls the function to resume an ended scene"""
+    """handles resuming an ended scene"""
     from src.praxxis.scene import resume_scene
 
     resume_scene.resume_scene(arg, scene_root, history_db)
@@ -68,7 +68,7 @@ def resume_scene(arg,
 def delete_scene(arg, 
                  scene_root = _scene_root,
                  history_db = _history_db):
-    """ calls the function to delete a scene"""
+    """handles deleting a scene"""
     from src.praxxis.scene import delete_scene
     
     delete_scene.delete_scene(arg, scene_root, history_db)
@@ -77,7 +77,7 @@ def delete_scene(arg,
 def list_scene(arg, 
                scene_root = _scene_root, 
                history_db = _history_db):
-    """calls the function to list scenes"""
+    """handles listing scenes"""
     from src.praxxis.scene import list_scene
 
     list_scene.list_scene(scene_root, history_db)
@@ -88,7 +88,7 @@ def history(arg,
             history_db = _history_db,
             library_db = _library_db, 
             current_scene_db = None):
-    """calls the function to display scene history"""
+    """handles displaying scene history"""
     from src.praxxis.scene import history
     from src.praxxis.util import roots
     
@@ -101,7 +101,7 @@ def history(arg,
 def current_scene(arg, 
             scene_root = _scene_root,
             history_db = _history_db):
-    """calls the default function, which is to display the current scene."""
+    """handles the default function, which displays the current scene"""
     from src.praxxis.scene import current_scene
     
     current_scene = current_scene.current_scene(scene_root, history_db)
