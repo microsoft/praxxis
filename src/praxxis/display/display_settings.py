@@ -20,12 +20,12 @@ def display_settings(settings, values):
 
 
 def display_menu_prompt():
-    """ display function for the menu prompt"""
+    """display function for the menu prompt"""
     return input("Enter the ordinal of the setting to update (enter q to exit): ")
 
 
 def display_value_prompt(setting, setting_help):
-    """ display function for setting a value"""
+    """display function for setting a value"""
     print("\t>> %s: %s" %(setting, setting_help))
     if (setting != "Password"):
         return input("\t>> Enter a new value for %s: " %(setting))
@@ -40,4 +40,3 @@ def display_value_updated(setting, changeVal):
         print("\t>> setting changed: %s = %s\n" %(setting, changeVal))
     else:
         print("\t>> setting changed: %s\n" %(setting))
-    
