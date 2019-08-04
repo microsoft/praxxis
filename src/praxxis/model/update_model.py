@@ -13,5 +13,5 @@ from requests.auth import HTTPBasicAuth
 from src.praxxis.sqlite import sqlite_telemetry
 
 def update_model():
-    #stubbed out :(
+    #TODO: implement this
     pass
