@@ -1,9 +1,9 @@
 """
-adds a library from git or path
+This file adds a library from git or path
 """
 
 def add_library(args, library_db, git_root):
-    """ adds a library from git or path"""
+    """adds a library from git or path"""
     from src.praxxis.util import error
     from src.praxxis.display import display_error
     from src.praxxis.display import display_library

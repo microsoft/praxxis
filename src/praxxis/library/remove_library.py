@@ -1,5 +1,5 @@
 """
-removes a library by ordinal or name
+This file removes a library by ordinal or name
 """
 
 def remove_library(args, library_db, query_start, query_end):

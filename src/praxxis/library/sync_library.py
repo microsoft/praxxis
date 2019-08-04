@@ -1,10 +1,11 @@
 """
-    This file loads libraries into the library database file
+This file loads libraries into the library database file
 """
 
 import os
 
 def sync_library(library_root, library_db, custom_path = False, custom_library_name = None, remote = None, remote_origin = None):
+    """step through a library and load all .ipynb files into sqlite database"""
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.util import error
     from src.praxxis.display import display_error
@@ -67,6 +68,7 @@ def sync_library(library_root, library_db, custom_path = False, custom_library_n
 
 
 def load_notebook(notebook_name, root, library_db, library_name, relative_path, remote_origin=None, remote=None, readme_data = None):
+    """load a notebook into the sqlite database"""
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.notebook import notebook
     from src.praxxis.sqlite import sqlite_parameter

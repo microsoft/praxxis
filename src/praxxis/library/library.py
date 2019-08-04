@@ -1,5 +1,5 @@
 """
-library specific utilities
+This file contains library specific utilities
 """
 
 def get_library_by_ordinal(library_db, ordinal, query_start, query_end):
