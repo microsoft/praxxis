@@ -12,7 +12,6 @@ def run_notebook(args, user_info_db, output_root, current_scene_db, library_root
     from src.praxxis.notebook import open_notebook 
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.sqlite import sqlite_scene
-    from src.praxxis.util import error
     from datetime import datetime
     import os
 

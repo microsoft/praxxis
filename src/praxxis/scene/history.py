@@ -9,7 +9,6 @@ def history(history_db, library_db, current_scene_db):
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.display import display_scene
-    from src.praxxis.util import error
 
     curr_scene = sqlite_scene.get_current_scene(history_db)
     

@@ -1,6 +1,5 @@
 def add_notebook(args, library_db):
     import os 
-    from src.praxxis.util import error
     from src.praxxis.library import sync_library
     
     root = (os.path.sep).join(os.path.abspath(args.path).split(os.path.sep)[:-1])

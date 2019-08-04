@@ -20,7 +20,6 @@ def list_notebook_param(args, library_db, current_scene_db):
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
-    from src.praxxis.util import error
     from src.praxxis.display import display_param
 
     name = args.notebook

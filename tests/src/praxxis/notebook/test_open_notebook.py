@@ -62,7 +62,6 @@ def test_open_notebook_editor(setup, add_test_library, current_scene_db, library
 def test_open_notebook_jupyter(setup, add_test_library, current_scene_db, library_db, ads_location):
     from src.praxxis.notebook import open_notebook
     from tests.src.praxxis.util import dummy_object
-    from src.praxxis.util import error
 
     notebook1 = dummy_object.make_dummy_notebook(viewer="jupyter")
     assert open_notebook.open_notebook(notebook1, current_scene_db, library_db, ads_location, test=True) == 0

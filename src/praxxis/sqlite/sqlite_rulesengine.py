@@ -54,7 +54,6 @@ def get_ruleset_path(rulesengine_db, name):
 def remove_ruleset(rulesengine_db, name):
     """removes a ruleset from the list of rulesets"""
     from src.praxxis.sqlite import connection
-    from src.praxxis.util import error
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
