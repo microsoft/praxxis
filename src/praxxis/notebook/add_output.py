@@ -1,5 +1,9 @@
+"""
+This file adds output to the last executed notbeook.
+"""
 
 def add_output(args, output_root, current_scene_db, user_info_db):
+    """insert output into previously executed notebook json"""
     import json
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.display import display_notebook
@@ -29,6 +33,7 @@ def add_output(args, output_root, current_scene_db, user_info_db):
     
 
 def update_telemetry(user_info_db, local_copy, current_scene_db):
+    """sets up a telemetry update operation as a subprocess"""
     from src.praxxis.sqlite import sqlite_telemetry
 
     current_scene_id = sqlite_telemetry.get_scene_id(current_scene_db)
@@ -39,7 +44,6 @@ def update_telemetry(user_info_db, local_copy, current_scene_db):
     elif not sqlite_telemetry.telem_on(user_info_db):
         from src.praxxis.display import display_error
         display_error.telem_off_warning()    
-
     else: # telemetry initalized and on     
         import subprocess
         import os

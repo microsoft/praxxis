@@ -1,4 +1,9 @@
+"""
+This file adds a notebook 
+"""
+
 def add_notebook(args, library_db):
+    """add a notebook to sqlite database"""
     import os 
     from src.praxxis.library import sync_library
     

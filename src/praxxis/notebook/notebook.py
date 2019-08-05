@@ -4,6 +4,7 @@ file and checking its parameterization information.
 """
 
 def get_notebook(current_scene_db, library_db, name):
+    """gets a notebook path from name and library name"""
     from src.praxxis.notebook import notebook
     from src.praxxis.util import error
     from src.praxxis.sqlite import sqlite_notebook
@@ -55,36 +56,38 @@ def get_output_from_filename(filename):
     return ''.join(linelist)
 
 
-def handle_duplicate_notebook(library_db, notebook_data, name,):
-        from src.praxxis.display import display_error
-        from src.praxxis.library import list_library
-        from src.praxxis.library import library
-        from src.praxxis.sqlite import sqlite_notebook
-        from src.praxxis.sqlite import sqlite_library
-        from src.praxxis.notebook import notebook
-        from src.praxxis.display import display_notebook
-        from src.praxxis.util import error
-        
-        library_list = []
-        for element in notebook_data:
-            library_list.append(element[2])
-        
-        display_error.duplicate_notebook_error(name, library_list)
-        selection = display_notebook.get_notebook_selection()
+def handle_duplicate_notebook(library_db, notebook_data, name):
+    """prompts user to resolve duplicate notebook problem"""
+    from src.praxxis.display import display_error
+    from src.praxxis.library import list_library
+    from src.praxxis.library import library
+    from src.praxxis.sqlite import sqlite_notebook
+    from src.praxxis.sqlite import sqlite_library
+    from src.praxxis.notebook import notebook
+    from src.praxxis.display import display_notebook
+    from src.praxxis.util import error
+    
+    library_list = []
+    for element in notebook_data:
+        library_list.append(element[2])
+    
+    display_error.duplicate_notebook_error(name, library_list)
+    selection = display_notebook.get_notebook_selection()
 
-        if selection.isdigit():
-            if int(selection) <= len(library_list):
-                selection = library_list[int(selection)-1]
-            else:
-                raise error.LibraryNotFoundError(selection)
+    if selection.isdigit():
+        if int(selection) <= len(library_list):
+            selection = library_list[int(selection)-1]
         else:
-            sqlite_library.check_library_exists(library_db, selection)
-        return sqlite_notebook.get_notebook(library_db, name, selection)[0]
+            raise error.LibraryNotFoundError(selection)
+    else:
+        sqlite_library.check_library_exists(library_db, selection)
+    return sqlite_notebook.get_notebook(library_db, name, selection)[0]
 
 
 class Notebook:
-    """ this is the notebook class, which is an instance of a notebook"""
+    """this is the notebook class, which is an instance of a notebook"""
     def __init__(self, notebook_data):
+        """creates a notebook as set of parameters, path, and library name"""
         from src.praxxis.display import display_error
         import os
 

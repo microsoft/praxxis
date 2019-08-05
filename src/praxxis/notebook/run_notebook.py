@@ -44,6 +44,7 @@ def run_notebook(args, user_info_db, output_root, current_scene_db, library_root
 
 
 def telemetry(user_info_db, local_copy, current_scene_id):
+    """sets up telemetry subprocess and calls it"""
     if not sqlite_telemetry.telem_init(user_info_db):
         from src.praxxis.display import display_error
         display_error.telem_not_init_warning() 
@@ -65,7 +66,7 @@ def telemetry(user_info_db, local_copy, current_scene_id):
 
 
 def execute(current_scene_db, notebook, output_root):
-    """Handles papermill execution for notebook"""
+    """handles papermill execution for notebook"""
     import papermill
     from src.praxxis.display import display_error
 
@@ -84,12 +85,11 @@ def execute(current_scene_db, notebook, output_root):
         except Exception as e:
             raise e
 
-    #need local output -- temp? or just send it directly to HDFS
     return local_copy
 
 
 def pull_params(current_scene_db, parameters):
-    """Returns a dictionary of all overridden parameters for notebook"""
+    """returns a dictionary of all overridden parameters for notebook"""
     from src.praxxis.sqlite import sqlite_parameter
 
     injects = {}
@@ -102,7 +102,7 @@ def pull_params(current_scene_db, parameters):
 
 
 def get_outputname(notebook, output_root):
-    """Returns name of output file for notebook"""
+    """returns name of output file for notebook"""
     import os
     from datetime import datetime
 

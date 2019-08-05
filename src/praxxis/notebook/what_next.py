@@ -10,7 +10,6 @@ from requests.auth import HTTPBasicAuth
 from src.praxxis.sqlite import sqlite_scene
 from src.praxxis.rulesengine import rules_checker
 
-
 def what_next(args, user_info_db, current_scene_db, library_db, rulesengine_db, query_start, query_end):
     """calls prediction query_endpoints to get next notebooks"""
     from src.praxxis.display import display_rulesengine
@@ -49,4 +48,3 @@ def write_to_list(notebook_library_list, current_scene_db, library_db):
         notebooklist.append(notebook)
 
     sqlite_notebook.write_list(current_scene_db, notebooklist)
-    

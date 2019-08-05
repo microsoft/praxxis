@@ -3,7 +3,7 @@ This file opens a notebook in ADS, HTML, jupyter or vim
 """
 
 def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim", test = False):
-    """Opens a notebook, by getting the filename and then opening from the ads binary location"""
+    """opens a notebook by getting the filename and then opening from the ads binary location"""
     import subprocess
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
@@ -49,6 +49,7 @@ def display_as_html(filename, html_outputfile = None):
 
 
 def open_jupyter(filepath, test):
+    """opens a notebook in jupyter"""
     import subprocess
     import os
     import sys    
@@ -72,6 +73,7 @@ def open_jupyter(filepath, test):
 
 
 def open_editor(notebook_filename, editor):
+    """opens the notebook in specified shell editor"""
     import sys, tempfile, os
     from subprocess import call
     from src.praxxis.display import display_error
