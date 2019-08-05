@@ -1,3 +1,7 @@
+"""
+This file (attempts to) send files to storage pool.
+Usually called as a subprocess.
+"""
 import os
 import sys
 
@@ -8,7 +12,8 @@ from requests.auth import HTTPBasicAuth
 
 from src.praxxis.sqlite import sqlite_telemetry
 
-def send(user_info_db, local_copy, scene_identifier):    
+def send(user_info_db, local_copy, scene_identifier):  
+    """attempts to send a file to storage pool"""  
     telem_info = sqlite_telemetry.get_telemetry_info(user_info_db)
     username = telem_info[2]
     pswd = telem_info[3]
@@ -18,7 +23,7 @@ def send(user_info_db, local_copy, scene_identifier):
     # TODO: Enable round-robin for all nodes in the K8s cluster (nodePort)
     url = telem_info[1]
 
-    web_hdfs_endpoint = url.format(telem_info[0])
+    storage_pool_endpoint = url.format(telem_info[0])
 
     # Get the filename from the end of the url
     basename = os.path.basename(local_copy)
@@ -27,8 +32,8 @@ def send(user_info_db, local_copy, scene_identifier):
     month = basename[4:6]
     day = basename[6:8]
 
-    # Create a file in hdfs
-    route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(web_hdfs_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
+    # Create a file in storage pool
+    route = "{0}/{1}/{2}/{3}/ipynb/{4}/{5}/{6}".format(storage_pool_endpoint, year, month, day, installation_identifier, scene_identifier, basename)
 
     payload = {'op': 'CREATE'}
     with open(local_copy, 'rb' ) as f:
@@ -36,13 +41,8 @@ def send(user_info_db, local_copy, scene_identifier):
         r.raise_for_status()
 
 
-def telem_entrance(user_info_db=None, new_local_copy=None, scene_identifier=None):
-    if user_info_db == None:
-        user_info_db = sys.argv[1]
-    if new_local_copy == None:
-        new_local_copy = sys.argv[2]
-    if scene_identifier == None:
-        scene_identifier = sys.argv[3]
+def telem_entrance(user_info_db, new_local_copy, scene_identifier):
+    """attempts to send each file in backlog as well as current file"""
 
     backlog_size = sqlite_telemetry.backlog_size(user_info_db)
 
@@ -68,4 +68,8 @@ def telem_entrance(user_info_db=None, new_local_copy=None, scene_identifier=None
         sqlite_telemetry.add_to_backlog(user_info_db, new_local_copy, scene_identifier, str(e))
     
 if __name__ == "__main__":
-    telem_entrance()
+    """calls entrance with command line args"""
+    user_info_db = sys.argv[1]
+    new_local_copy = sys.argv[2]
+    scene_identifier = sys.argv[3]
+    telem_entrance(user_info_db, new_local_copy, scene_identifier)

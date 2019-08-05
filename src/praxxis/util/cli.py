@@ -29,7 +29,7 @@ def command(argument,
             model_db = _model_db,
             default_scene_name = _default_scene_name,
             test = False):
-    """uses a dictionary as a switch statement to determine which funciton to run."""
+    """uses a dictionary as a switch statement to determine which funciton to run"""
     from src.praxxis.entrypoints import entry_parameter
     from src.praxxis.entrypoints import entry_library
     from src.praxxis.entrypoints import entry_notebook
@@ -107,5 +107,3 @@ def command(argument,
     except Exception as e:
         raise e
     return output
-
-    

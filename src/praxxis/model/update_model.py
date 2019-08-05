@@ -1,5 +1,5 @@
 """
-This file requests a new model from HDFS.
+This file requests a new model from the storage pool.
 """
 
 import os

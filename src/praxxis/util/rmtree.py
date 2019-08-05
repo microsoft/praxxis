@@ -1,10 +1,9 @@
 """
-This file exists because windows needs this for whatever reason
+This file exists to try to combat Windows permissions errors 
 """
+
 def rmtree(root, test = False):
-    """
-    just calls rmtree with the onerror so windows doesn't have a terrible time
-    """
+    """calls rmtree with onerror so windows doesn't have a terrible time"""
     import shutil
     import os
 
@@ -21,9 +20,7 @@ def rmtree(root, test = False):
 
 
 def onerror(func, path, exc_info):
-    """
-    what to do if there's an error, which is try to get permissons from the os.
-    """
+    """what to do if there's an error -- try to get permissons from the os"""
     import stat
     import os 
     ## https://stackoverflow.com/questions/1213706/what-user-do-python-scripts-run-as-in-windows

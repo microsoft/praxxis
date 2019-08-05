@@ -1,4 +1,7 @@
-"""opens an interactive update utility in the console"""
+"""
+This file opens an interactive update utility in the console
+"""
+
 from src.praxxis.sqlite import sqlite_telemetry
 from src.praxxis.display import display_settings
 
@@ -7,6 +10,7 @@ _settings_help = ["Set 0 to disable telemetry, 1 to enable", "WARNING-- do not a
         "IP address of server", "Your username", "Your password"]
 
 def update_settings(user_info_db):
+    """prompts user through changing settings"""
     values = get_values(user_info_db)
     
     display_settings.display_opening_message()
@@ -22,23 +26,26 @@ def update_settings(user_info_db):
 
 
 def get_values(user_info_db):
+    """gets current setting values from sqlite"""
     return sqlite_telemetry.get_settings(user_info_db, _settings)
 
 
 def get_ordinal(user_in, values, user_info_db):
-        try:
-            ordinal = int(user_in)
-            if(ordinal in range(1, len(_settings)+1)):
-                edit_settings(ordinal, values, user_info_db)
-            else:
-                raise ValueError
-        except ValueError:
-            from src.praxxis.display import display_error
-            display_error.settings_invalid_ordinal(user_in)
-            return "not_ordinal"
+    """get themeaning of the user-input settings ordinal"""
+    try:
+        ordinal = int(user_in)
+        if(ordinal in range(1, len(_settings)+1)):
+            edit_settings(ordinal, values, user_info_db)
+        else:
+            raise ValueError
+    except ValueError:
+        from src.praxxis.display import display_error
+        display_error.settings_invalid_ordinal(user_in)
+        return "not_ordinal"
 
 
 def edit_settings(ordinal, values, user_info_db):
+    """prompts user through changing a specific setting, once selected"""
     setting = _settings[ordinal-1]
     setting_help = _settings_help[ordinal-1]
     values[setting] = display_settings.display_value_prompt(setting, setting_help)
