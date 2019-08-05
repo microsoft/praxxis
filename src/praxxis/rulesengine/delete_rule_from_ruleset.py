@@ -3,6 +3,7 @@ Deletes a rule from a ruleset, based on user input in the console.
 """
 
 def delete_rule_from_ruleset(args, rulesengine_db):
+    """prompts user through deleting a rule in a ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
     from src.praxxis.display import display_edit_ruleset
@@ -28,6 +29,7 @@ def delete_rule_from_ruleset(args, rulesengine_db):
     display_rulesengine.display_rule_deletion(name, deletion_name)
 
     return deletion_name
+
 
 def get_rule_by_ordinal(name, ruleslist):
     """gets rule by ordinal using a list of tuples"""

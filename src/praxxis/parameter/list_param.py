@@ -16,7 +16,7 @@ def list_param(current_scene_db, query_start, query_end):
 
 
 def list_notebook_param(args, library_db, current_scene_db):
-    """List all parameters in the current notebook"""
+    """list all parameters in the current notebook"""
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
@@ -37,7 +37,7 @@ def list_notebook_param(args, library_db, current_scene_db):
 
 
 def list_library_param(args, library_db, current_scene_db, query_start, query_end):
-    """Lists all parameters in the """
+    """lists all parameters in the current library"""
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.display import display_param
     from src.praxxis.library import library

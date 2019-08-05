@@ -1,6 +1,5 @@
 """
-This file sets an parameter variable for the current
-    scence (a value passed on the command line)
+This file sets a parameter for the current scence.
 """
 
 def set_param(args, scene_root, history_db, current_scene_db):

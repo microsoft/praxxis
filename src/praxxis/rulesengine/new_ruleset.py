@@ -34,4 +34,3 @@ def new_ruleset(args, rulesengine_root, rulesengine_db):
 
     display_rulesengine.display_new_ruleset(name)
     return name
-

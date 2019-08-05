@@ -1,8 +1,9 @@
 """
 This file completely deletes a ruleset.
 """
+
 def remove_ruleset(args, rulesengine_db):
-    """Remove a ruleset, deleting the associated db"""
+    """remove a ruleset, deleting the associated db"""
     import os
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.rulesengine import rules
@@ -24,4 +25,3 @@ def remove_ruleset(args, rulesengine_db):
         raise error.RulesetNotFoundError(name)
 
     return name
-

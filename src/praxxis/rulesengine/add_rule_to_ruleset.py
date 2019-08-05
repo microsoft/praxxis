@@ -55,7 +55,6 @@ def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, quer
 
     return rulename
     
-        
 
 def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_errors = True):
     """get filenames, given ordinals"""
@@ -79,10 +78,10 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
 
     return filenames
 
+
 def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename):
-    """get all fileinfo and format it correctly for predictions entry
-    TODO: look at renaming/refactoring this
-    """
+    """get all fileinfo and format it correctly for predictions entry"""
+    # TODO: look at renaming/refactoring this
     from src.praxxis.notebook import notebook
     from src.praxxis.util.error import NotebookNotFoundError
     # format:    

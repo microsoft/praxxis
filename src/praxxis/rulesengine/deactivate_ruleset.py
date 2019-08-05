@@ -4,6 +4,7 @@ Deactivates a ruleset.
 """
 
 def deactivate_ruleset(args, rulesengine_db):
+    """deactivates a ruleset so it won't be used in the rules engine"""
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
     from src.praxxis.rulesengine import rules
