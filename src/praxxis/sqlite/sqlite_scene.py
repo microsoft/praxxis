@@ -5,7 +5,6 @@ This file contains all of the sqlite functions for scenes
 
 def init_scene(scene_db, name):
     """initializes the scene db"""
-    #TODO: handle strings
     import uuid
     from src.praxxis.sqlite import connection
 
@@ -26,6 +25,7 @@ def init_scene(scene_db, name):
     conn.commit()
     conn.close()
 
+
 def check_ended(history_db, scene, conn, cur):
     """checks if a scene has ended"""
     from src.praxxis.util import error
@@ -42,7 +42,6 @@ def check_ended(history_db, scene, conn, cur):
 
 def check_scene_ended(history_db, scene):
     """checks if scene has ended"""
-    #TODO: handle strings
     from src.praxxis.sqlite import connection
     from src.praxxis.util import error
 
@@ -60,7 +59,6 @@ def check_scene_ended(history_db, scene):
 
 def update_current_scene(history_db, scene):
     """updates the current scene in the history db"""
-    #TODO: handle strings
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(history_db)
@@ -85,7 +83,7 @@ def get_current_scene(history_db):
 
 
 def delete_scene(history_db, scene):
-    """Deletes the specified scene"""
+    """deletes the specified scene"""
     import itertools
     from src.praxxis.sqlite import connection
     from src.praxxis.util import error
@@ -228,7 +226,7 @@ def get_notebook_history(current_scene_db):
 
 
 def get_recent_history(db_file, seq_length):
-    """Gets last <seq_length> file names from a scene"""
+    """gets last <seq_length> file names from a scene"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(db_file)
@@ -239,6 +237,7 @@ def get_recent_history(db_file, seq_length):
     rows = cur.fetchall()
     conn.close()
     return rows
+
 
 def dump_scene_list(history_db):
     """empties the scene list table""" 

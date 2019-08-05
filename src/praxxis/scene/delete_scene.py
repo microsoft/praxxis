@@ -1,9 +1,9 @@
 """
-This file deletes the specified scene
+This file deletes a scene.
 """
 
 def delete_scene(args, scene_root, history_db):
-    """Deletes a scene"""
+    """deletes a specified scene, including all its data"""
     import shutil
     import os
 

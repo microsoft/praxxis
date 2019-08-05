@@ -113,6 +113,7 @@ def set_many_params(current_scene_db, parameter_list):
     conn.commit()
     conn.close()
 
+
 def get_param_by_ord(current_scene_db, ordinal):
     """get an parameter variable by ord"""
     from src.praxxis.sqlite import connection

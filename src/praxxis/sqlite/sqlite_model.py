@@ -14,4 +14,3 @@ def add_model(model_db, model_name, model_path, converter_path):
     cur.execute(add_model, (model_name, model_path, converter_path))
     conn.commit()
     conn.close()
-

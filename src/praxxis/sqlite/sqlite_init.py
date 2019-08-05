@@ -90,4 +90,3 @@ def init_user_info(telemetry_db, send_telemetry=1):
     cur.execute(create_telemetry_table)
     conn.commit()
     conn.close()
-

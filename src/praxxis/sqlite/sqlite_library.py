@@ -81,7 +81,6 @@ def sync_library(library_db, path, readme, library, remote=None):
     cur.execute(update_library, (readme, library))
     conn.commit()
     conn.close()
-
     
 
 def list_libraries(library_db, query_start, query_end):

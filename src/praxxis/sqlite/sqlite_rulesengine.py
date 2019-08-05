@@ -21,6 +21,7 @@ def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     conn.commit()
     conn.close()
 
+
 def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
     """adds ruleset to list"""
     from src.praxxis.sqlite import connection
@@ -34,6 +35,7 @@ def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
     cur.execute(add_rule, (ruleset_name, ruleset_root, active))
     conn.commit()
     conn.close()
+
 
 def get_ruleset_path(rulesengine_db, name):
     """returns the path to a ruleset"""
@@ -51,6 +53,7 @@ def get_ruleset_path(rulesengine_db, name):
         raise error.RulesetNotFoundError(name)
     return rows[0]
 
+
 def remove_ruleset(rulesengine_db, name):
     """removes a ruleset from the list of rulesets"""
     from src.praxxis.sqlite import connection
@@ -61,6 +64,7 @@ def remove_ruleset(rulesengine_db, name):
     cur.execute(remove_ruleset, (name,))
     conn.commit()
     conn.close()
+
 
 def get_ruleset_by_ord(rulesengine_db, ordinal):
     """gets ruleset by ordinal"""
@@ -78,6 +82,7 @@ def get_ruleset_by_ord(rulesengine_db, ordinal):
         raise error.RulesetNotFoundError(ordinal)
     return rows[0][0]
 
+
 def get_all_rulesets(rulesengine_db, query_start, query_end):
     """gets all rulesets"""
     from src.praxxis.sqlite import connection
@@ -91,6 +96,7 @@ def get_all_rulesets(rulesengine_db, query_start, query_end):
     conn.close()
 
     return rows
+
 
 def get_active_rulesets(rulesengine_db, query_start, query_end):
     """gets all active rulesets and paths"""
@@ -106,6 +112,7 @@ def get_active_rulesets(rulesengine_db, query_start, query_end):
 
     return rows
 
+
 def get_inactive_rulesets(rulesengine_db):
     """gets all inactive rulesets"""
     from src.praxxis.sqlite import connection
@@ -119,6 +126,7 @@ def get_inactive_rulesets(rulesengine_db):
     conn.close()
 
     return rows
+
 
 def activate_ruleset(rulesengine_db, name):
     """activates ruleset <name>"""
@@ -139,6 +147,7 @@ def activate_ruleset(rulesengine_db, name):
         cur.execute(activate_ruleset, (name,))
         conn.commit()
     conn.close()
+
 
 def deactivate_ruleset(rulesengine_db, name):
     """deactivates ruleset <name>"""
@@ -161,6 +170,7 @@ def deactivate_ruleset(rulesengine_db, name):
         conn.commit()
     conn.close()
     
+
 def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     """adds a rule to the ruleset"""
     from src.praxxis.sqlite import connection 
@@ -180,6 +190,7 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     conn.commit()
     conn.close()
 
+
 def delete_rule(ruleset_db, rulename):
     """deletes a rule from the ruleset"""
     from src.praxxis.sqlite import connection 
@@ -193,6 +204,7 @@ def delete_rule(ruleset_db, rulename):
     cur.execute(delete_rule, (rulename,))
     conn.commit()
     conn.close()
+
 
 def list_rules_in_ruleset(ruleset_db):
     """returns a list of all rule names in a ruleset"""
@@ -209,6 +221,7 @@ def list_rules_in_ruleset(ruleset_db):
     
     return rules
 
+
 def get_filenames(ruleset_db, rule):
     """returns a list of all filenames for a rule in a ruleset"""
     from src.praxxis.sqlite import connection 
@@ -224,6 +237,7 @@ def get_filenames(ruleset_db, rule):
 
     return filenames
 
+
 def get_filenames_by_rule(ruleset_db):
     """returns a list of all filenames for all rules in a ruleset"""
     from src.praxxis.sqlite import connection 
@@ -238,6 +252,7 @@ def get_filenames_by_rule(ruleset_db):
     conn.close()
 
     return filenames
+
     
 def get_outputs(ruleset_db, rule):
     """returns a list of all outputs for a rule in a ruleset"""
@@ -254,6 +269,7 @@ def get_outputs(ruleset_db, rule):
 
     return outputs
 
+
 def get_outputs_for_rules(ruleset_db, ruleset):
     """returns a list of all outputs for all rules in a ruleset"""
     from src.praxxis.sqlite import connection 
@@ -268,6 +284,7 @@ def get_outputs_for_rules(ruleset_db, ruleset):
     conn.close()
 
     return outputs
+
 
 def get_predictions(ruleset_db, ruleset):
     """returns the ordered list of predictions for a set of rule matches"""
@@ -284,6 +301,7 @@ def get_predictions(ruleset_db, ruleset):
     conn.close()
 
     return predictions
+
 
 def clear_ruleset_list(rulesengine_db):
     """removes all rulesets from list, for testing"""

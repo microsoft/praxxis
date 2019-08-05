@@ -88,6 +88,7 @@ def write_setting(user_info_db, setting, value):
      
 
 def write_settings(user_info_db, settings, values):
+    """updates a list of settings with new values"""
     for setting in settings:
         write_setting(user_info_db, setting, values[setting])
 
@@ -143,6 +144,7 @@ def delete_from_backlog(user_info_db, local_copy):
     cur.execute(cleanup, (local_copy,))
     conn.commit()
     conn.close()
+
 
 def clear_backlog(user_info_db):
     """clears backlog completely (for testing purposes)"""

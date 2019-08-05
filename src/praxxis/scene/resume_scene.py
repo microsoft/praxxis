@@ -1,9 +1,9 @@
 """
-This file resumes a previously used scene.
+This file resumes a previously ended scene.
 """
 
 def resume_scene(args, scene_root, history_db):
-    """Resumes a scene"""
+    """resumes a scene"""
     import os
 
     from src.praxxis.sqlite import sqlite_scene
@@ -34,4 +34,3 @@ def resume_scene(args, scene_root, history_db):
     
     display_scene.display_resume_scene(name)
     return name
-    

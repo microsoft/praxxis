@@ -2,10 +2,8 @@
 This file ends the specified scene
 """
 
-##TODO: make all of these strings I return into proper errors.
-
 def end_scene(args, scene_root, history_db, current_scene_db):
-    """Ends a scene"""
+    """ends a scene"""
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.display import display_scene
     from src.praxxis.scene import scene

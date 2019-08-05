@@ -20,9 +20,6 @@ def history(history_db, library_db, current_scene_db):
     for notebook_info in notebook_history:
         # pass the library_db, notebook name, notebook library
         notebook_data = sqlite_notebook.get_notebook(library_db, notebook_info[1])[0]
-
-
         notebooks.insert(0, (notebook_data))
     sqlite_notebook.write_list(current_scene_db, notebooks)
     return notebooks
-        
