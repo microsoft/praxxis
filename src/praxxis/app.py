@@ -156,6 +156,7 @@ praxxis_ascii_art = r"""
 """
 
 class helpFormatter (argparse.RawDescriptionHelpFormatter):
+    """formats the help to have section headers"""
     def _format_action(self, action):
         import re
         if action.dest == "command":

@@ -1,0 +1,9 @@
+name: praxxis-training-app
+version: v1
+runtime: Python
+src: ./train.py
+entrypoint: train
+replicas: 1
+poolsize: 1
+output:
+  data: str

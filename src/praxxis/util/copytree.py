@@ -5,6 +5,7 @@ of the copytree permissions errors?
 """
 
 def copytree(src, dest, test = False):
+    """recursively copies a directory tree"""
     import shutil
     
     try:

@@ -48,6 +48,7 @@ def init(
         default_scene_name,
         telemetry = True,
         ):
+    """initializes praxxis folders for operation"""
     import os
     from src.praxxis.entrypoints import entry_parameter
     from src.praxxis.entrypoints import entry_library
@@ -83,4 +84,3 @@ def init(
     # model init
     if not os.path.exists(model_db):
         entry_model.init_model(model_root, model_db)
-

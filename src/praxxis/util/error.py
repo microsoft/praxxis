@@ -143,6 +143,7 @@ class NotNotebookError(Exception):
 
 
 class DuplicateNotebookError(Exception):
+    """thrown when two notebooks with the same name lack distinguishing info"""
     def __init__(self, name=None):
         self.name = name
     
@@ -152,6 +153,7 @@ class DuplicateNotebookError(Exception):
 
 
 class EditorNotFoundError(Exception):
+    """thrown when the editor to open in doesn't exist"""
     def __init__(self, name=None):
         self.name = name
     
@@ -161,6 +163,7 @@ class EditorNotFoundError(Exception):
 
 
 class ADSNotFoundError(Exception):
+    """thrown when ADS is not in the expected place"""
     def __init__(self, name=None):
         self.name = name
     
@@ -169,6 +172,7 @@ class ADSNotFoundError(Exception):
         return str(display_error.ads_not_found_error(self.name))
 
 class NotValidRuleset(Exception):
+    """thrown when user attempts to import ruleset that's not correct format"""
     def __init__(self, name=None):
         self.name = name
     
@@ -177,6 +181,7 @@ class NotValidRuleset(Exception):
         return str(display_error.invalid_ruleset_import(self.name))
 
 class EmptyHistoryError(Exception):
+    """thrown when history is empty, but op requires history"""
     def __init__(self):
         pass
     
