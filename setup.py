@@ -21,7 +21,7 @@ setuptools.setup(
         "colorama",
         "toml"
      ],
-     version='0.1.0',
+     version='0.1.1',
      author="Skyler Clark, Amanda Bertsch, Swarathmika Kakivaya, Stuart Padley",
      author_email="skylerjaneclark@gmail.com, abertsch72@gmail.com, swarathmika@hotmail.com",
      description="a notebook task interface built on big data and machine learning.",
