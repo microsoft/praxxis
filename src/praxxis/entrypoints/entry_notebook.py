@@ -113,7 +113,7 @@ def next_notebook(arg,
     from src.praxxis.notebook import what_next
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     what_next.what_next(arg, user_info_db, current_scene_db, library_db, rulesengine_db, query_start, query_end)

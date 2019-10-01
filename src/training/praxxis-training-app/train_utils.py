@@ -43,7 +43,7 @@ def model_train(model, sequences, converter=[]):
     # unique_file_count: size of OHE (could make larger to allow for expansion (?))
     unique_file_count = len(converter)
 
-    if model == None:
+    if model is None:
         model = model_create(n_units, n_steps, unique_file_count)
 
     # https://github.com/keras-team/keras/issues/1765

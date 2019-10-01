@@ -65,7 +65,7 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
     for filename in filenames_with_ords:
         try:
             nbname = notebook.get_notebook_by_ordinal(current_scene_db, filename)
-            if nbname != None:
+            if nbname is not None:
                 filename = nbname[0]
             elif not allow_errors:
                 raise NotebookNotFoundError(nbname)
@@ -94,7 +94,7 @@ def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename
         try:
             nbname = notebook.get_notebook_by_ordinal(current_scene_db, prediction)
             
-            if nbname == None:
+            if nbname is None:
                 raise NotebookNotFoundError(prediction)
         except NotebookNotFoundError as e:
             raise e

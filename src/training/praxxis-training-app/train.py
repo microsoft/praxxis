@@ -14,7 +14,7 @@ def train():
     """the app entry point"""
     sequences = get_sequences()
     model, converter = get_model()
-    if model == None:
+    if model is None:
         write_model(model, converter)
     elif sequences == []:
         write_model(model, converter)

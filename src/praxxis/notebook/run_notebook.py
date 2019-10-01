@@ -98,7 +98,7 @@ def pull_params(current_scene_db, parameters):
     injects = {}
     for var in parameters:
         value = sqlite_parameter.get_param(current_scene_db, var[0])
-        if value != None:
+        if value is not None:
             value = value[0]  # want just the value, currently a tuple
             injects[var[0]] = value
     return injects

@@ -54,7 +54,7 @@ def get_ruleset_path(rulesengine_db, name):
     conn.commit()
     rows = cur.fetchone()
     conn.close()
-    if rows == None:
+    if rows is None:
         raise error.RulesetNotFoundError(name)
     return rows[0]
 
@@ -143,7 +143,7 @@ def activate_ruleset(rulesengine_db, name):
     cur.execute(check_if_active, (name,))
     result = cur.fetchone()
 
-    if result == None:
+    if result is None:
         raise error.RulesetNotFoundError(name)
     elif result[0] == 1:
         raise error.RulesetActiveError(name)
@@ -165,7 +165,7 @@ def deactivate_ruleset(rulesengine_db, name):
     cur.execute(check_if_inactive, (name,))
     result = cur.fetchone()
 
-    if result == None:
+    if result is None:
         raise error.RulesetNotFoundError(name)
     elif result[0] == 0:
         raise error.RulesetNotActiveError(name)

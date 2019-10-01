@@ -18,7 +18,7 @@ def resume_scene(args, scene_root, history_db):
         name = args
 
     tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
-    if tmp_name != None:
+    if tmp_name is not None:
         name = tmp_name
     try:
         sqlite_scene.check_scene_ended(history_db, name)

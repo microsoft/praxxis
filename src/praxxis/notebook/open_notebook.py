@@ -35,7 +35,7 @@ def display_as_html(filename, html_outputfile=None):
     import webbrowser
 
     output = nbconvert.exporters.export(nbconvert.HTMLExporter(), filename)[0]
-    if html_outputfile == None:
+    if html_outputfile is None:
         import tempfile
         # create temporary file
         temp = tempfile.NamedTemporaryFile(mode="w+t", suffix=".html", delete=False)

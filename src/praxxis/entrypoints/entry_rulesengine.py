@@ -73,7 +73,7 @@ def edit_ruleset(arg,
                  query_end=_query_end):
     """handles editing a ruleset"""
     from src.praxxis.util import roots
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     if arg.action == 'a':
@@ -95,7 +95,7 @@ def add_rule_to_ruleset(arg,
                         query_end=_query_end):
     """handles adding a rule to a ruleset"""
     from src.praxxis.util import roots
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     from src.praxxis.rulesengine import add_rule_to_ruleset

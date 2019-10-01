@@ -357,7 +357,7 @@ def start(args=None, test=False):
     from src.praxxis.util import cli
     from src.praxxis.util import error
 
-    if args == None:
+    if args is None:
         args = sys.argv
 
     # prevents praxxis from running on an out of date version of python

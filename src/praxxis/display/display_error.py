@@ -19,7 +19,7 @@ def notebook_load_error(name):
 
 def scene_not_found_error(name):
     """error display for scenes not existing"""
-    if name == None:
+    if name is None:
         return("%sscene does not exist" %(Fore.RED))  
     else:
         return("%sscene %s does not exist"  %(Fore.RED, name))
@@ -27,7 +27,7 @@ def scene_not_found_error(name):
 
 def notebook_not_found_error(name):
     """error display for notebooks not existing"""
-    if name == None:
+    if name is None:
         return("%snotebook does not exist" %(name))
     else:
         return("%snotebook %s does not exist" %(Fore.RED, name))
@@ -35,7 +35,7 @@ def notebook_not_found_error(name):
 
 def rule_not_found_error(name):
     """error display for a rule not existing"""
-    if name == None:
+    if name is None:
         return("%srule does not exist" %(name))
     else:
         return("%srule %s does not exist" %(Fore.RED, name))
@@ -43,7 +43,7 @@ def rule_not_found_error(name):
 
 def ruleset_not_found_error(name):
     """error display for a ruleset not existing"""
-    if name == None:
+    if name is None:
         return("%sruleset does not exist" %(name)) 
     else:
         return("%sruleset %s does not exist" %(Fore.RED, name)) 
@@ -51,7 +51,7 @@ def ruleset_not_found_error(name):
 
 def ruleset_active_error(name):
     """error display for activating an active ruleset"""
-    if name == None:
+    if name is None:
         return("%sruleset is already active" %(name))
     else:
         return("%sruleset %s is already active" %(Fore.RED, name)) 
@@ -59,7 +59,7 @@ def ruleset_active_error(name):
 
 def ruleset_not_active_error(name):
     """error display for deactivating an inactive ruleset"""
-    if name == None:
+    if name is None:
         return("%sruleset is already inactive" %(name))
     else:
         return("%sruleset %s is already inactive" %(Fore.RED, name))
@@ -187,7 +187,7 @@ def predictions_ordinal_not_in_list_error():
 
 def invalid_ruleset_import(name):
     """error fir importing an invalid ruleset""" 
-    if name == None:
+    if name is None:
         return("%sThis does not appear to be the path to a valid .db file" %(Fore.RED) )
     else:
         return("%s%s is not the path to a valid .db file"  %(Fore.RED, name)) 

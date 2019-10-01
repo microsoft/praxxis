@@ -16,7 +16,7 @@ def set_param(arg,
     from src.praxxis.parameter import set_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     set_param.set_param(arg, scene_root, history_db, current_scene_db)
@@ -30,7 +30,7 @@ def delete_param(arg,
     from src.praxxis.parameter import delete_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     delete_param.delete_parameter(arg, scene_root, history_db, current_scene_db)
@@ -46,7 +46,7 @@ def list_param(arg,
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     list_param.list_param(current_scene_db, query_start, query_end)
@@ -63,7 +63,7 @@ def view_library_param(arg,
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     list_param.list_library_param(arg, library_db, current_scene_db, query_start, query_end)
@@ -78,7 +78,7 @@ def view_notebook_param(arg,
     from src.praxxis.parameter import list_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     list_param.list_notebook_param(arg, library_db, current_scene_db)
@@ -93,7 +93,7 @@ def pull_notebook_param(arg,
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     pull_param.pull_notebook_parameter(arg, library_db, current_scene_db)
@@ -110,7 +110,7 @@ def pull_library_param(arg,
     from src.praxxis.parameter import pull_param
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     pull_param.pull_library_parameter(arg, library_db, current_scene_db, query_start, query_end)

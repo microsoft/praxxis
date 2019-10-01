@@ -42,7 +42,7 @@ def end_scene(arg,
     from src.praxxis.scene import end_scene
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     end_scene.end_scene(arg, scene_root, history_db, current_scene_db)
@@ -93,7 +93,7 @@ def history(arg,
     from src.praxxis.scene import history
     from src.praxxis.util import roots
 
-    if current_scene_db == None:
+    if current_scene_db is None:
         current_scene_db = roots.get_current_scene_db(scene_root, history_db)
 
     history.history(history_db, library_db, current_scene_db)
