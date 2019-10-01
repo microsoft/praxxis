@@ -1,7 +1,7 @@
 """
-This file sets an parameter variable for the current
-    scence (a value passed on the command line)
+This file sets a parameter for the current scence.
 """
+
 
 def set_param(args, scene_root, history_db, current_scene_db):
     """sets the parameter by making a sqlite call"""
@@ -15,7 +15,7 @@ def set_param(args, scene_root, history_db, current_scene_db):
         name = args
         
     if str(name).isdigit():
-        #checking if the user passed an ordinal instead of a string
+        # checking if the user passed an ordinal instead of a string
         try:
             name = sqlite_parameter.get_param_by_ord(current_scene_db, int(name))
         except error.ParamNotFoundError as e:

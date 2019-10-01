@@ -1,4 +1,10 @@
+"""
+This file imports a model and converter
+"""
+
+
 def import_model(args, model_db):
+    """add model and converter to sqlite database"""
     from src.praxxis.sqlite import sqlite_model
     from src.praxxis.display import display_model
     import os

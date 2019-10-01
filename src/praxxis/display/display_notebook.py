@@ -2,8 +2,9 @@
 This file contains all of the display functions for notebooks
 """
 
+
 def display_list_notebook(notebooks):
-    """the display function for listing notebooks"""
+    """display function for listing notebooks"""
     print("Notebooks:")
     i = 0
     library = ""
@@ -16,15 +17,17 @@ def display_list_notebook(notebooks):
 
 
 def get_notebook_selection():
+    """prompts user for notebook selection"""
     return input("")
 
+
 def display_run_notebook_start(notebook_name):
-    """the beginning display function for running a notebook"""
+    """beginning display function for running a notebook"""
     print("\nRunning %s...\n"  %(notebook_name))
 
 
 def display_run_notebook_html(output_root, html_output):
-    """the display function for running a notebook with html"""
+    """display function for running a notebook with html"""
     print("\nCOMPLETE\n")
     print("View HTML output from notebook runs here")
     print("\t%s" %(output_root)) 
@@ -33,7 +36,7 @@ def display_run_notebook_html(output_root, html_output):
 
 
 def display_run_notebook(filename):
-    """the display function for running a notebook"""
+    """display function for running a notebook"""
     import nbconvert
     print("\nNotebook output:")
     
@@ -42,12 +45,12 @@ def display_run_notebook(filename):
 
 
 def display_init_run_notebook(output_root):
-    """the display function for initializing the notebooks directory"""
+    """display function for initializing the notebooks directory"""
     print("Created output directory at %s" %(output_root)) 
 
 
 def display_search(search_term, notebooks):
-    """the display function for showing the results of the current search"""
+    """display function for showing the results of the current search"""
     print("Search notebook names for \"%s\"" %(search_term)) 
     if len(notebooks) == 0:
         print("\tNo results found")
@@ -57,9 +60,10 @@ def display_search(search_term, notebooks):
 
 
 def display_remove_success(name):
-    """the display function for removing a notebook sucessfullly"""
+    """display function for removing a notebook sucessfullly"""
     print("Successfully removed notebook %s"  %(name))
 
+
 def display_adding_output(name, output_string):
-    """the display function for adding output manually to a notebook execution"""
+    """display function for adding output manually to a notebook execution"""
     print("For the last notebook executed (%s), added to the output \"%s\""  %(name, output_string))

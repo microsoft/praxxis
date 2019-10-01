@@ -2,6 +2,7 @@
 This file contains the sqlite functions for the rules engine
 """
 
+
 def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     """creates a new ruleset database"""
     from src.praxxis.sqlite import connection
@@ -10,9 +11,13 @@ def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     cur = conn.cursor()
 
     create_rules_table = 'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
-    create_filenames_table = 'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_outputs_table = 'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_prediction_table = 'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, Library TEXT, RawURL TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_filenames_table = 'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(' \
+                             'Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE) '
+    create_outputs_table = 'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) ' \
+                           'REFERENCES "Rules"(Name) ON DELETE CASCADE) '
+    create_prediction_table = 'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, ' \
+                              'Library TEXT, RawURL TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(' \
+                              'Name) ON DELETE CASCADE) '
 
     cur.execute(create_rules_table)
     cur.execute(create_filenames_table)
@@ -20,6 +25,7 @@ def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     cur.execute(create_prediction_table)
     conn.commit()
     conn.close()
+
 
 def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
     """adds ruleset to list"""
@@ -35,6 +41,7 @@ def add_ruleset_to_list(rulesengine_db, ruleset_name, ruleset_root, active = 1):
     conn.commit()
     conn.close()
 
+
 def get_ruleset_path(rulesengine_db, name):
     """returns the path to a ruleset"""
     from src.praxxis.sqlite import connection
@@ -47,14 +54,14 @@ def get_ruleset_path(rulesengine_db, name):
     conn.commit()
     rows = cur.fetchone()
     conn.close()
-    if rows == None:
+    if rows is None:
         raise error.RulesetNotFoundError(name)
     return rows[0]
+
 
 def remove_ruleset(rulesengine_db, name):
     """removes a ruleset from the list of rulesets"""
     from src.praxxis.sqlite import connection
-    from src.praxxis.util import error
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
@@ -62,6 +69,7 @@ def remove_ruleset(rulesengine_db, name):
     cur.execute(remove_ruleset, (name,))
     conn.commit()
     conn.close()
+
 
 def get_ruleset_by_ord(rulesengine_db, ordinal):
     """gets ruleset by ordinal"""
@@ -79,6 +87,7 @@ def get_ruleset_by_ord(rulesengine_db, ordinal):
         raise error.RulesetNotFoundError(ordinal)
     return rows[0][0]
 
+
 def get_all_rulesets(rulesengine_db, query_start, query_end):
     """gets all rulesets"""
     from src.praxxis.sqlite import connection
@@ -92,6 +101,7 @@ def get_all_rulesets(rulesengine_db, query_start, query_end):
     conn.close()
 
     return rows
+
 
 def get_active_rulesets(rulesengine_db, query_start, query_end):
     """gets all active rulesets and paths"""
@@ -107,6 +117,7 @@ def get_active_rulesets(rulesengine_db, query_start, query_end):
 
     return rows
 
+
 def get_inactive_rulesets(rulesengine_db):
     """gets all inactive rulesets"""
     from src.praxxis.sqlite import connection
@@ -121,6 +132,7 @@ def get_inactive_rulesets(rulesengine_db):
 
     return rows
 
+
 def activate_ruleset(rulesengine_db, name):
     """activates ruleset <name>"""
     from src.praxxis.sqlite import connection
@@ -131,7 +143,7 @@ def activate_ruleset(rulesengine_db, name):
     cur.execute(check_if_active, (name,))
     result = cur.fetchone()
 
-    if result == None:
+    if result is None:
         raise error.RulesetNotFoundError(name)
     elif result[0] == 1:
         raise error.RulesetActiveError(name)
@@ -140,6 +152,7 @@ def activate_ruleset(rulesengine_db, name):
         cur.execute(activate_ruleset, (name,))
         conn.commit()
     conn.close()
+
 
 def deactivate_ruleset(rulesengine_db, name):
     """deactivates ruleset <name>"""
@@ -152,7 +165,7 @@ def deactivate_ruleset(rulesengine_db, name):
     cur.execute(check_if_inactive, (name,))
     result = cur.fetchone()
 
-    if result == None:
+    if result is None:
         raise error.RulesetNotFoundError(name)
     elif result[0] == 0:
         raise error.RulesetNotActiveError(name)
@@ -162,6 +175,7 @@ def deactivate_ruleset(rulesengine_db, name):
         conn.commit()
     conn.close()
     
+
 def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     """adds a rule to the ruleset"""
     from src.praxxis.sqlite import connection 
@@ -171,7 +185,8 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     add_name_to_rules = 'INSERT INTO "Rules" (Name) VALUES (?)'
     add_to_filenames = 'INSERT INTO "Filenames" (Rule, Filename) VALUES (?,?)'
     add_to_output = 'INSERT INTO "OutputString" (Rule, Output) VALUES (?,?)'
-    add_to_predictions = 'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,?,?,?)'
+    add_to_predictions = 'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,' \
+                         '?,?,?) '
 
     cur.execute(add_name_to_rules, (rulename,))
     cur.executemany(add_to_filenames, [(rulename, string) for string in filenames])
@@ -180,6 +195,7 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     cur.executemany(add_to_predictions, predictions)
     conn.commit()
     conn.close()
+
 
 def delete_rule(ruleset_db, rulename):
     """deletes a rule from the ruleset"""
@@ -194,6 +210,7 @@ def delete_rule(ruleset_db, rulename):
     cur.execute(delete_rule, (rulename,))
     conn.commit()
     conn.close()
+
 
 def list_rules_in_ruleset(ruleset_db):
     """returns a list of all rule names in a ruleset"""
@@ -210,6 +227,7 @@ def list_rules_in_ruleset(ruleset_db):
     
     return rules
 
+
 def get_filenames(ruleset_db, rule):
     """returns a list of all filenames for a rule in a ruleset"""
     from src.praxxis.sqlite import connection 
@@ -225,6 +243,7 @@ def get_filenames(ruleset_db, rule):
 
     return filenames
 
+
 def get_filenames_by_rule(ruleset_db):
     """returns a list of all filenames for all rules in a ruleset"""
     from src.praxxis.sqlite import connection 
@@ -239,6 +258,7 @@ def get_filenames_by_rule(ruleset_db):
     conn.close()
 
     return filenames
+
     
 def get_outputs(ruleset_db, rule):
     """returns a list of all outputs for a rule in a ruleset"""
@@ -255,6 +275,7 @@ def get_outputs(ruleset_db, rule):
 
     return outputs
 
+
 def get_outputs_for_rules(ruleset_db, ruleset):
     """returns a list of all outputs for all rules in a ruleset"""
     from src.praxxis.sqlite import connection 
@@ -270,6 +291,7 @@ def get_outputs_for_rules(ruleset_db, ruleset):
 
     return outputs
 
+
 def get_predictions(ruleset_db, ruleset):
     """returns the ordered list of predictions for a set of rule matches"""
     from src.praxxis.sqlite import connection 
@@ -277,7 +299,8 @@ def get_predictions(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
-    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (%s) ORDER BY Position ASC' %(ruleslist)
+    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (%s) ORDER ' \
+                      'BY Position ASC' %(ruleslist)
 
     cur.execute(get_predictions)
     conn.commit()
@@ -285,6 +308,7 @@ def get_predictions(ruleset_db, ruleset):
     conn.close()
 
     return predictions
+
 
 def clear_ruleset_list(rulesengine_db):
     """removes all rulesets from list, for testing"""

@@ -2,18 +2,17 @@
 This file ends the specified scene
 """
 
-##TODO: make all of these strings I return into proper errors.
 
 def end_scene(args, scene_root, history_db, current_scene_db):
-    """Ends a scene"""
+    """ends a scene"""
     from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.display import display_scene
     from src.praxxis.scene import scene
     from src.praxxis.util import error
     
     if hasattr(args, "name"):
-        #end scene can have 0 args and end the current scene
-        if(args.name == None):
+        # end scene can have 0 args and end the current scene
+        if(args.name is None):
             name = sqlite_scene.get_current_scene(history_db)
         else:
             name = args.name
@@ -25,7 +24,7 @@ def end_scene(args, scene_root, history_db, current_scene_db):
     except error.SceneNotFoundError as e:
         raise (e)
 
-    if tmp_name != None:
+    if tmp_name is not None:
         name = tmp_name
 
     try:

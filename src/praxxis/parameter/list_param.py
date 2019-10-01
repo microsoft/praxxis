@@ -2,13 +2,12 @@
 This file lists all of the parameters
 """
 
+
 def list_param(current_scene_db, query_start, query_end):
     """lists the parameters in scene"""
-    import os
-    from src.praxxis.sqlite import sqlite_scene
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.display import display_param
-    
+
     param_list = sqlite_parameter.list_param(current_scene_db, query_start, query_end)
 
     display_param.display_list_param(param_list)
@@ -16,11 +15,9 @@ def list_param(current_scene_db, query_start, query_end):
 
 
 def list_notebook_param(args, library_db, current_scene_db):
-    """List all parameters in the current notebook"""
+    """list all parameters in the current notebook"""
     from src.praxxis.sqlite import sqlite_parameter
-    from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
-    from src.praxxis.util import error
     from src.praxxis.display import display_param
 
     name = args.notebook
@@ -30,15 +27,15 @@ def list_notebook_param(args, library_db, current_scene_db):
     sqlite_parameter.get_all_param(current_scene_db)
 
     parameters = sqlite_parameter.list_notebook_param(library_db, notebook_data[1], notebook_data[2])
-    
-    display_param.display_view_param(parameters, 
-                                      sqlite_parameter.get_all_param(current_scene_db))
-    
+
+    display_param.display_view_param(parameters,
+                                     sqlite_parameter.get_all_param(current_scene_db))
+
     return parameters
 
 
 def list_library_param(args, library_db, current_scene_db, query_start, query_end):
-    """Lists all parameters in the """
+    """lists all parameters in the current library"""
     from src.praxxis.sqlite import sqlite_parameter
     from src.praxxis.display import display_param
     from src.praxxis.library import library
@@ -51,13 +48,13 @@ def list_library_param(args, library_db, current_scene_db, query_start, query_en
 
     if name.isdigit():
         name = library.get_library_by_ordinal(library_db, name, query_start, query_end)
-            
+
     try:
         parameters = sqlite_parameter.get_library_parameters(library_db, name)
     except error.LibraryNotFoundError as e:
         raise e
-    
+
     display_param.display_view_param(parameters,
-                             sqlite_parameter.get_all_param(current_scene_db))
+                                     sqlite_parameter.get_all_param(current_scene_db))
 
     return parameters

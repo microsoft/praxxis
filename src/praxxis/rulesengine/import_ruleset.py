@@ -1,6 +1,10 @@
+"""
+This file imports a ruleset.
+"""
 
 from src.praxxis.sqlite import sqlite_rulesengine
 from src.praxxis.display import display_rulesengine
+
 
 def import_ruleset(args, ruleset_root, rulesengine_db):
     """links a ruleset db to the ruleset table"""
@@ -24,7 +28,9 @@ def import_ruleset(args, ruleset_root, rulesengine_db):
     
     return ruleset_name
 
+
 def parse_toml(path, ruleset_root, rulesengine_db):
+    """parses a toml file into a ruleset"""
     import toml
     import os
     rulesetInfo = toml.load(path)
@@ -61,5 +67,3 @@ def parse_toml(path, ruleset_root, rulesengine_db):
             display_error.invalid_rule_definition(rulename)
 
     return ruleset_name
-    
-    

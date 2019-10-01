@@ -3,9 +3,9 @@
 This file contains all of the sqlite functions for scenes
 """
 
+
 def init_scene(scene_db, name):
     """initializes the scene db"""
-    #TODO: handle strings
     import uuid
     from src.praxxis.sqlite import connection
 
@@ -14,7 +14,8 @@ def init_scene(scene_db, name):
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = 'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Scene TEXT)'
-    create_notebook_list_table='CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Library TEXT, Path TEXT, RawUrl TEXT)'
+    create_notebook_list_table='CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, ' \
+                               'Library TEXT, Path TEXT, RawUrl TEXT) '
     create_parameter_table='CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
     create_history_table='CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
     init_metadata_table = 'insert into "SceneMetadata"(ID, Ended, Scene) values(?, 0, ?)'
@@ -26,6 +27,7 @@ def init_scene(scene_db, name):
     conn.commit()
     conn.close()
 
+
 def check_ended(history_db, scene, conn, cur):
     """checks if a scene has ended"""
     from src.praxxis.util import error
@@ -33,7 +35,7 @@ def check_ended(history_db, scene, conn, cur):
     ended = 'SELECT Ended from "SceneHistory" WHERE Scene = ?'
     cur.execute(ended, (scene,))
     ended = cur.fetchone()
-    if ended == None:
+    if ended is None:
         raise error.SceneNotFoundError(scene)
     elif ended[0]:
         raise error.EndEndedSceneError(scene)
@@ -42,7 +44,6 @@ def check_ended(history_db, scene, conn, cur):
 
 def check_scene_ended(history_db, scene):
     """checks if scene has ended"""
-    #TODO: handle strings
     from src.praxxis.sqlite import connection
     from src.praxxis.util import error
 
@@ -60,7 +61,6 @@ def check_scene_ended(history_db, scene):
 
 def update_current_scene(history_db, scene):
     """updates the current scene in the history db"""
-    #TODO: handle strings
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(history_db)
@@ -85,7 +85,7 @@ def get_current_scene(history_db):
 
 
 def delete_scene(history_db, scene):
-    """Deletes the specified scene"""
+    """deletes the specified scene"""
     import itertools
     from src.praxxis.sqlite import connection
     from src.praxxis.util import error
@@ -228,17 +228,19 @@ def get_notebook_history(current_scene_db):
 
 
 def get_recent_history(db_file, seq_length):
-    """Gets last <seq_length> file names from a scene"""
+    """gets last <seq_length> file names from a scene"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    get_recent_history = 'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    get_recent_history = 'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ' \
+                         'ORDER BY Timestamp ASC '
     cur.execute(get_recent_history, (seq_length,))
     conn.commit()
     rows = cur.fetchall()
     conn.close()
     return rows
+
 
 def dump_scene_list(history_db):
     """empties the scene list table""" 

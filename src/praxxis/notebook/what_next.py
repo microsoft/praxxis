@@ -30,14 +30,14 @@ def what_next(args, user_info_db, current_scene_db, library_db, rulesengine_db, 
             from src.praxxis.display import display_error
             display_error.tensorflow_version_error()
             sys.exit(1)
-        return 
+        return
         """
         from src.praxxis.model import score
         suggestions = score.predict(history)
         print(suggestions)
         """
 
-    
+
 def write_to_list(notebook_library_list, current_scene_db, library_db):
     """grabs paths and writes to notebook list so ordinal referencing works"""
     from src.praxxis.sqlite import sqlite_notebook
@@ -49,4 +49,3 @@ def write_to_list(notebook_library_list, current_scene_db, library_db):
         notebooklist.append(notebook)
 
     sqlite_notebook.write_list(current_scene_db, notebooklist)
-    

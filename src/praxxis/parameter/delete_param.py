@@ -2,6 +2,7 @@
 This file deletes a specified parameter variable
 """
 
+
 def delete_parameter(args, scene_root, history_db, current_scene_db):
     """deletes the parameter variable specified in args. Can be passed only a name or an ordinal"""
     from src.praxxis.sqlite import sqlite_parameter
@@ -16,7 +17,7 @@ def delete_parameter(args, scene_root, history_db, current_scene_db):
         name = args
         
     if str(name).isdigit():
-        #checking if the user passed an ordinal instead of a string
+        # checking if the user passed an ordinal instead of a string
         try:
             name = sqlite_parameter.get_param_by_ord(current_scene_db, int(name))
         except error.ParamNotFoundError as e:

@@ -1,10 +1,11 @@
 """
+This file checks the recent history against all active rulesets.
+
 Rules are defined as:
-
 ([filename match(es)],[output match(es)],[notebooks to suggest])
-
 if either left-hand list is empty, this is interpreted as "all"
 """
+
 
 def rules_check(rulesengine_db, filename, output_path, query_start, query_end):
     """check if any rules match"""
@@ -34,4 +35,3 @@ def rules_check(rulesengine_db, filename, output_path, query_start, query_end):
         predictions.extend(sqlite_rulesengine.get_predictions(ruleset[2], hit))
             
     return predictions
-    

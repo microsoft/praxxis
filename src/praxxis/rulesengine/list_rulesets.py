@@ -2,6 +2,7 @@
 This file lists all rulesets by name
 """
 
+
 def list_rulesets(args, rulesengine_db, query_start, query_end):
     """lists all rulesets and whether each is currently activated"""
     from src.praxxis.sqlite import sqlite_rulesengine

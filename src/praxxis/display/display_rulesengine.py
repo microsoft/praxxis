@@ -2,38 +2,39 @@
 This file contains all of the display functions for the rules engine
 """
 
+
 def display_init_rulesengine_root(root):
-    """the display function for creating new rules engine folder"""
+    """display function for creating new rules engine folder"""
     print("Created rules engine directory at %s" %(root)) 
 
 
 def display_init_rulesengine_db(db_root):
-    """the display function for initializing the rules engine db"""
+    """display function for initializing the rules engine db"""
     print("Created rules engine database at %s" %(db_root)) 
 
 
 def display_new_ruleset(name):
-    """the display function for creating a new ruleset"""
+    """display function for creating a new ruleset"""
     print("Created new ruleset \"%s\""  %(name))
 
 
 def display_removed_ruleset(name):
-    """the display function for removing a ruleset"""
+    """display function for removing a ruleset"""
     print("Removed ruleset \"%s\"" %(name)) 
 
 
 def display_activate_ruleset(name):
-    """the display function for activating a ruleset"""
+    """display function for activating a ruleset"""
     print("Ruleset \"%s\" is active" %(name)) 
 
 
 def display_deactivate_ruleset(name):
-    """the display function for deactivating a ruleset"""
+    """display function for deactivating a ruleset"""
     print("Ruleset \"%s\" is no longer active" %(name)) 
 
 
 def display_ruleset_list(rulesets):
-    """the display function for listing rulesets"""
+    """display function for listing rulesets"""
     activation_messages = ["(INACTIVE)", "(ACTIVE)"]
 
     print("Rulesets:")
@@ -44,7 +45,7 @@ def display_ruleset_list(rulesets):
 
 
 def display_rule_list(ruleset, rules):
-    """the display function for listing rules in a ruleset"""
+    """display function for listing rules in a ruleset"""
     print("Rules in ruleset %s:" %(ruleset)) 
 
     i = 1
@@ -54,22 +55,23 @@ def display_rule_list(ruleset, rules):
 
 
 def display_rule(name, filenames, outputs, predictions):
-    """the display function for displaying a rule"""
+    """display function for displaying a rule"""
     print("%s: %s %s = %s" %(name, filenames, outputs, [pred[2] for pred in predictions])) 
 
+
 def display_added_rule(ruleset_name, name, filenames, outputs, predictions):
-    """the display function for adding a rule"""
+    """display function for adding a rule"""
     print("Added rule %s to %s:" %(name, ruleset_name)) 
     display_rule(name, filenames, outputs, predictions)
 
 
 def display_rule_deletion(ruleset, rule):
-    """the display function for deleting a rule"""
+    """display function for deleting a rule"""
     print("Rule %s successfully deleted from %s" %(rule, ruleset)) 
 
 
 def display_predictions(predictions):
-    """the display function for displaying a list of predictions"""
+    """display function for displaying a list of predictions"""
     i = 1
     print("Predicted Notebooks: ")
     for nb in predictions:

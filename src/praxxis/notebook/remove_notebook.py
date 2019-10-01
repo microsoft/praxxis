@@ -1,8 +1,13 @@
+"""
+This file removes a notebook.
+"""
+
+
 def remove_notebook(args, library_db, current_scene_db):
+    """remove a notebook from sqlite database"""
     from src.praxxis.sqlite import sqlite_library
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.notebook import notebook
-    from src.praxxis.util import error
     from src.praxxis.notebook import list_notebook
     from src.praxxis.display import display_notebook
 

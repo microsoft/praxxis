@@ -1,4 +1,3 @@
-
 import pytest
 
 def test_activate_ruleset(setup, create_deactivated_ruleset, rulesengine_db):

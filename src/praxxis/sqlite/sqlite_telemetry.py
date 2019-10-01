@@ -2,6 +2,7 @@
 This file contains all of the sqlite functions for telemetry
 """
 
+
 def get_scene_id(current_scene_db):
     """gets the scene ID from the scene db"""
     from src.praxxis.sqlite import connection
@@ -27,7 +28,7 @@ def telem_init(user_info_db):
     cur.execute(query)
     conn.commit()
     response = cur.fetchone()[0]
-    return response != None # True if telemetry is initialized
+    return response is not None # True if telemetry is initialized
 
 
 def telem_on(user_info_db):
@@ -48,11 +49,12 @@ def get_telemetry_info(user_info_db):
     from src.praxxis.sqlite import connection
     conn = connection.create_connection(user_info_db)
     cur = conn.cursor()
-    query = 'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY Key="ID", Key="Password", Key="Username", Key="URL", Key="Host"'
+    query = 'SELECT Value FROM "UserInfo" WHERE Key in ("URL", "Host", "Username", "Password", "ID") ORDER BY ' \
+            'Key="ID", Key="Password", Key="Username", Key="URL", Key="Host" '
     cur.execute(query)
     conn.commit()
     info = cur.fetchall()
-    if info != None:
+    if info is not None:
         for i in range(len(info)):
             info[i] = info[i][0]
     conn.close()
@@ -88,6 +90,7 @@ def write_setting(user_info_db, setting, value):
      
 
 def write_settings(user_info_db, settings, values):
+    """updates a list of settings with new values"""
     for setting in settings:
         write_setting(user_info_db, setting, values[setting])
 
@@ -143,6 +146,7 @@ def delete_from_backlog(user_info_db, local_copy):
     cur.execute(cleanup, (local_copy,))
     conn.commit()
     conn.close()
+
 
 def clear_backlog(user_info_db):
     """clears backlog completely (for testing purposes)"""

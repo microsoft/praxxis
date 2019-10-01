@@ -2,6 +2,7 @@
 This file contains all of the sqlite functions for libraries
 """
 
+
 def clear_loaded_libararies(library_db):
     from src.praxxis.sqlite import connection
 
@@ -81,7 +82,6 @@ def sync_library(library_db, path, readme, library, remote=None):
     cur.execute(update_library, (readme, library))
     conn.commit()
     conn.close()
-
     
 
 def list_libraries(library_db, query_start, query_end):

@@ -1,9 +1,10 @@
 """
-This file resumes a previously used scene.
+This file resumes a previously ended scene.
 """
 
+
 def resume_scene(args, scene_root, history_db):
-    """Resumes a scene"""
+    """resumes a scene"""
     import os
 
     from src.praxxis.sqlite import sqlite_scene
@@ -17,7 +18,7 @@ def resume_scene(args, scene_root, history_db):
         name = args
 
     tmp_name = scene.get_scene_by_ordinal(args, name, history_db)
-    if tmp_name != None:
+    if tmp_name is not None:
         name = tmp_name
     try:
         sqlite_scene.check_scene_ended(history_db, name)
@@ -34,4 +35,3 @@ def resume_scene(args, scene_root, history_db):
     
     display_scene.display_resume_scene(name)
     return name
-    

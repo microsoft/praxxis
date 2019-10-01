@@ -2,8 +2,9 @@
 This file creates a new scene
 """
 
+
 def new_scene(args, scene_root, history_db):
-    """ creates a new scene db file""" 
+    """creates a new scene db file""" 
     import os
     from src.praxxis.display import display_scene
     from src.praxxis.scene import scene 

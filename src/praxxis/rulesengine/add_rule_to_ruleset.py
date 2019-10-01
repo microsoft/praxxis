@@ -2,6 +2,7 @@
 Adds a rule to the ruleset by user inputs in a console dialog
 """
 
+
 def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, query_start, query_end):
     """prompts user through adding a rule, given a ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine
@@ -55,7 +56,6 @@ def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, quer
 
     return rulename
     
-        
 
 def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_errors = True):
     """get filenames, given ordinals"""
@@ -65,7 +65,7 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
     for filename in filenames_with_ords:
         try:
             nbname = notebook.get_notebook_by_ordinal(current_scene_db, filename)
-            if nbname != None:
+            if nbname is not None:
                 filename = nbname[0]
             elif not allow_errors:
                 raise NotebookNotFoundError(nbname)
@@ -79,10 +79,10 @@ def get_filenames_from_ordinals(filenames_with_ords, current_scene_db, allow_err
 
     return filenames
 
+
 def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename):
-    """get all fileinfo and format it correctly for predictions entry
-    TODO: look at renaming/refactoring this
-    """
+    """get all fileinfo and format it correctly for predictions entry"""
+    # TODO: look at renaming/refactoring this
     from src.praxxis.notebook import notebook
     from src.praxxis.util.error import NotebookNotFoundError
     # format:    
@@ -94,7 +94,7 @@ def get_fileinfo_from_ordinals(predictions_with_ords, current_scene_db, rulename
         try:
             nbname = notebook.get_notebook_by_ordinal(current_scene_db, prediction)
             
-            if nbname == None:
+            if nbname is None:
                 raise NotebookNotFoundError(prediction)
         except NotebookNotFoundError as e:
             raise e

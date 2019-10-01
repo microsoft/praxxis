@@ -1,9 +1,10 @@
 """
-This file deletes the specified scene
+This file deletes a scene.
 """
 
+
 def delete_scene(args, scene_root, history_db):
-    """Deletes a scene"""
+    """deletes a specified scene, including all its data"""
     import shutil
     import os
 
@@ -14,7 +15,7 @@ def delete_scene(args, scene_root, history_db):
     from src.praxxis.scene import scene
 
     if hasattr(args, "name"):
-        if(args.name == None):
+        if(args.name is None):
             name = sqlite_scene.get_current_scene(history_db)
         else:
             name = args.name
@@ -28,7 +29,7 @@ def delete_scene(args, scene_root, history_db):
     except error.EndEndedSceneError as e:
         pass
         
-    if tmp_name != None:
+    if tmp_name is not None:
         name = tmp_name
 
     directory = os.path.join(scene_root, name)

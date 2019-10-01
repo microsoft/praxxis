@@ -2,6 +2,7 @@
 This file changes the current scene.
 """
 
+
 def change_scene(args, scene_root, history_db):
     """changes current scene in sqlite history db"""
     from src.praxxis.sqlite import sqlite_scene
@@ -19,7 +20,7 @@ def change_scene(args, scene_root, history_db):
     except error.SceneNotFoundError as e:
         raise e
 
-    if tmp_name != None:
+    if tmp_name is not None:
         name = tmp_name
 
     try:

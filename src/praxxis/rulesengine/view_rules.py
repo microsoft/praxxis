@@ -2,6 +2,8 @@
 View a list of all rules in a ruleset
 TODO: -v option to see rule definitions too
 """ 
+
+
 def view_rules(args, rulesengine_db):
     """view rules in a given ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine

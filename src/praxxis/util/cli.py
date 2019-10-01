@@ -15,21 +15,22 @@ from src.praxxis.util.roots import _rulesengine_db
 from src.praxxis.util.roots import _model_root
 from src.praxxis.util.roots import _model_db
 
+
 def command(argument,
-            root = _root,
-            library_root = _library_root, 
-            library_db = _library_db,
-            output_root = _output_root,
-            scene_root = _scene_root,
-            history_db = _history_db,
-            telemetry_db = _telemetry_db,
-            rulesengine_root = _rulesengine_root,
-            rulesengine_db = _rulesengine_db,
-            model_root = _model_root,
-            model_db = _model_db,
-            default_scene_name = _default_scene_name,
-            test = False):
-    """uses a dictionary as a switch statement to determine which funciton to run."""
+            root=_root,
+            library_root=_library_root,
+            library_db=_library_db,
+            output_root=_output_root,
+            scene_root=_scene_root,
+            history_db=_history_db,
+            telemetry_db=_telemetry_db,
+            rulesengine_root=_rulesengine_root,
+            rulesengine_db=_rulesengine_db,
+            model_root=_model_root,
+            model_db=_model_db,
+            default_scene_name=_default_scene_name,
+            test=False):
+    """uses a dictionary as a switch statement to determine which funciton to run"""
     from src.praxxis.entrypoints import entry_parameter
     from src.praxxis.entrypoints import entry_library
     from src.praxxis.entrypoints import entry_notebook
@@ -40,20 +41,20 @@ def command(argument,
     from src.praxxis.util import roots
 
     if not test:
-        roots.init(root, 
-         library_root, 
-         library_db,
-         output_root,
-         scene_root,
-         history_db,
-         telemetry_db,
-         rulesengine_root,
-         rulesengine_db,
-         model_root,
-         model_db,
-         default_scene_name,
-         )
-    
+        roots.init(root,
+                   library_root,
+                   library_db,
+                   output_root,
+                   scene_root,
+                   history_db,
+                   telemetry_db,
+                   rulesengine_root,
+                   rulesengine_db,
+                   model_root,
+                   model_db,
+                   default_scene_name,
+                   )
+
     switcher = {
         "run_notebook": entry_notebook.run_notebook,
         "view_notebook_param": entry_parameter.view_notebook_param,
@@ -98,8 +99,8 @@ def command(argument,
         func = switcher.get(argument.which)
     else:
         func = entry_scene.current_scene
-    
-    if(test):
+
+    if (test):
         return func
 
     try:
@@ -107,5 +108,3 @@ def command(argument,
     except Exception as e:
         raise e
     return output
-
-    

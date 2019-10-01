@@ -3,7 +3,9 @@ Marks a ruleset as activate
 (i.e., its rules will be evaluated when making predictions)
 """
 
+
 def activate_ruleset(args, rulesengine_db):
+    """activates a ruleset to be used in the rules engine"""
     from src.praxxis.sqlite import sqlite_rulesengine
     from src.praxxis.display import display_rulesengine
     from src.praxxis.rulesengine import rules

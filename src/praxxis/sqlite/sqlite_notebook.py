@@ -2,6 +2,7 @@
 This file contains the sqlite functions for notebooks
 """
 
+
 def list_notebooks(library_db, query_start, query_end):
     """lists all loaded notebooks"""
     from src.praxxis.sqlite import connection
@@ -22,7 +23,7 @@ def get_notebook(library_db, notebook, library = None):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    if not library == None:
+    if not library is None:
         get_notebook = 'SELECT * FROM "Notebooks" WHERE Notebook = ? AND Library = ?'
         cur.execute(get_notebook, (notebook, library))
     else:
@@ -49,7 +50,7 @@ def get_notebook_by_ord(current_scene_db, ordinal):
     item = cur.fetchone()
     conn.close()
 
-    if item == None:
+    if item is None:
         raise error.NotebookNotFoundError
     return item
 
@@ -84,7 +85,7 @@ def get_notebook_path(library_db, notebook, library):
     conn.commit()
     path = cur.fetchone()
     conn.close()
-    if path == None:
+    if path is None:
         return None
     return path[0]
 
@@ -100,7 +101,7 @@ def get_notebook_library(library_db, notebook):
     conn.commit()
     path = cur.fetchall()
     conn.close()
-    if path == None:
+    if path is None:
         return None
     return path
 
@@ -129,7 +130,8 @@ def search_notebooks(library_db, search_term, query_start, query_end):
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    list_param = 'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" WHERE Notebook LIKE "%{}%" ORDER BY Notebook LIMIT ?, ?'.format(search_term)
+    list_param = 'SELECT Notebook, Path, Library, RawUrl FROM "Notebooks" WHERE Notebook LIKE "%{}%" ORDER BY ' \
+                 'Notebook LIMIT ?, ?'.format(search_term)
     cur.execute(list_param, (query_start, query_end))
     conn.commit()
     rows = cur.fetchall()

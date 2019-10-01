@@ -24,7 +24,7 @@ def test_add_one_output(setup, generate_short_history, output_root, current_scen
     for cell in file_data["cells"]:
         # check if cell format is correct to be the output added cell
         output = cell.get('outputs')
-        if output != None and output[0].get("text") != None:
+        if output is not None and output[0].get("text") is not None:
             # check if this cell output matches up
             if output[0].get("text")[0] == test_str:
                 found_cell = True

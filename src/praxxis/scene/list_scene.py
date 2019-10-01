@@ -2,6 +2,7 @@
 This file lists all scenes
 """
 
+
 def list_scene(root, history_db):
     """lists scenes by fetching from sqlite db"""
     from src.praxxis.sqlite import sqlite_scene

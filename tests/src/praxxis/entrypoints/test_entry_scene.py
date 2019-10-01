@@ -24,7 +24,6 @@ def test_delete_scene(setup, create_one_scene, scene_root, history_db):
     
 def test_resume_scene(setup, create_ended_scene, scene_root, history_db):
     from src.praxxis.sqlite import sqlite_scene
-    from src.praxxis.util import error
 
     entry_scene.resume_scene("generated_ended_scene", scene_root, history_db)
     try:
