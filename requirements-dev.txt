@@ -8,5 +8,6 @@ pytest-runner
 setuptools
 nbopen
 gitpython
+giturlparse
 colorama 
 toml
