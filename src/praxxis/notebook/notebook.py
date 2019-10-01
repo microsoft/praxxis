@@ -3,6 +3,7 @@ This file contains the Notebook class, with methods for loading in a .ipynb
 file and checking its parameterization information.
 """
 
+
 def get_notebook(current_scene_db, library_db, name):
     """gets a notebook path from name and library name"""
     from src.praxxis.notebook import notebook
@@ -11,14 +12,14 @@ def get_notebook(current_scene_db, library_db, name):
 
     tmp_name = notebook.get_notebook_by_ordinal(current_scene_db, name)[0]
 
-    if tmp_name != None:
+    if tmp_name is not None:
         name = tmp_name
 
     notebook_data = sqlite_notebook.get_notebook(library_db, name)
 
     if not len(notebook_data) == 1:
         notebook_data = [notebook.handle_duplicate_notebook(library_db, notebook_data, name)]
-    
+
     return notebook_data[0]
 
 
@@ -26,7 +27,7 @@ def get_notebook_by_ordinal(current_scene_db, name):
     """gets notebook by ordinal using the sqlite history db"""
     from src.praxxis.sqlite import sqlite_notebook
     from src.praxxis.util import error
-    
+
     if str(name).isdigit():
         try:
             name = sqlite_notebook.get_notebook_by_ord(current_scene_db, name)
@@ -35,19 +36,19 @@ def get_notebook_by_ordinal(current_scene_db, name):
     else:
         library = sqlite_notebook.get_notebook_library(current_scene_db, name)
         name = (name, library)
-    return(name)   
+    return (name)
 
 
 def get_output_from_filename(filename):
-    """gets only cell outputs from filename""" 
+    """gets only cell outputs from filename"""
     import json
-    
+
     linelist = []
     with open(filename) as f:
         info = json.load(f)
         cells = info["cells"]
         for cell in cells:
-            if(cell["cell_type"] == "code"):
+            if (cell["cell_type"] == "code"):
                 if (len(cell["outputs"]) != 0):
                     linelist += (cell["outputs"][0]["text"])
 
@@ -66,17 +67,17 @@ def handle_duplicate_notebook(library_db, notebook_data, name):
     from src.praxxis.notebook import notebook
     from src.praxxis.display import display_notebook
     from src.praxxis.util import error
-    
+
     library_list = []
     for element in notebook_data:
         library_list.append(element[2])
-    
+
     display_error.duplicate_notebook_error(name, library_list)
     selection = display_notebook.get_notebook_selection()
 
     if selection.isdigit():
         if int(selection) <= len(library_list):
-            selection = library_list[int(selection)-1]
+            selection = library_list[int(selection) - 1]
         else:
             raise error.LibraryNotFoundError(selection)
     else:
@@ -86,12 +87,13 @@ def handle_duplicate_notebook(library_db, notebook_data, name):
 
 class Notebook:
     """this is the notebook class, which is an instance of a notebook"""
+
     def __init__(self, notebook_data):
         """creates a notebook as set of parameters, path, and library name"""
         from src.praxxis.display import display_error
         import os
 
-        #TODO: add support for reading from a URL
+        # TODO: add support for reading from a URL
         self.name = notebook_data[1]
         notebook_path = notebook_data[0]
 
@@ -106,11 +108,10 @@ class Notebook:
             f.close()
         except(FileNotFoundError):
             print(display_error.notebook_not_found_error(self.name))
-    
+
     def getpath(self):
         """returns the path of the notebook"""
         return self._path
-
 
     def extract_params(self, openFile):
         """extracts the parameters from the file"""
@@ -124,10 +125,9 @@ class Notebook:
                 self.extract_from_cell(cell.get("source"))
                 return
 
-
     def extract_from_cell(self, source):
         """extracts the parameters"""
-        if(isinstance(source, list)):
+        if (isinstance(source, list)):
             lines = source
         else:
             lines = source.splitlines()
@@ -137,5 +137,5 @@ class Notebook:
                 name = parameter[0].strip()
                 value = parameter[1].split("#")[0].strip()
                 if value == "\"\"":
-                    value = None               
+                    value = None
                 self._parameters.append([name, value])

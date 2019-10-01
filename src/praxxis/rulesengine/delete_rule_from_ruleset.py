@@ -2,6 +2,7 @@
 Deletes a rule from a ruleset, based on user input in the console.
 """
 
+
 def delete_rule_from_ruleset(args, rulesengine_db):
     """prompts user through deleting a rule in a ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine

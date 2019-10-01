@@ -2,6 +2,7 @@
 This file completely deletes a ruleset.
 """
 
+
 def remove_ruleset(args, rulesengine_db):
     """remove a ruleset, deleting the associated db"""
     import os

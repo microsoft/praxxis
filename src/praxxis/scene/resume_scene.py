@@ -2,6 +2,7 @@
 This file resumes a previously ended scene.
 """
 
+
 def resume_scene(args, scene_root, history_db):
     """resumes a scene"""
     import os

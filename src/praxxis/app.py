@@ -6,65 +6,66 @@ import argparse
 import os
 import sys
 from colorama import init, Fore, Style
+
 init(autoreset=True)
 
-## these are the commands passed into cli.py
+# these are the commands passed into cli.py
 run_notebook_command = "run_notebook"
-view_notebook_param_command="view_notebook_param"
-list_notebooks_command="list_notebooks"
-search_notebooks_command="search_notebooks"
-open_notebook_command="open_notebook"
-history_command="history"
-next_notebook_command="next_notebook"
+view_notebook_param_command = "view_notebook_param"
+list_notebooks_command = "list_notebooks"
+search_notebooks_command = "search_notebooks"
+open_notebook_command = "open_notebook"
+history_command = "history"
+next_notebook_command = "next_notebook"
 remove_notebook_command = "remove_notebook"
 add_notebook_command = "add_notebook"
 add_output_command = "add_output"
 
 new_scene_command = "new_scene"
-end_scene_command="end_scene"
-change_scene_command="change_scene"
-resume_scene_command="resume_scene"
-delete_scene_command="delete_scene"
-list_scene_command="list_scene"
+end_scene_command = "end_scene"
+change_scene_command = "change_scene"
+resume_scene_command = "resume_scene"
+delete_scene_command = "delete_scene"
+list_scene_command = "list_scene"
 
-add_library_command="add_library"
-list_library_command="list_library"
-remove_library_command="remove_library"
-sync_library_command="sync_library"
+add_library_command = "add_library"
+list_library_command = "list_library"
+remove_library_command = "remove_library"
+sync_library_command = "sync_library"
 
-set_param_command="set_param"
-delete_param_command="delete_param"
-list_param_command="list_param"
-view_library_param_command="view_library_param"
+set_param_command = "set_param"
+delete_param_command = "delete_param"
+list_param_command = "list_param"
+view_library_param_command = "view_library_param"
 pull_notebook_param_command = "pull_notebook_param"
 pull_library_param_command = "pull_library_param"
-search_param_command="search_param"
+search_param_command = "search_param"
 
-update_settings_command="update_settings"
-new_ruleset_command="new_ruleset"
-remove_ruleset_command="remove_ruleset"
-list_rulesets_command="list_rulesets"
-view_ruleset_command="view_ruleset"
-edit_ruleset_command="edit_ruleset"
-import_ruleset_command="import_ruleset"
-activate_ruleset_command="activate_ruleset"
-deactivate_ruleset_command="deactivate_ruleset"
-import_model_command="import_model"
-update_model_command="update_model"
+update_settings_command = "update_settings"
+new_ruleset_command = "new_ruleset"
+remove_ruleset_command = "remove_ruleset"
+list_rulesets_command = "list_rulesets"
+view_ruleset_command = "view_ruleset"
+edit_ruleset_command = "edit_ruleset"
+import_ruleset_command = "import_ruleset"
+activate_ruleset_command = "activate_ruleset"
+deactivate_ruleset_command = "deactivate_ruleset"
+import_model_command = "import_model"
+update_model_command = "update_model"
 
-## notebook help strings
-run_notebook_help="run notebook"
-run_notebook_notebook_help="notebook to run"
-run_notebook_parameter_help="html flag for opening in web"
-view_notebook_param_help="displays the parameters for the notebook"
-view_notebook_param_notebook_help="the notebook to view parameter for"
-open_notebook_help="open notebook in Azure Data Studio"
-open_notebook_notebook_help="notebook to open"
-open_notebook_parameter_help="open notebook in jupyter ads or html"
-list_notebooks_help="list notebooks to run, by ordinal."
-search_notebooks_help="search for notebooks matching search term"
-search_notebooks_term_help ="search term for notebooks"
-next_notebook_help="model based prediction of what to do next in the current scene"
+# notebook help strings
+run_notebook_help = "run notebook"
+run_notebook_notebook_help = "notebook to run"
+run_notebook_parameter_help = "html flag for opening in web"
+view_notebook_param_help = "displays the parameters for the notebook"
+view_notebook_param_notebook_help = "the notebook to view parameter for"
+open_notebook_help = "open notebook in Azure Data Studio"
+open_notebook_notebook_help = "notebook to open"
+open_notebook_parameter_help = "open notebook in jupyter ads or html"
+list_notebooks_help = "list notebooks to run, by ordinal."
+search_notebooks_help = "search for notebooks matching search term"
+search_notebooks_term_help = "search term for notebooks"
+next_notebook_help = "model based prediction of what to do next in the current scene"
 remove_notebook_help = "remove notebook by name"
 remove_notebook_name_help = "name of notebook to remove"
 add_notebook_help = "add a notebook to praxxis"
@@ -72,74 +73,73 @@ add_notebook_path_help = "the path of the notebook you want to load"
 add_output_help = "add output from an external program to the last notebook executed"
 add_output_string_help = "the external output to add"
 
-## scene help strings 
-new_scene_help="new scene"
-new_scene_name_help="name of new scene"
-end_scene_help="end scene"
-end_scene_name_help="name of scene to end"
-change_scene_help="change scene"
-change_scene_parameter_help="parameter for scene"
-change_scene_name_help="name of scene to change to"
-resume_scene_help="resume scene"
-resume_scene_name_help="name of scene to resume"
-delete_scene_help="delete scene"
-delete_scene_name_help="name of scene to delete"
-list_scene_help="list scenes"
+# scene help strings
+new_scene_help = "new scene"
+new_scene_name_help = "name of new scene"
+end_scene_help = "end scene"
+end_scene_name_help = "name of scene to end"
+change_scene_help = "change scene"
+change_scene_parameter_help = "parameter for scene"
+change_scene_name_help = "name of scene to change to"
+resume_scene_help = "resume scene"
+resume_scene_name_help = "name of scene to resume"
+delete_scene_help = "delete scene"
+delete_scene_name_help = "name of scene to delete"
+list_scene_help = "list scenes"
 
-## parameter help strings
-set_param_help="set parameter variable for current scene"
-set_param_name_help="name of the parameter variable to set"
-set_param_value_help="value of the parameter variable to set"
-delete_param_help="delete parameter variable for current scene"
-delete_param_name_help="name of the parameter variable to delete"
-search_param_help="search for parameter variable names"
-search_param_term_help="search term for parameter variable"
-list_param_help="list parameters"
-view_library_param_help="list all parameters in a library of notebooks"
-view_library_param_name_help="the name of the library you want to list for"
+# parameter help strings
+set_param_help = "set parameter variable for current scene"
+set_param_name_help = "name of the parameter variable to set"
+set_param_value_help = "value of the parameter variable to set"
+delete_param_help = "delete parameter variable for current scene"
+delete_param_name_help = "name of the parameter variable to delete"
+search_param_help = "search for parameter variable names"
+search_param_term_help = "search term for parameter variable"
+list_param_help = "list parameters"
+view_library_param_help = "list all parameters in a library of notebooks"
+view_library_param_name_help = "the name of the library you want to list for"
 pull_notebook_param_help = "pull parameters out of a notebook into your current scene"
 pull_notebook_param_name_help = "the name of the notebook to pull parameters from"
 pull_library_param_help = "pull parameters out of a library into your current scene"
 pull_library_param_name_help = "the name of the library to pull the parameters from"
 
-## library help strings
-add_library_help="install library of notebooks to praxxis"
-add_library_path_help="the path to the library you want to add"
-remove_library_help="remove library of notebooks praxxis"
-remove_library_name_help="name of the library you want to remove"
-list_libraries_help="list libraries currently installed"
-sync_library_help="load libraries into praxxis. Default loads from predefined library path"
-sync_library_path_help="load library from a specific directory into praxxis"
+# library help strings
+add_library_help = "install library of notebooks to praxxis"
+add_library_path_help = "the path to the library you want to add"
+remove_library_help = "remove library of notebooks praxxis"
+remove_library_name_help = "name of the library you want to remove"
+list_libraries_help = "list libraries currently installed"
+sync_library_help = "load libraries into praxxis. Default loads from predefined library path"
+sync_library_path_help = "load library from a specific directory into praxxis"
 
-## misc help strings
-history_help="history of what you've done in the current scene"
-update_settings_help="update telemetry and security settings"
+# misc help strings
+history_help = "history of what you've done in the current scene"
+update_settings_help = "update telemetry and security settings"
 
 # rules engine help strings
-new_ruleset_help="create a ruleset for the rules engine"
-new_ruleset_name_help="the name of the new ruleset to create"
-new_ruleset_path_help="(optional) path to location to save ruleset at"
-remove_ruleset_help="remove a ruleset from your machine"
-remove_ruleset_name_help="the name of the ruleset to remove"
-list_rulesets_help="list all rulesets available for the rules engine"
-view_ruleset_help="view all rules in a ruleset"
-view_ruleset_name_help="the name of the ruleset to view rules in"
-edit_ruleset_help="make changes to a ruleset"
-edit_ruleset_name_help="the name of the ruleset to edit"
-edit_ruleset_action_help="'a' to add a rule, 'd' to delete a rule, 'm' to modify a rule"
-import_ruleset_help="import a ruleset file from outside praxxis"
-import_ruleset_path_help="the path to the file to import"
-activate_ruleset_help="activate ruleset(s) to use when making predictions"
-activate_ruleset_name_help="name of the ruleset to activate"
-deactivate_ruleset_name_help="name of the ruleset to deactivate"
-deactivate_ruleset_help="deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
+new_ruleset_help = "create a ruleset for the rules engine"
+new_ruleset_name_help = "the name of the new ruleset to create"
+new_ruleset_path_help = "(optional) path to location to save ruleset at"
+remove_ruleset_help = "remove a ruleset from your machine"
+remove_ruleset_name_help = "the name of the ruleset to remove"
+list_rulesets_help = "list all rulesets available for the rules engine"
+view_ruleset_help = "view all rules in a ruleset"
+view_ruleset_name_help = "the name of the ruleset to view rules in"
+edit_ruleset_help = "make changes to a ruleset"
+edit_ruleset_name_help = "the name of the ruleset to edit"
+edit_ruleset_action_help = "'a' to add a rule, 'd' to delete a rule, 'm' to modify a rule"
+import_ruleset_help = "import a ruleset file from outside praxxis"
+import_ruleset_path_help = "the path to the file to import"
+activate_ruleset_help = "activate ruleset(s) to use when making predictions"
+activate_ruleset_name_help = "name of the ruleset to activate"
+deactivate_ruleset_name_help = "name of the ruleset to deactivate"
+deactivate_ruleset_help = "deactivate ruleset(s) to keep them on your machine, but not use them in predictions"
 
 # model help strings
-import_model_help="import a model file and converter from outside praxxis"
-import_model_modelpath_help="the path to the model file"
-import_model_converterpath_help="the path to the converter"
-update_model_help="fetch newest version of model from storage pool"
-
+import_model_help = "import a model file and converter from outside praxxis"
+import_model_modelpath_help = "the path to the model file"
+import_model_converterpath_help = "the path to the converter"
+update_model_help = "fetch newest version of model from storage pool"
 
 praxxis_ascii_art = r"""
                                                   /▒▒          
@@ -155,8 +155,10 @@ praxxis_ascii_art = r"""
 |__/
 """
 
-class helpFormatter (argparse.RawDescriptionHelpFormatter):
+
+class helpFormatter(argparse.RawDescriptionHelpFormatter):
     """formats the help to have section headers"""
+
     def _format_action(self, action):
         import re
         if action.dest == "command":
@@ -165,30 +167,32 @@ class helpFormatter (argparse.RawDescriptionHelpFormatter):
                 if len(choice) <= 2:
                     new_choices.append(choice)
             action.choices = new_choices
-        parts = super()._format_action(action)  
+        parts = super()._format_action(action)
         if action.help == run_notebook_help:
-            parts = """Notebooks: \n    [n]                 runs nth notebook in list\n%s""" %(parts)
+            parts = """Notebooks: \n    [n]                 runs nth notebook in list\n%s""" % (parts)
         elif action.help == new_scene_help:
-            parts = "Scene: \n%s" %(parts)
+            parts = "Scene: \n%s" % (parts)
         elif action.help == set_param_help:
-            parts = "Parameter: \n%s" %(parts)
+            parts = "Parameter: \n%s" % (parts)
         elif action.help == add_library_help:
-            parts = "Library: \n%s" %(parts)
+            parts = "Library: \n%s" % (parts)
         elif action.help == new_ruleset_help:
-            parts = "Rules Engine: \n%s" %(parts)
+            parts = "Rules Engine: \n%s" % (parts)
         elif action.help == import_model_help:
-            parts = "Model: \n%s" %(parts)
+            parts = "Model: \n%s" % (parts)
 
         return parts
 
+
 def main(command_line=None):
-    """creates all of the argparse parsers and returns the args passed in""" 
-    parser = argparse.ArgumentParser(description=praxxis_ascii_art, 
-                                    formatter_class=helpFormatter, 
-                                    usage="Notebooks: r, o, s, l, h, v, Scene: ns, es, cs, rs, ds, ls, Library: al, rl, ll, sl, parameter:se , sv, de, le")
-                                    
+    """creates all of the argparse parsers and returns the args passed in"""
+    parser = argparse.ArgumentParser(description=praxxis_ascii_art,
+                                     formatter_class=helpFormatter,
+                                     usage="Notebooks: r, o, s, l, h, v, Scene: ns, es, cs, rs, ds, ls, Library: al, "
+                                           "rl, ll, sl, parameter:se , sv, de, le")
+
     subparsers = parser.add_subparsers(dest='command')
-    
+
     run_notebook = subparsers.add_parser('run', aliases=["r"], help=run_notebook_help)
     run_notebook.add_argument('notebook', help=run_notebook_notebook_help)
     run_notebook.add_argument('html', nargs="?", help=run_notebook_parameter_help)
@@ -200,9 +204,10 @@ def main(command_line=None):
 
     open_notebook = subparsers.add_parser('open', aliases=["o"], help=open_notebook_help)
     open_notebook.add_argument('notebook', help=open_notebook_notebook_help)
-    open_notebook.add_argument('viewer', nargs="?", choices=['html', 'jupyter', 'ads'], help=open_notebook_parameter_help)
+    open_notebook.add_argument('viewer', nargs="?", choices=['html', 'jupyter', 'ads'],
+                               help=open_notebook_parameter_help)
     open_notebook.set_defaults(which=open_notebook_command)
-    
+
     search_notebooks = subparsers.add_parser('search', aliases=["s"], help=search_notebooks_help)
     search_notebooks.add_argument('term', help=search_notebooks_term_help)
     search_notebooks.set_defaults(which=search_notebooks_command)
@@ -272,12 +277,12 @@ def main(command_line=None):
     view_library_param.set_defaults(which=view_library_param_command)
 
     pull_notebook_param = subparsers.add_parser('pullparam', aliases=['p'], help=pull_notebook_param_help)
-    pull_notebook_param.add_argument('notebook', help = pull_notebook_param_name_help)
-    pull_notebook_param.set_defaults(which = pull_notebook_param_command)
+    pull_notebook_param.add_argument('notebook', help=pull_notebook_param_name_help)
+    pull_notebook_param.set_defaults(which=pull_notebook_param_command)
 
     pull_library_param = subparsers.add_parser('pullparamlib', aliases=['pl'], help=pull_library_param_help)
-    pull_library_param.add_argument('name', help = pull_library_param_name_help)
-    pull_library_param.set_defaults(which = pull_library_param_command)
+    pull_library_param.add_argument('name', help=pull_library_param_name_help)
+    pull_library_param.set_defaults(which=pull_library_param_command)
 
     add_library = subparsers.add_parser('addlibrary', aliases=["al"], help=add_library_help)
     add_library.add_argument('path', help=add_library_path_help)
@@ -319,7 +324,7 @@ def main(command_line=None):
 
     edit_ruleset = subparsers.add_parser('editruleset', aliases=['er'], help=edit_ruleset_help)
     edit_ruleset.add_argument('name', help=edit_ruleset_name_help)
-    edit_ruleset.add_argument('action', choices=['a','d','m'], help=edit_ruleset_action_help)
+    edit_ruleset.add_argument('action', choices=['a', 'd', 'm'], help=edit_ruleset_action_help)
     edit_ruleset.set_defaults(which=edit_ruleset_command)
 
     activate_ruleset = subparsers.add_parser('activateruleset', aliases=['ar'], help=activate_ruleset_help)
@@ -340,18 +345,18 @@ def main(command_line=None):
 
     args = parser.parse_args(command_line)
 
-    if len(sys.argv[1:])==0:
+    if len(sys.argv[1:]) == 0:
         parser.print_help()
         print()
-    
+
     return args
 
 
-def start(args=None, test = False):
+def start(args=None, test=False):
     """the runner of praxxis from the cli. makes a call to the switcher with the output of main"""
     from src.praxxis.util import cli
     from src.praxxis.util import error
-    
+
     if args == None:
         args = sys.argv
 
@@ -381,23 +386,23 @@ def start(args=None, test = False):
                 print(e)
                 return 1
             return func
-        
+
     func = 0
     try:
         func = cli.command(main(), test=test)
-    except (error.EndEndedSceneError, 
-            error.ParamNotFoundError, 
-            error.LastActiveSceneError, 
-            error.LibraryNotFoundError, 
-            error.NotebookNotFoundError, 
-            error.SceneEndedError, 
-            error.SceneNotFoundError, 
+    except (error.EndEndedSceneError,
+            error.ParamNotFoundError,
+            error.LastActiveSceneError,
+            error.LibraryNotFoundError,
+            error.NotebookNotFoundError,
+            error.SceneEndedError,
+            error.SceneNotFoundError,
             error.RulesetNotFoundError,
             error.RulesetActiveError,
             error.RulesetNotActiveError,
             error.SceneNotFoundError,
             error.NotDirectoryError,
-            error.NotFileError, 
+            error.NotFileError,
             error.NotNotebookError,
             error.EditorNotFoundError,
             error.ADSNotFoundError,
@@ -405,7 +410,7 @@ def start(args=None, test = False):
             error.EmptyHistoryError) as e:
         print(e)
         return 1
-    
+
     if test:
         return func
 

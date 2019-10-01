@@ -1,7 +1,7 @@
 """
 Searches notebooks for search term using a sql query, and calls the display function
 """
-import os
+
 
 def search_notebook(args, library_db, current_scene_db, query_start, query_end):
     """searches and displays loaded notebooks"""

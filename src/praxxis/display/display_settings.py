@@ -2,6 +2,7 @@
 This file contains all the display functions for updating settings
 """
 
+
 def display_opening_message():
     """display function for opening settings"""
     print("Welcome to the praxxis settings utility.")

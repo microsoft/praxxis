@@ -2,6 +2,7 @@
 This file creates a new ruleset
 """
 
+
 def new_ruleset(args, rulesengine_root, rulesengine_db):
     """create a new ruleset and associated db"""
     import os

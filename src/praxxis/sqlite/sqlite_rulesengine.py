@@ -2,6 +2,7 @@
 This file contains the sqlite functions for the rules engine
 """
 
+
 def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     """creates a new ruleset database"""
     from src.praxxis.sqlite import connection
@@ -10,9 +11,13 @@ def init_ruleset(rulesengine_db, ruleset_name, ruleset_db):
     cur = conn.cursor()
 
     create_rules_table = 'CREATE TABLE "Rules" (Name TEXT PRIMARY KEY)'
-    create_filenames_table = 'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_outputs_table = 'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
-    create_prediction_table = 'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, Library TEXT, RawURL TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE)'
+    create_filenames_table = 'CREATE TABLE "Filenames" (Rule TEXT, Filename TEXT, CONSTRAINT fk_rule FOREIGN KEY(' \
+                             'Rule) REFERENCES "Rules"(Name) ON DELETE CASCADE) '
+    create_outputs_table = 'CREATE TABLE "OutputString" (Rule TEXT, Output TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) ' \
+                           'REFERENCES "Rules"(Name) ON DELETE CASCADE) '
+    create_prediction_table = 'CREATE TABLE "Predictions" (Rule TEXT, Position INTEGER, PredictedNotebook TEXT, ' \
+                              'Library TEXT, RawURL TEXT, CONSTRAINT fk_rule FOREIGN KEY(Rule) REFERENCES "Rules"(' \
+                              'Name) ON DELETE CASCADE) '
 
     cur.execute(create_rules_table)
     cur.execute(create_filenames_table)
@@ -180,7 +185,8 @@ def add_rule(ruleset_db, rulename, filenames, outputs, predictions):
     add_name_to_rules = 'INSERT INTO "Rules" (Name) VALUES (?)'
     add_to_filenames = 'INSERT INTO "Filenames" (Rule, Filename) VALUES (?,?)'
     add_to_output = 'INSERT INTO "OutputString" (Rule, Output) VALUES (?,?)'
-    add_to_predictions = 'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,?,?,?)'
+    add_to_predictions = 'INSERT INTO "Predictions" (Rule, Position, PredictedNotebook, Library, RawURL) VALUES (?,?,' \
+                         '?,?,?) '
 
     cur.execute(add_name_to_rules, (rulename,))
     cur.executemany(add_to_filenames, [(rulename, string) for string in filenames])
@@ -293,7 +299,8 @@ def get_predictions(ruleset_db, ruleset):
     conn = connection.create_connection(ruleset_db)
     cur = conn.cursor()
     ruleslist = ','.join('"{0}"'.format(rule) for rule in ruleset)
-    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (%s) ORDER BY Position ASC' %(ruleslist)
+    get_predictions = 'SELECT DISTINCT PredictedNotebook, Library, RawURL FROM "Predictions" WHERE Rule IN (%s) ORDER ' \
+                      'BY Position ASC' %(ruleslist)
 
     cur.execute(get_predictions)
     conn.commit()

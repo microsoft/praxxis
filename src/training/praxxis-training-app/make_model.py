@@ -115,7 +115,8 @@ validation_gen = generate(seqs, batch_size=batch, num_steps=n_steps, total_names
 
 start = time.time()
 model = define_compile_model()
-history = model.fit_generator(training_gen, len(train_seq)//(batch), epochs=100, validation_data=validation_gen, validation_steps = len(valid_seq)//(batch*n_steps) +1, verbose=2)
+history = model.fit_generator(training_gen, len(train_seq)//(batch), epochs=100, validation_data=validation_gen,
+                              validation_steps = len(valid_seq)//(batch*n_steps) +1, verbose=2)
 end = time.time()
 elapsed = end - start
 
@@ -170,7 +171,7 @@ for i in range(num_tests):
 
     print(pd.Series(yhat_proba[0], converter).sort_values(ascending=False))
 
-#model.evaluate(validation_gen)
+# model.evaluate(validation_gen)
 
 
 ##

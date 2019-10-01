@@ -2,6 +2,7 @@
 This file contains all of the sqlite functions for libraries
 """
 
+
 def clear_loaded_libararies(library_db):
     from src.praxxis.sqlite import connection
 

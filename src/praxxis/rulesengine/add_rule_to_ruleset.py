@@ -2,6 +2,7 @@
 Adds a rule to the ruleset by user inputs in a console dialog
 """
 
+
 def add_rule_to_ruleset(args, rulesengine_db, library_db, current_scene_db, query_start, query_end):
     """prompts user through adding a rule, given a ruleset"""
     from src.praxxis.sqlite import sqlite_rulesengine

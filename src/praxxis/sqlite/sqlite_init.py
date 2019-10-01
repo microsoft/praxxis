@@ -4,16 +4,22 @@ instantiation of praxxis (or if something from the data is deleted
 unexpectedly)
 """
 
+
 def init_library_db(library_db):  
     """initializes the library database"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    create_metadata_table = 'CREATE TABLE "LibraryMetadata" (Path TEXT PRIMARY KEY, Readme TEXT, Library TEXT, Remote TEXT)'
-    create_notebook_table = 'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, RawUrl TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library))'
+    create_metadata_table = 'CREATE TABLE "LibraryMetadata" (Path TEXT PRIMARY KEY, Readme TEXT, Library TEXT, ' \
+                            'Remote TEXT) '
+    create_notebook_table = 'CREATE TABLE "Notebooks" (Path TEXT PRIMARY KEY, Notebook TEXT, Library TEXT, ' \
+                            'RawUrl TEXT, FOREIGN KEY(Library) REFERENCES "LibraryMetadata"(Library)) '
     create_parameter_table = 'CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
-    create_notebook_parameter_table = 'CREATE TABLE "NotebookDefaultParam" (Parameter TEXT, Value TEXT, Notebook TEXT, Library TEXT,  PRIMARY KEY(Parameter, Library, Notebook), FOREIGN KEY(Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES "Parameters"(Parameter), FOREIGN KEY(Library) REFERENCES "Library"(Library))'
+    create_notebook_parameter_table = 'CREATE TABLE "NotebookDefaultParam" (Parameter TEXT, Value TEXT, Notebook ' \
+                                      'TEXT, Library TEXT,  PRIMARY KEY(Parameter, Library, Notebook), FOREIGN KEY(' \
+                                      'Notebook) REFERENCES "Notebooks"(Notebook), FOREIGN KEY(Parameter) REFERENCES ' \
+                                      '"Parameters"(Parameter), FOREIGN KEY(Library) REFERENCES "Library"(Library)) '
     cur.execute(create_metadata_table)
     cur.execute(create_notebook_table)
     cur.execute(create_parameter_table)
@@ -28,7 +34,8 @@ def init_model_db(model_db):
 
     conn = connection.create_connection(model_db)
     cur = conn.cursor()
-    create_models_table = 'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT, ConverterPath TEXT)'
+    create_models_table = 'CREATE TABLE "Models" (Name TEXT PRIMARY KEY, Info TEXT, Date TEXT, Path TEXT, ' \
+                          'ConverterPath TEXT) '
     cur.execute(create_models_table)
     conn.commit()
     conn.close()
@@ -40,7 +47,8 @@ def init_rulesengine_db(rulesengine_db):
 
     conn = connection.create_connection(rulesengine_db)
     cur = conn.cursor()
-    create_rules_table = 'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, Active INTEGER)'
+    create_rules_table = 'CREATE TABLE "RulesEngine" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Path TEXT, ' \
+                         'Active INTEGER) '
     cur.execute(create_rules_table)
     conn.commit()
     conn.close()
@@ -52,7 +60,8 @@ def init_history(history_db, scene_name):
 
     conn = connection.create_connection(history_db)
     cur = conn.cursor()
-    create_scene_history_table = 'CREATE TABLE "SceneHistory" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Scene TEXT, Ended INTEGER)'
+    create_scene_history_table = 'CREATE TABLE "SceneHistory" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Scene TEXT, ' \
+                                 'Ended INTEGER) '
     create_scene_list_table='CREATE TABLE "SceneList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Scene TEXT)'
     cur.execute(create_scene_list_table)
     cur.execute(create_scene_history_table)
@@ -76,7 +85,8 @@ def init_user_info(telemetry_db, send_telemetry=1):
     create_url = 'INSERT INTO "UserInfo" (Key, Value) VALUES ("URL", ?)'
     create_user = 'INSERT INTO "UserInfo" (Key) VALUES ("Username")'
     create_pswd = 'INSERT INTO "UserInfo" (Key) VALUES ("Password")'
-    create_telemetry_table = 'CREATE TABLE "TelemBacklog" (LocalCopy TEXT PRIMARY KEY, SceneID TEXT, Error TEXT, Operation INTEGER)'
+    create_telemetry_table = 'CREATE TABLE "TelemBacklog" (LocalCopy TEXT PRIMARY KEY, SceneID TEXT, Error TEXT, ' \
+                             'Operation INTEGER) '
     id_val = str(uuid.uuid4())
     
     cur.execute(create_userinfo_table)

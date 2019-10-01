@@ -3,13 +3,14 @@ This file opens a notebook in jupyter
 Usually called as a subprocess.
 """
 
+
 def open_jupyter():
     """opens file in jupyter"""
     import sys
     import nbopen
     import webbrowser
-    
-    try:        
+
+    try:
         nbopen.main([str(sys.argv[1])])
     except webbrowser.Error as e:
         print(e)

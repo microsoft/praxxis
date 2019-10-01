@@ -1,8 +1,13 @@
+"""
+This is a test applet deployed on a BDC to test fetching from HDFS from within
+app-deploy.
+"""
 import re
 import subprocess
 import json
 
-MTOOL_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/praxxis/"
+PRAXXIS_ROOT = "http://nmnode-0-svc:50070/webhdfs/v1/praxxis/"
+
 
 def test(loc):
     """
@@ -14,22 +19,22 @@ def test(loc):
 
     date_path = (date.today() - timedelta(days=int(loc))).strftime('%Y/%m/%d/ipynb')
 
-    global MTOOL_ROOT   
-    basepath = MTOOL_ROOT + date_path
+    global PRAXXIS_ROOT
+    basepath = PRAXXIS_ROOT + date_path
 
     params = (
         ('op', 'LISTSTATUS'),
     )
 
     response = requests.get(basepath, params=params)
-    
+
     users = (response.json())['FileStatuses']['FileStatus']
 
     sequences = []
     for user in users:
         user_basepath = basepath + "/" + user['pathSuffix']
         response = requests.get(user_basepath, params=params)
-    
+
         scenes = (response.json())['FileStatuses']['FileStatus']
         for scene in scenes:
             scene_basepath = user_basepath + "/" + scene['pathSuffix']
@@ -40,12 +45,11 @@ def test(loc):
                 fullname = f['pathSuffix']
                 fullname.rstrip('.ipynb')
                 # removes datetime info at start of string, and library name
-                filename = ('-'.join(fullname.split('-')[3:])) #.rstrip('.ipynb')
-                filename = filename[0:len(filename)-6] # removes .ipynb
+                filename = ('-'.join(fullname.split('-')[3:]))  # .rstrip('.ipynb')
+                filename = filename[0:len(filename) - 6]  # removes .ipynb
                 sequence.append(filename)
             sequences.append(sequence)
 
-    
     return sequences
 
     """http://nmnode-0-svc:50070/webhdfs/v1/praxxis?op=LISTSTATUS"""

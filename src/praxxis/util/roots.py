@@ -1,7 +1,13 @@
+"""
+This file contains roots and initialization information for praxxis.
+
+The roots are accessed every run; the initializations are generally run
+only at the start of the first run.
+"""
 import os
 import sys
 
-#checks what platform you're on to see where to put praxxis root
+# checks what platform you're on to see where to put praxxis root
 if(sys.platform == "linux" or sys.platform == "darwin"):
     _root = os.path.join (os.path.expanduser('~/praxxis'))
     _azure_data_studio_location = os.path.join('/usr', 'share', 'azuredatastudio', 'azuredatastudio')
@@ -50,7 +56,6 @@ def init(
         ):
     """initializes praxxis folders for operation"""
     import os
-    from src.praxxis.entrypoints import entry_parameter
     from src.praxxis.entrypoints import entry_library
     from src.praxxis.entrypoints import entry_notebook
     from src.praxxis.entrypoints import entry_scene
@@ -61,15 +66,15 @@ def init(
     if not os.path.exists(root):
         os.mkdir(root)
 
-    #library init
+    # library init
     if not os.path.exists(library_root):
         entry_library.init_library(library_root, library_db)
     
-    #output init
+    # output init
     if not os.path.exists(output_root):
         entry_notebook.init_output(output_root)
 
-    #scene init
+    # scene init
     if not os.path.exists(scene_root):
         entry_scene.init_scene(scene_root, history_db, default_scene_name)
 

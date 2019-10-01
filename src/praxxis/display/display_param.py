@@ -2,6 +2,7 @@
 This file contains all of the display functions for parameters
 """
 
+
 def display_delete_param(name):
     """display function for deleted parameters"""
     print("%s deleted" %(name)) 

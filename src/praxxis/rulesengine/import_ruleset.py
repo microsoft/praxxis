@@ -5,6 +5,7 @@ This file imports a ruleset.
 from src.praxxis.sqlite import sqlite_rulesengine
 from src.praxxis.display import display_rulesengine
 
+
 def import_ruleset(args, ruleset_root, rulesengine_db):
     """links a ruleset db to the ruleset table"""
     import os

@@ -1,6 +1,9 @@
-
-"""http://nmnode-0-svc:50070/webhdfs/v1/praxxis?op=LISTSTATUS"""    
-PRAXXIS_ROOT= "http://nmnode-0-svc:50070/webhdfs/v1/praxxis/"
+"""
+This training code is hosted on the server. it runs a nightly re-train of the
+LSTM model.
+"""
+"""http://nmnode-0-svc:50070/webhdfs/v1/praxxis?op=LISTSTATUS"""
+PRAXXIS_ROOT = "http://nmnode-0-svc:50070/webhdfs/v1/praxxis/"
 
 import json
 import requests
@@ -8,6 +11,7 @@ from datetime import date, timedelta
 
 
 def train():
+    """the app entry point"""
     sequences = get_sequences()
     model, converter = get_model()
     if model == None:
@@ -18,24 +22,31 @@ def train():
     else:
         nightly_train(model, converter, sequences)
 
-
     return str(sequences)
 
+
 def nightly_train(model, converter, sequences):
-    #train
-    write_model(model, converter)
-    
-def create(model, converter, sequences):
-    #create
+    """runs a nightly train on a preexisting model"""
+    # train
     write_model(model, converter)
 
+
+def create(model, converter, sequences):
+    """creates a new model from data"""
+    # create
+    write_model(model, converter)
+
+
 def write_model(model, converter):
+    """writes back model and converter to HDFS"""
     pass
     # writes model back
 
+
 def get_model():
-    #TODO: clean this the heck up
-    #TODO: return none for model if doesn't exist
+    """fetches model and converter from HDFS"""
+    # TODO: clean this the heck up
+    # TODO: return none for model if doesn't exist
     from keras.models import load_model
     from sklearn.externals import joblib
 
@@ -49,7 +60,7 @@ def get_model():
 
     modelpath = basepath + MODEL_NAME
     converterpath = basepath + CONVERTER_NAME
-    
+
     params = (
         ('op', 'OPEN'),
     )
@@ -59,19 +70,18 @@ def get_model():
     model = load_model("tempmodel.h5")
 
     response2 = requests.get(converterpath, params=params)
-    
+
     open("temppkl.pkl", 'wb').write(response2.content)
-    converter = joblib.load("temppkl.pkl") 
+    converter = joblib.load("temppkl.pkl")
 
     import os
     os.remove("tempmodel.h5")
     os.remove("temppkl.pkl")
     return model, converter
 
+
 def get_sequences():
-    """
-    collect the sequences for all users and all scenes.
-    """
+    """collect the sequences for all users and all scenes"""
 
     date_path = (date.today() - timedelta(days=1)).strftime('%Y/%m/%d/ipynb')
 
@@ -83,14 +93,14 @@ def get_sequences():
     )
 
     response = requests.get(basepath, params=params)
-    
+
     users = (response.json())['FileStatuses']['FileStatus']
 
     sequences = []
     for user in users:
         user_basepath = basepath + "/" + user['pathSuffix']
         response = requests.get(user_basepath, params=params)
-    
+
         scenes = (response.json())['FileStatuses']['FileStatus']
         for scene in scenes:
             scene_basepath = user_basepath + "/" + scene['pathSuffix']
@@ -101,8 +111,8 @@ def get_sequences():
                 fullname = f['pathSuffix']
                 fullname.rstrip('.ipynb')
                 # removes datetime info at start of string, and library name
-                filename = ('-'.join(fullname.split('-')[3:])) 
-                filename = filename[0:len(filename)-6] # removes .ipynb
+                filename = ('-'.join(fullname.split('-')[3:]))
+                filename = filename[0:len(filename) - 6]  # removes .ipynb
                 sequence.append(filename)
             sequences.append(sequence)
 

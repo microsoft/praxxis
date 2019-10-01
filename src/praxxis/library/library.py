@@ -2,6 +2,7 @@
 This file contains library specific utilities
 """
 
+
 def get_library_by_ordinal(library_db, ordinal, query_start, query_end):
     """gets library by ordinal using the sqlite history db"""
     from src.praxxis.sqlite import sqlite_library
@@ -13,5 +14,5 @@ def get_library_by_ordinal(library_db, ordinal, query_start, query_end):
         except error.LibraryNotFoundError as e:
             raise e
         else:
-            #this converts the ordinal to an int, and gets the name of that ordinal out of the list
-            return(library[int(ordinal)-1][0])
+            # this converts the ordinal to an int, and gets the name of that ordinal out of the list
+            return (library[int(ordinal) - 1][0])

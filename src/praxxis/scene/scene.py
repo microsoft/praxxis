@@ -2,6 +2,7 @@
 This file contains scene utilities, like initializing scenes and getting by ord
 """
 
+
 def get_scene_by_ordinal(args, name, history_db):
     """gets scene by ordinal using the sqlite history db"""
     from src.praxxis.sqlite import sqlite_scene

@@ -2,14 +2,17 @@
 This file contains all of the sqlite functions for parameters
 """
 
+
 def set_notebook_parameters(library_db, notebook_name, parameter_name, parameter_value, library):
     """set or update an parameter variable"""
     from src.praxxis.sqlite import connection
 
     conn = connection.create_connection(library_db)
     cur = conn.cursor()
-    set_notebook_param = 'INSERT OR IGNORE INTO "NotebookDefaultParam" (Parameter, Value, Notebook, Library) VALUES(?, ?, ?, ?)'
-    update_notebook_param = 'UPDATE "NotebookDefaultParam" SET Value = ? WHERE Parameter = ? AND Notebook = ? AND Library = ?'
+    set_notebook_param = 'INSERT OR IGNORE INTO "NotebookDefaultParam" (Parameter, Value, Notebook, Library) VALUES(' \
+                         '?, ?, ?, ?) '
+    update_notebook_param = 'UPDATE "NotebookDefaultParam" SET Value = ? WHERE Parameter = ? AND Notebook = ? AND ' \
+                            'Library = ? '
     cur.execute(set_notebook_param, (parameter_name, parameter_value, notebook_name, library,))
     cur.execute(update_notebook_param, (parameter_value, parameter_name, notebook_name, library,))
     conn.commit()

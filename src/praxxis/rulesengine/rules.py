@@ -2,6 +2,7 @@
 This file contains utilities for rules engine operation
 """
 
+
 def get_ruleset_by_ordinal(name, rulesengine_db):
     """gets ruleset by ordinal using the sqlite prediction db"""
     from src.praxxis.sqlite import sqlite_rulesengine

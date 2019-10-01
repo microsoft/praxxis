@@ -4,10 +4,11 @@ TODO: needs reworking/reevaluation. does this actually fix any
 of the copytree permissions errors?
 """
 
-def copytree(src, dest, test = False):
+
+def copytree(src, dest, test=False):
     """recursively copies a directory tree"""
     import shutil
-    
+
     try:
         shutil.copytree(src, dest)
     except PermissionError:
@@ -22,7 +23,7 @@ def copytree(src, dest, test = False):
 
         if not os.path.exists(dest):
             try:
-                shutil.copytree(src,dest)
+                shutil.copytree(src, dest)
             except Exception as e:
                 if test and "WinError" in str(e):
                     # exits pytest

@@ -2,6 +2,7 @@
 This file creates a new scene
 """
 
+
 def new_scene(args, scene_root, history_db):
     """creates a new scene db file""" 
     import os

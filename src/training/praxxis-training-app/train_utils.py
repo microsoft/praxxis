@@ -18,29 +18,31 @@ from keras.models import clone_model
 from keras.layers import LSTM
 from keras.layers import Dense
 
+
 def model_train(model, sequences, converter=[]):
+    """trains an LSTM model from the sequences given"""
     ##
     # hyperparameters to tune
     ##
     # n_steps: the number of input steps to be used to predict the next notebook, avg of input seq length
-    n_steps = 5    # affects the training time not the complexity of the model
+    n_steps = 5  # affects the training time not the complexity of the model
 
     # n_units: LSTM units/cells,which determines the complexity of the model 
     # (sometimes called  size_of_output, n_neurons)
-    n_units = n_steps  
+    n_units = n_steps
 
     # split: fraction of data used to train (vs. used for validation)
-    split = 2/3
+    split = 2 / 3
 
     # batch: size of each batch (right now, 2 batches per epoch)
-    batch = int((1/3) * len(sequences))
+    batch = int((1 / 3) * len(sequences))
 
     # add to the list, if necessary
     seqs, converter = encode(sequences, converter)
 
     # unique_file_count: size of OHE (could make larger to allow for expansion (?))
-    unique_file_count = len(converter) 
-    
+    unique_file_count = len(converter)
+
     if model == None:
         model = model_create(n_units, n_steps, unique_file_count)
 
@@ -50,8 +52,8 @@ def model_train(model, sequences, converter=[]):
     new_model.set_weights(model.get_weights())
 
     np.random.shuffle(seqs)
-    train_seq = seqs[:int(len(seqs)*split)]
-    valid_seq = seqs[int(len(seqs)*split):]
+    train_seq = seqs[:int(len(seqs) * split)]
+    valid_seq = seqs[int(len(seqs) * split):]
 
     ##
     # fit the model
@@ -59,7 +61,8 @@ def model_train(model, sequences, converter=[]):
     training_gen = generate(seqs, batch_size=batch, num_steps=n_steps, total_names=unique_file_count)
     validation_gen = generate(seqs, batch_size=batch, num_steps=n_steps, total_names=unique_file_count)
 
-    history = model.fit_generator(training_gen, len(train_seq)//(batch), epochs=100, validation_data=validation_gen, validation_steps = len(valid_seq)//(batch*n_steps) +1, verbose=2)
+    history = model.fit_generator(training_gen, len(train_seq) // (batch), epochs=100, validation_data=validation_gen,
+                                  validation_steps=len(valid_seq) // (batch * n_steps) + 1, verbose=2)
 
     epoch_min_val = np.argmin(history.history['val_loss'])
 
@@ -69,7 +72,7 @@ def model_train(model, sequences, converter=[]):
     training_gen = generate(seqs, batch_size=batch, num_steps=n_steps, total_names=unique_file_count)
     validation_gen = generate(seqs, batch_size=batch, num_steps=n_steps, total_names=unique_file_count)
 
-    history = new_model.fit_generator(training_gen, len(train_seq)//(batch), epochs=epoch_min_val, verbose=2)
+    history = new_model.fit_generator(training_gen, len(train_seq) // (batch), epochs=epoch_min_val, verbose=2)
 
     return new_model
 
@@ -90,7 +93,7 @@ def model_create(n_units, n_steps, unique_file_count):
     # define and compile model
     ##
     model = Sequential()
-    
+
     # input_shape = (time_step, seq_len)
     #    time_step = # timesteps considered
     #    seq_len= # of features considerd 
@@ -98,14 +101,13 @@ def model_create(n_units, n_steps, unique_file_count):
 
     # size = length of OHE array
     model.add(Dense(unique_file_count, activation='softmax'))
-    
+
     model.compile(loss=loss_func, optimizer=adam, metrics=['acc'])
 
     return model
 
 
-
-import collections 
+import collections
 
 import numpy as np
 from numpy import array
@@ -113,7 +115,8 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
 
 
-def encode(sequences, converter=["<None>","<Unknown>"]):
+def encode(sequences, converter=["<None>", "<Unknown>"]):
+    """encode a set of sequences using a converter, building it as it goes"""
     newSeqs = []
     for seq in sequences:
         newSeq = []
@@ -124,7 +127,9 @@ def encode(sequences, converter=["<None>","<Unknown>"]):
         newSeqs.append(newSeq)
     return newSeqs, converter
 
+
 def pad_sequence(sequence, length, value=0):
+    """pad a sequence to a specified length"""
     if len(sequence) <= length:
         padded = pad_sequences([sequence], maxlen=length, dtype=object, value=value)
         return padded[0].tolist()
@@ -133,13 +138,16 @@ def pad_sequence(sequence, length, value=0):
 
 
 def one_hot_encode(sequence, ohe):
+    """encodes using OHE"""
     encoded = ohe.transform(array(sequence).reshape(len(sequence), 1))
     return encoded
 
+
 def generate(sequences, batch_size, num_steps, total_names):
+    """generator that yields sets of <batch_size> number of sequences"""
     x = np.zeros((batch_size, num_steps))
-    #y = np.zeros((batch_size, num_steps, total_names))
-    y= np.zeros((batch_size, total_names))
+    # y = np.zeros((batch_size, num_steps, total_names))
+    y = np.zeros((batch_size, total_names))
     i = 0
     while True:
         for sequence in sequences:
@@ -148,13 +156,16 @@ def generate(sequences, batch_size, num_steps, total_names):
                 # OHE based on sequence
                 temp = [0] * total_names
                 temp[sequence[j]] = 1
-                y[i, :] = temp #to_categorical(sequence[j],num_classes=total_names) #to_categorical(pad_sequence(sequence[:j+1], num_steps), num_classes=total_names)
+                y[i,
+                :] = temp  # to_categorical(sequence[j],num_classes=total_names) #to_categorical(pad_sequence(sequence[:j+1], num_steps), num_classes=total_names)
                 i += 1
                 if i == batch_size:
-                    yield x.reshape(batch_size,num_steps,1), y
+                    yield x.reshape(batch_size, num_steps, 1), y
                     i = 0
 
+
 def generate_features(sequence, length, ohe):
+    """old code to generate features from a sequence set"""
     padded = pad_sequence(sequence, length)
     encoded = one_hot_encode(padded, ohe)  # TODO: possible to avoid ohe with tensorflow?
 
@@ -166,11 +177,14 @@ def generate_features(sequence, length, ohe):
 
     return x
 
+
 def decode(encoded, converter):
+    """decodes using converter"""
     decoded = converter[int(encoded[0])]
     return decoded
 
+
 def one_hot_decode(encoded, converter):
+    """decodes using OHE"""
     index = encoded.tolist()[0].index(1)
     return converter[int(index)]
-

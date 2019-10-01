@@ -2,7 +2,8 @@
 This file opens a notebook in ADS, HTML, jupyter or vim
 """
 
-def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim", test = False):
+
+def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim", test=False):
     """opens a notebook by getting the filename and then opening from the ads binary location"""
     import subprocess
     from src.praxxis.sqlite import sqlite_notebook
@@ -10,9 +11,9 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim"
     from src.praxxis.util import error
 
     name = args.notebook
-    
+
     notebook_data = notebook.get_notebook(current_scene_db, library_db, name)
-    
+
     notebook_filename = notebook_data[0]
     if args.viewer == "html":
         display_as_html(notebook_filename)
@@ -28,7 +29,7 @@ def open_notebook(args, current_scene_db, library_db, ads_location, editor="vim"
     return 0
 
 
-def display_as_html(filename, html_outputfile = None):
+def display_as_html(filename, html_outputfile=None):
     """opens the file as html in the web browser"""
     import nbconvert
     import webbrowser
@@ -41,7 +42,7 @@ def display_as_html(filename, html_outputfile = None):
         temp.write(output)
         temp.seek(0)
         webbrowser.open(temp.name)
-    
+
     else:
         with open(html_outputfile, 'w+') as f:
             f.write(output)
@@ -52,9 +53,11 @@ def open_jupyter(filepath, test):
     """opens a notebook in jupyter"""
     import subprocess
     import os
-    import sys    
+    import sys
 
-    process = subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__),  ".." , "util", "open_jupyter.py"), filepath], stdout=subprocess.PIPE)
+    process = subprocess.Popen(
+        [sys.executable, os.path.join(os.path.dirname(__file__), "..", "util", "open_jupyter.py"), filepath],
+        stdout=subprocess.PIPE)
 
     if test:
         return
@@ -65,7 +68,7 @@ def open_jupyter(filepath, test):
             if output == '' and process.poll() is not None:
                 break
             if output:
-                print (output.strip())
+                print(output.strip())
         rc = process.poll()
         return rc
     except KeyboardInterrupt:

@@ -4,10 +4,11 @@ This file handles the model functions of the CLI
 from src.praxxis.util.roots import _model_root
 from src.praxxis.util.roots import _model_db
 
+
 def init_model(model_root, model_db):
     """initializes the model db and directories"""
     import os
-    
+
     from src.praxxis.display import display_model
     from src.praxxis.sqlite import sqlite_init
 
@@ -17,12 +18,14 @@ def init_model(model_root, model_db):
     display_model.display_init_model_db(model_db)
     return
 
-def import_model(arg, 
-                 model_db = _model_db):
+
+def import_model(arg,
+                 model_db=_model_db):
     """ handles importing a new model. """
     from src.praxxis.model import import_model
     import_model.import_model(arg, model_db)
     return
+
 
 def update_model(arg):
     """ handles updating a model. """

@@ -3,6 +3,7 @@ Deactivates a ruleset.
 (i.e., the ruleset remains on disk but will not be used in making predictions)
 """
 
+
 def deactivate_ruleset(args, rulesengine_db):
     """deactivates a ruleset so it won't be used in the rules engine"""
     from src.praxxis.sqlite import sqlite_rulesengine

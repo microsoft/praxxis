@@ -2,7 +2,8 @@
 This file exists to try to combat Windows permissions errors 
 """
 
-def rmtree(root, test = False):
+
+def rmtree(root, test=False):
     """calls rmtree with onerror so windows doesn't have a terrible time"""
     import shutil
     import os
@@ -22,7 +23,7 @@ def rmtree(root, test = False):
 def onerror(func, path, exc_info):
     """what to do if there's an error -- try to get permissons from the os"""
     import stat
-    import os 
+    import os
     ## https://stackoverflow.com/questions/1213706/what-user-do-python-scripts-run-as-in-windows
 
     if not os.access(path, os.W_OK):
@@ -34,7 +35,7 @@ def onerror(func, path, exc_info):
         func(path)
     else:
         try:
-            import uuid 
+            import uuid
             newname = str(uuid.uuid4())
             os.rename(path, newname)
             func(newname)

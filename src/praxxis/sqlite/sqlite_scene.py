@@ -3,6 +3,7 @@
 This file contains all of the sqlite functions for scenes
 """
 
+
 def init_scene(scene_db, name):
     """initializes the scene db"""
     import uuid
@@ -13,7 +14,8 @@ def init_scene(scene_db, name):
     scene_id = str(uuid.uuid4())
 
     create_metadata_table = 'CREATE TABLE "SceneMetadata" (ID TEXT PRIMARY KEY, Ended INTEGER, Scene TEXT)'
-    create_notebook_list_table='CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, Library TEXT, Path TEXT, RawUrl TEXT)'
+    create_notebook_list_table='CREATE TABLE "NotebookList" (ID INTEGER PRIMARY KEY AUTOINCREMENT, Notebook TEXT, ' \
+                               'Library TEXT, Path TEXT, RawUrl TEXT) '
     create_parameter_table='CREATE TABLE "Parameters" (Parameter TEXT PRIMARY KEY, Value TEXT)'
     create_history_table='CREATE TABLE "History" (Timestamp STRING, Notebook TEXT, Library TEXT, OutputPath TEXT)'
     init_metadata_table = 'insert into "SceneMetadata"(ID, Ended, Scene) values(?, 0, ?)'
@@ -33,7 +35,7 @@ def check_ended(history_db, scene, conn, cur):
     ended = 'SELECT Ended from "SceneHistory" WHERE Scene = ?'
     cur.execute(ended, (scene,))
     ended = cur.fetchone()
-    if ended == None:
+    if ended is None:
         raise error.SceneNotFoundError(scene)
     elif ended[0]:
         raise error.EndEndedSceneError(scene)
@@ -231,7 +233,8 @@ def get_recent_history(db_file, seq_length):
 
     conn = connection.create_connection(db_file)
     cur = conn.cursor()
-    get_recent_history = 'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ORDER BY Timestamp ASC'
+    get_recent_history = 'SELECT Notebook, OutputPath FROM (SELECT * FROM "History" ORDER BY Timestamp DESC LIMIT ?) ' \
+                         'ORDER BY Timestamp ASC '
     cur.execute(get_recent_history, (seq_length,))
     conn.commit()
     rows = cur.fetchall()

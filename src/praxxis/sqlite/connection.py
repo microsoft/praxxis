@@ -5,6 +5,7 @@ This file contains the create connection function used by all of the sqlite file
 import sqlite3
 from sqlite3 import Error
 
+
 def create_connection(db_file):
     """creates the connection to the database specified"""
     try:

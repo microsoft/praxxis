@@ -2,6 +2,7 @@
 This file contains all of the display functions for the rules engine
 """
 
+
 def display_init_rulesengine_root(root):
     """display function for creating new rules engine folder"""
     print("Created rules engine directory at %s" %(root)) 
